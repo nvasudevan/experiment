@@ -1,0 +1,153 @@
+#! /bin/sh
+
+# We assume the following programs/tools exist:
+# wget, git, bunzip2, unzip, Python 2.7, Java, patch, timeout
+
+
+missing=0
+check_for () {
+	which $1 > /dev/null 2> /dev/null
+    if [ $? -ne 0 ]; then
+        echo "Error: can't find $1 binary"
+        missing=1
+    fi
+}
+
+check_for git
+check_for wget
+check_for bunzip2
+check_for java
+check_for javac
+check_for patch
+check_for timeout
+
+
+which pypy > /dev/null 2> /dev/null
+if [ $? -eq 0 ]; then
+    PYTHON=`which pypy`
+else
+    check_for python
+    PYTHON=`which python`
+fi
+
+which gmake > /dev/null 2> /dev/null
+if [ $? -eq 0 ]; then
+    MYMAKE=gmake
+else
+    MYMAKE=make
+fi
+
+if [ $missing -eq 1 ]; then
+    exit 1
+fi
+
+java -version 2>&1 | tail -n 1 | grep "OpenJDK .*Server VM (build [a-zA-Z0-9.\-]*, mixed mode)" > /dev/null 2> /dev/null
+if [ $? -ne 0 ]; then
+    cat << EOF
+Warning: incorrect version of Java detected. Expected:
+  OpenJDK Server VM (build ..., mixed mode)
+You should download the correct version and put it in your PATH.
+EOF
+    echo -n "Continue building anyway? [Ny] "
+    read answer
+    case "$answer" in
+        y | Y) ;;
+        *) exit 1;;
+    esac
+fi
+
+python -V 2>&1 | egrep -o '[0-9].[0-9]' > /dev/null 2> /dev/null
+if [ $? -ne 0 ]; then
+    cat << EOF
+Warning: incorrect version of Python detected. Expected:
+  Python 2.7 or above
+You should download the correct version and put it in your PATH.
+EOF
+    echo -n "Continue building anyway? [Ny] "
+    read answer
+    case "$answer" in
+        y | Y) ;;
+        *) exit 1;;
+    esac
+fi
+
+if [ $# -eq 0 ]; then
+    wrkdir=`pwd`
+elif [ $# -eq 1 ]; then
+    wrkdir=$1
+    mkdir -p $wrkdir
+else
+    echo "$0 [<full path to working directory>]"
+    exit 1
+fi
+echo "===> Working in $wrkdir"
+
+# Download ACCENT tools -- accent, amber and entire parser
+
+echo "\\n===> Fetching ACCENT tools\\n"
+
+cd $wrkdir
+wget http://accent.compilertools.net/accent.tar
+tar xf accent.tar
+cd accent/accent
+./build
+[ ! -f $wrkdir/accent/accent/accent ] && echo "ACCENT build has failed. Check in $wrkdir/accent" && exit 1
+
+
+# Download SinBAD
+
+echo "\\n===> Fetching SinBAD tool\\n"
+
+cd $wrkdir
+git clone git@github.com:nvasudevan/sinbad.git
+cd sinbad
+#git checkout 8f99f2d111
+[ ! -f $wrkdir/sinbad/src/sinbad ] && echo "SinBAD tool didn't download. Check in $wrkdir/sinbad" && exit 1
+
+
+# Download ACLA
+
+echo "\\n===> Fetching ACLA tool\\n"
+
+cd $wrkdir
+mkdir ACLA
+cd ACLA
+wget http://www.brics.dk/grammar/dist/grammar-all.jar
+wget http://www.brics.dk/grammar/grammar-2.0-4.tar.gz
+gtar -zxf grammar-2.0-4.tar.gz
+cd grammar-2.0
+patch -b -R -p0 build.xml < $wrkdir/sinbad/experiment/patches/acla.build.xml.patch || exit $?
+patch -b -R -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $wrkdir/sinbad/experiment/patches/acla.patch || exit $?
+ant
+[ ! -f dist/grammar.jar ] && echo "ACLA didn't compile. Check in $wrkdir/ACLA" && exit 1
+# repackage acla
+cd ..
+mkdir repackage
+cd repackage
+jar -xf ../grammar-all.jar
+cp META-INF/MANIFEST.MF META-INF/MANIFEST.MF.orig
+jar -xf ../grammar-2.0/dist/grammar.jar 
+mv META-INF/MANIFEST.MF.orig META-INF/MANIFEST.MF
+jar cmf META-INF/MANIFEST.MF ../grammar.modified.jar *
+[ ! -f $wrkdir/ACLA/grammar.modified.jar ] && echo "ACLA can't be patched. Please check in $wrkdir/ACLA" && exit 1
+
+
+# Download AmbiDexter
+
+echo "\\n===> Fetching AmbiDexter tool\\n"
+
+cd $wrkdir
+git clone git://github.com/cwi-swat/ambidexter.git
+cd ambidexter
+git checkout db64485ad4
+mkdir -p build/META-INF
+echo "Main-Class: nl.cwi.sen1.AmbiDexter.Main" > build/META-INF/MANIFEST.MF
+patch -b -R -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $wrkdir/sinbad/experiment/patches/AmbiDexter.patch || exit $?
+cd src
+javac nl/cwi/sen1/AmbiDexter/*.java || exit $?
+find . -type f -name "*.class" | cpio -pdm ../build/
+cd ../build
+jar cmf META-INF/MANIFEST.MF AmbiDexter.jar nl
+[ ! -f $wrkdir/ambidexter/build/AmbiDexter.jar ] && echo "AmbiDexter failed to build. Check in $wrkdir/ambidexter" && exit 1
+
+
