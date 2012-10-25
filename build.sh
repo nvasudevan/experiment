@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # We assume the following programs/tools exist:
-# wget, git, bunzip2, unzip, Python 2.7, Java, patch, timeout
+# gmake, wget, git, bunzip2, PyPy (Python 2.7), Java, patch, timeout, mktemp, flex, cc
 
 
 missing=0
@@ -13,6 +13,7 @@ check_for () {
     fi
 }
 
+check_for gmake
 check_for git
 check_for wget
 check_for bunzip2
@@ -20,7 +21,9 @@ check_for java
 check_for javac
 check_for patch
 check_for timeout
-
+check_for mktemp
+check_for flex
+check_for cc
 
 which pypy > /dev/null 2> /dev/null
 if [ $? -eq 0 ]; then
@@ -28,13 +31,6 @@ if [ $? -eq 0 ]; then
 else
     check_for python
     PYTHON=`which python`
-fi
-
-which gmake > /dev/null 2> /dev/null
-if [ $? -eq 0 ]; then
-    MYMAKE=gmake
-else
-    MYMAKE=make
 fi
 
 if [ $missing -eq 1 ]; then
@@ -80,11 +76,11 @@ else
     echo "$0 [<full path to working directory>]"
     exit 1
 fi
-echo "===> Working in $wrkdir"
+echo -e "\\n===> Working in $wrkdir\\n"
 
 # Download ACCENT tools -- accent, amber and entire parser
 
-echo "\\n===> Fetching ACCENT tools\\n"
+echo -e "\\n===> Fetching ACCENT tools\\n"
 
 cd $wrkdir
 wget http://accent.compilertools.net/accent.tar
@@ -95,11 +91,12 @@ cd accent/accent
 
 
 # Download SinBAD
+# git@github.com:nvasudevan/sinbad.git
 
-echo "\\n===> Fetching SinBAD tool\\n"
+echo -e "\\n===> Fetching SinBAD tool\\n"
 
 cd $wrkdir
-git clone git@github.com:nvasudevan/sinbad.git
+git clone https://github.com/nvasudevan/sinbad.git 
 cd sinbad
 #git checkout 8f99f2d111
 [ ! -f $wrkdir/sinbad/src/sinbad ] && echo "SinBAD tool didn't download. Check in $wrkdir/sinbad" && exit 1
@@ -107,7 +104,7 @@ cd sinbad
 
 # Download ACLA
 
-echo "\\n===> Fetching ACLA tool\\n"
+echo -e "\\n===> Fetching ACLA tool\\n"
 
 cd $wrkdir
 mkdir ACLA
@@ -116,8 +113,8 @@ wget http://www.brics.dk/grammar/dist/grammar-all.jar
 wget http://www.brics.dk/grammar/grammar-2.0-4.tar.gz
 gtar -zxf grammar-2.0-4.tar.gz
 cd grammar-2.0
-patch -b -R -p0 build.xml < $wrkdir/sinbad/experiment/patches/acla.build.xml.patch || exit $?
-patch -b -R -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $wrkdir/sinbad/experiment/patches/acla.patch || exit $?
+patch -b -R -p0 build.xml < $CWD/patches/acla.build.xml.patch || exit $?
+patch -b -R -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $CWD/patches/acla.patch || exit $?
 ant
 [ ! -f dist/grammar.jar ] && echo "ACLA didn't compile. Check in $wrkdir/ACLA" && exit 1
 # repackage acla
@@ -134,15 +131,15 @@ jar cmf META-INF/MANIFEST.MF ../grammar.modified.jar *
 
 # Download AmbiDexter
 
-echo "\\n===> Fetching AmbiDexter tool\\n"
+echo -e "\\n===> Fetching AmbiDexter tool\\n"
 
 cd $wrkdir
-git clone git://github.com/cwi-swat/ambidexter.git
+git clone https://github.com/cwi-swat/ambidexter.git
 cd ambidexter
 git checkout db64485ad4
 mkdir -p build/META-INF
 echo "Main-Class: nl.cwi.sen1.AmbiDexter.Main" > build/META-INF/MANIFEST.MF
-patch -b -R -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $wrkdir/sinbad/experiment/patches/AmbiDexter.patch || exit $?
+patch -b -R -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $CWD/patches/AmbiDexter.patch || exit $?
 cd src
 javac nl/cwi/sen1/AmbiDexter/*.java || exit $?
 find . -type f -name "*.class" | cpio -pdm ../build/
