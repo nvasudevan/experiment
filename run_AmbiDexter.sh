@@ -33,7 +33,7 @@ run() {
 }
 
 run_random1000() {
-    for grammar in `seq 1 1000`
+    for grammar in `seq 1 5`
     do
         # first convert accent format to yacc format
         ACC_GRAMMAR_FILE="${RANDOM1000}/${grammar}/${grammar}.acc"
@@ -52,15 +52,21 @@ run_random1000() {
 }
 
 run_lang() {
+    [ ! -d ${LANG}/y.generated ] && mkdir ${LANG}/y.generated
     for grammar in Pascal SQL Java C
     do
         for i in `seq 1 5`
         do
-            GRAMMAR_FILE="${GRAMMAR_DIR}/AmbiDexter/grammars.SLR1_generated/y/${grammar}.${i}.y"
-            [ "${FILTER}" != "" ] && GRAMMAR_FILE="${GRAMMAR_DIR}/AmbiDexter/grammars.SLR1_generated/y/${grammar}.${i}.${FILTER}.pa.y" 
-            sentence="`timeout ${TIME} ${CMD} -q -pg -ik 0 ${GRAMMAR_FILE} 2>/dev/null | grep 'Ambiguous string found'`"
-            [ "${sentence}" != "" ] && echo "${grammar}.${i},yes" | tee -a ${RESULT}  && continue
-            echo "${grammar}.${i}," | tee -a ${RESULT}
+        	ACC_GRAMMAR_FILE="${LANG}/acc/${grammar}.${i}.acc"
+            YACC_GRAMMAR_FILE="${LANG}/y/${grammar}.${i}.y"
+            tmp_file="`mktemp`"
+            ${CMD} -s ${YACC_GRAMMAR_FILE} > ${tmp_file} 2>&1
+            message="`cat ${tmp_file} | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3`"
+            [ "${message}" != "" ] && echo "${grammar},yes," | tee -a ${RESULT} && continue
+            message="`cat ${tmp_file} | egrep -i 'Unproductive start symbol' | cut -d: -f2,3`"
+            [ "${message}" != "" ] && echo "${grammar},," | tee -a ${RESULT}  && continue
+            result=$(run ${YACC_GRAMMAR_FILE})
+            echo "${grammar}.${i},${result}" | tee -a ${RESULT}
         done
     done
 }
@@ -69,19 +75,23 @@ run_lang() {
 run_mutlang() {
     for grammar in Pascal SQL Java C
     do
-        for n in `seq 1 ${NO_MUTATIONS}`
-        do
+       for type in ${MUTYPES}
+       do
+          cp /dev/null ${RESULT}_${type}
+          for n in `seq 1 ${NO_MUTATIONS}`
+          do
             # convert grammar to yacc format
-            ACC_GRAMMAR_FILE="${MUTATED_LANGUAGES}/acc/${grammar}/${grammar}.0_${n}.acc"
-            YACC_GRAMMAR_FILE="${MUTATED_LANGUAGES}/y/${grammar}/${grammar}.0_${n}.y"
-            [ ! -d "${MUTATED_LANGUAGES}/y/${grammar}" ] && mkdir -p ${MUTATED_LANGUAGES}/y/${grammar}
+            ACC_GRAMMAR_FILE="${MUTLANG}/acc/${type}/${grammar}.0_${n}.acc"
+            YACC_GRAMMAR_FILE="${MUTLANG}/y/${type}/${grammar}.0_${n}.y"
+            [ ! -d "${MUTLANG}/y/${type}" ] && mkdir -p ${MUTLANG}/y/${type}
             # add %token lines from grammar.0.y to the yacc one
-            grep "^%token" ${MUTATED_LANGUAGES}/y/${grammar}/${grammar}.0.y > ${YACC_GRAMMAR_FILE}
+            grep "^%token" ${LANG}/y/${grammar}.0.y > ${YACC_GRAMMAR_FILE}
             printf "\n%%%%\n" >> ${YACC_GRAMMAR_FILE}
             egrep -v "^%token|^%nodefault" ${ACC_GRAMMAR_FILE} >> ${YACC_GRAMMAR_FILE}
             result=$(run ${YACC_GRAMMAR_FILE})
-            echo "${grammar}.0_${n},${result}" | tee -a ${RESULT}
-        done
+            echo "${grammar}.0_${n},${result}" | tee -a ${RESULT}_${type}
+          done
+       done
     done
 }
 

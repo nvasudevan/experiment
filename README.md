@@ -20,3 +20,4 @@ build.sh
 run_experiment.sh
 
 - Runs the build.sh first, and then invokes each tool for different sets of grammars.
+./run_experiment.sh <working directory>

@@ -1,0 +1,89 @@
+%{
+#include "yygrammar.h"
+%}
+%%
+","         { return ','; }
+"&"         { return '&'; }
+"~"         { return '~'; }
+"%"         { return '%'; }
+"!"         { return '!'; }
+"?"         { return '?'; }
+"+"         { return '+'; }
+"-"         { return '-'; }
+"*"         { return '*'; }
+"/"         { return '/'; }
+"("         { return '('; }
+")"         { return ')'; }
+"{"         { return '{'; }
+"}"         { return '}'; }
+"."         { return '.'; }
+";"         { return ';'; }
+":"         { return ':'; }
+"^"         { return '^'; }
+"["         { return '['; }
+"]"         { return ']'; }
+"="         { return '='; }
+"<"         { return '<'; }
+">"         { return '>'; }
+"_break"          { return BREAK; }
+"_dec_op"          { return DEC_OP; }
+"_short"          { return SHORT; }
+"_char"          { return CHAR; }
+"_struct"          { return STRUCT; }
+"=="          { return EQ_OP; }
+"1.0"          { return DOUBLE; }
+"1"          { return INT; }
+"|="          { return OR_ASSIGN; }
+"_const"          { return CONST; }
+"|"          { return OR_OP; }
+"2.0"          { return FLOAT; }
+"_if"          { return IF; }
+"_else"          { return ELSE; }
+"_switch"          { return SWITCH; }
+"_case"          { return CASE; }
+"_Return"          { return RETURN; }
+"_auto"          { return AUTO; }
+"_union"          { return UNION; }
+"abcd"          { return IDENTIFIER; }
+"_for"          { return FOR; }
+"<<="          { return LEFT_ASSIGN; }
+"_continue"          { return CONTINUE; }
+"a_constant"          { return CONSTANT; }
+"_register"          { return REGISTER; }
+"_default"          { return DEFAULT; }
+"_extern"          { return EXTERN; }
+"_signed"          { return SIGNED; }
+"_volatile"          { return VOLATILE; }
+"<<"          { return LEFT_OP; }
+"_sizeof"          { return SIZEOF; }
+"_void"          { return VOID; }
+">>="          { return RIGHT_ASSIGN; }
+"_while"          { return WHILE; }
+"_do"          { return DO; }
+">>"          { return RIGHT_OP; }
+"++"          { return INC_OP; }
+"_enum"          { return ENUM; }
+"/="          { return DIV_ASSIGN; }
+"_long"          { return LONG; }
+"&="          { return AND_ASSIGN; }
+"_unsigned"          { return UNSIGNED; }
+"^="          { return XOR_ASSIGN; }
+"_ptr_op"          { return PTR_OP; }
+"any_type"          { return TYPE_NAME; }
+"..."          { return ELIPSIS; }
+"-="          { return SUB_ASSIGN; }
+"_static"          { return STATIC; }
+"+="          { return ADD_ASSIGN; }
+"%="          { return MOD_ASSIGN; }
+"_typedef"          { return TYPEDEF; }
+"*="          { return MUL_ASSIGN; }
+"!="          { return NE_OP; }
+"&&"          { return AND_OP; }
+"<="          { return LE_OP; }
+"_goto"          { return GOTO; }
+">="          { return GE_OP; }
+"a_string"          { return STRING_LITERAL; }
+" "         { /* skip blank */ }
+\r          { yypos++; /* adjust linenumber and skip newline */ }
+\n          { yypos++; /* adjust linenumber and skip newline */ }
+.           { printf("\n++ illegal token : %s ++", yytext); yyerror("illegal xyz token"); }
