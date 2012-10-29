@@ -1,25 +1,36 @@
 #!/bin/sh
 
 TO_RUN="${1}"
-TIME="${2}s"
-MEM_MAX="${3}"
+shift
+TIME="${1}s"
+shift
+MEM_MAX="${1}"
+shift
 FILTER=""
-[ "${4}" != "" ] && FILTER="${4}"
+if [ "${1}" == "slr1" ]
+then 
+ FILTER="slr1"
+ shift
+ AMBIDEXTER_OPTIONS="$*"
+else
+ AMBIDEXTER_OPTIONS="$*"
+fi
 
 run() {
     _GRAMMAR="${1}"
     if [ "${FILTER}" == "" ]
     then
-        _sentence="`timeout ${TIME} ${CMD} -q -pg -ik 0 ${_GRAMMAR} 2>/dev/null | grep 'Ambiguous string found'`"
+	    #_sentence="`timeout ${TIME} ${CMD} -q -pg -ik 0 ${_GRAMMAR} 2>/dev/null | grep 'Ambiguous string found'`"
+        _sentence="`timeout ${TIME} ${CMD} ${AMBIDEXTER_OPTIONS} ${_GRAMMAR} 2>/dev/null | grep 'Ambiguous string found'`"
     else
         exported_harmless="`${CMD} -h -${FILTER} -oy ${_GRAMMAR} 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' '`"
         harmless="`echo $exported_harmless | awk -F, '{print $1}'`"
         exported="`echo $exported_harmless | awk -F, '{print $2}'`"
         if [ "${exported}" == "" ]
         then
-            _sentence="`timeout ${TIME} ${CMD} -q -pg -ik 0 ${_GRAMMAR} 2>/dev/null | grep 'Ambiguous string found'`"
+            _sentence="`timeout ${TIME} ${CMD} ${AMBIDEXTER_OPTIONS} ${_GRAMMAR} 2>/dev/null | grep 'Ambiguous string found'`"
         else
-            _sentence="`timeout ${TIME} ${CMD} -q -pg -ik 0 ${exported} 2> /dev/null | grep 'Ambiguous string found'`"
+            _sentence="`timeout ${TIME} ${CMD} ${AMBIDEXTER_OPTIONS} ${exported} 2> /dev/null | grep 'Ambiguous string found'`"
         fi        
     fi
     
@@ -109,8 +120,8 @@ main() {
     for i in $*
     do
     	[ ! -d ${RESULTS_DIR}/ambidexter/${TO_RUN} ] && mkdir -p ${RESULTS_DIR}/ambidexter/${TO_RUN} && echo "${RESULTS_DIR}/ambidexter/${TO_RUN} created!"
-    	RESULT="${RESULTS_DIR}/ambidexter/${TO_RUN}/${TIME}t_${FILTER}f_${MEM_MAX}"
-    	echo "[${TO_RUN} filter=${FILTER}, time=${TIME}, memory max=${MEM_MAX}], Result -- ${RESULT}"
+    	RESULT="${RESULTS_DIR}/ambidexter/${TO_RUN}/${TIME}t_${FILTER}f_${MEM_MAX}_`echo ${AMBIDEXTER_OPTIONS} | sed -e 's/\s/_/g'`"
+    	echo "[${TO_RUN} filter=${FILTER}, time=${TIME}, memory max=${MEM_MAX}, options=${AMBIDEXTER_OPTIONS}], Result -- ${RESULT}"
     	cp /dev/null ${RESULT}
     	CMD="`which java` -Xss8m -Xmx${MEM_MAX} -jar ${wrkdir}/ambidexter/build/AmbiDexter.jar"
         run_${i}

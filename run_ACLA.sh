@@ -84,7 +84,6 @@ run_mutlang() {
     done    
 }
 
-# we run one grammar from each set
 run_test() {
     grammar="amb2"
     ACC_GRAMMAR_FILE="${GRAMMAR_DIR}/test/${grammar}/${grammar}.acc"

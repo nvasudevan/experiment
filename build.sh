@@ -98,7 +98,6 @@ echo -e "\\n===> Fetching SinBAD tool\\n"
 cd $wrkdir
 git clone https://github.com/nvasudevan/sinbad.git 
 cd sinbad
-#git checkout 8f99f2d111
 [ ! -f $wrkdir/sinbad/src/sinbad ] && echo "SinBAD tool didn't download. Check in $wrkdir/sinbad" && exit 1
 
 

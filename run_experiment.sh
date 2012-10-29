@@ -15,7 +15,7 @@ echo -e "===> Working in $wrkdir"
 export CWD wrkdir
 
 # now run build.sh to build your tools
-./build.sh ${wrkdir}
+./build.sh $wrkdir
 
 # Download AmbiDexter grammars
 
@@ -36,7 +36,7 @@ LEX_DIR="${GRAMMAR_DIR}/lex"
 RANDOM1000="${GRAMMAR_DIR}/random1000"
 LANG="${GRAMMAR_DIR}/lang"
 MUTLANG="${GRAMMAR_DIR}/mutlang"
-NO_MUTATIONS="10"
+NO_MUTATIONS="5"
 MUTYPES="type1 type2 type3 type4"
 MEMLIMIT="256m"
 TIMELIMITS="10 30 60 90 180 300"
@@ -55,52 +55,63 @@ echo -e "\\n===> Doing a test run of each tool \\n"
 echo -e "\\n===> ACLA \\n"
 cd $CWD
 
-./run_ACLA.sh test 5 ${MEMLIMIT} || exit $?
-./run_ACLA.sh random1000 5 ${MEMLIMIT} || exit $?
-./run_ACLA.sh lang 5 ${MEMLIMIT} || exit $?
-./run_ACLA.sh mutlang 5 ${MEMLIMIT} || exit $?
+./run_ACLA.sh test 5 $MEMLIMIT || exit $?
+./run_ACLA.sh random1000 5 $MEMLIMIT || exit $?
+./run_ACLA.sh lang 5 $MEMLIMIT || exit $?
+./run_ACLA.sh mutlang 5 $MEMLIMIT || exit $?
 
 echo -e "\n===> Amber \\n"
 cd $CWD
 
-./run_Amber.sh test 5 examples 10000 || exit $?
-./run_Amber.sh random1000 5 examples 10000 || exit $?
-./run_Amber.sh lang 5 examples 10000 || exit $?
-./run_Amber.sh mutlang 5 examples 10000 || exit $?
+for g in test random1000 lang mutlang
+do
+	./run_Amber.sh $g 60 examples 10000 || exit $?
+	./run_Amber.sh $g 60 examples 1000000000000 || exit $?
+	./run_Amber.sh $g 60 silent examples 10000 || exit $?
+	./run_Amber.sh $g 60 silent examples 1000000000000 || exit $?
+
+	./run_Amber.sh $g 60 ellipsis examples 10000 || exit $?
+	./run_Amber.sh $g 60 ellipsis examples 1000000000000 || exit $?
+	./run_Amber.sh $g 60 silent ellipsis examples 10000 || exit $?
+	./run_Amber.sh $g 60 silent ellipsis examples 1000000000000 || exit $?
+
+	./run_Amber.sh $g 60 length 100 || exit $?
+	./run_Amber.sh $g 60 length 1000 || exit $?
+	./run_Amber.sh $g 60 silent length 100 || exit $?
+	./run_Amber.sh $g 60 silent length 1000 || exit $?
+
+	./run_Amber.sh $g 60 ellipsis length 100 || exit $?
+	./run_Amber.sh $g 60 ellipsis length 1000 || exit $?
+	./run_Amber.sh $g 60 silent ellipsis length 100 || exit $?
+	./run_Amber.sh $g 60 silent ellipsis length 1000 || exit $?
+done
 
 echo -e "\n===> AmbiDexter \\n"
 cd $CWD
 
-./run_AmbiDexter.sh test 5 ${MEMLIMIT} || exit $?
-./run_AmbiDexter.sh test 5 ${MEMLIMIT} slr1 || exit $?
-./run_AmbiDexter.sh random1000 5 ${MEMLIMIT} || exit $?
-./run_AmbiDexter.sh lang 5 ${MEMLIMIT} || exit $?
-./run_AmbiDexter.sh mutlang 5 ${MEMLIMIT} || exit $?
+for g in test random1000 lang mutlang
+do
+	./run_AmbiDexter.sh $g 5 $MEMLIMIT -q -pg -k 100 || exit $?
+	./run_AmbiDexter.sh $g 5 $MEMLIMIT -q -pg -k 1000 || exit $?
+	./run_AmbiDexter.sh $g 5 $MEMLIMIT slr1 -q -pg -k 100 || exit $?
+	./run_AmbiDexter.sh $g 5 $MEMLIMIT slr1 -q -pg -k 1000 || exit $?
+	./run_AmbiDexter.sh $g 5 $MEMLIMIT -q -pg -ik 0 || exit $?
+	./run_AmbiDexter.sh $g 5 $MEMLIMIT slr1 -q -pg -ik 0 || exit $?
+done
 
-echo -e "\n===> SinBAD (dynamic1) \\n"
 cd $CWD
 
-./run_SinBAD.sh test dynamic1 10 10 || exit $?
-./run_SinBAD.sh random1000 dynamic1 10 10 || exit $?
-./run_SinBAD.sh lang dynamic1 10 10 || exit $?
-./run_SinBAD.sh mutlang dynamic1 10 10 || exit $?
-
-echo -e "\n===> SinBAD (random1) \\n"
-
-./run_SinBAD.sh test random1 10 0 || exit $?
-./run_SinBAD.sh random1000 random1 10 0 || exit $?
-./run_SinBAD.sh lang random1 10 0 || exit $?
-./run_SinBAD.sh mutlang random1 10 0 || exit $?
-
-#echo -e "\n===> ACLA \\n"
-
-#for grammarset in random1000 lang mutlang
-#do 
-#    for timelimit in ${TIMELIMITS}
-#    do
-#    ./run_ACLA.sh ${grammarset} ${timelimit} ${MEMLIMIT}
-#    done 
-#done
+for backend in purerandom dynamic1
+do
+	echo -e "\n===> SinBAD ($g - $backend) \\n"
+	for g in test random1000 lang mutlang
+	do
+		./run_SinBAD.sh $g $backend 10 || exit $?
+		./run_SinBAD.sh $g $backend 10 || exit $?
+		./run_SinBAD.sh $g $backend 10 || exit $?
+		./run_SinBAD.sh $g $backend 10 || exit $?
+	done
+done
 
 
 cd $CWD
