@@ -1,0 +1,31 @@
+--- amber.c.modified	2012-10-29 23:00:51.371828644 +0000
++++ amber.c	2012-10-29 23:00:51.373834751 +0000
+@@ -47,8 +47,6 @@
+ int ELLIPSIS = 0;
+ int iteration = 1;
+ 
+-int tick;
+-
+ /*============================================================================*/
+ 
+ extern char *yyprintname();
+@@ -1000,10 +998,6 @@
+       else if (sub[i] != s) {
+ 	 disjunctive_ambiguity(i, d, l, s);
+       }
+-	  if (ambiguity_count > 0) {
+-	    printf("\ntick: %d \n",tick);
+-	   	exit(0);
+-	  }
+ #endif
+ 
+    }
+@@ -1523,7 +1517,7 @@
+ int ACTUAL[MAXVALIDTOKENS+1];
+ 
+ #define TICKWIDTH 7
+-//int tick;
++int tick;
+ 
+ int RESOURCES = 0;
+ int BALANCING = 0;
