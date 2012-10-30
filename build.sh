@@ -1,7 +1,7 @@
 #! /bin/sh
 
 # We assume the following programs/tools exist:
-# gmake, wget, git, bunzip2, PyPy (Python 2.7), Java, patch, timeout, mktemp, flex, cc
+# gmake, wget, git, bunzip2, PyPy (Python 2.7), Java, patch, timeout, mktemp, flex, cc, ant
 
 
 missing=0
@@ -24,6 +24,12 @@ check_for timeout
 check_for mktemp
 check_for flex
 check_for cc
+check_for ant
+
+if [ $missing -eq 1 ]; then
+    exit 1
+fi
+
 
 which pypy > /dev/null 2> /dev/null
 if [ $? -eq 0 ]; then
@@ -31,10 +37,6 @@ if [ $? -eq 0 ]; then
 else
     check_for python
     PYTHON=`which python`
-fi
-
-if [ $missing -eq 1 ]; then
-    exit 1
 fi
 
 java -version 2>&1 | tail -n 1 | grep "OpenJDK .*Server VM (build [a-zA-Z0-9.\-]*, mixed mode)" > /dev/null 2> /dev/null
@@ -87,7 +89,9 @@ wget http://accent.compilertools.net/accent.tar
 tar xf accent.tar
 cd accent/accent
 ./build
-[ ! -f $wrkdir/accent/accent/accent ] && echo "ACCENT build has failed. Check in $wrkdir/accent" && exit 1
+[ ! -f accent ] && echo "ACCENT build has failed. Check in $wrkdir/accent" && exit 1
+# patch amber
+patch -b -R -p0 $wrkdir/accent/amber/amber.c < $CWD/patches/amber.patch || exit $?
 
 
 # Download SinBAD
@@ -144,6 +148,7 @@ javac nl/cwi/sen1/AmbiDexter/*.java || exit $?
 find . -type f -name "*.class" | cpio -pdm ../build/
 cd ../build
 jar cmf META-INF/MANIFEST.MF AmbiDexter.jar nl
-[ ! -f $wrkdir/ambidexter/build/AmbiDexter.jar ] && echo "AmbiDexter failed to build. Check in $wrkdir/ambidexter" && exit 1
+[ ! -f $wrkdir/ambidexter/build/AmbiDexter.jar ] && echo "AmbiDexter failed to build. Check in $wrkdir/ambidexter" && exit $?
 
+echo "===> build complete"
 

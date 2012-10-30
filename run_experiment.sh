@@ -6,6 +6,11 @@ if [ $# -eq 0 ]; then
     wrkdir=`pwd`
 elif [ $# -eq 1 ]; then
     wrkdir=$1
+    if [ "`dirname $wrkdir`" == "." ]; then 
+    	_wrkdir="`pwd`/`basename $wrkdir`"
+    	wrkdir = "$_wrkdir"
+    fi
+    echo "full path - $wrkdir"
     mkdir -p $wrkdir
 else
     echo "$0 [<full path to working directory>]"
@@ -15,7 +20,7 @@ echo -e "===> Working in $wrkdir"
 export CWD wrkdir
 
 # now run build.sh to build your tools
-./build.sh $wrkdir
+./build.sh $wrkdir || exit $?
 
 # Download AmbiDexter grammars
 
