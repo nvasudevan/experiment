@@ -92,7 +92,7 @@ random1000(){
 		fcnt=0
 		ratiocnt=0.0
 		gstarttime="`date '+%s'`"
-		for g in `seq 1 10`
+		for g in `seq 1 1000`
 		do
 			cat $grandom/$g/$g.acc | sed -e 's/%nodefault/%start root\n\n%%/' > $grandom/$g/$g.y
 			generate $grandom/$g/$g.acc $grandom/$g/$g.y $filter
