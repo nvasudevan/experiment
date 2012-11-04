@@ -44,6 +44,7 @@ run() {
 }
 
 run_random1000() {
+	cp /dev/null ${RESULT}
     for grammar in `seq 1 5`
     do
         # first convert accent format to yacc format
@@ -63,6 +64,7 @@ run_random1000() {
 }
 
 run_lang() {
+	cp /dev/null ${RESULT}
     [ ! -d ${LANG}/y.generated ] && mkdir ${LANG}/y.generated
     for grammar in Pascal SQL Java C
     do
@@ -122,7 +124,6 @@ main() {
     	[ ! -d ${RESULTS_DIR}/ambidexter/${TO_RUN} ] && mkdir -p ${RESULTS_DIR}/ambidexter/${TO_RUN} && echo "${RESULTS_DIR}/ambidexter/${TO_RUN} created!"
     	RESULT="${RESULTS_DIR}/ambidexter/${TO_RUN}/${TIME}t_${FILTER}f_${MEM_MAX}_`echo ${AMBIDEXTER_OPTIONS} | sed -e 's/\s/_/g'`"
     	echo "[${TO_RUN} filter=${FILTER}, time=${TIME}, memory max=${MEM_MAX}, options=${AMBIDEXTER_OPTIONS}], Result -- ${RESULT}"
-    	cp /dev/null ${RESULT}
     	CMD="`which java` -Xss8m -Xmx${MEM_MAX} -jar ${wrkdir}/ambidexter/build/AmbiDexter.jar"
         run_${i}
     done  

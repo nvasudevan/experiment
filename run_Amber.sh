@@ -11,6 +11,7 @@ LEX="`which flex`"
 CC="`which cc`"
 
 run_random1000() {
+	cp /dev/null ${RESULT}
     CWD="`pwd`"
     for grammar in `seq 1 5`
     do
@@ -30,6 +31,7 @@ run_random1000() {
 }
 
 run_lang() {
+	cp /dev/null ${RESULT}
     CWD="`pwd`"
     for grammar in Pascal SQL Java C
     do
@@ -100,7 +102,6 @@ main() {
     	[ ! -d ${RESULTS_DIR}/amber/${TO_RUN} ] && mkdir -p ${RESULTS_DIR}/amber/${TO_RUN} && echo "${RESULTS_DIR}/amber/${TO_RUN} created!"
     	RESULT="${RESULTS_DIR}/amber/${TO_RUN}/${TIME}t_`echo ${AMBER_OPTIONS} | sed -e 's/\s/_/g'`"
     	echo "[${TO_RUN} time=${TIME}, options=${AMBER_OPTIONS}], Result -- ${RESULT}"
-    	cp /dev/null ${RESULT}
         run_${i}
     done  
 }

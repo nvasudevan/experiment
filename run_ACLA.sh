@@ -6,6 +6,7 @@ MEM_MAX="-Xmx${3}"
 CMD="`which java` ${MEM_MAX} -jar ${wrkdir}/ACLA/grammar.modified.jar"
 
 run_random1000() {
+	cp /dev/null ${RESULT}
     for grammar in  `seq 1 5` 
     do
         # first convert accent format to cfg format
@@ -20,6 +21,7 @@ run_random1000() {
 }
 
 run_lang() {
+	cp /dev/null ${RESULT}
     for grammar in Pascal SQL Java C
     do
         for i in `seq 1 5`
@@ -101,7 +103,6 @@ main() {
     	[ ! -d ${RESULTS_DIR}/acla/${TO_RUN} ] && mkdir -p ${RESULTS_DIR}/acla/${TO_RUN} && echo "${RESULTS_DIR}/acla/${TO_RUN} created!"
     	RESULT="${RESULTS_DIR}/acla/${TO_RUN}/${TIME}t"
     	echo "[${TO_RUN} time=${TIME}, memory max=${MEM_MAX}], Result -- ${RESULT}"
-    	cp /dev/null ${RESULT}
         run_${i}
     done  
 }

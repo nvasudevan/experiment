@@ -8,6 +8,7 @@ DEPTH_OPTIONS=""
 SINBAD="${wrkdir}/sinbad/src"
 
 run_random1000() {
+	cp /dev/null ${RESULT}
     TMP="`mktemp -d`"
     for grammar in `seq 1 5`
     do
@@ -21,6 +22,7 @@ run_random1000() {
 }
 
 run_lang() {
+	cp /dev/null ${RESULT}
     TMP="`mktemp -d`"
     for grammar in Pascal SQL Java C
     do
@@ -70,7 +72,6 @@ main() {
     	[ ! -d ${RESULTS_DIR}/sinbad/${TO_RUN} ] && mkdir -p ${RESULTS_DIR}/sinbad/${TO_RUN} && echo "${RESULTS_DIR}/sinbad/${TO_RUN} created!"
     	RESULT="${RESULTS_DIR}/sinbad/${TO_RUN}/${FITNESS}_${TIME}t_${DEPTH}d"
     	echo "[${TO_RUN} fitness=${FITNESS}, time=${TIME}, depth options=${DEPTH_OPTIONS}], Result -- ${RESULT}"
-    	cp /dev/null ${RESULT}
         run_${i}
     done  
 }
