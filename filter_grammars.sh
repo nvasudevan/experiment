@@ -29,14 +29,15 @@ grammardir="$cwd/grammars"
 grandom="${grammardir}/random1000"
 glang="${grammardir}/lang"
 gmutlang="${grammardir}/mutlang"
-Nmutations="250"
+Nmutations="100"
 mutypes="type1 type2 type3 type4"
 memlimit="2048m"
 cmd="`which java` -Xss8m -Xmx${memlimit} -jar ${wrkdir}/ambidexter/build/AmbiDexter.jar"
 filters="slr1 lr0 lr1 lalr1"
 grammars="random1000 lan mutlang"
+timelimit="300s"
 
-export grammardir grandom glang gmultang n_mutations mutypes memlimit 
+export grammardir grandom glang gmultang n_mutations mutypes memlimit timelimit
 
 # Download AmbiDexter
 
@@ -69,7 +70,7 @@ generate() {
 	yacc=$2
 	filter=$3
 	starttime="`date '+%s'`"
-	out="`timeout 300s $cmd -h -$filter -oy $yacc 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' '`"
+	out="`timeout $timelimit $cmd -h -$filter -oy $yacc 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' '`"
 	endtime="`date '+%s'`"
 	harmless="`echo $out | awk -F, '{print $1}'`"
 	exported="`echo $out | awk -F, '{print $2}'`"
@@ -80,7 +81,7 @@ generate() {
 		ratiocnt=$(echo "$ratiocnt + $ratio" | bc)
 	fi
 	timediff="`echo $endtime - $starttime | bc`"
-	echo "$g, $harmless [ratio=$ratio, ratiocnt=$ratiocnt], $exported, $timediff"
+	echo "`basename $gacc .acc`, $harmless [ratio=$ratio, ratiocnt=$ratiocnt], $exported, $timediff"
 }
 
 random1000(){
@@ -105,9 +106,10 @@ random1000(){
 }
 
 lang() {
+	echo -e "\n===> lang \n"
 	for filter in $filters
 	do
-		echo -e "\n===> $filter \n"
+		echo -e "\n=> $filter \n"
 		cnt=0
 		fcnt=0
 		ratiocnt=0.0
@@ -127,9 +129,10 @@ lang() {
 }
 	
 mutlang() {
+	echo -e "\n===> mutlang \n"
 	for filter in $filters
 	do
-		echo -e "\n===> $filter \n"
+		echo -e "\n=> $filter \n"
 		cnt=0
 		fcnt=0
 		ratiocnt=0.0
@@ -151,7 +154,7 @@ mutlang() {
 		done
 		gendtime="`date '+%s'`"
 		avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
-		echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio"			
+		echo -e "\n$t, time taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio"			
 	done
 }
 
