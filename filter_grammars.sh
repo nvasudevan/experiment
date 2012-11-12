@@ -26,18 +26,20 @@ export cwd wrkdir
 cd $wrkdir 
 
 grammardir="$cwd/grammars"
-grandom="${grammardir}/random1000"
-glang="${grammardir}/lang"
-gmutlang="${grammardir}/mutlang"
+grandom="$grammardir/random1000"
+glang="$grammardir/lang"
+gmutlang="$grammardir/mutlang"
 Nmutations="100"
 mutypes="type1 type2 type3 type4"
 memlimit="2048m"
-cmd="`which java` -Xss8m -Xmx${memlimit} -jar ${wrkdir}/ambidexter/build/AmbiDexter.jar"
+cmd="`which java` -Xss8m -Xmx$memlimit -jar $wrkdir/ambidexter/build/AmbiDexter.jar"
 filters="slr1 lr0 lr1 lalr1"
-grammars="random1000 lan mutlang"
+grammars="random1000 lang mutlang"
 timelimit="300s"
+resultsdir="$cwd/results"
 
-export grammardir grandom glang gmultang n_mutations mutypes memlimit timelimit
+
+export grammardir grandom glang gmultang Nmutations mutypes memlimit cmd filters grammars timelimit resultsdir
 
 # Download AmbiDexter
 
@@ -65,6 +67,8 @@ wget -O grammars.zip https://sites.google.com/site/basbasten/files/grammars.zip
 unzip -q grammars.zip
 mv grammars lang
 
+[ ! -d $resultsdir ] && mkdir $resultsdir
+
 generate() {
 	gacc=$1
 	yacc=$2
@@ -86,6 +90,8 @@ generate() {
 
 random1000(){
 	echo -e "\n===> random1000 \n"
+	resultf="$resultsdir/random1000_filter.stats"
+	cp /dev/null $resultf
 	for filter in $filters
 	do
 		echo -e "\n=> $filter \n"
@@ -101,12 +107,14 @@ random1000(){
 		done
 		gendtime="`date '+%s'`"
 		avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
-		echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio"
+		echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf
 	done
 }
 
 lang() {
 	echo -e "\n===> lang \n"
+	resultf="$resultsdir/lang_filter.stats"
+	cp /dev/null $resultf	
 	for filter in $filters
 	do
 		echo -e "\n=> $filter \n"
@@ -124,12 +132,14 @@ lang() {
 		done
 		gendtime="`date '+%s'`"
 		avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
-		echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio"			
+		echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf			
 	done
 }
 	
 mutlang() {
 	echo -e "\n===> mutlang \n"
+	resultf="$resultsdir/mutlang_filter.stats"
+	cp /dev/null $resultf	
 	for filter in $filters
 	do
 		echo -e "\n=> $filter \n"
@@ -154,7 +164,7 @@ mutlang() {
 		done
 		gendtime="`date '+%s'`"
 		avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
-		echo -e "\n$t, time taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio"			
+		echo -e "\n$t, time taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf			
 	done
 }
 

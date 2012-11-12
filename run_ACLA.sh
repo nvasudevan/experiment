@@ -1,40 +1,41 @@
 #!/bin/sh
 
-TO_RUN="${1}"
-TIME="${2}s"
-MEM_MAX="-Xmx${3}"
-CMD="`which java` ${MEM_MAX} -jar ${wrkdir}/ACLA/grammar.modified.jar"
+torun="$1"
+timelimit="${2}s"
+cmd="`which java` -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar"
 
 run_random1000() {
-	cp /dev/null ${RESULT}
-    for grammar in  `seq 1 5` 
+	result="$resultsdir/acla/$torun/$timelimit"
+	cp /dev/null $result
+    for g in  `seq 1 $Nrandom` 
     do
         # first convert accent format to cfg format
-        ACC_GRAMMAR_FILE="${RANDOM1000}/${grammar}/${grammar}.acc"
-        CFG_GRAMMAR_FILE="${RANDOM1000}/${grammar}/${grammar}.cfg"    
-        cat ${ACC_GRAMMAR_FILE} | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > ${CFG_GRAMMAR_FILE}
-        sentence="`timeout ${TIME} ${CMD} -a ${CFG_GRAMMAR_FILE} | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
-        [ "${sentence}" == "ambiguous string" ] && echo "${grammar},yes" | tee -a ${RESULT}  && continue
-        [ "${sentence}" == "unambiguous!" ] && echo "${grammar},no" | tee -a ${RESULT}  && continue
-        echo "${grammar}," | tee -a ${RESULT}
+        gacc="$grandom/$g/$g.acc"
+        gcfg="$grandom/$g/$g.cfg"    
+        cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
+        sentence="`timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq`"
+        [ "$sentence" == "ambiguous string" ] && echo "$g,yes" | tee -a $result  && continue
+        [ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
+        echo "$g," | tee -a $result
     done
 }
 
 run_lang() {
-	cp /dev/null ${RESULT}
-    for grammar in Pascal SQL Java C
+	result="$resultsdir/acla/$torun/$timelimit"
+	cp /dev/null $result
+    for g in $lgrammars
     do
-        for i in `seq 1 5`
+        for i in `seq 1 $Nlang`
         do
             # convert yacc grammars from AmbiDexter to ACLA format
-            ACC_GRAMMAR_FILE="${LANG}/acc/${grammar}.${i}.acc"
-            CFG_GRAMMAR_FILE="${GRAMMAR_DIR}/cfg/${grammar}.${i}.cfg"
-            [ ! -d ${GRAMMAR_DIR}/cfg ] && mkdir -p ${GRAMMAR_DIR}/cfg    
-            cat ${ACC_GRAMMAR_FILE} | egrep -v "^\s*;|^%nodefault|^%token " > ${CFG_GRAMMAR_FILE}
-            token_list="`grep '%token' ${ACC_GRAMMAR_FILE} | sed -e 's/%token //' | tr -d ';,'`"
-            for token in $token_list
+            gacc="$glang/acc/$g.$i.acc"
+            gcfg="$grammardir/cfg/$g.$i.cfg"
+            [ ! -d $grammardir/cfg ] && mkdir -p $grammardir/cfg    
+            cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
+            tokenlist="`grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,'`"
+            for token in $tokenlist
             do
-                sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" ${CFG_GRAMMAR_FILE}
+                sed -i -e "s/\b$token\b/\"$token}\"/g" -e "s/'/\"/g" $gcfg
 #                if [ "${grammar}" == "Pascal" ]
 #                then 
 #                    sed -i -e 's/"UNSIGNED_INT"/"1"/g' ${CFG_GRAMMAR_FILE}
@@ -43,32 +44,33 @@ run_lang() {
 #                    sed -i -e 's/"IDENTIFIER"/"id"/g' ${CFG_GRAMMAR_FILE}
 #                fi
             done            
-            sentence="`timeout ${TIME} ${CMD} -a ${CFG_GRAMMAR_FILE} | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
-            [ "${sentence}" == "ambiguous string" ] && echo "${grammar}.${i},yes" | tee -a ${RESULT}  && continue
-            [ "${sentence}" == "unambiguous!" ] && echo "${grammar}.${i},no" | tee -a ${RESULT}  && continue
-            echo "${grammar}.${i}," | tee -a ${RESULT}
+            sentence="`timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
+            [ "$sentence" == "ambiguous string" ] && echo "$g.$i,yes" | tee -a $result  && continue
+            [ "$sentence" == "unambiguous!" ] && echo "$g.$i,no" | tee -a $result  && continue
+            echo "$g.$i," | tee -a $result
         done
     done
 }
 
 run_mutlang() {
-    for grammar in Pascal SQL Java C
+    for type in $mutypes
     do
-       for type in ${MUTYPES}
+   	  result="$resultsdir/acla/$torun/${type}_${timelimit}"
+      cp /dev/null $result
+      echo "===> $type, result - $result"
+       for g in $mugrammars
        do
-          cp /dev/null ${RESULT}_${type}
-          echo "===> ${RESULT}_${type}"
-          for n in `seq 1 ${NO_MUTATIONS}`
+          for n in `seq 1 $Nmutations`
           do
              # convert grammar to cfg format
-             ACC_GRAMMAR_FILE="${MUTLANG}/acc/${type}/${grammar}.0_${n}.acc"
-             CFG_GRAMMAR_FILE="${MUTLANG}/cfg/${type}/${grammar}.0_${n}.cfg"
-             [ ! -d ${MUTLANG}/cfg/${type} ] && mkdir -p ${MUTLANG}/cfg/${type}    
-             cat ${ACC_GRAMMAR_FILE} | egrep -v "^\s*;|^%nodefault|^%token " > ${CFG_GRAMMAR_FILE}
-             token_list="`grep '%token' ${ACC_GRAMMAR_FILE} | sed -e 's/%token //' | tr -d ';,'`"
-             for token in $token_list
+             gacc="$gmutlang/acc/$type/$g.0_$n.acc"
+             gcfg="$gmutlang/cfg/$type/$g.0_$n.cfg"
+             [ ! -d $gmutlang/cfg/$type ] && mkdir -p $gmutlang/cfg/$type
+             cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
+             tokenlist="`grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,'`"
+             for token in $tokenlist
              do
-                sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" ${CFG_GRAMMAR_FILE}
+                sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" $gcfg
 #                if [ "${grammar}" == "Pascal" ]
 #                then 
 #                    sed -i -e 's/"UNSIGNED_INT"/"1"/g' ${CFG_GRAMMAR_FILE}
@@ -77,35 +79,37 @@ run_mutlang() {
 #                    sed -i -e 's/"IDENTIFIER"/"id"/g' ${CFG_GRAMMAR_FILE}
 #                fi                
              done
-             sentence="`timeout ${TIME} ${CMD} -a ${CFG_GRAMMAR_FILE} | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
-             [ "${sentence}" == "ambiguous string" ] && echo "${grammar}.0_${n},yes" | tee -a ${RESULT}_${type}  && continue
-             [ "${sentence}" == "unambiguous!" ] && echo "${grammar}.0_${n},no" | tee -a ${RESULT}_${type}  && continue
-             echo "${grammar}.0_${n}," | tee -a ${RESULT}_${type}            
+             sentence="`timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
+             [ "$sentence" == "ambiguous string" ] && echo "$g.0_$n,yes" | tee -a $result  && continue
+             [ "$sentence" == "unambiguous!" ] && echo "$g.0_$n,no" | tee -a $result  && continue
+             echo "$g.0_$n," | tee -a $result            
           done
        done
     done    
 }
 
 run_test() {
-    grammar="amb2"
-    ACC_GRAMMAR_FILE="${GRAMMAR_DIR}/test/${grammar}/${grammar}.acc"
-    CFG_GRAMMAR_FILE="${GRAMMAR_DIR}/test/${grammar}/${grammar}.cfg"    
-    cat ${ACC_GRAMMAR_FILE} | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > ${CFG_GRAMMAR_FILE}
-    sentence="`timeout ${TIME} ${CMD} -a ${CFG_GRAMMAR_FILE} | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
-    [ "${sentence}" == "ambiguous string" ] && echo "${grammar},yes" | tee -a ${RESULT}  && return
-    [ "${sentence}" == "unambiguous!" ] && echo "${grammar},no" | tee -a ${RESULT}  && return
-    echo "${grammar}," | tee -a ${RESULT}
+	result="$resultsdir/acla/$torun/$timelimit"
+    for g in $testgrammars
+    do
+		gacc="$grammardir/test/$g/$g.acc"
+		gcfg="$grammardir/test/$g/$g.cfg"    
+		cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
+		sentence="`timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
+		[ "$sentence" == "ambiguous string" ] && echo "$g,yes" | tee -a $result  && continue
+		[ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
+		echo "$g," | tee -a $result
+    done
 }
 
 main() {
     for i in $*
     do
-    	[ ! -d ${RESULTS_DIR}/acla/${TO_RUN} ] && mkdir -p ${RESULTS_DIR}/acla/${TO_RUN} && echo "${RESULTS_DIR}/acla/${TO_RUN} created!"
-    	RESULT="${RESULTS_DIR}/acla/${TO_RUN}/${TIME}t"
-    	echo "[${TO_RUN} time=${TIME}, memory max=${MEM_MAX}], Result -- ${RESULT}"
-        run_${i}
+    	[ ! -d $resultsdir/acla/$torun ] && mkdir -p $resultsdir/acla/$torun && echo "$resultsdir/acla/$torun created!"
+    	echo "[$torun time=$timelimit, memory max=$memlimit]"
+        run_$i
     done  
 }
 
-main ${TO_RUN}
+main $torun
 

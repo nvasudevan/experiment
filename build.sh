@@ -39,6 +39,8 @@ else
     PYTHON=`which python`
 fi
 
+export PYTHON 
+
 java -version 2>&1 | tail -n 1 | grep "OpenJDK .*Server VM (build [a-zA-Z0-9.\-]*, mixed mode)" > /dev/null 2> /dev/null
 if [ $? -ne 0 ]; then
     cat << EOF
@@ -54,7 +56,7 @@ EOF
     esac
 fi
 
-python -V 2>&1 | egrep -o '[0-9].[0-9]' > /dev/null 2> /dev/null
+$PYTHON -V 2>&1 | egrep -o '[0-9].[0-9]' > /dev/null 2> /dev/null
 if [ $? -ne 0 ]; then
     cat << EOF
 Warning: incorrect version of Python detected. Expected:
@@ -91,7 +93,7 @@ cd accent/accent
 ./build
 [ ! -f accent ] && echo "ACCENT build has failed. Check in $wrkdir/accent" && exit 1
 # patch amber
-patch -b -R -p0 $wrkdir/accent/amber/amber.c < $CWD/patches/amber.patch || exit $?
+patch -b -R -p0 $wrkdir/accent/amber/amber.c < $cwd/patches/amber.patch || exit $?
 
 
 # Download SinBAD
@@ -116,8 +118,8 @@ wget http://www.brics.dk/grammar/dist/grammar-all.jar
 wget http://www.brics.dk/grammar/grammar-2.0-4.tar.gz
 gtar -zxf grammar-2.0-4.tar.gz
 cd grammar-2.0
-patch -b -R -p0 build.xml < $CWD/patches/acla.build.xml.patch || exit $?
-patch -b -R -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $CWD/patches/acla.patch || exit $?
+patch -b -R -p0 build.xml < $cwd/patches/acla.build.xml.patch || exit $?
+patch -b -R -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/acla.patch || exit $?
 ant
 [ ! -f dist/grammar.jar ] && echo "ACLA didn't compile. Check in $wrkdir/ACLA" && exit 1
 # repackage acla
@@ -142,7 +144,7 @@ cd ambidexter
 git checkout db64485ad4
 mkdir -p build/META-INF
 echo "Main-Class: nl.cwi.sen1.AmbiDexter.Main" > build/META-INF/MANIFEST.MF
-patch -b -R -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $CWD/patches/AmbiDexter.patch || exit $?
+patch -b -R -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $cwd/patches/AmbiDexter.patch || exit $?
 cd src
 javac nl/cwi/sen1/AmbiDexter/*.java || exit $?
 find . -type f -name "*.class" | cpio -pdm ../build/

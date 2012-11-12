@@ -1,80 +1,94 @@
 #!/bin/sh
 
-TO_RUN="${1}"
-FITNESS="${2}"
-TIME="${3}s"
-DEPTH_OPTIONS=""
-[ "${4}" != "" ] && DEPTH_OPTIONS="-d ${4}"
-SINBAD="${wrkdir}/sinbad/src"
+torun="$1"
+shift
+fitness="$1"
+shift
+timelimit="${1}s"
+shift
+depthoptions=""
+[ "$1" != "" ] && depthoptions="-d $*"
+
+sinbaddir="$wrkdir/sinbad/src"
 
 run_random1000() {
-	cp /dev/null ${RESULT}
-    TMP="`mktemp -d`"
-    for grammar in `seq 1 5`
+	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
+	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+	cp /dev/null $result
+    tmp="`mktemp -d`"
+    for g in `seq 1 $Nrandom`
     do
-        timeout ${TIME} ${PYTHON} ${SINBAD}/sinbad -b ${FITNESS} ${DEPTH_OPTIONS} ${RANDOM1000}/${grammar}/${grammar}.acc ${LEX_DIR}/general.lex > ${TMP}/${grammar}.log 2>&1
-        _amb="`grep -o 'Grammar ambiguity detected' ${TMP}/${grammar}.log`"
-        [ "${_amb}" != "" ] && echo "${grammar},yes" | tee -a ${RESULT} && continue
-        echo "${grammar}," | tee -a ${RESULT}
-        #_iter="`cat ${GRAMMAR_DIR}/${grammar}/sinbad_${FITNESS}_${DEPTH}d_${TIME}t.log | grep  '^\.' | wc -c`"
+        timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $grandom/$g/$g.acc $lexdir/general.lex > $tmp/$g.log 2>&1
+        amb="`grep -o 'Grammar ambiguity detected' $tmp/$g.log`"
+        [ "$amb" != "" ] && echo "$g,yes" | tee -a $result && continue
+        echo "$g," | tee -a $result
     done
-    rm -Rf ${TMP}
+    rm -Rf $tmp
 }
 
 run_lang() {
-	cp /dev/null ${RESULT}
-    TMP="`mktemp -d`"
-    for grammar in Pascal SQL Java C
+	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
+	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+	cp /dev/null $result
+    tmp="`mktemp -d`"
+    for g in $lgrammars
     do
-        for i in `seq 1 5`
+        for i in `seq 1 $Nlang`
         do
-            timeout ${TIME} ${PYTHON} ${SINBAD}/sinbad -b ${FITNESS} ${DEPTH_OPTIONS} ${LANG}/acc/${grammar}.${i}.acc ${LEX_DIR}/${grammar}.lex > ${TMP}/${grammar}_${i}.log 2>&1
-            _amb="`grep -o 'Grammar ambiguity detected' ${TMP}/${grammar}_${i}.log`"
-            [ "${_amb}" != "" ] && echo "${grammar}.${i},yes" | tee -a ${RESULT} && continue
-            echo "${grammar}.${i}," | tee -a ${RESULT}
+            timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $glang/acc/$g.$i.acc $lexdir/$g.lex > $tmp/${g}_${i}.log 2>&1
+            amb="`grep -o 'Grammar ambiguity detected' $tmp/${g}_${i}.log`"
+            [ "$amb" != "" ] && echo "$g.$i,yes" | tee -a $result && continue
+            echo "$g.$i," | tee -a $result
         done
     done
-    rm -Rf ${TMP}
+    rm -Rf $tmp
 }
 
 run_mutlang(){
-    TMP="`mktemp -d`"
-    for grammar in Pascal SQL Java C
+    tmp="`mktemp -d`"
+    for type in $mutypes
     do
-       for type in ${MUTYPES}
+       result="$resultsdir/sinbad/$torun/${type}_${fitness}_${timelimit}"
+       [ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+       cp /dev/null $result
+       echo "===> $type, result - $result"
+       for g in $mugrammars
        do
-         cp /dev/null ${RESULT}_${type}
-         for n in `seq 1 $NO_MUTATIONS`
+         for n in `seq 1 $Nmutations`
          do
-            timeout ${TIME} ${PYTHON} ${SINBAD}/sinbad -b ${FITNESS} ${DEPTH_OPTIONS} ${MUTLANG}/acc/${type}/${grammar}.0_${n}.acc ${LEX_DIR}/${grammar}.lex > ${TMP}/${grammar}_${n}.log 2>&1
-            _amb="`grep -o 'Grammar ambiguity detected' ${TMP}/${grammar}_${n}.log`"
-            [ "${_amb}" != "" ] && echo "${grammar}.0_${n},yes" | tee -a ${RESULT}_${type} && continue
-            echo "${grammar}.0_${n}," | tee -a ${RESULT}_${type}
+            timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $gmutlang/acc/$type/${g}.0_${n}.acc $lexdir/$g.lex > $tmp/${g}_${n}.log 2>&1
+            amb="`grep -o 'Grammar ambiguity detected' $tmp/${g}_${n}.log`"
+            [ "$amb" != "" ] && echo "${g}.0_${n},yes" | tee -a $result && continue
+            echo "${g}.0_${n}," | tee -a $result
          done
        done
     done
-    rm -Rf ${TMP}
+    rm -Rf $tmp
 }
 
 run_test() {
-    grammar="amb2"
-    TMP="`mktemp -d`"
-    ${PYTHON} ${SINBAD}/sinbad -b ${FITNESS} ${DEPTH_OPTIONS} ${GRAMMAR_DIR}/test/${grammar}/${grammar}.acc ${LEX_DIR}/general.lex > ${TMP}/${grammar}.log 2>&1
-    _amb="`grep -o 'Grammar ambiguity detected' ${TMP}/${grammar}.log`"
-    [ "${_amb}" != "" ] && echo "${grammar},yes" | tee -a ${RESULT}
-    #_iter="`cat ${GRAMMAR_DIR}/${grammar}/sinbad_${FITNESS}_${DEPTH}d_${TIME}t.log | grep  '^\.' | wc -c`"  
-    rm -Rf ${TMP}
+	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
+	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+	cp /dev/null $result
+	for g in $testgrammars
+	do
+		gacc="$grammardir/test/$g/$g.acc"
+		tmp="`mktemp -d`"
+		${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $gacc $lexdir/general.lex > $tmp/$g.log 2>&1
+		amb="`grep -o 'Grammar ambiguity detected' $tmp/$g.log`"
+		[ "$amb" != "" ] && echo "$g,yes" | tee -a $result
+		rm -Rf $tmp
+    done
 }
 
 main() {
     for i in $*
     do
-    	[ ! -d ${RESULTS_DIR}/sinbad/${TO_RUN} ] && mkdir -p ${RESULTS_DIR}/sinbad/${TO_RUN} && echo "${RESULTS_DIR}/sinbad/${TO_RUN} created!"
-    	RESULT="${RESULTS_DIR}/sinbad/${TO_RUN}/${FITNESS}_${TIME}t_${DEPTH}d"
-    	echo "[${TO_RUN} fitness=${FITNESS}, time=${TIME}, depth options=${DEPTH_OPTIONS}], Result -- ${RESULT}"
-        run_${i}
+    	[ ! -d $resultsdir/sinbad/$torun ] && mkdir -p $resultsdir/sinbad/$torun && echo "$resultsdir/sinbad/$torun created!"
+    	echo "[$torun fitness=$fitness, time=$timelimit, depth options=$depthoptions]"
+        run_$i
     done  
 }
 
-main ${TO_RUN}
+main $torun
 
