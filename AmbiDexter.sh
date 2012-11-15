@@ -15,7 +15,7 @@ result=""
 
 if [ "$filter" == "" ]
 then
-    sentence="`$cmd $ambidexteroptions $g 2>/dev/null | grep 'Ambiguous string found'`"
+    sentence=$($cmd $ambidexteroptions $g 2>/dev/null | grep 'Ambiguous string found') || exit $?
 else
     exported_harmless="`$cmd -h -$filter -oy $g 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' '`"
     harmless="`echo $exported_harmless | awk -F, '{print $1}'`"
@@ -23,9 +23,9 @@ else
     echo $harmless, $exported
     if [ "$exported" == "" ]
     then
-        sentence="`$cmd $ambidexteroptions $g 2>/dev/null | grep 'Ambiguous string found'`"
+        sentence=$($cmd $ambidexteroptions $g 2>/dev/null | grep 'Ambiguous string found') || exit $?
     else
-        sentence="`$cmd $ambidexteroptions $exported 2> /dev/null | grep 'Ambiguous string found'`"
+        sentence=$($cmd $ambidexteroptions $exported 2> /dev/null | grep 'Ambiguous string found') || exit $?
     fi       
 fi
 

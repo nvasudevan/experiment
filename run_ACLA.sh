@@ -4,25 +4,41 @@ torun="$1"
 timelimit="${2}s"
 cmd="`which java` -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar"
 
+print_summary() {
+    summary="Ambiguous count=$1[of $2]"
+    echo -e "\nSummary: $summary \n--"
+}
+
 run_random1000() {
 	result="$resultsdir/acla/$torun/$timelimit"
 	cp /dev/null $result
+	ambcnt=0
+	cnt=0	
     for g in  `seq 1 $Nrandom` 
     do
         # first convert accent format to cfg format
         gacc="$grandom/$g/$g.acc"
         gcfg="$grandom/$g/$g.cfg"    
         cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
-        sentence="`timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq`"
-        [ "$sentence" == "ambiguous string" ] && echo "$g,yes" | tee -a $result  && continue
+        sentence=$(timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq)
+        ((cnt+=1))
+        if [ "$sentence" == "ambiguous string" ]
+        then 
+        	((ambcnt+=1))
+        	echo "$g,yes" | tee -a $result
+        	continue
+        fi
         [ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
         echo "$g," | tee -a $result
     done
+    print_summary $ambcnt $cnt
 }
 
 run_lang() {
 	result="$resultsdir/acla/$torun/$timelimit"
 	cp /dev/null $result
+	ambcnt=0
+	cnt=0
     for g in $lgrammars
     do
         for i in `seq 1 $Nlang`
@@ -32,7 +48,7 @@ run_lang() {
             gcfg="$grammardir/cfg/$g.$i.cfg"
             [ ! -d $grammardir/cfg ] && mkdir -p $grammardir/cfg    
             cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
-            tokenlist="`grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,'`"
+            tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
             for token in $tokenlist
             do
                 sed -i -e "s/\b$token\b/\"$token}\"/g" -e "s/'/\"/g" $gcfg
@@ -44,22 +60,31 @@ run_lang() {
 #                    sed -i -e 's/"IDENTIFIER"/"id"/g' ${CFG_GRAMMAR_FILE}
 #                fi
             done            
-            sentence="`timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
-            [ "$sentence" == "ambiguous string" ] && echo "$g.$i,yes" | tee -a $result  && continue
+            sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
+            ((cnt+=1))
+            if [ "$sentence" == "ambiguous string" ]
+            then 
+            	((ambcnt+=1))
+            	echo "$g.$i,yes" | tee -a $result
+            	continue
+            fi
             [ "$sentence" == "unambiguous!" ] && echo "$g.$i,no" | tee -a $result  && continue
             echo "$g.$i," | tee -a $result
         done
     done
+    print_summary $ambcnt $cnt
 }
 
 run_mutlang() {
     for type in $mutypes
     do
-   	  result="$resultsdir/acla/$torun/${type}_${timelimit}"
-      cp /dev/null $result
-      echo "===> $type, result - $result"
-       for g in $mugrammars
-       do
+   		result="$resultsdir/acla/$torun/${type}_${timelimit}"
+      	cp /dev/null $result
+      	ambcnt=0
+      	cnt=0
+      	echo "===> $type, result - $result"
+       	for g in $mugrammars
+       	do
           for n in `seq 1 $Nmutations`
           do
              # convert grammar to cfg format
@@ -67,7 +92,7 @@ run_mutlang() {
              gcfg="$gmutlang/cfg/$type/$g.0_$n.cfg"
              [ ! -d $gmutlang/cfg/$type ] && mkdir -p $gmutlang/cfg/$type
              cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
-             tokenlist="`grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,'`"
+             tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
              for token in $tokenlist
              do
                 sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" $gcfg
@@ -79,27 +104,44 @@ run_mutlang() {
 #                    sed -i -e 's/"IDENTIFIER"/"id"/g' ${CFG_GRAMMAR_FILE}
 #                fi                
              done
-             sentence="`timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
-             [ "$sentence" == "ambiguous string" ] && echo "$g.0_$n,yes" | tee -a $result  && continue
+             sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
+             ((cnt+=1))
+             if [ "$sentence" == "ambiguous string" ]
+             then
+             	((ambcnt+=1))
+             	echo "$g.0_$n,yes" | tee -a $result
+             	continue
+             fi
              [ "$sentence" == "unambiguous!" ] && echo "$g.0_$n,no" | tee -a $result  && continue
              echo "$g.0_$n," | tee -a $result            
           done
-       done
+       	done
+       	print_summary $ambcnt $cnt
     done    
 }
 
 run_test() {
 	result="$resultsdir/acla/$torun/$timelimit"
+	cp /dev/null $result
+	ambcnt=0
+	cnt=0
     for g in $testgrammars
     do
 		gacc="$grammardir/test/$g/$g.acc"
 		gcfg="$grammardir/test/$g/$g.cfg"    
 		cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
-		sentence="`timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq`"
-		[ "$sentence" == "ambiguous string" ] && echo "$g,yes" | tee -a $result  && continue
+		sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
+		((cnt+=1))
+		if [ "$sentence" == "ambiguous string" ]
+		then
+			((ambcnt+=1))
+			echo "$g,yes" | tee -a $result
+			continue
+		fi
 		[ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
 		echo "$g," | tee -a $result
     done
+    print_summary $ambcnt $cnt
 }
 
 main() {

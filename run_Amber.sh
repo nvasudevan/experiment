@@ -10,92 +10,144 @@ ambersrc="$wrkdir/accent/amber/amber.c"
 lex="`which flex`"
 cc="`which cc`"
 
+print_summary() {
+    summary="Ambiguous count=$1[of $2]"
+    echo -e "\nSummary: $summary \n--"
+}
+
 run_random1000() {
 	result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"	
 	cp /dev/null $result
+	ambcnt=0
+	cnt=0
     cwd="`pwd`"
     for g in `seq 1 $Nrandom`
     do
-        tmp="`mktemp -d`"
+        tmp=$(mktemp -d)
         cd $tmp
         $accent $grandom/$g/$g.acc || exit $?
         $lex $lexdir/general.lex || exit $?
         $cc -w -o amber -O3 yygrammar.c $ambersrc
-        output="`timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - `"
-        sentence="`echo $output | grep -o 'Grammar ambiguity detected'`"
-        ticks="`echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //'`"
-        [ "$sentence" != "" ] && (echo "$g,yes,${ticks}" | tee -a $result;cd $cwd;rm -Rf $tmp)  && continue
+        output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
+        ((cnt+=1))
+        sentence=$(echo $output | grep -o 'Grammar ambiguity detected')
+        ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
+        if [ "$sentence" != "" ]
+        then
+        	((ambcnt+=1))
+        	echo "$g,yes,${ticks}" | tee -a $result
+        	cd $cwd
+        	rm -Rf $tmp
+        	continue
+        fi
         echo "$g,,$ticks" | tee -a $result
         cd $cwd
         rm -Rf $tmp
     done
+    print_summary $ambcnt $cnt
 }
 
 run_lang() {
 	result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"
 	cp /dev/null $result
+	ambcnt=0
+	cnt=0
     cwd="`pwd`"
     for g in $lgrammars
     do
         for i in `seq 1 $Nlang`
         do
-            tmp="`mktemp -d`"
+            tmp=$(mktemp -d)
             cd $tmp
             $accent $glang/acc/$g.$i.acc || exit $?
             $lex $lexdir/$g.lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
-            output="`timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - `"
-            sentence="`echo $output | grep -o 'Grammar ambiguity detected'`"
-            ticks="`echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //'`"
-            [ "$sentence" != "" ] && (echo "$g.$i,yes,$ticks" | tee -a $result;cd $cwd;rm -Rf $tmp)  && continue
+            output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
+            ((cnt+=1))
+            sentence=$(echo $output | grep -o 'Grammar ambiguity detected')
+            ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
+            if [ "$sentence" != "" ]
+            then
+            	((ambcnt+=1))
+            	echo "$g.$i,yes,$ticks" | tee -a $result
+            	cd $cwd
+            	rm -Rf $tmp
+            	continue
+            fi
             echo "$g.$i,,$ticks" | tee -a $result;cd $cwd;rm -Rf $tmp
         done
-    done  
+    done 
+    print_summary $ambcnt $cnt 
 }
 
 run_mutlang() {
     cwd="`pwd`"
-    tmp="`mktemp -d`"
     for type in $mutypes
     do
        result="$resultsdir/amber/$torun/${type}_${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"
        cp /dev/null $result
+       ambcnt=0
+       cnt=0
 	   echo "===> $type, result - $result"
        for g in $mugrammars
        do
           for n in `seq 1 $Nmutations`
           do
-             tmp="`mktemp -d`"
+             tmp=$(mktemp -d)
              cd $tmp
              $accent $gmutlang/acc/${type}/$g.0_${n}.acc || exit $?
              $lex $lexdir/$g.lex || exit $?
              $cc -w -o amber -O3 yygrammar.c $ambersrc
-             output="`timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - `"
-             sentence="`echo $output | grep -o 'Grammar ambiguity detected'`"
-             ticks="`echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //'`"
-             [ "$sentence" != "" ] && (echo "$g.0_$n,yes,$ticks" | tee -a $result;cd $cwd;rm -Rf $tmp)  && continue
-             echo "$g.0_$n,,$ticks" | tee -a $result;cd $cwd;rm -Rf $tmp
+             output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
+             ((cnt+=1))
+             sentence=$(echo $output | grep -o 'Grammar ambiguity detected')
+             ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
+             if [ "$sentence" != "" ]
+             then
+             	((ambcnt+=1))
+             	echo "$g.0_$n,yes,$ticks" | tee -a $result
+             	cd $cwd
+             	rm -Rf $tmp
+             	continue
+             fi
+             echo "$g.0_$n,,$ticks" | tee -a $result
+             cd $cwd
+             rm -Rf $tmp
           done
        done
+       print_summary $ambcnt $cnt
     done
 }
 
 run_test() {
+	result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"
+	cp /dev/null $result
+	ambcnt=0
+	cnt=0
 	for g in $testgrammars
 	do
-		tmp="`mktemp -d`"
+		tmp=$(mktemp -d)
 		cd $tmp
 		$accent $grammardir/test/$g/$g.acc || exit $?
 		$lex $lexdir/general.lex || exit $?
 		$cc -w -o amber -O3 yygrammar.c $ambersrc
-		output="`timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - `"
-		sentence="`echo $output | grep -o 'Grammar ambiguity detected'`"
-		ticks="`echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //'`"
-		[ "$sentence" != "" ] && (echo "$g,yes,$ticks" | tee -a $result;cd $cwd;rm -Rf $tmp) && continue
+		output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
+		((cnt+=1))
+		sentence=$(echo $output | grep -o 'Grammar ambiguity detected')
+		ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
+		if [ "$sentence" != "" ]
+		then
+			((ambcnt+=1))
+			echo "$g,yes,$ticks" | tee -a $result
+			cd $cwd
+			rm -Rf $tmp
+			continue
+		fi
 		echo "$g,,$ticks" | tee -a $result
 		cd $cwd
 		rm -Rf $tmp  
-    done  
+    done
+    print_summary $ambcnt $cnt
 }
 
 main() {
