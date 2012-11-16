@@ -69,52 +69,52 @@ echo -e "\\n===> Doing a test run of each tool \\n"
 echo -e "\\n===> ACLA \\n"
 cd $cwd
 
-#for timelimit in $timelimits
-#do
-#	echo -e "\n===> time limit: $timelimit \n"
-#	for g in test random1000 lang mutlang
-#	do
-#		./run_ACLA.sh $g $timelimit || exit $?
-#	done
-#done
+for timelimit in $timelimits
+do
+	echo -e "\n===> time limit: $timelimit \n"
+	for g in test random1000 lang mutlang
+	do
+		./run_ACLA.sh $g $timelimit || exit $?
+	done
+done
 
-#echo -e "\n===> Amber \\n"
-#cd $cwd
+echo -e "\n===> Amber \\n"
+cd $cwd
 
-#for timelimit in $timelimits
-#do
-#	echo -e "\n===> time limit: $timelimit \n"
-#	for g in test random1000  lang mutlang
-#	do
-#		./run_Amber.sh $g $timelimit examples 10000000000 || exit $?
-#		./run_Amber.sh $g $timelimit examples 100000000000000000000 || exit $?
-#		./run_Amber.sh $g $timelimit examples 1000000000000000000000000000000 || exit $?	
-#		./run_Amber.sh $g $timelimit silent examples 10000000000 || exit $?
-#		./run_Amber.sh $g $timelimit silent examples 100000000000000000000 || exit $?
-#		./run_Amber.sh $g $timelimit silent examples 1000000000000000000000000000000 || exit $?
+for timelimit in $timelimits
+do
+	echo -e "\n===> time limit: $timelimit \n"
+	for g in test random1000  lang mutlang
+	do
+		./run_Amber.sh $g $timelimit examples 10000000000 || exit $?
+		./run_Amber.sh $g $timelimit examples 100000000000000000000 || exit $?
+		./run_Amber.sh $g $timelimit examples 1000000000000000000000000000000 || exit $?	
+		./run_Amber.sh $g $timelimit silent examples 10000000000 || exit $?
+		./run_Amber.sh $g $timelimit silent examples 100000000000000000000 || exit $?
+		./run_Amber.sh $g $timelimit silent examples 1000000000000000000000000000000 || exit $?
 
-#		./run_Amber.sh $g $timelimit ellipsis examples 10000000000 || exit $?
-#		./run_Amber.sh $g $timelimit ellipsis examples 100000000000000000000 || exit $?
-#		./run_Amber.sh $g $timelimit ellipsis examples 1000000000000000000000000000000 || exit $?	
-#		./run_Amber.sh $g $timelimit silent ellipsis examples 10000000000 || exit $?
-#		./run_Amber.sh $g $timelimit silent ellipsis examples 100000000000000000000 || exit $?
-#		./run_Amber.sh $g $timelimit silent ellipsis examples 1000000000000000000000000000000 || exit $?
+		./run_Amber.sh $g $timelimit ellipsis examples 10000000000 || exit $?
+		./run_Amber.sh $g $timelimit ellipsis examples 100000000000000000000 || exit $?
+		./run_Amber.sh $g $timelimit ellipsis examples 1000000000000000000000000000000 || exit $?	
+		./run_Amber.sh $g $timelimit silent ellipsis examples 10000000000 || exit $?
+		./run_Amber.sh $g $timelimit silent ellipsis examples 100000000000000000000 || exit $?
+		./run_Amber.sh $g $timelimit silent ellipsis examples 1000000000000000000000000000000 || exit $?
 
-#		./run_Amber.sh $g $timelimit length 50 || exit $?
-#		./run_Amber.sh $g $timelimit length 100 || exit $?
-#		./run_Amber.sh $g $timelimit length 1000 || exit $?
-#		./run_Amber.sh $g $timelimit silent length 50 || exit $?
-#		./run_Amber.sh $g $timelimit silent length 100 || exit $?
-#		./run_Amber.sh $g $timelimit silent length 1000 || exit $?
+		./run_Amber.sh $g $timelimit length 50 || exit $?
+		./run_Amber.sh $g $timelimit length 100 || exit $?
+		./run_Amber.sh $g $timelimit length 1000 || exit $?
+		./run_Amber.sh $g $timelimit silent length 50 || exit $?
+		./run_Amber.sh $g $timelimit silent length 100 || exit $?
+		./run_Amber.sh $g $timelimit silent length 1000 || exit $?
 
-#		./run_Amber.sh $g $timelimit ellipsis length 50 || exit $?
-#		./run_Amber.sh $g $timelimit ellipsis length 100 || exit $?
-#		./run_Amber.sh $g $timelimit ellipsis length 1000 || exit $?
-#		./run_Amber.sh $g $timelimit silent ellipsis length 50 || exit $?	
-#		./run_Amber.sh $g $timelimit silent ellipsis length 100 || exit $?
-#		./run_Amber.sh $g $timelimit silent ellipsis length 1000 || exit $?
-#	done
-#done
+		./run_Amber.sh $g $timelimit ellipsis length 50 || exit $?
+		./run_Amber.sh $g $timelimit ellipsis length 100 || exit $?
+		./run_Amber.sh $g $timelimit ellipsis length 1000 || exit $?
+		./run_Amber.sh $g $timelimit silent ellipsis length 50 || exit $?	
+		./run_Amber.sh $g $timelimit silent ellipsis length 100 || exit $?
+		./run_Amber.sh $g $timelimit silent ellipsis length 1000 || exit $?
+	done
+done
 
 echo -e "\n===> AmbiDexter \\n"
 cd $cwd
@@ -129,63 +129,63 @@ do
 		filtertimes="$filtertimes $_ftime"
 	done
 	echo "filter times: $filtertimes"
-#	for ftime in $filtertimes
-#	do
-#		for g in test random1000 lang mutlang
-#		do
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 50 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 100 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 1000 || exit $?
-#		
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 50 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 100 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 1000 || exit $?
-#		
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 50 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 100 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 1000 || exit $?
-#		
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 50 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 100 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 1000 || exit $?
-#		
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 50 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 100 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 1000 || exit $?			
-#		
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -ik 0 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -ik 0 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -ik 0 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -ik 0 || exit $?
-#			./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -ik 0 || exit $?
-#		done
-#	done
+	for ftime in $filtertimes
+	do
+		for g in test random1000 lang mutlang
+		do
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 50 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 100 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 1000 || exit $?
+		
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 50 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 100 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 1000 || exit $?
+		
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 50 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 100 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 1000 || exit $?
+		
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 50 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 100 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 1000 || exit $?
+		
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 50 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 100 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 1000 || exit $?			
+		
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -ik 0 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -ik 0 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -ik 0 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -ik 0 || exit $?
+			./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -ik 0 || exit $?
+		done
+	done
 done
 
 cd $cwd
 
-#for timelimit in $timelimits
-#do
-#	echo -e "\n===> time limit: $timelimit \n"
-#	echo -e "\n===> SinBAD ($g - purerandom) \n"
-#	for g in test random1000 lang mutlang
-#	do
-#		./run_SinBAD.sh $g purerandom $timelimit || exit $?
-#	done
-#	
-#	for backend in dynamic1 dynamic2
-#	do
-#		echo -e "\n===> SinBAD ($g - $backend) \n"
-#		for g in test random1000 lang mutlang
-#		do
-#			for d in $Tdepths
-#			do
-#				./run_SinBAD.sh $g $backend $timelimit $d || exit $?
-#			done
-#		done
-#	done
-#	
-#done
+for timelimit in $timelimits
+do
+	echo -e "\n===> time limit: $timelimit \n"
+	echo -e "\n===> SinBAD ($g - purerandom) \n"
+	for g in test random1000 lang mutlang
+	do
+		./run_SinBAD.sh $g purerandom $timelimit || exit $?
+	done
+	
+	for backend in dynamic1 dynamic2
+	do
+		echo -e "\n===> SinBAD ($g - $backend) \n"
+		for g in test random1000 lang mutlang
+		do
+			for d in $Tdepths
+			do
+				./run_SinBAD.sh $g $backend $timelimit $d || exit $?
+			done
+		done
+	done
+	
+done
 
 cd $cwd
 gtar czf results.tar.gz results
