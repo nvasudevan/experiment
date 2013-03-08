@@ -1,0 +1,156 @@
+#! /usr/bin/env python
+
+# Copyright (c) 2012 King's College London
+# created by Laurence Tratt and Naveneetha Vasudevan
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+# This program generates random grammars in ACCENT format. To see usage, run it with -h. 
+
+import getopt, sys, os, tempfile, subprocess
+import random, math
+import Utils
+
+class RandomGrammarGenerator:
+
+    def __init__(self):
+        opts, args = getopt.getopt(sys.argv[1 : ], "hN:n:d:m:t:")
+        self.sym_type = None
+        self.no_samples = None
+        self.grammardir = None
+        self.no_nonterm = None
+        self.no_term = None
+                
+        if len(opts) == 0:
+            self.usage("Not enough arguments.")
+            
+        for opt in opts:
+            if opt[0] == "-d":
+                self.grammardir = opt[1]
+            elif opt[0] == "-N":
+                self.no_samples = int(opt[1])
+            elif opt[0] == "-m":
+                self.sym_type = opt[1]
+            elif opt[0] == "-n":
+                self.no_nonterm = int(opt[1])            
+            elif opt[0] == "-t":
+                self.no_term = int(opt[1])                
+            elif opt[0] == "-h":
+                self.usage()                
+            else:
+                self.usage("Unknown argument '%s'" % opt[0])
+                
+        if (self.no_samples == None) or \
+           (self.no_nonterm == None) or \
+           (self.no_term == None) or \
+           (self.sym_type == None) or \
+           (self.grammardir == None):
+            self.usage("Not enough arguments")
+                            
+        # few initialisation constants
+        self.max_alts = 5
+        self.max_tokens_per_rule = 7
+        self.min_ratio_empty_lhs = 0.1
+        self.max_ratio_empty_lhs = 0.2
+        
+        if not os.path.exists(self.grammardir):
+            os.makedirs(self.grammardir)
+
+        self.nonterms,self.terms = Utils.genSymbols(self.sym_type, self.no_nonterm, self.no_term)            
+        print self.nonterms,self.terms  
+        self.terms_map = {('TK_' + i): i for i in self.terms}
+        sinbaddir = os.path.expandvars("${SINBAD_DIR}")
+        if os.path.exists(sinbaddir):
+            sys.path.append(sinbaddir)
+        else:
+            sys.stderr.write("Can't locate sinbad program. Check SINBAD_DIR shell variable.\n")
+            sys.exit(1)
+        
+        lf = Utils.genLex(self.terms_map,self.grammardir)
+        i = 1
+        _ct = 0
+        while i <= self.no_samples:
+            _ct +=1; print "_ct: " , str(_ct)
+            cfg = self.genCfg()
+            tf = tempfile.mkstemp()[1]
+            Utils.write(cfg,self.terms_map,tf)
+            if Utils.valid(tf,lf):
+                gf = self.grammardir + "/" + str(i) + ".acc"
+                r = subprocess.call(["cp",tf,gf])
+                if r != 0:
+                    sys.stderr.write("Copy failed\n")
+                    sys.exit(r)
+                  
+#                sys.stdout.write(".")
+#                sys.stdout.flush()
+                print "==> %s" % gf
+                i+=1
+                
+            os.remove(tf)            
+
+        
+    def usage(self, msg = None):
+        if msg is not None:
+            sys.stderr.write(msg + "\n\n")
+            sys.stderr.write("genBoltz -d <grammar directory> -N <no of samples> " \
+              "-n <no of nonterminals> -t <no of terminals> -m <short|long>\n\n")
+            sys.exit(1)
+
+        
+    def genCfg(self):
+        rules = {}
+        # to control no of empty alternatives,
+        min_empty = math.ceil(len(self.nonterms) * self.min_ratio_empty_lhs)
+        max_empty = math.ceil(len(self.nonterms) * self.max_ratio_empty_lhs)
+        empty_lhs_count = random.randint(min_empty, max_empty)
+        epsilon_rules = random.sample(self.nonterms, empty_lhs_count)
+        _alts = self.generate_rule()
+        rules['root'] = self.rule_repr(_alts)
+        
+        for lhs in self.nonterms:
+            _alts = self.generate_rule()
+            if epsilon_rules.__contains__(lhs):
+                _alts.append("")
+            
+            rules[lhs] = self.rule_repr(_alts)
+        return rules
+
+
+    def generate_rule(self):
+        alts = []
+        n_alts = random.randint(1, self.max_alts)
+        while (len(alts) < n_alts):
+            alt = []
+            n_tokens = random.randint(1, self.max_tokens_per_rule)
+            while (len(alt) < n_tokens):
+                token = random.choice(self.nonterms + self.terms_map.keys())
+                alt.append(token)
+            alts.append(alt)
+            
+        return alts   
+
+
+    def rule_repr(self, alts):
+        alts_string = []
+        for alt in alts:
+            alts_string.append(" ".join([str(token) for token in alt]))
+        return " | ".join([x for x in alts_string])
+
+
+RandomGrammarGenerator()

@@ -1,0 +1,156 @@
+#!/usr/bin/env python
+
+# generates class specification with varying sizes of Rules and Alts
+# Rule :: 4-6
+# Alts :: 5-7
+#
+# first generate nonterminal tokens (so no of rules is no of nonterminals)
+# ratio of nonterminal to terminal symbols is always 1:1
+
+# Haskell data-types generated will of this form:
+#
+#data Prog = Prog Rule Rule Rule Rule deriving (Typeable, Data, Show) 
+#data Rule = EmptyRule | RuleAlts Rule Alt deriving (Typeable, Data, Show) 
+#data Alt = EmptyAlt | AltSyms Alt Symbol deriving (Typeable, Data, Show) 
+#data Symbol = NonTerm NonTerm | Term Term deriving (Typeable, Data, Show) 
+#data NonTerm = L | G | M | E | P | W deriving (Typeable, Data, Show) 
+#data Term = TK_j | TK_k | TK_h | TK_i | TK_n | TK_o deriving (Typeable, Data, Show)
+
+import random, string, StringIO, random, getopt
+import os, subprocess, sys, tempfile
+from sets import Set
+import ParseCfg, Utils
+
+class BoltzGrammarGenerator:
+
+    def __init__(self):
+        self.no_samples = None
+        self.sing_prec = None
+        self.no_nonterm = None
+        self.no_term = None
+        self.sym_type = None
+        self.grammardir = None
+        opts, args = getopt.getopt(sys.argv[1 : ], "hN:p:n:t:m:d:")
+        for opt in opts:
+            if opt[0] == "-N":
+                self.no_samples=int(opt[1])
+            elif opt[0] == "-p":
+                self.sing_prec=float(opt[1])
+            elif opt[0] == "-n":
+                self.no_nonterm = int(opt[1])            
+            elif opt[0] == "-t":
+                self.no_term = int(opt[1])
+            elif opt[0] == "-m":
+                self.sym_type = opt[1] # short or long   
+            elif opt[0] == "-d":
+                self.grammardir = opt[1]                 
+            elif opt[0] == "-h":
+                self.usage()
+        
+        if (self.no_samples == None) or \
+           (self.sing_prec == None) or \
+           (self.no_nonterm == None) or \
+           (self.no_term == None) or \
+           (self.sym_type == None) or \
+           (self.grammardir == None):
+            self.usage("Not enough arguments")
+        
+        # we create the directory here.    
+        if not os.path.exists(self.grammardir):
+            os.makedirs(self.grammardir)
+
+        self.nonterms,self.terms = Utils.genSymbols(self.sym_type, self.no_nonterm, self.no_term)            
+        print self.nonterms,self.terms  
+        self.terms_map = {('TK_' + i): i for i in self.terms}
+
+        sinbaddir = os.path.expandvars("${SINBAD_DIR}")
+        if os.path.exists(sinbaddir):
+            sys.path.append(sinbaddir)
+        else:
+            sys.stderr.write("Can't locate sinbad program. Check SINBAD_DIR shell variable.\n")
+            sys.exit(1)
+        
+        boltzdir = os.path.expandvars("${BOLTZ_DIR}")
+        if not os.path.exists(boltzdir):
+            sys.stderr.write("Can't locate Boltzmann directory. Check BOLTZ_DIR shell variable.\n")
+            sys.exit(1)
+
+        # Make will generate this
+        self.cfg_hs = os.path.join(boltzdir,"test/Cfg.hs")
+        self.boltzExe = os.path.join(boltzdir,"test/prog")
+        self.genBoltzProg()
+                
+        lf = Utils.genLex(self.terms_map,self.grammardir)
+        i = 1
+        _ct = 0
+        while i <= self.no_samples:
+            _ct +=1; print "_ct: " , str(_ct)
+            cfg = self.genCfg()
+            # we generate a temp file
+            tf = tempfile.mkstemp()[1]
+            Utils.write(cfg,self.terms_map,tf)
+            if Utils.valid(tf,lf):
+                gf = self.grammardir + "/" + str(i) + ".acc"
+                r = subprocess.call(["cp",tf,gf])
+                if r != 0:
+                    sys.stderr.write("Copy failed\n")
+                    sys.exit(r)
+                  
+#                sys.stdout.write(".")
+#                sys.stdout.flush()
+                print "==> %s" % gf
+                i+=1
+                
+            os.remove(tf)
+      
+    def usage(self, msg=None):
+        sys.stderr.write("genBoltz -d <grammar directory> -N <no of samples> " \
+          "-p <precision in float> -n <no of nonterminals> -t <no of terminals> " \
+          "-m <short|long>\n\n")
+        sys.exit(1)
+    
+        
+    def genBoltzProg(self):
+        header1 = "{-# LANGUAGE DeriveDataTypeable #-}"
+        header2 = "module Cfg where"
+        header3 = "import Data.Generics"
+        prog_rule = "data Cfg = Cfg " + ((len(self.nonterms)+1) * "Rule ") + "deriving (Typeable, Data, Show)"
+        rule_rule = "data Rule = EmptyRule | RuleAlts Rule Alt deriving (Typeable, Data, Show)"
+        alt_rule = "data Alt = EmptyAlt | AltSyms Alt Symbol deriving (Typeable, Data, Show) "
+        symbol_rule = "data Symbol = NonTerm NonTerm | Term Term deriving (Typeable, Data, Show)"
+        nt_rule = "data NonTerm = " + " | ".join(self.nonterms) + " deriving (Typeable, Data, Show)"
+        t_rule = "data Term = " + " | ".join(self.terms_map.keys()) + " deriving (Typeable, Data, Show)"
+        cfg = "%s \n%s \n%s \n\n%s \n%s \n%s \n%s \n%s \n%s\n" % (header1, header2, header3, prog_rule, rule_rule, alt_rule, symbol_rule, nt_rule, t_rule)
+        f_cfg = open(self.cfg_hs,"w")
+        f_cfg.write(cfg)
+        f_cfg.close()
+    
+        DEVNULL = open(os.devnull, 'wb')
+        r = subprocess.call(["make","clean"],stdout=DEVNULL)
+        if r != 0:
+            sys.stderr.msg("Make clean failed\n")
+            sys.exit(r)
+                    
+        r = subprocess.call(["make"],stdout=DEVNULL)
+        if r != 0:
+            sys.stderr.msg("Make failed\n")
+            sys.exit(r) 
+ 
+                 
+        
+    def genCfg(self):
+        p = subprocess.Popen([self.boltzExe,str(1),str(self.sing_prec)], stdout=subprocess.PIPE)
+        out = p.communicate()
+        bz_cfg = out[0].splitlines()[0]
+        rules=ParseCfg.parse(bz_cfg)
+        self.nonterms.append("root")
+        rules_dict = dict(zip(self.nonterms,rules))
+        #print "cfg: " , rules_dict
+
+        return rules_dict
+    
+           
+
+BoltzGrammarGenerator()
+
+    
