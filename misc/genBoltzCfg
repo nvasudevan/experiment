@@ -78,7 +78,7 @@ class BoltzGrammarGenerator:
         # Make will generate this
         self.cfg_hs = os.path.join(boltzdir,"test/Cfg.hs")
         self.boltzExe = os.path.join(boltzdir,"test/prog")
-        self.genBoltzProg()
+        self.genBoltzProg(boltzdir)
                 
         lf = Utils.genLex(self.terms_map,self.grammardir)
         i = 1
@@ -110,7 +110,7 @@ class BoltzGrammarGenerator:
         sys.exit(1)
     
         
-    def genBoltzProg(self):
+    def genBoltzProg(self, boltzdir):
         header1 = "{-# LANGUAGE DeriveDataTypeable #-}"
         header2 = "module Cfg where"
         header3 = "import Data.Generics"
@@ -125,17 +125,21 @@ class BoltzGrammarGenerator:
         f_cfg.write(cfg)
         f_cfg.close()
     
+        cwd = os.getcwd()
+        os.chdir(boltzdir)
+        
         DEVNULL = open(os.devnull, 'wb')
         r = subprocess.call(["make","clean"],stdout=DEVNULL)
         if r != 0:
-            sys.stderr.msg("Make clean failed\n")
+            sys.stderr.write("Make clean failed\n")
             sys.exit(r)
                     
         r = subprocess.call(["make"],stdout=DEVNULL)
         if r != 0:
-            sys.stderr.msg("Make failed\n")
+            sys.stderr.write("Make failed\n")
             sys.exit(r) 
  
+        os.chdir(cwd)
                  
         
     def genCfg(self):
