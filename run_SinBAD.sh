@@ -98,6 +98,30 @@ run_mutlang(){
     rm -Rf $tmp
 }
 
+run_boltzcfg(){
+	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
+	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+	cp /dev/null $result
+	ambcnt=0
+	cnt=0
+    tmp=$(mktemp -d)
+    for g in `seq 1 $nboltz`
+    do
+        timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $gboltz/$g.acc $gboltz/boltz.lex > $tmp/$g.log 2>&1
+        amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
+        ((cnt+=1))
+        if [ "$amb" != "" ]
+        then 
+        	((ambcnt+=1))
+        	echo "$g,yes" | tee -a $result
+        	continue
+        fi
+        echo "$g," | tee -a $result
+    done
+    rm -Rf $tmp
+    print_summary $ambcnt $cnt
+}
+
 run_test() {
 	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
 	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"

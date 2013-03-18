@@ -25,6 +25,7 @@ check_for mktemp
 check_for flex
 check_for cc
 check_for ant
+check_for parallel
 
 if [ $missing -eq 1 ]; then
     exit 1

@@ -120,6 +120,36 @@ run_mutlang() {
     done    
 }
 
+run_boltzcfg() {
+	result="$resultsdir/acla/$torun/$timelimit"
+	cp /dev/null $result
+	ambcnt=0
+	cnt=0	
+    for g in  `seq 1 $nboltz` 
+    do
+        # first convert accent format to cfg format
+        gacc="$gboltz/$g.acc"
+        gcfg="$gboltz/$g.cfg"    
+        cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " | sed -e 's/;$//g' > $gcfg
+        tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
+        for token in $tokenlist
+        do
+           sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" $gcfg
+        done        
+        sentence=$(timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq)
+        ((cnt+=1))
+        if [ "$sentence" == "ambiguous string" ]
+        then 
+        	((ambcnt+=1))
+        	echo "$g,yes" | tee -a $result
+        	continue
+        fi
+        [ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
+        echo "$g," | tee -a $result
+    done
+    print_summary $ambcnt $cnt
+}
+
 run_test() {
 	result="$resultsdir/acla/$torun/$timelimit"
 	cp /dev/null $result

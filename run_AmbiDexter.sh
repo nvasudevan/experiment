@@ -222,6 +222,65 @@ run_mutlang() {
     done
 }
 
+run_boltzcfg() {
+	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${filtertime}_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
+	cp /dev/null $result
+	cnt=0
+	fcnt=0
+	ratiocnt=0.0
+	ambcnt=0
+	avgratio=0	
+    for g in `seq 1 $nboltz`
+    do
+        # first convert accent format to yacc format
+        gacc="$gboltz/$g.acc"
+        gy="$gboltz/$g.y"
+        cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
+        tmp="`mktemp`"
+        $cmd -s $gy > $tmp 2>&1
+        message="`cat $tmp | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3`"
+        if [ "$message" != "" ]
+        then
+        	if [ "$filter" == "" ]
+        	then
+        		echo "$g,yes" | tee -a $result
+        	else
+        		echo "$g,,,yes" | tee -a $result
+        	fi
+        	((ambcnt+=1))
+        	continue
+        fi
+        	
+        message="`cat $tmp | egrep -i 'Unproductive start symbol' | cut -d: -f2,3`"
+        if [ "$message" != "" ]
+        then 
+        	if [ "$filter" == "" ]
+        	then 
+        		echo "$g," | tee -a $result  && continue
+        	else
+        		echo "$g,,," | tee -a $result && continue
+        	fi
+        fi
+        rm $tmp
+        output=$(timeout $timelimit ./AmbiDexter.sh $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+		if [ "$filter" != "" ]
+		then
+			harmless=$(echo $output | cut -d, -f1)
+			if [ "$harmless" != "" ]
+			then
+				ratio=$(echo "scale=3;$harmless" | bc)
+				ratiocnt=$(echo "$ratiocnt + $ratio" | bc)
+				((fcnt+=1))
+			fi
+		fi        
+		((cnt+=1))
+		amb=$(echo $output | awk -F, '{print $NF}')
+		[ "$amb" == "yes" ] && ((ambcnt+=1))
+		echo "$g,$output" | tee -a $result		
+    done
+    print_summary $ambcnt $cnt $fcnt $ratiocnt
+}
+
 
 run_test() {
 	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${filtertime}_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"

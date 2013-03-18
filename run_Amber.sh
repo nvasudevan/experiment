@@ -74,7 +74,9 @@ run_lang() {
             	rm -Rf $tmp
             	continue
             fi
-            echo "$g.$i,,$ticks" | tee -a $result;cd $cwd;rm -Rf $tmp
+            echo "$g.$i,,$ticks" | tee -a $result
+            cd $cwd
+            rm -Rf $tmp
         done
     done 
     print_summary $ambcnt $cnt 
@@ -117,6 +119,38 @@ run_mutlang() {
        done
        print_summary $ambcnt $cnt
     done
+}
+
+run_boltzcfg() {
+	result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"	
+	cp /dev/null $result
+	ambcnt=0
+	cnt=0
+    cwd="`pwd`"
+    for g in `seq 1 $nboltz`
+    do
+        tmp=$(mktemp -d)
+        cd $tmp 
+        $accent $gboltz/$g.acc || exit $?
+        $lex $gboltz/boltz.lex || exit $?
+        $cc -w -o amber -O3 yygrammar.c $ambersrc
+        output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
+        ((cnt+=1))
+        sentence=$(echo $output | grep -o 'Grammar ambiguity detected')
+        ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
+        if [ "$sentence" != "" ]
+        then
+        	((ambcnt+=1))
+        	echo "$g,yes,${ticks}" | tee -a $result
+        	cd $cwd
+        	rm -Rf $tmp
+        	continue
+        fi
+        echo "$g,,$ticks" | tee -a $result
+        cd $cwd
+        rm -Rf $tmp
+    done
+    print_summary $ambcnt $cnt
 }
 
 run_test() {
