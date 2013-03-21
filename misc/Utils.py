@@ -22,6 +22,7 @@
 import random, string
 import sys
 from sets import Set
+import GrammarInfo
 
 def uniqSymbols(n_syms):
     symbols =  Set()
@@ -78,27 +79,40 @@ def write(rulesd, terms_map, gf):
 def valid(gf, lf):
     import Lexer, CFG
     lex = Lexer.parse(open(lf, "r").read())
-    # filter out: 1) root: ''; 2) X : A | A
+    # filter out: 
+    # 1) root: '' 
+    # 2) X : A | A | Z
     # 3) X: ''; - empty rules
+    # 4) A: A | A nonterminating type rules
     cfg = CFG.parse(lex, open(gf, "r").read())
     #print "CFG:\n%s\n" % cfg
+    
+    # 1 
     root_rule = cfg.get_rule('root')
     if len(root_rule.seqs) == 1 and len(root_rule.seqs[0]) == 0:
-        print "empty root rule \n"
+        #print "empty root rule \n"
         return False
          
+    # 2
     for rule in cfg.rules:
         seqs_set = Set()
         for seq in rule.seqs:
             seqs_set.add(" ".join(str(x) for x in seq))
                 
         if len(rule.seqs) != len(list(seqs_set)):
-            print "[duplicate] %s : %s \n" % (rule.name,seqs_set)
+            #print "[duplicate] %s : %s \n" % (rule.name,seqs_set)
             return False
-                
+       
+    # 3         
     for rule in cfg.rules:
         if (len(rule.seqs) == 1) and len(rule.seqs[0]) == 0:
-            print "*EMPTY* " , rule
+            #print "*EMPTY* " , rule
             return False
              
+    # 4         
+    cyclic_rules = GrammarInfo.cyclicInfo(cfg,lex)
+    if len(cyclic_rules) > 0:
+        #print "** CYCLIC RULES ** ", cyclic_rules
+        return False
+        
     return True        

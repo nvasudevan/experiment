@@ -9,152 +9,204 @@
 
 # Haskell data-types generated will of this form:
 #
-#data Prog = Prog Rule Rule Rule Rule deriving (Typeable, Data, Show) 
-#data Rule = EmptyRule | RuleAlts Rule Alt deriving (Typeable, Data, Show) 
-#data Alt = EmptyAlt | AltSyms Alt Symbol deriving (Typeable, Data, Show) 
-#data Symbol = NonTerm NonTerm | Term Term deriving (Typeable, Data, Show) 
-#data NonTerm = L | G | M | E | P | W deriving (Typeable, Data, Show) 
-#data Term = TK_j | TK_k | TK_h | TK_i | TK_n | TK_o deriving (Typeable, Data, Show)
+#data Prog = Prog Rule Rule Rule Rule Rule deriving (Typeable, Data, Show)
+#data Rule = RuleAlts Alt Alt Alt Alt deriving (Typeable, Data, Show)
+#data Alt = AltTokens [Symbol]  deriving (Typeable, Data, Show)
+#data Symbol = NonTerm NT | Term T deriving (Typeable, Data, Show)
+#data NT = A | B | C | D | E deriving (Typeable, Data, Show)
+#data T = T1 | T2 | T3 | T4 | T5 deriving (Typeable, Data, Show)
 
 import random, string, StringIO, random, getopt
-import os, subprocess, sys, tempfile
+import os, subprocess, sys
 from sets import Set
-import ParseCfg, Utils
+  
+def usage(msg=None):
+    sys.stderr.write("genBoltz -d <grammar directory> -n <no of samples> -p <precision in float> -r <no of nonterminals> -t <short|long>\n\n")
+    sys.exit(1)
 
-class BoltzGrammarGenerator:
+def generateLex(terms_map,grammardir):
+    lex_file = grammardir + "/" + "boltz.lex"
+    f_lex = open(lex_file,"w")
+    # first write the usual lines
+    f_lex.write("%{" + "\n")
+    f_lex.write('#include "yygrammar.h"' + "\n")
+    f_lex.write("%}" + "\n")
+    f_lex.write("%%" + "\n")
+    f_lex.write('" "    { /* skip blank */ }\n')
+    f_lex.write('\\n     { yypos++; /* adjust linenumber and skip newline */ }' + "\n")
+    f_lex.write('\\r     { yypos++; /* adjust linenumber and skip newline */ }' + "\n")
+    #
+    f_lex.write('.      { yyerror("illegal token"); }' + "\n")
+    # now write your stuff
+    for key in terms_map.keys():
+        #"delete"     { return DELETE; }
+        f_lex.write('"' + terms_map[key] + '"     { return ' + key + "; }\n")
+    f_lex.close()
 
-    def __init__(self):
-        self.no_samples = None
-        self.sing_prec = None
-        self.no_nonterm = None
-        self.no_term = None
-        self.sym_type = None
-        self.grammardir = None
-        opts, args = getopt.getopt(sys.argv[1 : ], "hN:p:n:t:m:d:")
-        for opt in opts:
-            if opt[0] == "-N":
-                self.no_samples=int(opt[1])
-            elif opt[0] == "-p":
-                self.sing_prec=float(opt[1])
-            elif opt[0] == "-n":
-                self.no_nonterm = int(opt[1])            
-            elif opt[0] == "-t":
-                self.no_term = int(opt[1])
-            elif opt[0] == "-m":
-                self.sym_type = opt[1] # short or long   
-            elif opt[0] == "-d":
-                self.grammardir = opt[1]                 
-            elif opt[0] == "-h":
-                self.usage()
-        
-        if (self.no_samples == None) or \
-           (self.sing_prec == None) or \
-           (self.no_nonterm == None) or \
-           (self.no_term == None) or \
-           (self.sym_type == None) or \
-           (self.grammardir == None):
-            self.usage("Not enough arguments")
-        
-        # we create the directory here.    
-        if not os.path.exists(self.grammardir):
-            os.makedirs(self.grammardir)
-
-        self.nonterms,self.terms = Utils.genSymbols(self.sym_type, self.no_nonterm, self.no_term)            
-        print self.nonterms,self.terms  
-        self.terms_map = {('TK_' + i): i for i in self.terms}
-
-        sinbaddir = os.path.expandvars("${SINBAD_DIR}")
-        if os.path.exists(sinbaddir):
-            sys.path.append(sinbaddir)
-        else:
-            sys.stderr.write("Can't locate sinbad program. Check SINBAD_DIR shell variable.\n")
-            sys.exit(1)
-        
-        boltzdir = os.path.expandvars("${BOLTZ_DIR}")
-        if not os.path.exists(boltzdir):
-            sys.stderr.write("Can't locate Boltzmann directory. Check BOLTZ_DIR shell variable.\n")
-            sys.exit(1)
-
-        # Make will generate this
-        self.cfg_hs = os.path.join(boltzdir,"test/Cfg.hs")
-        self.boltzExe = os.path.join(boltzdir,"test/prog")
-        self.genBoltzProg(boltzdir)
-                
-        lf = Utils.genLex(self.terms_map,self.grammardir)
-        i = 1
-        _ct = 0
-        while i <= self.no_samples:
-            _ct +=1; print "_ct: " , str(_ct)
-            cfg = self.genCfg()
-            # we generate a temp file
-            tf = tempfile.mkstemp()[1]
-            Utils.write(cfg,self.terms_map,tf)
-            if Utils.valid(tf,lf):
-                gf = self.grammardir + "/" + str(i) + ".acc"
-                r = subprocess.call(["cp",tf,gf])
-                if r != 0:
-                    sys.stderr.write("Copy failed\n")
-                    sys.exit(r)
-                  
-#                sys.stdout.write(".")
-#                sys.stdout.flush()
-                print "==> %s" % gf
-                i+=1
-                
-            os.remove(tf)
-      
-    def usage(self, msg=None):
-        sys.stderr.write("genBoltz -d <grammar directory> -N <no of samples> " \
-          "-p <precision in float> -n <no of nonterminals> -t <no of terminals> " \
-          "-m <short|long>\n\n")
-        sys.exit(1)
+def generateGrammars(no_samples, sing_prec, exe, nonterms, terms_map, sym_type, grammardir):
+    p = subprocess.Popen([exe,str(no_samples),str(sing_prec)], stdout=subprocess.PIPE)
+    out = p.communicate()
+    out1 = out[0].replace("Prog (RuleAlts (AltTokens","\nCFG\n\nRule:")
+    out2 = out1.replace("(RuleAlts (AltTokens","\n\nRule:")
+    out3 = out2.replace("(AltTokens","|")
+    out4 = out3.replace(")","")
+    out5 = out4.replace("NonTerm","")
+    out6 = out5.replace("Term","")
+    #print "before: " , out6
+#    if sym_type == "short":
+#        for key in terms_map.keys():
+#            out6 = out6.replace(key,"'" + terms_map[key] + "'")
+       
+    out7 = out6.replace("]","")
+    out8 = out7.replace("[","")
+    out9 = out8.replace(",","")
+#    print "--"
+#    print out9
+#    print "--"
+    #buf = StringIO.StringIO(out9)
+    cfg_list = out9.split("CFG")
+#            for cfg in cfg_list[1:]:
+#                print "XX: \n" , cfg
+#            sys.exit(1)
+    nonterms.append("root")
+    count=1
+    for cfg in cfg_list[1:]:
+        buf = StringIO.StringIO(cfg)
+        rules=[]
+        while 1:
+            line = buf.readline()
+            if not line:
+                break
+            if line.startswith("Rule:"):
+                rules.append(line.split("Rule:")[1])
     
-        
-    def genBoltzProg(self, boltzdir):
-        header1 = "{-# LANGUAGE DeriveDataTypeable #-}"
-        header2 = "module Cfg where"
-        header3 = "import Data.Generics"
-        prog_rule = "data Cfg = Cfg " + ((len(self.nonterms)+1) * "Rule ") + "deriving (Typeable, Data, Show)"
-        rule_rule = "data Rule = EmptyRule | RuleAlts Rule Alt deriving (Typeable, Data, Show)"
-        alt_rule = "data Alt = EmptyAlt | AltSyms Alt Symbol deriving (Typeable, Data, Show) "
-        symbol_rule = "data Symbol = NonTerm NonTerm | Term Term deriving (Typeable, Data, Show)"
-        nt_rule = "data NonTerm = " + " | ".join(self.nonterms) + " deriving (Typeable, Data, Show)"
-        t_rule = "data Term = " + " | ".join(self.terms_map.keys()) + " deriving (Typeable, Data, Show)"
-        cfg = "%s \n%s \n%s \n\n%s \n%s \n%s \n%s \n%s \n%s\n" % (header1, header2, header3, prog_rule, rule_rule, alt_rule, symbol_rule, nt_rule, t_rule)
-        f_cfg = open(self.cfg_hs,"w")
-        f_cfg.write(cfg)
+
+        random.shuffle(nonterms)
+        random.shuffle(rules)
+        rules_dict = dict(zip(nonterms,rules))        
+        sys.stdout.write(".")
+        sys.stdout.flush()
+        cfg_file = grammardir + "/" + str(count) + ".acc"
+        f_cfg = open(cfg_file,"w")
+        root_rule = rules_dict.pop('root')
+        f_cfg.write("%token " + ", ".join(terms_map.keys()) + ";\n\n")
+        f_cfg.write("%nodefault\n\n")
+        f_cfg.write("root: " + root_rule + ";\n")
+        rules_keys = rules_dict.keys()
+        for key in rules_keys:
+            print " ** " , key, rules_dict[key]
+            f_cfg.write(key + ": " + rules_dict.pop(key) + ";\n")
         f_cfg.close()
+        count += 1
+
+def uniqueSymbols(n_nonterms,n_terms):
+    symbols =  Set()
+    # we need one less nonterminal as we have start symbol - root
+    while (len(symbols) < ((n_nonterms-1)+n_terms)):
+        sym = ''.join(random.choice(string.uppercase) for x in range(random.randint(2,5)))
+        symbols.add(sym)
+
+    symlist = list(symbols)
+    print symlist    
+    return symlist[0:n_nonterms-1],symlist[n_nonterms-1:]
     
-        cwd = os.getcwd()
-        os.chdir(boltzdir)
+
+def genSymbols(sym_type,n_nonterms,n_terms):
+    if sym_type == "short":
+        # one of the nonterminal will be 'root'. so we need one less
+        nonterms = random.sample(string.uppercase,n_nonterms-1)
+        terms = random.sample(string.lowercase,n_terms)
+    else:
+        # nonterms and terms as words
+        nonterms,terms = uniqueSymbols(n_nonterms,n_terms)  
         
-        DEVNULL = open(os.devnull, 'wb')
-        r = subprocess.call(["make","clean"],stdout=DEVNULL)
-        if r != 0:
-            sys.stderr.write("Make clean failed\n")
-            sys.exit(r)
+    return nonterms,terms
+
+def generateDataType(rule_size_range,alt_size_range,sym_type,no_samples,sing_prec,grammardir):
+    for nRules in rule_size_range:
+        for nAlts in alt_size_range:
+            nonterms,terms = genSymbols(sym_type,nRules,nRules)            
+            print nonterms,terms   
+            terms_map = {('TK_' + i): i for i in terms}
+            h_terms = terms_map.keys()
+            print "--\n",terms_map
+            header1 = "{-# LANGUAGE DeriveDataTypeable #-}"
+            header2 = "module Cfg where"
+            header3 = "import Data.Generics"
+            prog_rule = "data Prog = Prog " + nRules * "Rule " + "deriving (Typeable, Data, Show)"
+            rule_rule = "data Rule = RuleAlts " + nAlts * "Alt " + "deriving (Typeable, Data, Show)"
+            alt_rule = "data Alt = AltTokens [Symbol]  deriving (Typeable, Data, Show)"
+            symbol_rule = "data Symbol = NonTerm NonTerm | Term Term deriving (Typeable, Data, Show)"
+            nt_rule = "data NonTerm = " + " | ".join(nonterms) + " deriving (Typeable, Data, Show)"
+            t_rule = "data Term = " + " | ".join(h_terms) + " deriving (Typeable, Data, Show)"
+            cfg = "%s \n%s \n%s \n\n%s \n%s \n%s \n%s \n%s \n%s\n" % (header1, header2, header3, prog_rule, rule_rule, alt_rule, symbol_rule, nt_rule, t_rule)
+            print cfg
+            cfg_file = "grammars/" + str(nRules) + "Rules_" + str(nAlts) + "Alts.hs"
+            f_cfg = open(cfg_file,"w")
+            f_cfg.write(cfg)
+            f_cfg.close()
+            
+            # invoke the boltzmann for this grammar
+            # make clean;make and then ./test/prog 1.0e-03 1
+            r = subprocess.call(["cp",cfg_file,"test/Cfg.hs"])
+            if r != 0:
+                sys.stderr.msg("Copy failed\n")
+                sys.exit(r)
+                
+            DEVNULL = open(os.devnull, 'wb')
+            r = subprocess.call(["make","clean"],stdout=DEVNULL)
+            
+            if r != 0:
+                sys.stderr.msg("Make clean failed\n")
+                sys.exit(r)
+                
+            r = subprocess.call(["make"],stdout=DEVNULL)
+            if r != 0:
+                sys.stderr.msg("Make failed\n")
+                sys.exit(r)       
+                
+            print "generating grammars..."
+            generateGrammars(no_samples,sing_prec,"./test/prog",nonterms,terms_map,sym_type,grammardir)
+            print "\ngenerating lex..."
+            generateLex(terms_map,grammardir)
+            print ".. DONE .."
+                
+
+if __name__ == "__main__":
+    no_samples = None
+    sing_prec = None
+    no_nt = None
+    sym_type = None
+    grammardir = None
+    opts, args = getopt.getopt(sys.argv[1 : ], "hn:p:r:t:d:")
+    for opt in opts:
+        if opt[0] == "-n":
+            no_samples=int(opt[1])
+        elif opt[0] == "-p":
+            sing_prec=float(opt[1])
+        elif opt[0] == "-r":
+            no_nt = int(opt[1])
+        elif opt[0] == "-t":
+            sym_type = opt[1] # short or long   
+        elif opt[0] == "-d":
+            grammardir = opt[1]                 
+        elif opt[0] == "-h":
+            usage()
+    
+    if (no_samples == None) or (sing_prec == None) or (no_nt == None) or (sym_type == None) or (grammardir == None):
+        usage()
+    
+    # we create the directory here.    
+    if not os.path.exists(grammardir):
+        os.makedirs(grammardir)
                     
-        r = subprocess.call(["make"],stdout=DEVNULL)
-        if r != 0:
-            sys.stderr.write("Make failed\n")
-            sys.exit(r) 
- 
-        os.chdir(cwd)
-                 
-        
-    def genCfg(self):
-        p = subprocess.Popen([self.boltzExe,str(1),str(self.sing_prec)], stdout=subprocess.PIPE)
-        out = p.communicate()
-        bz_cfg = out[0].splitlines()[0]
-        rules=ParseCfg.parse(bz_cfg)
-        self.nonterms.append("root")
-        rules_dict = dict(zip(self.nonterms,rules))
-        #print "cfg: " , rules_dict
+#    print "no_samples, precision: %s, %s"  % (no_samples,sing_prec)
+    rule_size_range=[no_nt]
+    alt_size_range=[5]
+    generateDataType(rule_size_range,alt_size_range,sym_type,no_samples,sing_prec,grammardir)
 
-        return rules_dict
+                
+                
     
-           
-
-BoltzGrammarGenerator()
-
+            
     
