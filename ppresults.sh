@@ -150,6 +150,7 @@ pp_sinbad() {
     done
 }
 
+. ./toolparams.sh
 
 for g in $gset
 do  
