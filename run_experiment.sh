@@ -1,24 +1,5 @@
 #!/bin/sh
 
-testgrammars="amb2 amb3"
-Nrandom="100"
-lgrammars="Pascal SQL Java C"
-Nlang="5"
-mugrammars="Pascal SQL Java C"
-nboltz="10"
-Nmutations="10"
-mutypes="type1 type2 type3 type4"
-Tdepths="25 30 35 40 45 50"
-
-memlimit="128m"
-timelimits="10 30 120 240 480"
-filtertimeratios="0.25 0.5"
-gset="random1000 lang mutlang boltzcfg"
-
-
-export testgrammars Nrandom lgrammars Nlang mugrammars Nmutations mutypes nboltz Tdepths
-export memlimit timelimit
-
 cwd="`pwd`"
 
 if [ $# -eq 0 ]; then
@@ -52,19 +33,8 @@ mv grammars lang
 
 cd $cwd
 
-grammardir="$cwd/grammars"
-lexdir="$grammardir/lex"
-grandom="$grammardir/random1000"
-glang="$grammardir/lang"
-gmutlang="$grammardir/mutlang"
-gboltz="$grammardir/boltzcfg"
-resultsdir="$cwd/results"
-scriptlist="./scriptlist"
-cp /dev/null $scriptlist
-
-export grammardir lexdir grandom glang gmutlang gboltz resultsdir
-
-export accentdir="$wrkdir/accent"
+# sets up values for our experiment
+. ./toolparams.sh
 
 [ ! -d $resultsdir ] && mkdir $resultsdir
 
@@ -75,15 +45,11 @@ cd $cwd
 
 for g in $gset
 do  
-    _start=$(date +%s) 
 	for timelimit in $timelimits
 	do
 	    echo -e "\n===> [$g]:: time limit: $timelimit \n"
 		echo "./run_ACLA.sh $g $timelimit || exit \$?" >> $scriptlist
 	done
-	_end=$(date +%s)
-	elapsed=$(($_end - $_start))
-	echo "ACLA:$g:elapsed=$elapsed"
 done
 
 echo -e "\n===> Amber \\n"
@@ -91,41 +57,22 @@ cd $cwd
 
 for g in $gset
 do
-    _start=$(date +%s)
 	for timelimit in $timelimits
 	do
 	    echo -e "\n===> [$g]:: time limit: $timelimit \n"
-		echo "./run_Amber.sh $g $timelimit examples 10000000000 || exit \$?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit examples 100000000000000000000 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit examples 1000000000000000000000000000000 || exit \$?" >> $scriptlist	
-		echo "./run_Amber.sh $g $timelimit silent examples 10000000000 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent examples 100000000000000000000 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent examples 1000000000000000000000000000000 || exit $?" >> $scriptlist
+	    for amberex in $amber_n_examples
+	    do
+	        echo "./run_Amber.sh $g $timelimit examples $amberex || exit \$?" >> $scriptlist
+		    echo "./run_Amber.sh $g $timelimit ellipsis examples $amberex || exit \$?" >> $scriptlist
+		done
 
-		echo "./run_Amber.sh $g $timelimit ellipsis examples 10000000000 || exit \$?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit ellipsis examples 100000000000000000000 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit ellipsis examples 1000000000000000000000000000000 || exit \$?" >> $scriptlist	
-		echo "./run_Amber.sh $g $timelimit silent ellipsis examples 10000000000 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent ellipsis examples 100000000000000000000 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent ellipsis examples 1000000000000000000000000000000 || exit $?" >> $scriptlist
+        for amberlen in $amber_n_length
+        do
+		    echo "./run_Amber.sh $g $timelimit length $amberlen || exit $?" >> $scriptlist
+		    echo "./run_Amber.sh $g $timelimit ellipsis length $amberlen || exit $?" >> $scriptlist
+		done
 
-		echo "./run_Amber.sh $g $timelimit length 50 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit length 100 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit length 1000 || exit \$?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent length 50 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent length 100 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent length 1000 || exit $?" >> $scriptlist
-
-		echo "./run_Amber.sh $g $timelimit ellipsis length 50 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit ellipsis length 100 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit ellipsis length 1000 || exit \$?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent ellipsis length 50 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent ellipsis length 100 || exit $?" >> $scriptlist
-		echo "./run_Amber.sh $g $timelimit silent ellipsis length 1000 || exit $?" >> $scriptlist
     done
-	_end=$(date +%s)
-	elapsed=$(($_end - $_start))
-	echo "Amber:$g:elapsed=$elapsed"	
 done
 
 echo -e "\n===> AmbiDexter \\n"
@@ -133,7 +80,6 @@ cd $cwd
 
 for g in $gset
 do
-    _start=$(date +%s)
     for timelimit in $timelimits
     do
 	    filtertimes=""
@@ -147,36 +93,18 @@ do
 	    for ftime in $filtertimes
 	    do
 	        echo -e "\n===> [$g]:: time limit: $timelimit, ftime: $ftime \n"
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 50 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 100 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k 1000 || exit \$?" >> $scriptlist
-		
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 50 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 100 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k 1000 || exit \$?" >> $scriptlist
-		
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 50 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 100 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -k 1000 || exit $?" >> $scriptlist
-		
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 50 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 100 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -k 1000 || exit $?" >> $scriptlist
-		
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 50 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 100 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k 1000 || exit \$?" >> $scriptlist			
-		
+	        for ambilen in $ambidexter_n_length
+	        do
+	            echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -k $ambilen || exit $?" >> $scriptlist
+			    echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
+			    echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
+		    done
+		    
 			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s -q -pg -ik 0 || exit \$?" >> $scriptlist
 			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s slr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lr0 -q -pg -ik 0 || exit $?" >> $scriptlist
-			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lr1 -q -pg -ik 0 || exit $?" >> $scriptlist
 			echo "./run_AmbiDexter.sh $g $timelimit ${ftime}s lalr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
 	    done
 	done
-	_end=$(date +%s)
-	elapsed=$(($_end - $_start))
-	echo "AmbiDexter:$g:elapsed=$elapsed"	
 done
 
 echo -e "\n===> SinBAD \\n"
@@ -184,13 +112,12 @@ cd $cwd
 
 for g in $gset
 do
-    _start=$(date +%s)
     for timelimit in $timelimits
     do
         echo -e "\n===> [$g]::[purerandom] time limit: $timelimit \n"
         echo "./run_SinBAD.sh $g purerandom $timelimit || exit \$?" >> $scriptlist
         
-        for backend in dynamic1 dynamic2
+        for backend in dynamic1
         do
             for d in $Tdepths
             do
@@ -199,14 +126,9 @@ do
             done
         done
     done
-	_end=$(date +%s)
-	elapsed=$(($_end - $_start))
-	echo "SinBAD:$g:elapsed=$elapsed"
 done
 
-echo "list of scripts: "
-cat $scriptlist
-echo "running them in parallel..."
+echo "Generated list of scripts ($scriptlist); running them in parallel ..."
 
 expstart=$(date +%s)
 cat scriptlist | parallel
@@ -219,3 +141,5 @@ cd $cwd
 gtar czf results.tar.gz results
 echo -e "\\n===> results - results.tar.gz \\n"
 
+echo -e "\\n pretty printing results to $ppresults \\n"
+./ppresults.sh
