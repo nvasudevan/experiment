@@ -145,7 +145,7 @@ pp_sinbad() {
 }
 
 
-for g in random1000 mutlang #  # lang # boltzcfg
+for g in random1000 lang mutlang boltzcfg
 do  
     ##########  ACLA ###########
     if [ "$g" == "mutlang" ]
