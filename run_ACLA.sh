@@ -17,8 +17,8 @@ run_random1000() {
     for g in  `seq 1 $nrandom` 
     do
         # first convert accent format to cfg format
-        gacc="$grandom/$g/$g.acc"
-        gcfg="$grandom/$g/$g.cfg"    
+        gacc="$grandom/$g.acc"
+        gcfg="$grandom/$g.cfg"    
         cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
         sentence=$(timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq)
         ((cnt+=1))
