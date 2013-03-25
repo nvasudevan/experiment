@@ -38,7 +38,7 @@ run_random1000() {
 	ratiocnt=0.0
 	ambcnt=0
 	avgratio=0	
-    for g in `seq 1 $Nrandom`
+    for g in `seq 1 $nrandom`
     do
         # first convert accent format to yacc format
         gacc="$grandom/$g/$g.acc"
@@ -99,7 +99,7 @@ run_lang() {
 	avgratio=0		
     for g in $lgrammars
     do
-        for i in `seq 1 $Nlang`
+        for i in `seq 1 $nlang`
         do
         	gacc="$glang/acc/$g.$i.acc"
             gy="$glang/y/$g.$i.y"
@@ -154,7 +154,7 @@ run_lang() {
 run_mutlang() {
     for type in $mutypes
     do
-    	result="$resultsdir/ambidexter/$torun/${type}_${timelimit}_${filtertime}_${filter}f_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
+    	result="$resultsdir/ambidexter/$torun/${type}_${timelimit}_${filter}f_${filtertime}_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
     	cp /dev/null $result
 		cnt=0
 		fcnt=0
@@ -164,7 +164,7 @@ run_mutlang() {
         echo "===> $type, result - $result"
         for g in $lgrammars
         do
-          for n in `seq 1 $Nmutations`
+          for n in `seq 1 $nmutations`
           do
             # convert grammar to yacc format
             gacc="$gmutlang/acc/$type/$g.0_$n.acc"
