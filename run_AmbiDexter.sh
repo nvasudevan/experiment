@@ -41,8 +41,8 @@ run_random1000() {
     for g in `seq 1 $nrandom`
     do
         # first convert accent format to yacc format
-        gacc="$grandom/$g/$g.acc"
-        gy="$grandom/$g/$g.y"
+        gacc="$grandom/$g.acc"
+        gy="$grandom/$g.y"
         cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
         tmp="`mktemp`"
         $cmd -s $gy > $tmp 2>&1
