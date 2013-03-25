@@ -46,13 +46,10 @@ resultsdir="$cwd/results"
 resultsdir="/home/user/codespace/experiment/_results"
 ppresults="$cwd/ppresults.txt"
 
-scriptlist="./scriptlist"
-cp /dev/null $scriptlist
-
 export grammardir lexdir grandom glang gmutlang gboltz resultsdir ppresults
 
-randomlex="/home/user/codespace/experiment/random.1/lex"
-boltzlex="/home/user/codespace/experiment/boltz.6.001_n15_t15_f1234/lex"
+randomlex="$lexdir/random.lex"
+boltzlex="$lexdir/boltz.lex"
 export randomlex boltzlex
 
 export accentdir="$wrkdir/accent"

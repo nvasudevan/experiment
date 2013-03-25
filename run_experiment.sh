@@ -38,6 +38,9 @@ cd $cwd
 
 [ ! -d $resultsdir ] && mkdir $resultsdir
 
+scriptlist="./scriptlist"
+cp /dev/null $scriptlist
+
 # Run each tool now on three sets of grammars
 
 echo -e "\\n===> ACLA \\n"
