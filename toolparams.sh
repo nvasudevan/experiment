@@ -43,7 +43,6 @@ glang="$grammardir/lang"
 gmutlang="$grammardir/mutlang"
 gboltz="$grammardir/boltzcfg"
 resultsdir="$cwd/results"
-resultsdir="/home/user/codespace/experiment/_results"
 ppresults="$cwd/ppresults.txt"
 
 export grammardir lexdir grandom glang gmutlang gboltz resultsdir ppresults
@@ -53,3 +52,5 @@ boltzlex="$lexdir/boltz.lex"
 export randomlex boltzlex
 
 export accentdir="$wrkdir/accent"
+# required for SinBAD
+export ACCENT_DIR=$accentdir
