@@ -145,4 +145,4 @@ gtar czf results.tar.gz results
 echo -e "\\n===> results - results.tar.gz \\n"
 
 echo -e "\\n pretty printing results to $ppresults \\n"
-./ppresults.sh
+./ppresults.sh > $ppresults 2>&1
