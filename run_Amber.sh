@@ -21,12 +21,12 @@ run_random1000() {
 	ambcnt=0
 	cnt=0
     cwd="`pwd`"
-    for g in `seq 1 $Nrandom`
+    for g in `seq 1 $nrandom`
     do
         tmp=$(mktemp -d)
         cd $tmp
-        $accent $grandom/$g/$g.acc || exit $?
-        $lex $lexdir/general.lex || exit $?
+        $accent $grandom/$g.acc || exit $?
+        $lex $randomlex || exit $?
         $cc -w -o amber -O3 yygrammar.c $ambersrc
         output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
         ((cnt+=1))
@@ -55,7 +55,7 @@ run_lang() {
     cwd="`pwd`"
     for g in $lgrammars
     do
-        for i in `seq 1 $Nlang`
+        for i in `seq 1 $nlang`
         do
             tmp=$(mktemp -d)
             cd $tmp
@@ -93,7 +93,7 @@ run_mutlang() {
 	   echo "===> $type, result - $result"
        for g in $mugrammars
        do
-          for n in `seq 1 $Nmutations`
+          for n in `seq 1 $nmutations`
           do
              tmp=$(mktemp -d)
              cd $tmp
@@ -130,9 +130,9 @@ run_boltzcfg() {
     for g in `seq 1 $nboltz`
     do
         tmp=$(mktemp -d)
-        cd $tmp 
+        cd $tmp
         $accent $gboltz/$g.acc || exit $?
-        $lex $gboltz/boltz.lex || exit $?
+        $lex $boltzlex || exit $?
         $cc -w -o amber -O3 yygrammar.c $ambersrc
         output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
         ((cnt+=1))

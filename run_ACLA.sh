@@ -14,7 +14,7 @@ run_random1000() {
 	cp /dev/null $result
 	ambcnt=0
 	cnt=0	
-    for g in  `seq 1 $Nrandom` 
+    for g in  `seq 1 $nrandom` 
     do
         # first convert accent format to cfg format
         gacc="$grandom/$g/$g.acc"
@@ -41,7 +41,7 @@ run_lang() {
 	cnt=0
     for g in $lgrammars
     do
-        for i in `seq 1 $Nlang`
+        for i in `seq 1 $nlang`
         do
             # convert yacc grammars from AmbiDexter to ACLA format
             gacc="$glang/acc/$g.$i.acc"
@@ -85,7 +85,7 @@ run_mutlang() {
       	echo "===> $type, result - $result"
        	for g in $mugrammars
        	do
-          for n in `seq 1 $Nmutations`
+          for n in `seq 1 $nmutations`
           do
              # convert grammar to cfg format
              gacc="$gmutlang/acc/$type/$g.0_$n.acc"

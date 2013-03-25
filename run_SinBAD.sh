@@ -23,9 +23,9 @@ run_random1000() {
 	ambcnt=0
 	cnt=0
     tmp=$(mktemp -d)
-    for g in `seq 1 $Nrandom`
+    for g in `seq 1 $nrandom`
     do
-        timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $grandom/$g/$g.acc $lexdir/general.lex > $tmp/$g.log 2>&1
+        timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $grandom/$g.acc $randomlex > $tmp/$g.log 2>&1
         amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
         ((cnt+=1))
         if [ "$amb" != "" ]
@@ -49,7 +49,7 @@ run_lang() {
     tmp=$(mktemp -d)
     for g in $lgrammars
     do
-        for i in `seq 1 $Nlang`
+        for i in `seq 1 $nlang`
         do
             timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $glang/acc/$g.$i.acc $lexdir/$g.lex > $tmp/${g}_${i}.log 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $tmp/${g}_${i}.log)
@@ -79,7 +79,7 @@ run_mutlang(){
        echo "===> $type, result - $result"
        for g in $mugrammars
        do
-         for n in `seq 1 $Nmutations`
+         for n in `seq 1 $nmutations`
          do
             timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $gmutlang/acc/$type/${g}.0_${n}.acc $lexdir/$g.lex > $tmp/${g}_${n}.log 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $tmp/${g}_${n}.log)
@@ -107,7 +107,7 @@ run_boltzcfg(){
     tmp=$(mktemp -d)
     for g in `seq 1 $nboltz`
     do
-        timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $gboltz/$g.acc $gboltz/boltz.lex > $tmp/$g.log 2>&1
+        timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $gboltz/$g.acc $boltzlex > $tmp/$g.log 2>&1
         amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
         ((cnt+=1))
         if [ "$amb" != "" ]
