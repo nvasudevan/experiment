@@ -134,7 +134,7 @@ done
 echo "Generated list of scripts ($scriptlist); running them in parallel ..."
 
 expstart=$(date +%s)
-cat scriptlist | parallel
+cat scriptlist | parallel --progress
 expend=$(date +%s)
 expelapsed=$(($expend - $expstart))
 
