@@ -1,0 +1,23 @@
+random_grammar_generator.py -- used for generating random grammars (single
+character tokens). This script was used to generate 1000 random grammars for 
+paper submitted to ICCSW 2012
+
+genRandomCfg - Replaces random_grammar_generator.py script. It generates
+multi characters symbols too.  
+
+genBoltzCfg - Generates grammars based on Boltzmann sampling. 
+
+Both genRandomCfg and genBoltzCfg filters out grammars of this form:
+1) root: ''
+2) A: X | X ... (ambiguous)
+3) A: ''
+4) A: A (non-terminating rule) 
+
+ParseCfg.py - Parses a boltzmann tree and spits out CFG in ACCENT format
+
+MutateGrammar.py - Mutates a grammar in one of the following ways:
+- Add a symbol
+- Remove a symbol
+- Replaces a symbol
+- Add empty alternative
+
