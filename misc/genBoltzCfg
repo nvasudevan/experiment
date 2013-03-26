@@ -63,13 +63,6 @@ class BoltzGrammarGenerator:
         print self.nonterms,self.terms  
         self.terms_map = {('TK_' + i): i for i in self.terms}
 
-        sinbaddir = os.path.expandvars("${SINBAD_DIR}")
-        if os.path.exists(sinbaddir):
-            sys.path.append(sinbaddir)
-        else:
-            sys.stderr.write("Can't locate sinbad program. Check SINBAD_DIR shell variable.\n")
-            sys.exit(1)
-        
         boltzdir = os.path.expandvars("${BOLTZ_DIR}")
         if not os.path.exists(boltzdir):
             sys.stderr.write("Can't locate Boltzmann directory. Check BOLTZ_DIR shell variable.\n")
