@@ -13,6 +13,8 @@ Both genRandomCfg and genBoltzCfg filters out grammars of this form:
 3) A: ''
 4) A: A (non-terminating rule) 
 
+N.B: export PYTHONPATH=$PYTHONPATH:<sinbad repo> before running genRandomCfg or genBoltzCfg
+
 ParseCfg.py - Parses a boltzmann tree and spits out CFG in ACCENT format
 
 MutateGrammar.py - Mutates a grammar in one of the following ways:
