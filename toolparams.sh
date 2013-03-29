@@ -14,7 +14,7 @@ mugrammars="Pascal SQL Java C"
 mutypes="type1 type2 type3 type4"
 export testgrammars nrandom nlang nmutations nboltz lgrammars mugrammars mutypes
 
-memlimit="4096m"
+memlimit="1024m"
 timelimits="10 30 60 120 240" # 120 240
 export memlimit timelimits
 

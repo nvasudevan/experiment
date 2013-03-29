@@ -13,7 +13,7 @@ check_for () {
     fi
 }
 
-check_for gmake
+check_for make
 check_for git
 check_for wget
 check_for bunzip2
@@ -26,6 +26,7 @@ check_for flex
 check_for cc
 check_for ant
 check_for parallel
+check_for tar
 
 if [ $missing -eq 1 ]; then
     exit 1
@@ -117,7 +118,7 @@ mkdir ACLA
 cd ACLA
 wget http://www.brics.dk/grammar/dist/grammar-all.jar
 wget http://www.brics.dk/grammar/grammar-2.0-4.tar.gz
-gtar -zxf grammar-2.0-4.tar.gz
+tar -zxf grammar-2.0-4.tar.gz
 cd grammar-2.0
 patch -b -R -p0 build.xml < $cwd/patches/acla.build.xml.patch || exit $?
 patch -b -R -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/acla.patch || exit $?

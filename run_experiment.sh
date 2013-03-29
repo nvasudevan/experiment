@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cwd="`pwd`"
 
@@ -134,14 +134,14 @@ done
 echo "Generated list of scripts ($scriptlist); running them in parallel ..."
 
 expstart=$(date +%s)
-cat scriptlist | parallel --progress
+cat scriptlist | parallel --progress -u -j -1
 expend=$(date +%s)
 expelapsed=$(($expend - $expstart))
 
 echo -e "\\n===> experiment complete in $expelapsed seconds \n"
 
 cd $cwd
-gtar czf results.tar.gz results
+tar czf results.tar.gz results
 echo -e "\\n===> results - results.tar.gz \\n"
 
 echo -e "\\n pretty printing results to $ppresults \\n"
