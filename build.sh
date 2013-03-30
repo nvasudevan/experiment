@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/bin/bash
 
 # We assume the following programs/tools exist:
 # gmake, wget, git, bunzip2, PyPy (Python 2.7), Java, patch, timeout, mktemp, flex, cc, ant
@@ -27,6 +27,7 @@ check_for cc
 check_for ant
 check_for parallel
 check_for tar
+check_for bc
 
 if [ $missing -eq 1 ]; then
     exit 1

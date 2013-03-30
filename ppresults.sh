@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 pp_acla() {
     g="$1"

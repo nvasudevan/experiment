@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 torun="$1"
 timelimit="${2}s"
