@@ -1,21 +1,5 @@
 #!/usr/bin/env python
 
-# generates class specification with varying sizes of Rules and Alts
-# Rule :: 4-6
-# Alts :: 5-7
-#
-# first generate nonterminal tokens (so no of rules is no of nonterminals)
-# ratio of nonterminal to terminal symbols is always 1:1
-
-# Haskell data-types generated will of this form:
-#
-#data Prog = Prog Rule Rule Rule Rule deriving (Typeable, Data, Show) 
-#data Rule = EmptyRule | RuleAlts Rule Alt deriving (Typeable, Data, Show) 
-#data Alt = EmptyAlt | AltSyms Alt Symbol deriving (Typeable, Data, Show) 
-#data Symbol = NonTerm NonTerm | Term Term deriving (Typeable, Data, Show) 
-#data NonTerm = L | G | M | E | P | W deriving (Typeable, Data, Show) 
-#data Term = TK_j | TK_k | TK_h | TK_i | TK_n | TK_o deriving (Typeable, Data, Show)
-
 import random, string, StringIO, random, getopt
 import os, subprocess, sys, tempfile
 from sets import Set
@@ -30,7 +14,10 @@ class BoltzGrammarGenerator:
         self.no_term = None
         self.sym_type = None
         self.grammardir = None
-        opts, args = getopt.getopt(sys.argv[1 : ], "hN:p:n:t:m:d:")
+        self.instance = None
+        justlex=False
+        uselex=False
+        opts, args = getopt.getopt(sys.argv[1 : ], "hN:p:n:t:m:d:i:lL")
         for opt in opts:
             if opt[0] == "-N":
                 self.no_samples=int(opt[1])
@@ -41,115 +28,111 @@ class BoltzGrammarGenerator:
             elif opt[0] == "-t":
                 self.no_term = int(opt[1])
             elif opt[0] == "-m":
-                self.sym_type = opt[1] # short or long   
+                self.sym_type = opt[1]
             elif opt[0] == "-d":
-                self.grammardir = opt[1]                 
+                self.grammardir = opt[1]
+            elif opt[0] == "-i":
+                self.instance = opt[1]
+            elif opt[0] == "-l":
+                justlex=True    
+            elif opt[0] == "-L":
+                uselex=True         
             elif opt[0] == "-h":
                 self.usage()
         
+
         if (self.no_samples == None) or \
            (self.sing_prec == None) or \
            (self.no_nonterm == None) or \
            (self.no_term == None) or \
            (self.sym_type == None) or \
            (self.grammardir == None):
-            self.usage("Not enough arguments")
-        
+            self.usage("Not enough arguments")  
+            
         # we create the directory here.    
         if not os.path.exists(self.grammardir):
             os.makedirs(self.grammardir)
 
-        self.nonterms,self.terms = Utils.genSymbols(self.sym_type, self.no_nonterm, self.no_term)            
-        print self.nonterms,self.terms  
+           
+        if uselex:
+            nt_f = open(self.grammardir  + "/" + "nonterms","r")
+            nt_line = nt_f.readline()
+            nt_f.close()
+            t_f = open(self.grammardir  + "/" + "terms","r")
+            t_line = t_f.readline()
+            t_f.close()
+            self.nonterms = nt_line.split(" | ")
+            self.terms = t_line.split(" | ")
+            print self.nonterms, self.terms
+        else:
+            self.nonterms,self.terms = Utils.genSymbols(self.sym_type, self.no_nonterm, self.no_term)
+            print self.nonterms,self.terms
+            
         self.terms_map = {('TK_' + i): i for i in self.terms}
+                    
+        
+        if justlex:
+            nonterms_s = (" | ").join(x for x in self.nonterms)
+            terms_s = (" | ").join(x for x in self.terms_map.keys())
+            # write them to file
+            nt_f = open(self.grammardir  + "/" + "nonterms","w")
+            nt_f.write(nonterms_s)
+            nt_f.close()
+            t_f = open(self.grammardir  + "/" + "terms","w")
+            t_f.write(terms_s)
+            t_f.close()
+            sys.exit(0)            
 
-        boltzdir = os.path.expandvars("${BOLTZ_DIR}")
-        if not os.path.exists(boltzdir):
-            sys.stderr.write("Can't locate Boltzmann directory. Check BOLTZ_DIR shell variable.\n")
+        boltzprog = os.path.expandvars("${BOLTZ_PROG}")
+        if not os.path.exists(boltzprog):
+            sys.stderr.write("Can't locate Boltzmann CFG program. Check BOLTZ_PROG shell variable.\n")
             sys.exit(1)
 
-        # Make will generate this
-        self.cfg_hs = os.path.join(boltzdir,"test/Cfg.hs")
-        self.boltzExe = os.path.join(boltzdir,"test/prog")
-        self.genBoltzProg(boltzdir)
-                
+        self.boltzExe = boltzprog                
+        gdir = self.grammardir
+        if self.instance != None:
+            # we write to their respective instance
+            gdir = os.path.join(gdir, str(self.instance))
+
         lf = Utils.genLex(self.terms_map,self.grammardir)
-        tf = tempfile.mkstemp()[1]
+        tf = tempfile.mkstemp()[1]            
         i = 1
-        _ct = 0
+        _cnt=0
         while i <= self.no_samples:
-            #_ct +=1; print "_ct: " , str(_ct)
+            _cnt += 1
             sys.stdout.write(".");sys.stdout.flush()
             cfg = self.genCfg()
-            # we generate a temp file
-            ###tf = tempfile.mkstemp()[1]
             Utils.write(cfg,self.terms_map,tf)
             if Utils.valid(tf,lf):
-                gf = self.grammardir + "/" + str(i) + ".acc"
+                gf = os.path.join(gdir, str(i) + ".acc")
                 r = subprocess.call(["cp",tf,gf])
                 if r != 0:
                     sys.stderr.write("Copy failed\n")
                     sys.exit(r)
                   
-#                sys.stdout.write(".")
-#                sys.stdout.flush()
-                #print "==> %s" % gf
                 sys.stdout.write("X");sys.stdout.flush()
                 i+=1
                 
-            ###os.remove(tf)
             r = subprocess.call(["cp","/dev/null",tf])
             if r != 0:
                 sys.stderr.write("Can't blank the temp file\n")
                 sys.exit(1)
+        print "no of samples tried: " , str(_cnt)
       
     def usage(self, msg=None):
         sys.stderr.write("genBoltz -d <grammar directory> -N <no of samples> " \
           "-p <precision in float> -n <no of nonterminals> -t <no of terminals> " \
-          "-m <short|long>\n\n")
+          "-m <short|long> -b <geneate lex and make> -L <use lex> -i <instance no>\n\n")
         sys.exit(1)
     
-        
-    def genBoltzProg(self, boltzdir):
-        header1 = "{-# LANGUAGE DeriveDataTypeable #-}"
-        header2 = "module Cfg where"
-        header3 = "import Data.Generics"
-        prog_rule = "data Cfg = Cfg " + ((len(self.nonterms)+1) * "Rule ") + "deriving (Typeable, Data, Show)"
-        rule_rule = "data Rule = EmptyRule | RuleAlts Rule Alt deriving (Typeable, Data, Show)"
-        alt_rule = "data Alt = EmptyAlt | AltSyms Alt Symbol deriving (Typeable, Data, Show) "
-        symbol_rule = "data Symbol = NonTerm NonTerm | Term Term deriving (Typeable, Data, Show)"
-        nt_rule = "data NonTerm = " + " | ".join(self.nonterms) + " deriving (Typeable, Data, Show)"
-        t_rule = "data Term = " + " | ".join(self.terms_map.keys()) + " deriving (Typeable, Data, Show)"
-        cfg = "%s \n%s \n%s \n\n%s \n%s \n%s \n%s \n%s \n%s\n" % (header1, header2, header3, prog_rule, rule_rule, alt_rule, symbol_rule, nt_rule, t_rule)
-        f_cfg = open(self.cfg_hs,"w")
-        f_cfg.write(cfg)
-        f_cfg.close()
-    
-        cwd = os.getcwd()
-        os.chdir(boltzdir)
-        
-        DEVNULL = open(os.devnull, 'wb')
-        r = subprocess.call(["make","clean"],stdout=DEVNULL)
-        if r != 0:
-            sys.stderr.write("Make clean failed\n")
-            sys.exit(r)
-                    
-        r = subprocess.call(["make"],stdout=DEVNULL)
-        if r != 0:
-            sys.stderr.write("Make failed\n")
-            sys.exit(r) 
- 
-        os.chdir(cwd)
-                 
         
     def genCfg(self):
         p = subprocess.Popen([self.boltzExe,str(1),str(self.sing_prec)], stdout=subprocess.PIPE)
         out = p.communicate()
         bz_cfg = out[0].splitlines()[0]
         rules=ParseCfg.parse(bz_cfg)
-        self.nonterms.append("root")
-        rules_dict = dict(zip(self.nonterms,rules))
-        #print "cfg: " , rules_dict
+        _nonterms = self.nonterms + ['root']
+        rules_dict = dict(zip(_nonterms,rules))
 
         return rules_dict
     
@@ -157,4 +140,3 @@ class BoltzGrammarGenerator:
 
 BoltzGrammarGenerator()
 
-    

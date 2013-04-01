@@ -148,4 +148,6 @@ if __name__ == "__main__":
     print "---"
     import sys
     _rules=parse(sys.argv[1]) 
+    for rule in _rules:
+        print "%s \n" % rule
     
