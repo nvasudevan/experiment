@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 torun="$1"
 shift
