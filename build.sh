@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# We assume the following programs/tools exist:
-# gmake, wget, git, bunzip2, PyPy (Python 2.7), Java, patch, timeout, mktemp, flex, cc, ant
-
+# We assume some of the more general (utility) programs to be already available.
+# We do a check before we run our experiment 
 
 missing=0
 check_for () {

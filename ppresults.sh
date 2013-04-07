@@ -8,9 +8,9 @@ pp_acla() {
         result="$resultsdir/acla/$g/${timelimit}s"
         [ ! -z "$2" ] && result="$resultsdir/acla/$g/${2}_${timelimit}s"
         n_amb_acla=$(grep -c "yes" $result)
-        aclarow="$aclarow , ($timelimit,$n_amb_acla) "
+        aclarow="$aclarow | ($timelimit,$n_amb_acla) "
     done
-    printf '%-20s :: %-200s\n' "ACLA [$g:${2}]" "$aclarow"
+    printf '%-20s %-200s\n' "ACLA [$g ${2}]" "$aclarow"
 }
 
 pp_amber_ex() {
@@ -27,11 +27,11 @@ pp_amber_ex() {
             [ ! -z "$2" ] && result_ell="$resultsdir/amber/$g/${2}_${timelimit}s_`echo "ellipsis examples $amberex" | sed -e 's/\s/_/g'`"
             n_amb_amber_ex=$(grep -c "yes" $result)
             n_amb_amber_ell_ex=$(grep -c "yes" $result_ell)
-            amberexrow="$amberexrow, ($timelimit, $n_amb_amber_ex)"
-            amberellexrow="$amberellexrow, ($timelimit, $n_amb_amber_ell_ex)"
+            amberexrow="$amberexrow | ($timelimit,$n_amb_amber_ex)"
+            amberellexrow="$amberellexrow | ($timelimit,$n_amb_amber_ell_ex)"
         done
-        printf '%-20s :: %-200s\n' "Amber [$g:${2}] [ex:$amberex]" "$amberexrow"
-        printf '%-20s :: %-200s\n' "Amber [$g:${2}] [ell ex:$amberex]" "$amberellexrow"
+        printf '%-20s %-200s\n' "Amber [$g ${2}] [ex $amberex]" "$amberexrow"
+        printf '%-20s %-200s\n' "Amber [$g ${2}] [ell ex $amberex]" "$amberellexrow"
     done
 }
 
@@ -49,11 +49,11 @@ pp_amber_len() {
             [ ! -z "$2" ] && result_ell="$resultsdir/amber/$g/${2}_${timelimit}s_`echo "ellipsis length $amberlen" | sed -e 's/\s/_/g'`"
             n_amb_amber_len=$(grep -c "yes" $result)
             n_amb_amber_ell_len=$(grep -c "yes" $result_ell)
-            amberlenrow="$amberlenrow, ($timelimit, $n_amb_amber_len)"
-            amberelllenrow="$amberelllenrow, ($timelimit, $n_amb_amber_ell_len)"
+            amberlenrow="$amberlenrow | ($timelimit,$n_amb_amber_len)"
+            amberelllenrow="$amberelllenrow | ($timelimit,$n_amb_amber_ell_len)"
         done
-        printf '%-20s :: %-200s\n' "Amber [$g:${2}] [len:$amberlen]" "$amberlenrow"
-        printf '%-20s :: %-200s\n' "Amber [$g:${2}] [ell len:$amberlen]" "$amberelllenrow"        
+        printf '%-20s %-200s\n' "Amber [$g ${2}] [len $amberlen]" "$amberlenrow"
+        printf '%-20s %-200s\n' "Amber [$g ${2}] [ell len $amberlen]" "$amberelllenrow"        
     done
 }
 
@@ -67,27 +67,25 @@ pp_ambidexter_len() {
         koptions="-q_-pg_-k_${ambilen}"
         for timelimit in $timelimits
         do
-            ftime=$(python -c "from math import ceil; print int(ceil($timelimit * $fratio))")
-
-            result="$resultsdir/ambidexter/$g/${timelimit}s_f_${ftime}s_${memlimit}_${koptions}"
-            [ ! -z "$2" ] && result="$resultsdir/ambidexter/$g/${2}_${timelimit}s_f_${ftime}s_${memlimit}_${koptions}"
+            result="$resultsdir/ambidexter/$g/${timelimit}s_f_${memlimit}_${koptions}"
+            [ ! -z "$2" ] && result="$resultsdir/ambidexter/$g/${2}_${timelimit}s_f_${memlimit}_${koptions}"
             n_amb_ambidexter_f_k=$(grep -c "yes" $result)
 
-            result_slr1="$resultsdir/ambidexter/$g/${timelimit}s_slr1f_${ftime}s_${memlimit}_${koptions}"
-            [ ! -z "$2" ] && result_slr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_slr1f_${ftime}s_${memlimit}_${koptions}"
+            result_slr1="$resultsdir/ambidexter/$g/${timelimit}s_slr1f_${memlimit}_${koptions}"
+            [ ! -z "$2" ] && result_slr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_slr1f_${memlimit}_${koptions}"
             n_amb_ambidexter_slr1f_k=$(grep -c "yes" $result_slr1)
 
-            result_lalr1="$resultsdir/ambidexter/$g/${timelimit}s_lalr1f_${ftime}s_${memlimit}_${koptions}"
-            [ ! -z "$2" ] && result_lalr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lalr1f_${ftime}s_${memlimit}_${koptions}"
+            result_lalr1="$resultsdir/ambidexter/$g/${timelimit}s_lalr1f_${memlimit}_${koptions}"
+            [ ! -z "$2" ] && result_lalr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lalr1f_${memlimit}_${koptions}"
             n_amb_ambidexter_lalr1f_k=$(grep -c "yes" $result_lalr1)
 
-            frow="$frow, ($timelimit, $n_amb_ambidexter_f_k)"
-            slr1frow="$slr1frow, ($timelimit, $n_amb_ambidexter_slr1f_k)"
-            lalr1frow="$lalr1frow, ($timelimit, $n_amb_ambidexter_lalr1f_k)"                
+            frow="$frow | ($timelimit,$n_amb_ambidexter_f_k)"
+            slr1frow="$slr1frow | ($timelimit,$n_amb_ambidexter_slr1f_k)"
+            lalr1frow="$lalr1frow | ($timelimit,$n_amb_ambidexter_lalr1f_k)"                
         done
-        printf '%-20s :: %-200s\n' "AmbiDexter [$g:${2}] [len:$amberlen, filter: n/a, ratio: $fratio]" "$frow"
-        printf '%-20s :: %-200s\n' "AmbiDexter [$g:${2}] [len:$amberlen, filter: slr1, ratio: $fratio]" "$slr1frow"
-        printf '%-20s :: %-200s\n' "AmbiDexter [$g:${2}] [len:$amberlen, filter: lalr1, ratio: $fratio]" "$lalr1frow"             
+        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $amberlen, filter: n/a]" "$frow"
+        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $amberlen, filter: slr1]" "$slr1frow"
+        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $amberlen, filter: lalr1]" "$lalr1frow"             
     done
 }
 
@@ -99,27 +97,25 @@ pp_ambidexter_inclen() {
     ikoptions="-q_-pg_-ik_0"
     for timelimit in $timelimits
     do
-        ftime=$(python -c "from math import ceil; print int(ceil($timelimit * $fratio))")
-
-        result="$resultsdir/ambidexter/$g/${timelimit}s_f_${ftime}s_${memlimit}_${ikoptions}"
-        [ ! -z "$2" ] && result="$resultsdir/ambidexter/$g/${2}_${timelimit}s_f_${ftime}s_${memlimit}_${ikoptions}"
+        result="$resultsdir/ambidexter/$g/${timelimit}s_f_${memlimit}_${ikoptions}"
+        [ ! -z "$2" ] && result="$resultsdir/ambidexter/$g/${2}_${timelimit}s_f_${memlimit}_${ikoptions}"
         n_amb_ambidexter_f_ik=$(grep -c "yes" $result)
 
-        result_slr1="$resultsdir/ambidexter/$g/${timelimit}s_slr1f_${ftime}s_${memlimit}_${ikoptions}"
-        [ ! -z "$2" ] && result_slr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_slr1f_${ftime}s_${memlimit}_${ikoptions}"
+        result_slr1="$resultsdir/ambidexter/$g/${timelimit}s_slr1f_${memlimit}_${ikoptions}"
+        [ ! -z "$2" ] && result_slr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_slr1f_${memlimit}_${ikoptions}"
         n_amb_ambidexter_slr1f_ik=$(grep -c "yes" $result_slr1)
 
-        result_lalr1="$resultsdir/ambidexter/$g/${timelimit}s_lalr1f_${ftime}s_${memlimit}_${ikoptions}"
-        [ ! -z "$2" ] && result_lalr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lalr1f_${ftime}s_${memlimit}_${ikoptions}"
+        result_lalr1="$resultsdir/ambidexter/$g/${timelimit}s_lalr1f_${memlimit}_${ikoptions}"
+        [ ! -z "$2" ] && result_lalr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lalr1f_${memlimit}_${ikoptions}"
         n_amb_ambidexter_lalr1f_ik=$(grep -c "yes" $result_lalr1)
 
-        ik_frow="$ik_frow, ($timelimit, $n_amb_ambidexter_f_ik)"
-        ik_slr1frow="$ik_slr1frow, ($timelimit, $n_amb_ambidexter_slr1f_ik)"
-        ik_lalr1frow="$ik_lalr1frow, ($timelimit, $n_amb_ambidexter_lalr1f_ik)"            
+        ik_frow="$ik_frow | ($timelimit,$n_amb_ambidexter_f_ik)"
+        ik_slr1frow="$ik_slr1frow | ($timelimit,$n_amb_ambidexter_slr1f_ik)"
+        ik_lalr1frow="$ik_lalr1frow | ($timelimit,$n_amb_ambidexter_lalr1f_ik)"            
     done
-    printf '%-20s :: %-200s\n' "AmbiDexter [$g:${2}] (ik, filter: n/a, ratio: $fratio)" "$ik_frow"
-    printf '%-20s :: %-200s\n' "AmbiDexter [$g:${2}] (ik, filter: slr1, ratio: $fratio)" "$ik_slr1frow"
-    printf '%-20s :: %-200s\n' "AmbiDexter [$g:${2}] (ik, filter: lalr1, ratio: $fratio)" "$ik_lalr1frow"
+    printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] (ik, filter: n/a)" "$ik_frow"
+    printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] (ik, filter: slr1)" "$ik_slr1frow"
+    printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] (ik, filter: lalr1)" "$ik_lalr1frow"
 }
 
 pp_sinbad() {
@@ -130,9 +126,9 @@ pp_sinbad() {
         result="$resultsdir/sinbad/$g/purerandom_${timelimit}s"
         [ ! -z "$2" ] && result="$resultsdir/sinbad/$g/${2}_purerandom_${timelimit}s"
         n_amb_sinbad_purerandom=$(grep -c "yes" $result)
-        prrow="$prrow ($timelimit, $n_amb_sinbad_purerandom)"
+        prrow="$prrow | ($timelimit,$n_amb_sinbad_purerandom)"
     done
-    printf '%-20s :: %-200s\n' "sinbad [$g:${2}] [purerandom]" "$prrow"
+    printf '%-20s %-200s\n' "sinbad [$g ${2}] [purerandom]" "$prrow"
 
     
     for d in $Tdepths
@@ -144,9 +140,9 @@ pp_sinbad() {
             result_dyn="$resultsdir/sinbad/$g/dynamic1_${timelimit}s_${_options}"
             [ ! -z "$2" ] && result_dyn="$resultsdir/sinbad/$g/${2}_dynamic1_${timelimit}s_${_options}"
             n_amb_sinbad_dyn=$(grep -c "yes" $result_dyn)
-            dyn1row="$dyn1row ($timelimit, $n_amb_sinbad_dyn)"
+            dyn1row="$dyn1row | ($timelimit,$n_amb_sinbad_dyn)"
         done
-        printf '%-20s :: %-200s\n' "sinbad [$g:${2}] [dynamic1[d=$d]]" "$dyn1row"
+        printf '%-20s %-200s\n' "sinbad [$g ${2}] [dynamic1 d=$d]" "$dyn1row"
     done
 }
 
@@ -188,33 +184,30 @@ do
     fi
 
     ##########  AMBIDEXTER  ########### 
-    for fratio in $filtertimeratios
-    do
-        echo "-- filter ratio: $fratio --"
-        ##### LENGTH #####
-        if [ "$g" == "mutlang" ]
-        then
-            for type in $mutypes
-            do
-                pp_ambidexter_len $g $type
-             done
-        else
-            pp_ambidexter_len $g
-        fi
 
-        ##### INCREMENTAL LENGTH #####
-        if [ "$g" == "mutlang" ]
-        then
-            for type in $mutypes
-            do
-                pp_ambidexter_inclen $g $type
-             done
-        else
-            pp_ambidexter_inclen $g
-        fi
+    ##### LENGTH #####
+    if [ "$g" == "mutlang" ]
+    then
+        for type in $mutypes
+        do
+            pp_ambidexter_len $g $type
+         done
+    else
+        pp_ambidexter_len $g
+    fi
+
+    ##### INCREMENTAL LENGTH #####
+    if [ "$g" == "mutlang" ]
+    then
+        for type in $mutypes
+        do
+            pp_ambidexter_inclen $g $type
+        done
+    else
+        pp_ambidexter_inclen $g
+    fi
                 
-    done
-  
+ 
     ##########  SINBAD ########### 
     if [ "$g" == "mutlang" ]
     then
