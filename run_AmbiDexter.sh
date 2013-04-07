@@ -4,8 +4,6 @@ torun="$1"
 shift
 timelimit="${1}s"
 shift
-filtertime="$1"
-shift
 filter=""
 if [ "$1" == "slr1" ] || [ "$1" == "lr0" ] || [ "$1" == "lr1" ] || [ "$1" == "lalr1" ]
 then 
@@ -31,7 +29,7 @@ print_summary() {
 }
 
 run_random1000() {
-	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${filtertime}_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
+	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
 	cp /dev/null $result
 	cnt=0
 	fcnt=0
@@ -70,7 +68,7 @@ run_random1000() {
         	fi
         fi
         rm $tmp
-        output=$(timeout $timelimit ./AmbiDexter.sh $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+        output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 		if [ "$filter" != "" ]
 		then
 			harmless=$(echo $output | cut -d, -f1)
@@ -90,7 +88,7 @@ run_random1000() {
 }
 
 run_lang() {
-	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${filtertime}_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
+	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
 	cp /dev/null $result
 	cnt=0
 	fcnt=0
@@ -130,7 +128,7 @@ run_lang() {
 		    fi
 		    
 		    rm $tmp
-		    output=$(timeout $timelimit ./AmbiDexter.sh $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+		    output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 			if [ "$filter" != "" ]
 			then
 				harmless=$(echo $output | cut -d, -f1)
@@ -154,7 +152,7 @@ run_lang() {
 run_mutlang() {
     for type in $mutypes
     do
-    	result="$resultsdir/ambidexter/$torun/${type}_${timelimit}_${filter}f_${filtertime}_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
+    	result="$resultsdir/ambidexter/$torun/${type}_${timelimit}_${filter}f_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
     	cp /dev/null $result
 		cnt=0
 		fcnt=0
@@ -201,7 +199,7 @@ run_mutlang() {
 		    fi
 		    
 		    rm $tmp
-		    output=$(timeout $timelimit ./AmbiDexter.sh $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+		    output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 			if [ "$filter" != "" ]
 			then
 				harmless=$(echo $output | cut -d, -f1)
@@ -223,7 +221,7 @@ run_mutlang() {
 }
 
 run_boltzcfg() {
-	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${filtertime}_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
+	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
 	cp /dev/null $result
 	cnt=0
 	fcnt=0
@@ -262,7 +260,7 @@ run_boltzcfg() {
         	fi
         fi
         rm $tmp
-        output=$(timeout $timelimit ./AmbiDexter.sh $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+        output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 		if [ "$filter" != "" ]
 		then
 			harmless=$(echo $output | cut -d, -f1)
@@ -283,7 +281,7 @@ run_boltzcfg() {
 
 
 run_test() {
-	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${filtertime}_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
+	result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
 	cp /dev/null $result
 	cnt=0
 	fcnt=0
@@ -295,7 +293,7 @@ run_test() {
 		gacc="$grammardir/test/$g/$g.acc"
 		gy="$grammardir/test/$g/$g.y"
 		cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
-		output=$(timeout $timelimit ./AmbiDexter.sh $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+		output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 		if [ "$filter" != "" ]
 		then
 			harmless=$(echo $output | cut -d, -f1)
@@ -318,7 +316,7 @@ main() {
     for i in $*
     do
     	[ ! -d $resultsdir/ambidexter/$torun ] && mkdir -p $resultsdir/ambidexter/$torun && echo "$resultsdir/ambidexter/$torun created!"
-    	echo "[$torun filter=$filter, time=$timelimit, filtertime=$filtertime, memory max=$memlimit, options=$ambidexteroptions]"
+    	echo "[$torun filter=$filter, time=$timelimit, memory max=$memlimit, options=$ambidexteroptions]"
         run_$i || exit $?
     done  
 }

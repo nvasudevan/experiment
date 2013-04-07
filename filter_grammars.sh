@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # - generated filtered grammmars for AmbiDexter
 #   - calculate % of unambiguous rules filtered out for each filter

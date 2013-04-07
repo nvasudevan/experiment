@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 testgrammars="amb2 amb3"
 gset="random1000 lang mutlang boltzcfg"

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+timelimit="$1"
+shift
 g="$1"
 shift
 filter=""
@@ -15,18 +17,16 @@ result=""
 
 if [ "$filter" == "" ]
 then
-    sentence=$($cmd $ambidexteroptions $g 2>/dev/null | grep 'Ambiguous string found') || exit $?
+    sentence=$(timeout $timelimit $cmd $ambidexteroptions $g 2>/dev/null | grep 'Ambiguous string found') || exit $?
 else
-    exported_harmless="`$cmd -h -$filter -oy $g 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' '`"
+    exported_harmless=$(timeout $timelimit $cmd -h -$filter -oy $g 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' ')
     harmless="`echo $exported_harmless | awk -F, '{print $1}'`"
     exported="`echo $exported_harmless | awk -F, '{print $2}'`"
     echo $harmless, $exported
-    if [ "$exported" == "" ]
+    if [ ! -z "$exported" ]
     then
-        sentence=$($cmd $ambidexteroptions $g 2>/dev/null | grep 'Ambiguous string found') || exit $?
-    else
-        sentence=$($cmd $ambidexteroptions $exported 2> /dev/null | grep 'Ambiguous string found') || exit $?
-    fi       
+        sentence=$(timeout $timelimit $cmd $ambidexteroptions $exported 2> /dev/null | grep 'Ambiguous string found') || exit $?
+    fi
 fi
 
 [ "$sentence" != "" ] && result="yes"
