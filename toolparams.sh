@@ -29,8 +29,7 @@ export amber_n_examples amber_n_length
 
 #AmbiDexter
 ambidexter_n_length="50 100"
-filtertimeratios="0.25 0.5"
-export ambidexter_n_length filtertimeratios
+export ambidexter_n_length 
 
 #SinBAD
 Tdepths="10 15 20"
