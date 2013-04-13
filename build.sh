@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# We assume some of the more general (utility) programs to be already available.
-# We do a check before we run our experiment 
+# We assume the following programs/tools exist:
+# gmake, wget, git, bunzip2, PyPy (Python 2.7), Java, patch, timeout, mktemp, flex, cc, ant
+
 
 missing=0
 check_for () {
@@ -104,7 +105,7 @@ patch -b -R -p0 $wrkdir/accent/amber/amber.c < $cwd/patches/amber.patch || exit 
 echo -e "\\n===> Fetching SinBAD tool\\n"
 
 cd $wrkdir
-git clone https://github.com/nvasudevan/sinbad.git 
+git clone http://github.com/nvasudevan/sinbad.git 
 cd sinbad
 [ ! -f $wrkdir/sinbad/src/sinbad ] && echo "SinBAD tool didn't download. Check in $wrkdir/sinbad" && exit 1
 
@@ -141,7 +142,7 @@ jar cmf META-INF/MANIFEST.MF ../grammar.modified.jar *
 echo -e "\\n===> Fetching AmbiDexter tool\\n"
 
 cd $wrkdir
-git clone https://github.com/cwi-swat/ambidexter.git
+git clone http://github.com/cwi-swat/ambidexter.git
 cd ambidexter
 git checkout db64485ad4
 mkdir -p build/META-INF

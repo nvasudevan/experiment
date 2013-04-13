@@ -27,7 +27,7 @@ export cwd wrkdir
 echo -e "\\n===> Fetching AmbiDexter grammars\\n"
 
 cd $cwd/grammars
-wget -O grammars.zip https://sites.google.com/site/basbasten/files/grammars.zip
+wget -O grammars.zip http://sites.google.com/site/basbasten/files/grammars.zip
 unzip -q grammars.zip
 mv grammars lang
 
