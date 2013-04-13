@@ -1,5 +1,11 @@
 #!/bin/bash
 
+bdir=$(dirname $0)
+echo $bdir
+. $bdir/toolparams.sh
+
+echo "$(hostname)::($basename $0) $cwd $wrkdir"
+
 torun="$1"
 shift
 fitness="$1"

@@ -1,5 +1,11 @@
 #!/bin/bash
 
+bdir=$(dirname $0)
+echo $bdir
+. $bdir/toolparams.sh
+
+echo "$(hostname)::($basename $0) $cwd $wrkdir"
+
 torun="$1"
 timelimit="${2}s"
 cmd="`which java` -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar"

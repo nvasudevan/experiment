@@ -1,5 +1,11 @@
 #!/bin/bash
 
+bdir=$(dirname $0)
+echo $bdir
+. $bdir/toolparams.sh
+
+echo "$(hostname)::($basename $0) $cwd $wrkdir"
+
 torun="$1"
 shift
 timelimit="${1}s"
@@ -68,7 +74,7 @@ run_random1000() {
         	fi
         fi
         rm $tmp
-        output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+        output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 		if [ "$filter" != "" ]
 		then
 			harmless=$(echo $output | cut -d, -f1)
@@ -128,7 +134,7 @@ run_lang() {
 		    fi
 		    
 		    rm $tmp
-		    output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+		    output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 			if [ "$filter" != "" ]
 			then
 				harmless=$(echo $output | cut -d, -f1)
@@ -199,7 +205,7 @@ run_mutlang() {
 		    fi
 		    
 		    rm $tmp
-		    output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+		    output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 			if [ "$filter" != "" ]
 			then
 				harmless=$(echo $output | cut -d, -f1)
@@ -260,7 +266,7 @@ run_boltzcfg() {
         	fi
         fi
         rm $tmp
-        output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+        output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 		if [ "$filter" != "" ]
 		then
 			harmless=$(echo $output | cut -d, -f1)
@@ -293,7 +299,7 @@ run_test() {
 		gacc="$grammardir/test/$g/$g.acc"
 		gy="$grammardir/test/$g/$g.y"
 		cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
-		output=$(./AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+		output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
 		if [ "$filter" != "" ]
 		then
 			harmless=$(echo $output | cut -d, -f1)

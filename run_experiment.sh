@@ -22,6 +22,8 @@ export cwd wrkdir
 # now run build.sh to build your tools
 ./build.sh $wrkdir || exit $?
 
+echo "Build complete"
+
 # Download AmbiDexter grammars
 
 echo -e "\\n===> Fetching AmbiDexter grammars\\n"
@@ -47,7 +49,7 @@ for g in $gset
 do  
 	for timelimit in $timelimits
 	do
-	    echo "./run_ACLA.sh $g $timelimit || exit \$?" >> $scriptlist
+	    echo "$cwd/run_ACLA.sh $g $timelimit || exit \$?" >> $scriptlist
 	done
 done
 
@@ -59,15 +61,15 @@ do
 	do
 	    for amberex in $amber_n_examples
 	    do
-	        echo "./run_Amber.sh $g $timelimit examples $amberex || exit \$?" >> $scriptlist
-		    echo "./run_Amber.sh $g $timelimit ellipsis examples $amberex || exit \$?" >> $scriptlist
-		done
+                echo "$cwd/run_Amber.sh $g $timelimit examples $amberex || exit \$?" >> $scriptlist
+                echo "$cwd/run_Amber.sh $g $timelimit ellipsis examples $amberex || exit \$?" >> $scriptlist
+	done
 
         for amberlen in $amber_n_length
         do
-		    echo "./run_Amber.sh $g $timelimit length $amberlen || exit $?" >> $scriptlist
-		    echo "./run_Amber.sh $g $timelimit ellipsis length $amberlen || exit $?" >> $scriptlist
-		done
+	    echo "$cwd/run_Amber.sh $g $timelimit length $amberlen || exit $?" >> $scriptlist
+	    echo "$cwd/run_Amber.sh $g $timelimit ellipsis length $amberlen || exit $?" >> $scriptlist
+	done
 
     done
 done
@@ -80,15 +82,15 @@ do
     do
 	    for ambilen in $ambidexter_n_length
 	    do
-	        echo "./run_AmbiDexter.sh $g $timelimit -q -pg -k $ambilen || exit $?" >> $scriptlist
-	        echo "./run_AmbiDexter.sh $g $timelimit slr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
-	        echo "./run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
-		done
+	        echo "$cwd/run_AmbiDexter.sh $g $timelimit -q -pg -k $ambilen || exit $?" >> $scriptlist
+	        echo "$cwd/run_AmbiDexter.sh $g $timelimit slr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
+	        echo "$cwd/run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
+            done
 		    
-	    echo "./run_AmbiDexter.sh $g $timelimit -q -pg -ik 0 || exit \$?" >> $scriptlist
-	    echo "./run_AmbiDexter.sh $g $timelimit slr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
-	    echo "./run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
-	done
+	    echo "$cwd/run_AmbiDexter.sh $g $timelimit -q -pg -ik 0 || exit \$?" >> $scriptlist
+	    echo "$cwd/run_AmbiDexter.sh $g $timelimit slr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
+	    echo "$cwd/run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
+    done
 done
 
 cd $cwd
@@ -97,13 +99,13 @@ for g in $gset
 do
     for timelimit in $timelimits
     do
-        echo "./run_SinBAD.sh $g purerandom $timelimit || exit \$?" >> $scriptlist
+        echo "$cwd/run_SinBAD.sh $g purerandom $timelimit || exit \$?" >> $scriptlist
         
         for backend in dynamic1
         do
             for d in $Tdepths
             do
-                echo "./run_SinBAD.sh $g $backend $timelimit $d || exit \$?" >> $scriptlist
+                echo "$cwd/run_SinBAD.sh $g $backend $timelimit $d || exit \$?" >> $scriptlist
             done
         done
     done
@@ -112,7 +114,7 @@ done
 echo "Generated list of scripts ($scriptlist); running them in parallel ..."
 
 expstart=$(date +%s)
-cat $scriptlist | parallel --progress -u -j -1
+cat $scriptlist | parallel -u -j
 expend=$(date +%s)
 expelapsed=$(($expend - $expstart))
 
