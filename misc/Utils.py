@@ -24,75 +24,96 @@ import sys
 from sets import Set
 import GrammarInfo
 
-def uniqSymbols(n_syms):
-    symbols =  Set()
+
+def genSymbols(cfggen, minsize, maxsize):
     # we need one less nonterminal as we have start symbol - root
+    n_syms = (cfggen.no_nonterms-1) + cfggen.no_terms
+    symbols =  Set()
     while (len(symbols) < (n_syms)):
-        sym = ''.join(random.choice(string.uppercase) for x in range(random.randint(2,5)))
+        sym = ''.join(random.choice(string.uppercase) for x in range(random.randint(minsize,maxsize)))
         symbols.add(sym)
-
-    return list(symbols)
-
-
-def genSymbols(sym_type, n_nonterms, n_terms):
-    if sym_type == "short":
-        # one of the nonterminal will be 'root'. so we need one less
-        nonterms = random.sample(string.uppercase,n_nonterms-1)
-        terms = random.sample(string.lowercase,n_terms)
-    else:
-        # we need one less nonterminal as we have start symbol - root
-        symlist = uniqSymbols((n_nonterms-1) + n_terms)  
-        nonterms,terms = symlist[0:n_nonterms-1],symlist[n_nonterms-1:]
+            
+    symlist = list(symbols)  
+    nonterms,terms = symlist[0:cfggen.no_nonterms-1],symlist[cfggen.no_nonterms-1:]
         
     return nonterms,terms
     
-def genLex(terms_map, grammardir):
-    lex_file = grammardir + "/lex"
+def genLex(cfggen):
+    lex_file = cfggen.grammardir + "/lex"
     f_lex = open(lex_file,"w")
     f_lex.write("%{" + "\n")
     f_lex.write('#include "yygrammar.h"' + "\n")
     f_lex.write("%}" + "\n")
     f_lex.write("%%" + "\n")
+
+    for _key in cfggen.lexterms:
+        __key = "'" + _key + "'"
+        f_lex.write('"' + _key + '"     { return ' + __key + "; }\n")
+        
+    for _key in cfggen.lexterms_multi.keys():
+        f_lex.write('"' + cfggen.lexterms_multi[_key] + '"     { return ' + _key + "; }\n")
+
+    ## these entries should come last in a lex file
     f_lex.write('" "    { /* skip blank */ }\n')
     f_lex.write('\\n     { yypos++; /* adjust linenumber and skip newline */ }' + "\n")
     f_lex.write('\\r     { yypos++; /* adjust linenumber and skip newline */ }' + "\n")
     f_lex.write('.      { yyerror("illegal token"); }' + "\n")
-    for key in terms_map.keys():
-        f_lex.write('"' + terms_map[key] + '"     { return ' + key + "; }\n")
     f_lex.close()
     
     return lex_file
     
     
-def write(rulesd, terms_map, gf):
-    cfg = open(gf,"w")
-    root_rule = rulesd.pop('root')
-    cfg.write("%token " + ", ".join(terms_map.keys()) + ";\n\n")
-    cfg.write("%nodefault\n\n")
-    cfg.write("root: " + root_rule + ";\n")
-    _keys = rulesd.keys()
+def write(cfg, cfggen, gf):
+    f_cfg = open(gf,"w")
+    root_rule = cfg.pop('root')
+    f_cfg.write("%token " + ", ".join(cfggen.lexterms_multi.keys()) + ";\n\n")
+    f_cfg.write("%nodefault\n\n")
+    f_cfg.write("root: " + root_rule + ";\n\n")
+    _keys = cfg.keys()
     for key in _keys:
-        cfg.write(key + ": " + rulesd.pop(key) + ";\n")
-    cfg.close()        
+        f_cfg.write(key + ": " + cfg.pop(key) + ";\n\n")
+    f_cfg.close()        
     
-    
+# filter out: 
+# 1) no of alternatives > 5
+# 2) X: ''; - empty rules
+# 3) percentage of empty alternatives > 5
+# 4) X : A | A | Z
+# 5) nonterminating type rules: A: B; B: C; C: A
+        
 def valid(gf, lf):
     import Lexer, CFG
     lex = Lexer.parse(open(lf, "r").read())
-    # filter out: 
-    # 1) root: '' 
-    # 2) X : A | A | Z
-    # 3) X: ''; - empty rules
-    # 4) A: A | A nonterminating type rules
+
     cfg = CFG.parse(lex, open(gf, "r").read())
-    #print "CFG:\n%s\n" % cfg
-    
-    # 1 
-    root_rule = cfg.get_rule('root')
-    if len(root_rule.seqs) == 1 and len(root_rule.seqs[0]) == 0:
-        #print "empty root rule \n"
+
+    totalrules = len(cfg.rules)
+    totalalts = 0
+    emptyalts = 0
+    for rule in cfg.rules:
+        n_alts = len(rule.seqs)
+        totalalts += n_alts
+
+        if n_alts > 5:
+            sys.stdout.write("l>")
+            sys.stdout.flush()
+            return False            
+        
+        if n_alts == 1 and len(rule.seqs[0]) == 0:
+            sys.stdout.write("e")
+            sys.stdout.flush()
+            return False
+            
+        for seq in rule.seqs:
+            n_syms = len(seq)
+            if n_syms == 0:
+                emptyalts += 1          
+
+    if (emptyalts * 1.0)/totalalts > 0.05:
+        sys.stdout.write("5")
+        sys.stdout.flush()
         return False
-         
+                
     # 2
     for rule in cfg.rules:
         seqs_set = Set()
@@ -100,19 +121,23 @@ def valid(gf, lf):
             seqs_set.add(" ".join(str(x) for x in seq))
                 
         if len(rule.seqs) != len(list(seqs_set)):
-            #print "[duplicate] %s : %s \n" % (rule.name,seqs_set)
+            sys.stdout.write("a")
+            sys.stdout.flush()
             return False
        
     # 3         
-    for rule in cfg.rules:
-        if (len(rule.seqs) == 1) and len(rule.seqs[0]) == 0:
-            #print "*EMPTY* " , rule
-            return False
-             
-    # 4         
     cyclic_rules = GrammarInfo.cyclicInfo(cfg,lex)
     if len(cyclic_rules) > 0:
-        #print "** CYCLIC RULES ** ", cyclic_rules
+        sys.stdout.write("c")
+        sys.stdout.flush()
         return False
         
+        
     return True        
+    
+if __name__ == "__main__":
+    import sys
+    gf = sys.argv[1]
+    lf = sys.argv[2]
+    print gf, lf     
+    print valid(gf,lf)

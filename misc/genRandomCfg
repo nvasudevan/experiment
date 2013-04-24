@@ -27,15 +27,25 @@ import getopt, sys, os, tempfile, subprocess
 import random, math
 import Utils
 
+TK_MINSIZE = 1
+TK_MAXSIZE = 5
+
+MINALTS = 1
+MAXALTS = 5
+
+MIN_TK_PER_RULE = 1
+MAX_TK_PER_RULE = 5
+
+EMPTY_ALTS_RATIO = 0.05
+
 class RandomGrammarGenerator:
 
     def __init__(self):
-        opts, args = getopt.getopt(sys.argv[1 : ], "hN:n:d:m:t:")
-        self.sym_type = None
+        opts, args = getopt.getopt(sys.argv[1 : ], "hN:n:d:t:")
         self.no_samples = None
         self.grammardir = None
-        self.no_nonterm = None
-        self.no_term = None
+        self.no_nonterms = None
+        self.no_terms = None
                 
         if len(opts) == 0:
             self.usage("Not enough arguments.")
@@ -45,95 +55,108 @@ class RandomGrammarGenerator:
                 self.grammardir = opt[1]
             elif opt[0] == "-N":
                 self.no_samples = int(opt[1])
-            elif opt[0] == "-m":
-                self.sym_type = opt[1]
             elif opt[0] == "-n":
-                self.no_nonterm = int(opt[1])            
+                self.no_nonterms = int(opt[1])            
             elif opt[0] == "-t":
-                self.no_term = int(opt[1])                
+                self.no_terms = int(opt[1])                
             elif opt[0] == "-h":
                 self.usage()                
             else:
                 self.usage("Unknown argument '%s'" % opt[0])
                 
         if (self.no_samples == None) or \
-           (self.no_nonterm == None) or \
-           (self.no_term == None) or \
-           (self.sym_type == None) or \
+           (self.no_nonterms == None) or \
+           (self.no_terms == None) or \
            (self.grammardir == None):
             self.usage("Not enough arguments")
                             
-        # few initialisation constants
-        self.max_alts = 5
-        self.max_tokens_per_rule = 7
-        self.min_ratio_empty_lhs = 0.1
-        self.max_ratio_empty_lhs = 0.2
-        
         if not os.path.exists(self.grammardir):
             os.makedirs(self.grammardir)
 
-        self.nonterms,self.terms = Utils.genSymbols(self.sym_type, self.no_nonterm, self.no_term)            
-        print self.nonterms,self.terms  
-        self.terms_map = {('TK_' + i): i for i in self.terms}
+        self.nonterms,self.terms = Utils.genSymbols(self, TK_MINSIZE, TK_MAXSIZE) 
+        print self.nonterms, self.terms
+        self.lexterms, self.lexterms_multi = [],{}
         
-        lf = Utils.genLex(self.terms_map,self.grammardir)
+        for _term in self.terms:
+            if len(_term) == 1:
+                self.lexterms.append(_term)
+            else:
+                self.lexterms_multi['TK_' + _term] = _term
+        
+        print self.lexterms, self.lexterms_multi
+        lf = Utils.genLex(self)
+
         i = 1
-        _ct = 0
+        _cnt = 0
         while i <= self.no_samples:
-            _ct +=1; print "_ct: " , str(_ct)
+            _cnt +=1
             cfg = self.genCfg()
             tf = tempfile.mkstemp()[1]
-            Utils.write(cfg,self.terms_map,tf)
+            Utils.write(cfg, self, tf)
             if Utils.valid(tf,lf):
                 gf = self.grammardir + "/" + str(i) + ".acc"
                 r = subprocess.call(["cp",tf,gf])
                 if r != 0:
                     sys.stderr.write("Copy failed\n")
                     sys.exit(r)
-                  
-#                sys.stdout.write(".")
-#                sys.stdout.flush()
-                print "==> %s" % gf
+
                 i+=1
                 
-            os.remove(tf)            
+            os.remove(tf)         
+        
+        print "\n=> no of samples tried: %s" % str(_cnt)   
 
         
     def usage(self, msg = None):
         if msg is not None:
             sys.stderr.write(msg + "\n\n")
             sys.stderr.write("genBoltz -d <grammar directory> -N <no of samples> " \
-              "-n <no of nonterminals> -t <no of terminals> -m <short|long>\n\n")
+              "-n <no of nonterminals> -t <no of terminals> \n\n")
             sys.exit(1)
 
         
     def genCfg(self):
         rules = {}
-        # to control no of empty alternatives,
-        min_empty = math.ceil(len(self.nonterms) * self.min_ratio_empty_lhs)
-        max_empty = math.ceil(len(self.nonterms) * self.max_ratio_empty_lhs)
-        empty_lhs_count = random.randint(min_empty, max_empty)
-        epsilon_rules = random.sample(self.nonterms, empty_lhs_count)
-        _alts = self.generate_rule()
-        rules['root'] = self.rule_repr(_alts)
+        totalalts = 0
+        quoted_lexterms = []
+        for _term in self.lexterms:
+            quoted_lexterms.append("'%s'" % _term)
+            
+        tokenlist = self.nonterms + quoted_lexterms + self.lexterms_multi.keys()
+        random.shuffle(tokenlist)
+        
+        alts = self.generate_rule(tokenlist)
+        rules['root'] = self.rule_repr(alts)
+        totalalts += len(alts)
+        
+        _rules = {}
         
         for lhs in self.nonterms:
-            _alts = self.generate_rule()
-            if epsilon_rules.__contains__(lhs):
-                _alts.append("")
+            alts = self.generate_rule(tokenlist)
+            totalalts += len(alts)
+            _rules[lhs] = alts
+           
+        n_empty_alts = int(totalalts * EMPTY_ALTS_RATIO)
+        empty_alt_rules = random.sample(self.nonterms, n_empty_alts)
             
-            rules[lhs] = self.rule_repr(_alts)
+        # add empty alts to these rules
+        for lhs in empty_alt_rules:    
+            _rules[lhs].append("")        
+                
+        for lhs in self.nonterms:
+            rules[lhs] = self.rule_repr(_rules[lhs])
+        
         return rules
 
 
-    def generate_rule(self):
+    def generate_rule(self, tokenlist):
         alts = []
-        n_alts = random.randint(1, self.max_alts)
+        n_alts = random.randint(MINALTS, MAXALTS)
         while (len(alts) < n_alts):
             alt = []
-            n_tokens = random.randint(1, self.max_tokens_per_rule)
+            n_tokens = random.randint(MIN_TK_PER_RULE, MAX_TK_PER_RULE)
             while (len(alt) < n_tokens):
-                token = random.choice(self.nonterms + self.terms_map.keys())
+                token = random.choice(tokenlist)
                 alt.append(token)
             alts.append(alt)
             
