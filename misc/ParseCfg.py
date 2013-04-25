@@ -23,9 +23,16 @@ import re, sys
 
 _RE_ID = re.compile("[a-zA-Z_][a-zA-Z_0-9]*")
 _CFG_CTOR = "Cfg"
-_RULE_ALTS_CTOR = "RuleAlts"
-_EMPTY_RULE_CTOR = "EmptyRule"
-_EMPTY_ALT_CTOR = "EmptyAlt"
+_SINGLE_ALT_CTOR = "SingleAlt"
+_RULEALTS_CTOR = ["RuleAlts1"]
+_SINGLE_SYM_CTOR = "SingleSym"
+
+_EMPTY_RULEALTS_CTOR = "EmptyRuleAlts"
+ALTSYMS_ID = re.compile("AltSyms[0-9]+")
+_SINGLE_ALTSYMS_CTOR = "SingleAltSyms1"
+_EMPTY_ALTSYMS_CTOR = "EmptyAltSyms"
+_NONTERM_CTOR = "NonTerm"
+_TERM_CTOR = "Term"
 
 class _ParseCfg:
 
@@ -33,6 +40,12 @@ class _ParseCfg:
         while i < len(_string) and _string[i] in " \r\n\t":
             i+=1
         return i
+    
+    def _r_non_ws(self, _string, i):
+        while i > 0 and _string[i] not in " \r\n\t":
+            i-=1
+        return i
+            
     
     def _id(self, _string, i):
         m = _RE_ID.match(_string,i)
@@ -55,6 +68,7 @@ class _ParseCfg:
                 
             i-=1
             
+    # 'i' starts with "("
     def _match_bkt(self, _str, i):
         brack_cnt=0
         m_str=""
@@ -70,45 +84,70 @@ class _ParseCfg:
                 return i+1, m_str
                 
             i+=1
+
+    def _alt(self, rule, j):
+        _, alt1 = self._match_bkt(rule,j)
+        # there are three options:
+        # 1) # (RuleAlts .. (AltSyms ...))
+        # 1) # (SingleAlt .. (AltSyms ...))
+        # 2) # (RuleAlts .. EmptyAlt)
+        if alt1[len(alt1)-2] == ")":
+            _, alt2 = self._r_match_bkt(alt1,len(alt1)-2)
+            return alt2
+        else:
+            # has to be a EmptyAlt
+            m = len(alt1)-2
+            n = self._r_non_ws(alt1,m)
+            _,name = self._id(alt1,n+1)
+            
+            assert name == _EMPTY_ALTSYMS_CTOR
+            return ""
     
-    def rule_alts(self, rule):
+    def _rule(self, rule):
         alts=[]
         i=(len(rule)-1)
         while (i >= 0):
-            #print "-- " , i , rule[i]
-            j,name = self._id(rule,i)
-            if name == _RULE_ALTS_CTOR:
-                j, alt1 = self._match_bkt(rule,i-1)
-                #print "=> alt1: " , alt1
-                if alt1[len(alt1)-2] == ")":
-                    # (Rule1 .. (Alt1 ...)); hence -2 from reverse
-                    k, alt2 = self._r_match_bkt(alt1,len(alt1)-2) 
-#                    print "=> alt2: " , alt2
-                    alts.append(alt2)
-                else: 
-                    k = len(alt1)-2
-                    while k >=0 and (alt1[k] not in " \r\n\t"):
-                        k-=1
+            # index of next non white space reverse direction
+            # so "abc defg", j will point to index 3 from the beginning
+            j = self._r_non_ws(rule,i)
+
+            if j == 0:
+                if rule[0] == "(":
+                    _,name = self._id(rule,1)
+                    if name == _SINGLE_ALT_CTOR:
+                        alt = self._alt(rule,j)
+                        alts.append(alt)
+                        return alts
                         
-#                    print "==>:%s:" % alt1[k+1:(len(alt1)-1)]
-                    if (alt1[k+1:(len(alt1)-1)]) == _EMPTY_ALT_CTOR:
-                        alts.append("")
-                    else: 
-                        print "FAIL"
-                        sys.exit(1)
-    
-#                print "-----"
-            i-=1
+                    assert name in _RULEALTS_CTOR
+                
+                    alt = self._alt(rule,j)
+                    alts.append(alt)
+                    return alts
+                    
+                assert rule == _EMPTY_RULEALTS_CTOR
+                print "empty"
+                return alts
+                
+                
+            elif rule[j+1] == "(":
+                _,name = self._id(rule,j+2)
+                if name in _RULEALTS_CTOR or name in _SINGLE_ALT_CTOR:
+                    alt = self._alt(rule,j+1)
+                    alts.append(alt)
+            else: 
+                k,name = self._id(rule,j+1)
+                
+            i=j-1
         
-        return alts
       
-    def parse(self, cfg):
+    def _parse(self, cfg, lexterms):
         i=len(_CFG_CTOR)
         bz_rules=[]
         while i < len(cfg):
     	    i = self._ws(cfg,i)
     	    j, name = self._id(cfg,i)
-    	    if name == _EMPTY_RULE_CTOR:
+    	    if name == _EMPTY_RULEALTS_CTOR:
     	        bz_rules.append(name)
     	        i = self._ws(cfg,j)
     	    elif cfg[j] == "(":
@@ -116,38 +155,54 @@ class _ParseCfg:
     	        i, rule = self._match_bkt(cfg,j)
     	        bz_rules.append(rule)
     	    else:
-    	        print "FAIL: Rule has to start with an %s or an %s" % (_EMPTY_RULE_CTOR,"(")
+    	        print "FAIL: Rule has to start with an %s or an %s" % (_EMPTY_RULEALTS_CTOR,"(")
     	        sys.exit(1)
     
-        #print "==>\n\n"
-        #print "bz_rules: %s \n\n" % bz_rules
+        
         rules=[]
         for bz_rule in bz_rules:
-            bz_alts = self.rule_alts(bz_rule)
+            bz_alts = self._rule(bz_rule)
             alts=[]
             for bz_alt in bz_alts:
-                alt = bz_alt.replace("(AltSyms","").replace("(NonTerm","").replace("(Term","").replace(")",""). replace("EmptyAlt","")
-                alt_list= alt.split()
-                alt_str=" ".join(sym for sym in alt_list)
+                alt = re.sub(r'\b%s\b' % _SINGLE_ALTSYMS_CTOR,"",bz_alt)
+                alt = re.sub(ALTSYMS_ID,"",alt)
+                alt = re.sub(r'\b%s\b' % _SINGLE_SYM_CTOR,"",alt)
+                alt = re.sub(r'\b%s\b' % _EMPTY_ALTSYMS_CTOR,"",alt)
+                alt = re.sub(r'\b%s\b' % _NONTERM_CTOR,"",alt)
+                alt = re.sub(r'\b%s\b' % _TERM_CTOR,"",alt)
+                alt = alt.replace("(","")
+                alt = alt.replace(")","")
+                alt_list = alt.split()
+                quoted_alt_list = []
+                for sym in alt_list:
+                    if sym in lexterms:
+                        quoted_alt_list.append("'%s'" % sym)
+                    else:
+                        quoted_alt_list.append(sym)
+                        
+                alt_str=" ".join(sym for sym in quoted_alt_list)
                 alts.append(alt_str)
             
             rules.append(" | ".join(_alt for _alt in alts))
-        
-#        for _i,_r in enumerate(bz_rules):
-##            print "bz_rule: %s \n===> rule: %s\n\n" % (bz_rules[_i],rules[_i])
-#            print "==> rule: %s\n" % (rules[_i])
             
         return rules
         
 
-def parse(cfg):
-    return _ParseCfg().parse(cfg)
+def parse(cfg,lexterms):
+    return _ParseCfg()._parse(cfg, lexterms)
 
 
 if __name__ == "__main__":
     print "---"
-    import sys
-    _rules=parse(sys.argv[1]) 
+    import sys 
+    cfg = sys.argv[1]
+    grammardir = sys.argv[2]
+    f_lexterms = open(grammardir  + "/" + "lexterms","r")
+    lexterms_line = f_lexterms.readline()
+    f_lexterms.close()
+    lexterms = lexterms_line.split(" | ")
+
+    _rules = parse(cfg, lexterms) 
     for rule in _rules:
-        print "%s \n" % rule
+        print "->%s \n" % rule
     
