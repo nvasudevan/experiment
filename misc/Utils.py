@@ -37,6 +37,16 @@ def genSymbols(cfggen, minsize, maxsize):
     nonterms,terms = symlist[0:cfggen.no_nonterms-1],symlist[cfggen.no_nonterms-1:]
         
     return nonterms,terms
+
+def splitLex(terms):
+    lexterms, lexterms_multi = [],{}
+    for _term in terms:
+        if len(_term) == 1:
+            lexterms.append(_term)
+        else:
+            lexterms_multi['TK_' + _term] = _term
+            
+    return lexterms, lexterms_multi
     
 def genLex(cfggen):
     lex_file = cfggen.grammardir + "/lex"
@@ -63,10 +73,10 @@ def genLex(cfggen):
     return lex_file
     
     
-def write(cfg, cfggen, gf):
+def write(cfg, tokenlist, gf):
     f_cfg = open(gf,"w")
     root_rule = cfg.pop('root')
-    f_cfg.write("%token " + ", ".join(cfggen.lexterms_multi.keys()) + ";\n\n")
+    f_cfg.write("%token " + ", ".join(tokenlist) + ";\n\n")
     f_cfg.write("%nodefault\n\n")
     f_cfg.write("root: " + root_rule + ";\n\n")
     _keys = cfg.keys()
@@ -81,10 +91,9 @@ def write(cfg, cfggen, gf):
 # 4) X : A | A | Z
 # 5) nonterminating type rules: A: B; B: C; C: A
         
-def valid(gf, lf):
+def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
     import Lexer, CFG
     lex = Lexer.parse(open(lf, "r").read())
-
     cfg = CFG.parse(lex, open(gf, "r").read())
 
     totalrules = len(cfg.rules)
@@ -94,7 +103,7 @@ def valid(gf, lf):
         n_alts = len(rule.seqs)
         totalalts += n_alts
 
-        if n_alts > 5:
+        if n_alts > maxalts_allowed:
             sys.stdout.write("l>")
             sys.stdout.flush()
             return False            
@@ -109,7 +118,7 @@ def valid(gf, lf):
             if n_syms == 0:
                 emptyalts += 1          
 
-    if (emptyalts * 1.0)/totalalts > 0.05:
+    if (emptyalts * 1.0)/totalalts > emptyalts_ratio:
         sys.stdout.write("5")
         sys.stdout.flush()
         return False

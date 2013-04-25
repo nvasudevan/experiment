@@ -5,34 +5,43 @@ import os, subprocess, sys, tempfile
 from sets import Set
 import ParseCfg, Utils
 
+
+TK_MINSIZE = 1
+TK_MAXSIZE = 5
+
+# for validation
+EMPTYALTS_ALLOWED_RATIO = 0.05
+MAXALTS_ALLOWED = 5
+
 class BoltzGrammarGenerator:
 
     def __init__(self):
         self.no_samples = None
         self.sing_prec = None
-        self.no_nonterm = None
-        self.no_term = None
-        self.sym_type = None
+        self.val_prec = None
+        self.no_nonterms = None
+        self.no_terms = None
         self.grammardir = None
         self.instance = None
         justlex=False
         uselex=False
-        opts, args = getopt.getopt(sys.argv[1 : ], "hN:p:n:t:m:d:i:lL")
+        opts, args = getopt.getopt(sys.argv[1 : ], "hN:p:v:n:t:d:i:lL")
+        
         for opt in opts:
             if opt[0] == "-N":
                 self.no_samples=int(opt[1])
             elif opt[0] == "-p":
                 self.sing_prec=float(opt[1])
+            elif opt[0] == "-v":
+                self.val_prec=float(opt[1])                
             elif opt[0] == "-n":
-                self.no_nonterm = int(opt[1])            
+                self.no_nonterms = int(opt[1])            
             elif opt[0] == "-t":
-                self.no_term = int(opt[1])
-            elif opt[0] == "-m":
-                self.sym_type = opt[1]
+                self.no_terms = int(opt[1])
             elif opt[0] == "-d":
-                self.grammardir = opt[1]
+                self.grammardir = opt[1]    
             elif opt[0] == "-i":
-                self.instance = opt[1]
+                self.instance = opt[1]    
             elif opt[0] == "-l":
                 justlex=True    
             elif opt[0] == "-L":
@@ -43,45 +52,63 @@ class BoltzGrammarGenerator:
 
         if (self.no_samples == None) or \
            (self.sing_prec == None) or \
-           (self.no_nonterm == None) or \
-           (self.no_term == None) or \
-           (self.sym_type == None) or \
+           (self.val_prec == None) or \
+           (self.no_nonterms == None) or \
+           (self.no_terms == None) or \
            (self.grammardir == None):
             self.usage("Not enough arguments")  
             
-        # we create the directory here.    
         if not os.path.exists(self.grammardir):
             os.makedirs(self.grammardir)
 
+        if justlex:
+            self.nonterms,self.terms = Utils.genSymbols(self, TK_MINSIZE, TK_MAXSIZE)
+            self.lexterms, self.lexterms_multi = Utils.splitLex(self.terms)
+            lf = Utils.genLex(self)
+            
+            nonterms_boltz_str = (" | ").join(x for x in self.nonterms)
+            lexterms_multi_boltz_str = (" | ").join(x for x in self.lexterms_multi.keys())
+            lexterms_boltz_str = (" | ").join(x for x in self.lexterms)
+            _terms = self.lexterms + self.lexterms_multi.keys()
+            random.shuffle(_terms)
+            terms_boltz_str = (" | ").join(x for x in _terms)
+            
+            # write them to file
+            f_nonterms = open(self.grammardir  + "/" + "nonterms","w")
+            f_nonterms.write(nonterms_boltz_str)
+            f_nonterms.close()
+
+            f_lexterms_multi = open(self.grammardir  + "/" + "lexterms_multi","w")
+            f_lexterms_multi.write(lexterms_multi_boltz_str)
+            f_lexterms_multi.close()
+                        
+            f_lexterms = open(self.grammardir  + "/" + "lexterms","w")
+            f_lexterms.write(lexterms_boltz_str)
+            f_lexterms.close()
+            
+            f_terms = open(self.grammardir  + "/" + "terms","w")
+            f_terms.write(terms_boltz_str)
+            f_terms.close()
+                        
+            sys.exit(0)
            
         if uselex:
-            nt_f = open(self.grammardir  + "/" + "nonterms","r")
-            nt_line = nt_f.readline()
-            nt_f.close()
-            t_f = open(self.grammardir  + "/" + "terms","r")
-            t_line = t_f.readline()
-            t_f.close()
-            self.nonterms = nt_line.split(" | ")
-            self.terms = t_line.split(" | ")
-            print self.nonterms, self.terms
-        else:
-            self.nonterms,self.terms = Utils.genSymbols(self.sym_type, self.no_nonterm, self.no_term)
-            print self.nonterms,self.terms
+            f_nonterms = open(self.grammardir  + "/" + "nonterms","r")
+            nt_line = f_nonterms.readline()
+            f_nonterms.close()
             
-        self.terms_map = {('TK_' + i): i for i in self.terms}
-                    
-        
-        if justlex:
-            nonterms_s = (" | ").join(x for x in self.nonterms)
-            terms_s = (" | ").join(x for x in self.terms_map.keys())
-            # write them to file
-            nt_f = open(self.grammardir  + "/" + "nonterms","w")
-            nt_f.write(nonterms_s)
-            nt_f.close()
-            t_f = open(self.grammardir  + "/" + "terms","w")
-            t_f.write(terms_s)
-            t_f.close()
-            sys.exit(0)            
+            f_lexterms_multi = open(self.grammardir  + "/" + "lexterms_multi","r")
+            lexterms_multi_line = f_lexterms_multi.readline()
+            f_lexterms_multi.close()
+            
+            f_lexterms = open(self.grammardir  + "/" + "lexterms","r")
+            lexterms_line = f_lexterms.readline()
+            f_lexterms.close()
+                        
+            self.nonterms = nt_line.split(" | ")
+            self.lexterms_multi = lexterms_multi_line.split(" | ")
+            self.lexterms = lexterms_line.split(" | ")
+            
 
         boltzprog = os.path.expandvars("${BOLTZ_PROG}")
         if not os.path.exists(boltzprog):
@@ -94,7 +121,9 @@ class BoltzGrammarGenerator:
             # we write to their respective instance
             gdir = os.path.join(gdir, str(self.instance))
 
-        lf = Utils.genLex(self.terms_map,self.grammardir)
+        lf = self.grammardir + "/lex"
+        assert os.path.exists(lf)
+        
         tf = tempfile.mkstemp()[1]            
         i = 1
         _cnt=0
@@ -102,41 +131,43 @@ class BoltzGrammarGenerator:
             _cnt += 1
             sys.stdout.write(".");sys.stdout.flush()
             cfg = self.genCfg()
-            Utils.write(cfg,self.terms_map,tf)
-            if Utils.valid(tf,lf):
+            Utils.write(cfg, self.lexterms_multi, tf)
+            if Utils.valid(tf, lf, MAXALTS_ALLOWED, EMPTYALTS_ALLOWED_RATIO):
                 gf = os.path.join(gdir, str(i) + ".acc")
                 r = subprocess.call(["cp",tf,gf])
                 if r != 0:
                     sys.stderr.write("Copy failed\n")
                     sys.exit(r)
                   
-                sys.stdout.write("X");sys.stdout.flush()
+                sys.stdout.write("[X]");sys.stdout.flush()
                 i+=1
                 
             r = subprocess.call(["cp","/dev/null",tf])
             if r != 0:
                 sys.stderr.write("Can't blank the temp file\n")
                 sys.exit(1)
-        print "no of samples tried: " , str(_cnt)
+
+        print "\n=> no of samples tried: %s" % str(_cnt) 
       
     def usage(self, msg=None):
         sys.stderr.write("genBoltz -d <grammar directory> -N <no of samples> " \
           "-p <precision in float> -n <no of nonterminals> -t <no of terminals> " \
-          "-m <short|long> -b <geneate lex and make> -L <use lex> -i <instance no>\n\n")
+          "-b <geneate lex and make> -L <use lex> -i <instance no>\n\n")
         sys.exit(1)
-    
+                 
         
     def genCfg(self):
-        p = subprocess.Popen([self.boltzExe,str(1),str(self.sing_prec)], stdout=subprocess.PIPE)
+        p = subprocess.Popen([self.boltzExe,str(1),str(self.sing_prec),str(self.val_prec)], stdout=subprocess.PIPE)
         out = p.communicate()
         bz_cfg = out[0].splitlines()[0]
-        rules=ParseCfg.parse(bz_cfg)
+        rules = ParseCfg.parse(bz_cfg, self.lexterms)
         _nonterms = self.nonterms + ['root']
         rules_dict = dict(zip(_nonterms,rules))
 
         return rules_dict
     
-           
+
 
 BoltzGrammarGenerator()
 
+    

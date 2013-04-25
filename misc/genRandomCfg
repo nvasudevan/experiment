@@ -38,6 +38,10 @@ MAX_TK_PER_RULE = 5
 
 EMPTY_ALTS_RATIO = 0.05
 
+# for validation
+EMPTYALTS_ALLOWED_RATIO = 0.05
+MAXALTS_ALLOWED = 5
+
 class RandomGrammarGenerator:
 
     def __init__(self):
@@ -74,16 +78,7 @@ class RandomGrammarGenerator:
             os.makedirs(self.grammardir)
 
         self.nonterms,self.terms = Utils.genSymbols(self, TK_MINSIZE, TK_MAXSIZE) 
-        print self.nonterms, self.terms
-        self.lexterms, self.lexterms_multi = [],{}
-        
-        for _term in self.terms:
-            if len(_term) == 1:
-                self.lexterms.append(_term)
-            else:
-                self.lexterms_multi['TK_' + _term] = _term
-        
-        print self.lexterms, self.lexterms_multi
+        self.lexterms, self.lexterms_multi = Utils.splitLex(self.terms)
         lf = Utils.genLex(self)
 
         i = 1
@@ -92,8 +87,8 @@ class RandomGrammarGenerator:
             _cnt +=1
             cfg = self.genCfg()
             tf = tempfile.mkstemp()[1]
-            Utils.write(cfg, self, tf)
-            if Utils.valid(tf,lf):
+            Utils.write(cfg, self.lexterms_multi.keys(), tf)
+            if Utils.valid(tf, lf, MAXALTS_ALLOWED, EMPTYALTS_ALLOWED_RATIO):
                 gf = self.grammardir + "/" + str(i) + ".acc"
                 r = subprocess.call(["cp",tf,gf])
                 if r != 0:
