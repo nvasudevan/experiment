@@ -11,9 +11,13 @@ n_nt=""
 n_t=""
 n_inst=""
 
+# point these to the Boltzmann software
 BOLTZ_DIR="$HOME/codespace/boltzmann/current"
 BOLTZ_SPEC="${BOLTZ_DIR}/test/Cfg.hs"
-export PYTHONPATH=$PYTHONPATH:/var/tmp/git/sinbad/src
+
+# download sinbad from there: https://github.com/nvasudevan/sinbad
+SINBAD_DIR="/var/tmp/git/sinbad/src"
+export PYTHONPATH=$PYTHONPATH:$SINBAD_DIR
 
 export BOLTZ_DIR BOLTZ_SPEC
 
@@ -42,25 +46,6 @@ usage() {
          "-v <value precision> -n <no of nonterminals> -t <no of terminals> " \
          "-i <no of parallel generators>"
     exit 1
-}
-
-
-download() {
-# *newer* wget -O boltz.tgz "http://genal.algo-prog.info/?p=syb_qc;a=snapshot;h=bc1ccc3b855fde726a16c5979b9f686624327a5c;sf=tgz"
-# wget -O boltz.tgz http://genal.algo-prog.info/?p=syb_qc;a=snapshot;h=75e0b6b451da205de4f58681bb5243ffe6663bf9;sf=tgz
-#cabal install utility-ht
-#cabal install extensible-exceptions
-#cabal install numeric-prelude
-
-## follwing needed for PreludeBase.hs
-#http://hackage.haskell.org/packages/archive/numeric-prelude/0.1.3.4/numeric-prelude-0.1.3.4.tar.gz
-
-#cp patches/test/*.hs test/
-# patch from src for src
-td=$(mktemp -d)
-cd $td
-wget -O boltz.tgz "http://genal.algo-prog.info/?p=syb_qc;a=snapshot;h=bc1ccc3b855fde726a16c5979b9f686624327a5c;sf=tgz"
-
 }
 
 genBoltzSpec() {
@@ -95,8 +80,6 @@ genBoltzSpec() {
 
 echo "$grammardir, $n_samples ($i_samples), $sprec, $vprec, $n_nt, $n_t, $n_inst"
 
-
-
 bstart=$(date +%s)
 
 if [ -z "$n_inst" ]
@@ -106,10 +89,6 @@ then
     export BOLTZ_PROG="${BOLTZ_DIR}/test/prog"
     $boltzprog -d $grammardir -N $n_samples -p $sprec -v $vprec -n $n_nt -t $n_t -L
 else
-
-    scriptlist="./scriptlist"
-    cp /dev/null $scriptlist
-
     echo "generate lex first, and make"
     $boltzprog -d $grammardir -N $n_samples -p $sprec -v $vprec -n $n_nt -t $n_t -l || exit $?
     genBoltzSpec
@@ -132,5 +111,3 @@ bend=$(date +%s)
 belapsed=$(($bend - $bstart))
 
 echo "time taken: $belapsed seconds"
-
-
