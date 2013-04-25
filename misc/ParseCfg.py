@@ -19,16 +19,23 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
+# works for the following Boltzmann spec:
+#
+#data Cfg = Cfg  Rule ... Rule deriving (Typeable, Data, Show) 
+#data Rule = SingleAlt Alt | RuleAlts1 Rule Alt deriving (Typeable, Data, Show) 
+#data Alt = EmptyAltSyms | SingleAltSyms1 Symbol | AltSyms1 Alt Symbol deriving (Typeable, Data, Show)   
+#data Symbol = NonTerm NonTerm | Term Term deriving (Typeable, Data, Show) 
+#data NonTerm = AAA | BBB | ... deriving (Typeable, Data, Show) 
+#data Term = XXX | YYY | ... deriving (Typeable, Data, Show)
+
 import re, sys
 
 _RE_ID = re.compile("[a-zA-Z_][a-zA-Z_0-9]*")
 _CFG_CTOR = "Cfg"
 _SINGLE_ALT_CTOR = "SingleAlt"
 _RULEALTS_CTOR = ["RuleAlts1"]
-_SINGLE_SYM_CTOR = "SingleSym"
 
-_EMPTY_RULEALTS_CTOR = "EmptyRuleAlts"
-ALTSYMS_ID = re.compile("AltSyms[0-9]+")
+_ALTSYMS_ID = re.compile("AltSyms[0-9]+")
 _SINGLE_ALTSYMS_CTOR = "SingleAltSyms1"
 _EMPTY_ALTSYMS_CTOR = "EmptyAltSyms"
 _NONTERM_CTOR = "NonTerm"
@@ -112,24 +119,19 @@ class _ParseCfg:
             j = self._r_non_ws(rule,i)
 
             if j == 0:
-                if rule[0] == "(":
-                    _,name = self._id(rule,1)
-                    if name == _SINGLE_ALT_CTOR:
-                        alt = self._alt(rule,j)
-                        alts.append(alt)
-                        return alts
-                        
-                    assert name in _RULEALTS_CTOR
-                
+                assert rule[0] == "("
+                _,name = self._id(rule,1)
+                if name == _SINGLE_ALT_CTOR:
                     alt = self._alt(rule,j)
                     alts.append(alt)
                     return alts
-                    
-                assert rule == _EMPTY_RULEALTS_CTOR
-                print "empty"
+                        
+                assert name in _RULEALTS_CTOR
+                
+                alt = self._alt(rule,j)
+                alts.append(alt)
                 return alts
-                
-                
+                    
             elif rule[j+1] == "(":
                 _,name = self._id(rule,j+2)
                 if name in _RULEALTS_CTOR or name in _SINGLE_ALT_CTOR:
@@ -147,16 +149,9 @@ class _ParseCfg:
         while i < len(cfg):
     	    i = self._ws(cfg,i)
     	    j, name = self._id(cfg,i)
-    	    if name == _EMPTY_RULEALTS_CTOR:
-    	        bz_rules.append(name)
-    	        i = self._ws(cfg,j)
-    	    elif cfg[j] == "(":
-    	        # we have (Rule1
-    	        i, rule = self._match_bkt(cfg,j)
-    	        bz_rules.append(rule)
-    	    else:
-    	        print "FAIL: Rule has to start with an %s or an %s" % (_EMPTY_RULEALTS_CTOR,"(")
-    	        sys.exit(1)
+    	    assert cfg[j] == "("
+    	    i, rule = self._match_bkt(cfg,j)
+    	    bz_rules.append(rule)
     
         
         rules=[]
@@ -165,8 +160,7 @@ class _ParseCfg:
             alts=[]
             for bz_alt in bz_alts:
                 alt = re.sub(r'\b%s\b' % _SINGLE_ALTSYMS_CTOR,"",bz_alt)
-                alt = re.sub(ALTSYMS_ID,"",alt)
-                alt = re.sub(r'\b%s\b' % _SINGLE_SYM_CTOR,"",alt)
+                alt = re.sub(_ALTSYMS_ID,"",alt)
                 alt = re.sub(r'\b%s\b' % _EMPTY_ALTSYMS_CTOR,"",alt)
                 alt = re.sub(r'\b%s\b' % _NONTERM_CTOR,"",alt)
                 alt = re.sub(r'\b%s\b' % _TERM_CTOR,"",alt)
