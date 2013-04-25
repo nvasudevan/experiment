@@ -1,0 +1,24 @@
+%token TK_ZY, TK_DY, TK_QI, TK_FSS, TK_APH, TK_QWXN, TK_HSY;
+
+%nodefault
+
+root: TK_HSY DHOLL 'Y' TK_HSY;
+
+A: EI | EK 'Y' TK_QWXN TK_QI EI | TK_QI 'T' TK_DY TK_ZY | TK_QWXN 'X';
+
+LG: 'Y' KSKAL LG SCLJ | TE SCLJ;
+
+EI: V A | 'T' TK_ZY A | 'X';
+
+DHOLL: A 'Y' 'Y' TK_HSY | 'Y' 'X' TK_QWXN TK_QWXN | ;
+
+EK: TK_ZY TK_QI TK_QI SCLJ DHOLL;
+
+SCLJ: LG TE | TK_APH | SCLJ A V TK_APH | 'Y' 'T' | 'X' DHOLL 'T';
+
+KSKAL: TK_ZY EK 'T';
+
+V: 'Y' V 'T' TK_DY TK_QI | EI TK_QI EI | LG TK_APH SCLJ TK_APH | TK_FSS TE TK_ZY TE;
+
+TE: TK_APH TK_QWXN KSKAL TK_APH;
+

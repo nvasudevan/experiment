@@ -1,0 +1,19 @@
+%{
+#include "yygrammar.h"
+%}
+%%
+"ZBTNE"     { return TK_ZBTNE; }
+"FEU"     { return TK_FEU; }
+"FBO"     { return TK_FBO; }
+"DPRF"     { return TK_DPRF; }
+"NDJEZ"     { return TK_NDJEZ; }
+"GO"     { return TK_GO; }
+"IC"     { return TK_IC; }
+"UB"     { return TK_UB; }
+"OAW"     { return TK_OAW; }
+"PFZU"     { return TK_PFZU; }
+"DHGTD"     { return TK_DHGTD; }
+" "    { /* skip blank */ }
+\n     { yypos++; /* adjust linenumber and skip newline */ }
+\r     { yypos++; /* adjust linenumber and skip newline */ }
+.      { yyerror("illegal token"); }

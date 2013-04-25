@@ -1,0 +1,3 @@
+Random grammars generated using genRandomCfg program. Grammars are arranged
+by the number of production rules. So grammars with 10 rules are located under
+directory "10". Each grammar set has an accompanying lex file too.
