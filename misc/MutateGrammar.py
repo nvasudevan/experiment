@@ -50,7 +50,7 @@ class MutateGrammar:
         i = 1
         while i <= self.variations_cnt:
             _cfg = self.modify_grammar()
-            _f_file = open(('%s/%s_%s.acc' % (mu_g_dir, os.path.splitext(g_file)[0], i)),"w")
+            _f_file = open(('%s/%s_%s.acc' % (mu_g_dir, os.path.splitext(g_file)[0], i+100)),"w")
             _f_file.write(header)
             _f_file.write(self.cfg_repr(_cfg))
             _f_file.close()
