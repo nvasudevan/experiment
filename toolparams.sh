@@ -1,5 +1,8 @@
 #!/bin/bash
 
+bdir=$(dirname $0)
+. $bdir/env.sh
+
 gset="randomcfg lang mutlang boltzcfg"
 grammardir="$cwd/grammars"
 lexdir="$grammardir/lex"

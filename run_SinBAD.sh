@@ -29,7 +29,7 @@ run_randomcfg() {
     ambcnt=0
     cnt=0
     tmp=$(mktemp -d)
-    for randomdize in $randomcfgsizes
+    for randomsize in $randomcfgsizes
     do
         for g in $(seq 1 $nrandom)
         do

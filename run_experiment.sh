@@ -19,6 +19,10 @@ fi
 echo -e "===> Working in $wrkdir"
 export cwd wrkdir
 
+cp /dev/null $cwd/env.sh
+echo "export cwd=$cwd" >> $cwd/env.sh
+echo "export wrkdir=$wrkdir" >> $cwd/env.sh
+
 # now run build.sh to build your tools
 ./build.sh $wrkdir || exit $?
 
@@ -112,8 +116,18 @@ done
 
 echo "Generated list of scripts ($scriptlist); running them in parallel ..."
 
+# we rely on ~/machinefile to provide list of nodes (one node on each line)
+nodelist=""
+for host in $(cat ~/machinefile)
+do
+    nodelist="8/$host,$nodelist"
+done
+pllnodes=$(echo $nodelist | sed -e 's/,$//')
+
+echo $pllnodes
+
 expstart=$(date +%s)
-cat $scriptlist | parallel -u -j
+cat $scriptlist | parallel -u -S $pllnodes
 expend=$(date +%s)
 expelapsed=$(($expend - $expstart))
 

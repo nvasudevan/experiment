@@ -21,7 +21,7 @@ then
 else
     _egrep_cmd="egrep '^Harmless productions|^Exporting'"
     _sed_cmd="sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/'" 
-    exported_harmless=$(timeout $timelimit $cmd -h -$filter -oy $g 2> /dev/null | ${_egrep_cmd} | ${_sed_cmd} | tr -d ' ')
+    exported_harmless=$(timeout $timelimit $cmd -h -$filter -oy $g 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' ')
     harmless="`echo $exported_harmless | awk -F, '{print $1}'`"
     exported="`echo $exported_harmless | awk -F, '{print $2}'`"
     echo $harmless, $exported
