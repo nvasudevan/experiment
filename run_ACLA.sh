@@ -16,10 +16,10 @@ print_summary() {
 }
 
 run_random1000() {
-	result="$resultsdir/acla/$torun/$timelimit"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0	
+    result="$resultsdir/acla/$torun/$timelimit"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0    
     for g in  `seq 1 $nrandom` 
     do
         # first convert accent format to cfg format
@@ -30,9 +30,9 @@ run_random1000() {
         ((cnt+=1))
         if [ "$sentence" == "ambiguous string" ]
         then 
-        	((ambcnt+=1))
-        	echo "$g,yes" | tee -a $result
-        	continue
+            ((ambcnt+=1))
+            echo "$g,yes" | tee -a $result
+            continue
         fi
         [ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
         echo "$g," | tee -a $result
@@ -41,10 +41,10 @@ run_random1000() {
 }
 
 run_lang() {
-	result="$resultsdir/acla/$torun/$timelimit"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
+    result="$resultsdir/acla/$torun/$timelimit"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
     for g in $lgrammars
     do
         for i in `seq 1 $nlang`
@@ -70,9 +70,9 @@ run_lang() {
             ((cnt+=1))
             if [ "$sentence" == "ambiguous string" ]
             then 
-            	((ambcnt+=1))
-            	echo "$g.$i,yes" | tee -a $result
-            	continue
+                ((ambcnt+=1))
+                echo "$g.$i,yes" | tee -a $result
+                continue
             fi
             [ "$sentence" == "unambiguous!" ] && echo "$g.$i,no" | tee -a $result  && continue
             echo "$g.$i," | tee -a $result
@@ -84,13 +84,13 @@ run_lang() {
 run_mutlang() {
     for type in $mutypes
     do
-   		result="$resultsdir/acla/$torun/${type}_${timelimit}"
-      	cp /dev/null $result
-      	ambcnt=0
-      	cnt=0
-      	echo "===> $type, result - $result"
-       	for g in $mugrammars
-       	do
+           result="$resultsdir/acla/$torun/${type}_${timelimit}"
+          cp /dev/null $result
+          ambcnt=0
+          cnt=0
+          echo "===> $type, result - $result"
+           for g in $mugrammars
+           do
           for n in `seq 1 $nmutations`
           do
              # convert grammar to cfg format
@@ -114,23 +114,23 @@ run_mutlang() {
              ((cnt+=1))
              if [ "$sentence" == "ambiguous string" ]
              then
-             	((ambcnt+=1))
-             	echo "$g.0_$n,yes" | tee -a $result
-             	continue
+                 ((ambcnt+=1))
+                 echo "$g.0_$n,yes" | tee -a $result
+                 continue
              fi
              [ "$sentence" == "unambiguous!" ] && echo "$g.0_$n,no" | tee -a $result  && continue
              echo "$g.0_$n," | tee -a $result            
           done
-       	done
-       	print_summary $ambcnt $cnt
+           done
+           print_summary $ambcnt $cnt
     done    
 }
 
 run_boltzcfg() {
-	result="$resultsdir/acla/$torun/$timelimit"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0	
+    result="$resultsdir/acla/$torun/$timelimit"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0    
     for g in  `seq 1 $nboltz` 
     do
         # first convert accent format to cfg format
@@ -146,9 +146,9 @@ run_boltzcfg() {
         ((cnt+=1))
         if [ "$sentence" == "ambiguous string" ]
         then 
-        	((ambcnt+=1))
-        	echo "$g,yes" | tee -a $result
-        	continue
+            ((ambcnt+=1))
+            echo "$g,yes" | tee -a $result
+            continue
         fi
         [ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
         echo "$g," | tee -a $result
@@ -157,25 +157,25 @@ run_boltzcfg() {
 }
 
 run_test() {
-	result="$resultsdir/acla/$torun/$timelimit"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
+    result="$resultsdir/acla/$torun/$timelimit"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
     for g in $testgrammars
     do
-		gacc="$grammardir/test/$g/$g.acc"
-		gcfg="$grammardir/test/$g/$g.cfg"    
-		cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
-		sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
-		((cnt+=1))
-		if [ "$sentence" == "ambiguous string" ]
-		then
-			((ambcnt+=1))
-			echo "$g,yes" | tee -a $result
-			continue
-		fi
-		[ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
-		echo "$g," | tee -a $result
+        gacc="$grammardir/test/$g/$g.acc"
+        gcfg="$grammardir/test/$g/$g.cfg"    
+        cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
+        sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
+        ((cnt+=1))
+        if [ "$sentence" == "ambiguous string" ]
+        then
+            ((ambcnt+=1))
+            echo "$g,yes" | tee -a $result
+            continue
+        fi
+        [ "$sentence" == "unambiguous!" ] && echo "$g,no" | tee -a $result  && continue
+        echo "$g," | tee -a $result
     done
     print_summary $ambcnt $cnt
 }
@@ -183,8 +183,8 @@ run_test() {
 main() {
     for i in $*
     do
-    	[ ! -d $resultsdir/acla/$torun ] && mkdir -p $resultsdir/acla/$torun && echo "$resultsdir/acla/$torun created!"
-    	echo "[$torun time=$timelimit, memory max=$memlimit]"
+        [ ! -d $resultsdir/acla/$torun ] && mkdir -p $resultsdir/acla/$torun && echo "$resultsdir/acla/$torun created!"
+        echo "[$torun time=$timelimit, memory max=$memlimit]"
         run_$i
     done  
 }

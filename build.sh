@@ -6,7 +6,7 @@
 
 missing=0
 check_for () {
-	which $1 > /dev/null 2> /dev/null
+    which $1 > /dev/null 2> /dev/null
     if [ $? -ne 0 ]; then
         echo "Error: can't find $1 binary"
         missing=1

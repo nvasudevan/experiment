@@ -12,8 +12,8 @@ if [ $# -eq 0 ]; then
 elif [ $# -eq 1 ]; then
     wrkdir=$1
     if [ "`dirname $wrkdir`" == "." ]; then 
-    	_wrkdir="`pwd`/`basename $wrkdir`"
-    	wrkdir = "$_wrkdir"
+        _wrkdir="`pwd`/`basename $wrkdir`"
+        wrkdir = "$_wrkdir"
     fi
     mkdir -p $wrkdir
 else
@@ -70,102 +70,102 @@ mv grammars lang
 [ ! -d $resultsdir ] && mkdir $resultsdir
 
 generate() {
-	gacc=$1
-	yacc=$2
-	filter=$3
-	starttime="`date '+%s'`"
-	out="`timeout $timelimit $cmd -h -$filter -oy $yacc 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' '`"
-	endtime="`date '+%s'`"
-	harmless="`echo $out | awk -F, '{print $1}'`"
-	exported="`echo $out | awk -F, '{print $2}'`"
-	if [ "$harmless" != "" ]
-	then
-		ratio=$(echo "scale=3; $harmless" | bc)
-		((fcnt+=1))
-		ratiocnt=$(echo "$ratiocnt + $ratio" | bc)
-	fi
-	timediff="`echo $endtime - $starttime | bc`"
-	echo "`basename $gacc .acc`, $harmless [ratio=$ratio, ratiocnt=$ratiocnt], $exported, $timediff"
+    gacc=$1
+    yacc=$2
+    filter=$3
+    starttime="`date '+%s'`"
+    out="`timeout $timelimit $cmd -h -$filter -oy $yacc 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' '`"
+    endtime="`date '+%s'`"
+    harmless="`echo $out | awk -F, '{print $1}'`"
+    exported="`echo $out | awk -F, '{print $2}'`"
+    if [ "$harmless" != "" ]
+    then
+        ratio=$(echo "scale=3; $harmless" | bc)
+        ((fcnt+=1))
+        ratiocnt=$(echo "$ratiocnt + $ratio" | bc)
+    fi
+    timediff="`echo $endtime - $starttime | bc`"
+    echo "`basename $gacc .acc`, $harmless [ratio=$ratio, ratiocnt=$ratiocnt], $exported, $timediff"
 }
 
 random1000(){
-	echo -e "\n===> random1000 \n"
-	resultf="$resultsdir/random1000_filter.stats"
-	cp /dev/null $resultf
-	for filter in $filters
-	do
-		echo -e "\n=> $filter \n"
-		cnt=0
-		fcnt=0
-		ratiocnt=0.0
-		gstarttime="`date '+%s'`"
-		for g in `seq 1 1000`
-		do
-			cat $grandom/$g/$g.acc | sed -e 's/%nodefault/%start root\n\n%%/' > $grandom/$g/$g.y
-			generate $grandom/$g/$g.acc $grandom/$g/$g.y $filter
-			((cnt+=1))
-		done
-		gendtime="`date '+%s'`"
-		avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
-		echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf
-	done
+    echo -e "\n===> random1000 \n"
+    resultf="$resultsdir/random1000_filter.stats"
+    cp /dev/null $resultf
+    for filter in $filters
+    do
+        echo -e "\n=> $filter \n"
+        cnt=0
+        fcnt=0
+        ratiocnt=0.0
+        gstarttime="`date '+%s'`"
+        for g in `seq 1 1000`
+        do
+            cat $grandom/$g/$g.acc | sed -e 's/%nodefault/%start root\n\n%%/' > $grandom/$g/$g.y
+            generate $grandom/$g/$g.acc $grandom/$g/$g.y $filter
+            ((cnt+=1))
+        done
+        gendtime="`date '+%s'`"
+        avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
+        echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf
+    done
 }
 
 lang() {
-	echo -e "\n===> lang \n"
-	resultf="$resultsdir/lang_filter.stats"
-	cp /dev/null $resultf	
-	for filter in $filters
-	do
-		echo -e "\n=> $filter \n"
-		cnt=0
-		fcnt=0
-		ratiocnt=0.0
-		gstarttime="`date '+%s'`"
-		for l in Pascal SQL Java C
-		do
-			for i in `seq 1 5`
-			do
-				generate $glang/acc/$l.$i.acc $glang/y/$l.$i.y $filter
-				((cnt+=1))
-			done
-		done
-		gendtime="`date '+%s'`"
-		avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
-		echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf			
-	done
+    echo -e "\n===> lang \n"
+    resultf="$resultsdir/lang_filter.stats"
+    cp /dev/null $resultf    
+    for filter in $filters
+    do
+        echo -e "\n=> $filter \n"
+        cnt=0
+        fcnt=0
+        ratiocnt=0.0
+        gstarttime="`date '+%s'`"
+        for l in Pascal SQL Java C
+        do
+            for i in `seq 1 5`
+            do
+                generate $glang/acc/$l.$i.acc $glang/y/$l.$i.y $filter
+                ((cnt+=1))
+            done
+        done
+        gendtime="`date '+%s'`"
+        avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
+        echo -e "\ntime taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf            
+    done
 }
-	
+    
 mutlang() {
-	echo -e "\n===> mutlang \n"
-	resultf="$resultsdir/mutlang_filter.stats"
-	cp /dev/null $resultf	
-	for filter in $filters
-	do
-		echo -e "\n=> $filter \n"
-		cnt=0
-		fcnt=0
-		ratiocnt=0.0
-		gstarttime="`date '+%s'`"
-		for t in $mutypes
-		do
-			for l in Pascal SQL Java C
-			do
-				[ ! -d "$gmutlang/y/$t" ] && mkdir -p $gmutlang/y/$t
-				for i in `seq 1 $Nmutations`
-				do
-            		grep "^%token" $glang/y/$l.0.y > $gmutlang/y/$t/$l.0_$i.y
-            		printf "\n%%%%\n" >> $gmutlang/y/$t/$l.0_$i.y
-            		egrep -v "^%token|^%nodefault" $gmutlang/acc/$t/$l.0_$i.acc >> $gmutlang/y/$t/$l.0_$i.y				
-					generate $gmutlang/acc/$t/$l.0_$i.acc $gmutlang/y/$t/$l.0_$i.y $filter
-					((cnt+=1))
-				done
-			done
-		done
-		gendtime="`date '+%s'`"
-		avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
-		echo -e "\n$t, time taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf			
-	done
+    echo -e "\n===> mutlang \n"
+    resultf="$resultsdir/mutlang_filter.stats"
+    cp /dev/null $resultf    
+    for filter in $filters
+    do
+        echo -e "\n=> $filter \n"
+        cnt=0
+        fcnt=0
+        ratiocnt=0.0
+        gstarttime="`date '+%s'`"
+        for t in $mutypes
+        do
+            for l in Pascal SQL Java C
+            do
+                [ ! -d "$gmutlang/y/$t" ] && mkdir -p $gmutlang/y/$t
+                for i in `seq 1 $Nmutations`
+                do
+                    grep "^%token" $glang/y/$l.0.y > $gmutlang/y/$t/$l.0_$i.y
+                    printf "\n%%%%\n" >> $gmutlang/y/$t/$l.0_$i.y
+                    egrep -v "^%token|^%nodefault" $gmutlang/acc/$t/$l.0_$i.acc >> $gmutlang/y/$t/$l.0_$i.y                
+                    generate $gmutlang/acc/$t/$l.0_$i.acc $gmutlang/y/$t/$l.0_$i.y $filter
+                    ((cnt+=1))
+                done
+            done
+        done
+        gendtime="`date '+%s'`"
+        avgratio=$(echo "scale=3; $ratiocnt/$fcnt" | bc)
+        echo -e "\n$t, time taken=`expr $gendtime - $gstarttime` , how many generated=$fcnt[of $cnt], avg harmless=$avgratio" | tee -a $resultf            
+    done
 }
 
 cd $cwd

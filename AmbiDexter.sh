@@ -7,11 +7,11 @@ shift
 filter=""
 if [ "$1" == "slr1" ] || [ "$1" == "lr0" ] || [ "$1" == "lr1" ] || [ "$1" == "lalr1" ]
 then
-	filter="$1"
-	shift
-	ambidexteroptions="$*"
+    filter="$1"
+    shift
+    ambidexteroptions="$*"
 else
-	ambidexteroptions="$*"
+    ambidexteroptions="$*"
 fi
 result=""
 

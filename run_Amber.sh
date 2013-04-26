@@ -22,10 +22,10 @@ print_summary() {
 }
 
 run_random1000() {
-	result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"	
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
+    result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"    
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
     cwd="`pwd`"
     for g in `seq 1 $nrandom`
     do
@@ -40,11 +40,11 @@ run_random1000() {
         ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
         if [ "$sentence" != "" ]
         then
-        	((ambcnt+=1))
-        	echo "$g,yes,${ticks}" | tee -a $result
-        	cd $cwd
-        	rm -Rf $tmp
-        	continue
+            ((ambcnt+=1))
+            echo "$g,yes,${ticks}" | tee -a $result
+            cd $cwd
+            rm -Rf $tmp
+            continue
         fi
         echo "$g,,$ticks" | tee -a $result
         cd $cwd
@@ -54,10 +54,10 @@ run_random1000() {
 }
 
 run_lang() {
-	result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
+    result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
     cwd="`pwd`"
     for g in $lgrammars
     do
@@ -74,11 +74,11 @@ run_lang() {
             ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
             if [ "$sentence" != "" ]
             then
-            	((ambcnt+=1))
-            	echo "$g.$i,yes,$ticks" | tee -a $result
-            	cd $cwd
-            	rm -Rf $tmp
-            	continue
+                ((ambcnt+=1))
+                echo "$g.$i,yes,$ticks" | tee -a $result
+                cd $cwd
+                rm -Rf $tmp
+                continue
             fi
             echo "$g.$i,,$ticks" | tee -a $result
             cd $cwd
@@ -96,7 +96,7 @@ run_mutlang() {
        cp /dev/null $result
        ambcnt=0
        cnt=0
-	   echo "===> $type, result - $result"
+       echo "===> $type, result - $result"
        for g in $mugrammars
        do
           for n in `seq 1 $nmutations`
@@ -112,11 +112,11 @@ run_mutlang() {
              ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
              if [ "$sentence" != "" ]
              then
-             	((ambcnt+=1))
-             	echo "$g.0_$n,yes,$ticks" | tee -a $result
-             	cd $cwd
-             	rm -Rf $tmp
-             	continue
+                 ((ambcnt+=1))
+                 echo "$g.0_$n,yes,$ticks" | tee -a $result
+                 cd $cwd
+                 rm -Rf $tmp
+                 continue
              fi
              echo "$g.0_$n,,$ticks" | tee -a $result
              cd $cwd
@@ -128,10 +128,10 @@ run_mutlang() {
 }
 
 run_boltzcfg() {
-	result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"	
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
+    result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"    
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
     cwd="`pwd`"
     for g in `seq 1 $nboltz`
     do
@@ -146,11 +146,11 @@ run_boltzcfg() {
         ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
         if [ "$sentence" != "" ]
         then
-        	((ambcnt+=1))
-        	echo "$g,yes,${ticks}" | tee -a $result
-        	cd $cwd
-        	rm -Rf $tmp
-        	continue
+            ((ambcnt+=1))
+            echo "$g,yes,${ticks}" | tee -a $result
+            cd $cwd
+            rm -Rf $tmp
+            continue
         fi
         echo "$g,,$ticks" | tee -a $result
         cd $cwd
@@ -160,32 +160,32 @@ run_boltzcfg() {
 }
 
 run_test() {
-	result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
-	for g in $testgrammars
-	do
-		tmp=$(mktemp -d)
-		cd $tmp
-		$accent $grammardir/test/$g/$g.acc || exit $?
-		$lex $lexdir/general.lex || exit $?
-		$cc -w -o amber -O3 yygrammar.c $ambersrc
-		output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
-		((cnt+=1))
-		sentence=$(echo $output | grep -o 'Grammar ambiguity detected')
-		ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
-		if [ "$sentence" != "" ]
-		then
-			((ambcnt+=1))
-			echo "$g,yes,$ticks" | tee -a $result
-			cd $cwd
-			rm -Rf $tmp
-			continue
-		fi
-		echo "$g,,$ticks" | tee -a $result
-		cd $cwd
-		rm -Rf $tmp  
+    result="$resultsdir/amber/$torun/${timelimit}_`echo $amberoptions | sed -e 's/\s/_/g'`"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
+    for g in $testgrammars
+    do
+        tmp=$(mktemp -d)
+        cd $tmp
+        $accent $grammardir/test/$g/$g.acc || exit $?
+        $lex $lexdir/general.lex || exit $?
+        $cc -w -o amber -O3 yygrammar.c $ambersrc
+        output=$(timeout $timelimit ./amber $amberoptions 2> /dev/null | egrep 'tick|Grammar ambiguity detected' | paste - - )
+        ((cnt+=1))
+        sentence=$(echo $output | grep -o 'Grammar ambiguity detected')
+        ticks=$(echo $output | grep -o "tick: [0-9]*" | sed -e 's/tick: //')
+        if [ "$sentence" != "" ]
+        then
+            ((ambcnt+=1))
+            echo "$g,yes,$ticks" | tee -a $result
+            cd $cwd
+            rm -Rf $tmp
+            continue
+        fi
+        echo "$g,,$ticks" | tee -a $result
+        cd $cwd
+        rm -Rf $tmp  
     done
     print_summary $ambcnt $cnt
 }
@@ -193,8 +193,8 @@ run_test() {
 main() {
     for i in $*
     do
-    	[ ! -d $resultsdir/amber/$torun ] && mkdir -p $resultsdir/amber/$torun && echo "$resultsdir/amber/$torun created!"
-    	echo "[$torun time=$timelimit, options=$amberoptions]"
+        [ ! -d $resultsdir/amber/$torun ] && mkdir -p $resultsdir/amber/$torun && echo "$resultsdir/amber/$torun created!"
+        echo "[$torun time=$timelimit, options=$amberoptions]"
         run_$i
     done  
 }

@@ -147,11 +147,11 @@ class _ParseCfg:
         i=len(_CFG_CTOR)
         bz_rules=[]
         while i < len(cfg):
-    	    i = self._ws(cfg,i)
-    	    j, name = self._id(cfg,i)
-    	    assert cfg[j] == "("
-    	    i, rule = self._match_bkt(cfg,j)
-    	    bz_rules.append(rule)
+            i = self._ws(cfg,i)
+            j, name = self._id(cfg,i)
+            assert cfg[j] == "("
+            i, rule = self._match_bkt(cfg,j)
+            bz_rules.append(rule)
     
         
         rules=[]

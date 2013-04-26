@@ -23,11 +23,11 @@ print_summary() {
 }
 
 run_random1000() {
-	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
-	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
+    result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
+    [ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
     tmp=$(mktemp -d)
     for g in `seq 1 $nrandom`
     do
@@ -36,9 +36,9 @@ run_random1000() {
         ((cnt+=1))
         if [ "$amb" != "" ]
         then 
-        	((ambcnt+=1))
-        	echo "$g,yes" | tee -a $result
-        	continue
+            ((ambcnt+=1))
+            echo "$g,yes" | tee -a $result
+            continue
         fi
         echo "$g," | tee -a $result
     done
@@ -47,11 +47,11 @@ run_random1000() {
 }
 
 run_lang() {
-	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
-	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
+    result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
+    [ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
     tmp=$(mktemp -d)
     for g in $lgrammars
     do
@@ -62,9 +62,9 @@ run_lang() {
             ((cnt+=1))
             if [ "$amb" != "" ]
             then
-           		((ambcnt+=1))
-            	echo "$g.$i,yes" | tee -a $result
-            	continue
+                   ((ambcnt+=1))
+                echo "$g.$i,yes" | tee -a $result
+                continue
             fi
             echo "$g.$i," | tee -a $result
         done
@@ -92,9 +92,9 @@ run_mutlang(){
             ((cnt+=1))
             if [ "$amb" != "" ]
             then
-            	((ambcnt+=1))
-            	echo "${g}.0_${n},yes" | tee -a $result
-            	continue
+                ((ambcnt+=1))
+                echo "${g}.0_${n},yes" | tee -a $result
+                continue
             fi
             echo "${g}.0_${n}," | tee -a $result
          done
@@ -105,11 +105,11 @@ run_mutlang(){
 }
 
 run_boltzcfg(){
-	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
-	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
+    result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
+    [ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
     tmp=$(mktemp -d)
     for g in `seq 1 $nboltz`
     do
@@ -118,9 +118,9 @@ run_boltzcfg(){
         ((cnt+=1))
         if [ "$amb" != "" ]
         then 
-        	((ambcnt+=1))
-        	echo "$g,yes" | tee -a $result
-        	continue
+            ((ambcnt+=1))
+            echo "$g,yes" | tee -a $result
+            continue
         fi
         echo "$g," | tee -a $result
     done
@@ -129,23 +129,23 @@ run_boltzcfg(){
 }
 
 run_test() {
-	result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
-	[ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
-	cp /dev/null $result
-	ambcnt=0
-	cnt=0
-	tmp=$(mktemp -d)
-	for g in $testgrammars
-	do
-		gacc="$grammardir/test/$g/$g.acc"
-		timeout $timelimit $PYTHON $sinbaddir/sinbad -b $fitness $depthoptions $gacc $lexdir/general.lex > $tmp/$g.log 2>&1
-		amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
-		((cnt+=1))
-		if [ "$amb" != "" ]
-		then
-			((ambcnt+=1))
-			echo "$g,yes" | tee -a $result
-		fi
+    result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
+    [ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
+    cp /dev/null $result
+    ambcnt=0
+    cnt=0
+    tmp=$(mktemp -d)
+    for g in $testgrammars
+    do
+        gacc="$grammardir/test/$g/$g.acc"
+        timeout $timelimit $PYTHON $sinbaddir/sinbad -b $fitness $depthoptions $gacc $lexdir/general.lex > $tmp/$g.log 2>&1
+        amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
+        ((cnt+=1))
+        if [ "$amb" != "" ]
+        then
+            ((ambcnt+=1))
+            echo "$g,yes" | tee -a $result
+        fi
     done
     rm -Rf $tmp
     print_summary $ambcnt $cnt
@@ -154,8 +154,8 @@ run_test() {
 main() {
     for i in $*
     do
-    	[ ! -d $resultsdir/sinbad/$torun ] && mkdir -p $resultsdir/sinbad/$torun && echo "$resultsdir/sinbad/$torun created!"
-    	echo "[$torun fitness=$fitness, time=$timelimit, depth options=$depthoptions]"
+        [ ! -d $resultsdir/sinbad/$torun ] && mkdir -p $resultsdir/sinbad/$torun && echo "$resultsdir/sinbad/$torun created!"
+        echo "[$torun fitness=$fitness, time=$timelimit, depth options=$depthoptions]"
         run_$i
     done  
 }
