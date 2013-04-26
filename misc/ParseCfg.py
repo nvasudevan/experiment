@@ -62,32 +62,32 @@ class _ParseCfg:
         return m.end(0), m.group()
     
     def _r_match_bkt(self, _str, i):
-        brack_cnt=0
-        j=i
+        bkt_cnt = 0
+        j = i
         while i >= 0:
             if _str[i] == ")":
-               brack_cnt+=1
+               bkt_cnt+=1
             elif _str[i] == "(":
-               brack_cnt-=1
+               bkt_cnt-=1
                
-            if brack_cnt == 0:
+            if bkt_cnt == 0:
                 return i-1, _str[i:j+1]
                 
             i-=1
             
     # 'i' starts with "("
     def _match_bkt(self, _str, i):
-        brack_cnt=0
-        m_str=""
+        bkt_cnt = 0
+        m_str = ""
         
         while i < len(_str):
             if _str[i] == "(":
-               brack_cnt+=1
+               bkt_cnt+=1
             elif _str[i] == ")":
-               brack_cnt-=1
+               bkt_cnt-=1
                
             m_str += _str[i]
-            if brack_cnt == 0:
+            if bkt_cnt == 0:
                 return i+1, m_str
                 
             i+=1
@@ -95,14 +95,14 @@ class _ParseCfg:
     def _alt(self, rule, j):
         _, alt1 = self._match_bkt(rule,j)
         # there are three options:
-        # 1) # (RuleAlts .. (AltSyms ...))
-        # 1) # (SingleAlt .. (AltSyms ...))
-        # 2) # (RuleAlts .. EmptyAlt)
+        # 1) # (RuleAlts1 .. (AltSyms ...))
+        # 2) # (RuleAlts1 .. EmptyAlt)
+        # 3) # (SingleAlt .. (AltSyms ...))
         if alt1[len(alt1)-2] == ")":
             _, alt2 = self._r_match_bkt(alt1,len(alt1)-2)
             return alt2
         else:
-            # has to be a EmptyAlt
+            # EmptyAlt
             m = len(alt1)-2
             n = self._r_non_ws(alt1,m)
             _,name = self._id(alt1,n+1)
@@ -111,11 +111,9 @@ class _ParseCfg:
             return ""
     
     def _rule(self, rule):
-        alts=[]
-        i=(len(rule)-1)
+        alts = []
+        i = (len(rule)-1)
         while (i >= 0):
-            # index of next non white space reverse direction
-            # so "abc defg", j will point to index 3 from the beginning
             j = self._r_non_ws(rule,i)
 
             if j == 0:
@@ -140,12 +138,12 @@ class _ParseCfg:
             else: 
                 k,name = self._id(rule,j+1)
                 
-            i=j-1
+            i = j-1
         
       
     def _parse(self, cfg, lexterms):
-        i=len(_CFG_CTOR)
-        bz_rules=[]
+        i = len(_CFG_CTOR)
+        bz_rules = []
         while i < len(cfg):
             i = self._ws(cfg,i)
             j, name = self._id(cfg,i)
@@ -154,10 +152,10 @@ class _ParseCfg:
             bz_rules.append(rule)
     
         
-        rules=[]
+        rules = []
         for bz_rule in bz_rules:
             bz_alts = self._rule(bz_rule)
-            alts=[]
+            alts = []
             for bz_alt in bz_alts:
                 alt = re.sub(r'\b%s\b' % _SINGLE_ALTSYMS_CTOR,"",bz_alt)
                 alt = re.sub(_ALTSYMS_ID,"",alt)
@@ -174,7 +172,7 @@ class _ParseCfg:
                     else:
                         quoted_alt_list.append(sym)
                         
-                alt_str=" ".join(sym for sym in quoted_alt_list)
+                alt_str = " ".join(sym for sym in quoted_alt_list)
                 alts.append(alt_str)
             
             rules.append(" | ".join(_alt for _alt in alts))

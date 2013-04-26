@@ -56,7 +56,7 @@ genBoltzSpec() {
     done
     nt_str=$(cat $grammardir/nonterms)
     terms_str=$(cat $grammardir/terms)
-    echo -e "nt: $nt_str \nlexterms_multi_str: $lexterms_multi_str \nlexterms: $lexterms_str"
+    echo -e "nt: $nt_str \nterms_str: $terms_str"
     header1="{-# LANGUAGE DeriveDataTypeable #-}"
     header2="module Cfg where"
     header3="import Data.Generics"
