@@ -26,7 +26,7 @@ export cwd wrkdir
 cd $wrkdir 
 
 grammardir="$cwd/grammars"
-grandom="$grammardir/random1000"
+grandom="$grammardir/randomcfg"
 glang="$grammardir/lang"
 gmutlang="$grammardir/mutlang"
 Nmutations="100"
@@ -34,7 +34,7 @@ mutypes="type1 type2 type3 type4"
 memlimit="2048m"
 cmd="`which java` -Xss8m -Xmx$memlimit -jar $wrkdir/ambidexter/build/AmbiDexter.jar"
 filters="slr1 lr0 lr1 lalr1"
-grammars="random1000 lang mutlang"
+grammars="randomcfg lang mutlang"
 timelimit="300s"
 resultsdir="$cwd/results"
 
@@ -88,9 +88,9 @@ generate() {
     echo "`basename $gacc .acc`, $harmless [ratio=$ratio, ratiocnt=$ratiocnt], $exported, $timediff"
 }
 
-random1000(){
-    echo -e "\n===> random1000 \n"
-    resultf="$resultsdir/random1000_filter.stats"
+randomcfg(){
+    echo -e "\n===> randomcfg \n"
+    resultf="$resultsdir/randomcfg_filter.stats"
     cp /dev/null $resultf
     for filter in $filters
     do
@@ -170,6 +170,6 @@ mutlang() {
 
 cd $cwd
 
-random1000
+randomcfg
 lang
 mutlang

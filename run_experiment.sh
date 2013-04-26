@@ -1,9 +1,9 @@
 #!/bin/bash
 
-cwd="`pwd`"
+cwd=$(pwd)
 
 if [ $# -eq 0 ]; then
-    wrkdir=`pwd`
+    wrkdir=$(pwd)
 elif [ $# -eq 1 ]; then
     wrkdir=$1
     if [ "`dirname $wrkdir`" == "." ]; then 
@@ -61,16 +61,15 @@ do
     do
         for amberex in $amber_n_examples
         do
-                echo "$cwd/run_Amber.sh $g $timelimit examples $amberex || exit \$?" >> $scriptlist
-                echo "$cwd/run_Amber.sh $g $timelimit ellipsis examples $amberex || exit \$?" >> $scriptlist
-    done
+            echo "$cwd/run_Amber.sh $g $timelimit examples $amberex || exit \$?" >> $scriptlist
+            echo "$cwd/run_Amber.sh $g $timelimit ellipsis examples $amberex || exit \$?" >> $scriptlist
+        done
 
         for amberlen in $amber_n_length
         do
-        echo "$cwd/run_Amber.sh $g $timelimit length $amberlen || exit $?" >> $scriptlist
-        echo "$cwd/run_Amber.sh $g $timelimit ellipsis length $amberlen || exit $?" >> $scriptlist
-    done
-
+            echo "$cwd/run_Amber.sh $g $timelimit length $amberlen || exit $?" >> $scriptlist
+            echo "$cwd/run_Amber.sh $g $timelimit ellipsis length $amberlen || exit $?" >> $scriptlist
+        done
     done
 done
 
@@ -85,7 +84,7 @@ do
             echo "$cwd/run_AmbiDexter.sh $g $timelimit -q -pg -k $ambilen || exit $?" >> $scriptlist
             echo "$cwd/run_AmbiDexter.sh $g $timelimit slr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
             echo "$cwd/run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
-            done
+        done
             
         echo "$cwd/run_AmbiDexter.sh $g $timelimit -q -pg -ik 0 || exit \$?" >> $scriptlist
         echo "$cwd/run_AmbiDexter.sh $g $timelimit slr1 -q -pg -ik 0 || exit \$?" >> $scriptlist

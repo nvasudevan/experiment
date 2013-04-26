@@ -22,25 +22,30 @@ print_summary() {
     echo -e "\nSummary: $summary \n--"
 }
 
-run_random1000() {
+run_randomcfg() {
     result="$resultsdir/sinbad/$torun/${fitness}_${timelimit}"
     [ "$depthoptions" != "" ] && result="${result}_`echo $depthoptions | sed -e 's/\s/_/g'`"
     cp /dev/null $result
     ambcnt=0
     cnt=0
     tmp=$(mktemp -d)
-    for g in `seq 1 $nrandom`
+    for randomdize in $randomcfgsizes
     do
-        timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $grandom/$g.acc $randomlex > $tmp/$g.log 2>&1
-        amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
-        ((cnt+=1))
-        if [ "$amb" != "" ]
-        then 
-            ((ambcnt+=1))
-            echo "$g,yes" | tee -a $result
-            continue
-        fi
-        echo "$g," | tee -a $result
+        for g in $(seq 1 $nrandom)
+        do
+            _acc="$grandom/$randomsize/$g.acc"
+            _lex="$grandom/$randomsize/lex"
+            timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions ${_acc} ${_lex} > $tmp/$g.log 2>&1
+            amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
+            ((cnt+=1))
+            if [ "$amb" != "" ]
+            then 
+                ((ambcnt+=1))
+                echo "$randomsize - $g,yes" | tee -a $result
+                continue
+            fi
+            echo "$randomsize - $g," | tee -a $result
+        done
     done
     rm -Rf $tmp
     print_summary $ambcnt $cnt
@@ -55,9 +60,11 @@ run_lang() {
     tmp=$(mktemp -d)
     for g in $lgrammars
     do
-        for i in `seq 1 $nlang`
+        for i in $(seq 1 $nlang)
         do
-            timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $glang/acc/$g.$i.acc $lexdir/$g.lex > $tmp/${g}_${i}.log 2>&1
+            _acc="$glang/acc/$g.$i.acc"
+            _lex="$lexdir/$g.lex"
+            timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions ${_acc} ${_lex}  > $tmp/${g}_${i}.log 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $tmp/${g}_${i}.log)
             ((cnt+=1))
             if [ "$amb" != "" ]
@@ -87,7 +94,9 @@ run_mutlang(){
        do
          for n in `seq 1 $nmutations`
          do
-            timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $gmutlang/acc/$type/${g}.0_${n}.acc $lexdir/$g.lex > $tmp/${g}_${n}.log 2>&1
+            _acc="$gmutlang/acc/$type/${g}.0_${n}.acc"
+            _lex="$lexdir/$g.lex"
+            timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions ${_acc} ${_lex} > $tmp/${g}_${n}.log 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $tmp/${g}_${n}.log)
             ((cnt+=1))
             if [ "$amb" != "" ]
@@ -111,18 +120,23 @@ run_boltzcfg(){
     ambcnt=0
     cnt=0
     tmp=$(mktemp -d)
-    for g in `seq 1 $nboltz`
+    for boltzsize in $boltzcfgsizes
     do
-        timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions $gboltz/$g.acc $boltzlex > $tmp/$g.log 2>&1
-        amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
-        ((cnt+=1))
-        if [ "$amb" != "" ]
-        then 
-            ((ambcnt+=1))
-            echo "$g,yes" | tee -a $result
-            continue
-        fi
-        echo "$g," | tee -a $result
+        for g in $(seq 1 $nboltz)
+        do
+            _acc="$gboltz/$boltzsize/$g.acc"
+            _lex="$gboltz/$boltzsize/lex"
+            timeout $timelimit ${PYTHON} $sinbaddir/sinbad -b $fitness $depthoptions ${_acc} ${_lex}  > $tmp/$g.log 2>&1
+            amb=$(grep -o 'Grammar ambiguity detected' $tmp/$g.log)
+            ((cnt+=1))
+            if [ "$amb" != "" ]
+            then 
+                ((ambcnt+=1))
+                echo "$boltzsize - $g,yes" | tee -a $result
+                continue
+            fi
+            echo "$boltzsize - $g," | tee -a $result
+        done
     done
     rm -Rf $tmp
     print_summary $ambcnt $cnt

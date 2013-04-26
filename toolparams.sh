@@ -1,18 +1,34 @@
 #!/bin/bash
 
+gset="randomcfg lang mutlang boltzcfg"
+grammardir="$cwd/grammars"
+lexdir="$grammardir/lex"
+export gset grammardir lexdir
+
 testgrammars="amb2 amb3"
-gset="random1000 lang mutlang boltzcfg"
+export testgrammars
 
-nrandom="100"
-nlang="5"
-nmutations="10"
-nboltz="100"
+grandom="$grammardir/randomcfg"
+randomcfgsizes="10 11 12"
+nrandom="10"
+export grandom randomcfgsizes nrandom 
 
+glang="$grammardir/lang"
 lgrammars="Pascal SQL Java C"
+nlang="5"
+export glang lgrammars nlang 
 
+gmutlang="$grammardir/mutlang"
 mugrammars="Pascal SQL Java C"
 mutypes="type1 type2 type3 type4"
-export testgrammars nrandom nlang nmutations nboltz lgrammars mugrammars mutypes
+nmutations="10"
+export gmutlang mugrammars mutypes nmutations 
+
+gboltz="$grammardir/boltzcfg"
+boltzcfgsizes="10 11 12"
+nboltz="10"
+
+export gboltz boltzcfgsizes nboltz 
 
 memlimit="1024m"
 timelimits="10 30 60 120 240" # 120 240
@@ -35,21 +51,9 @@ export ambidexter_n_length
 Tdepths="10 15 20"
 export Tdepths
 
-grammardir="$cwd/grammars"
-lexdir="$grammardir/lex"
-grandom="$grammardir/random1000"
-glang="$grammardir/lang"
-gmutlang="$grammardir/mutlang"
-gboltz="$grammardir/boltzcfg"
 resultsdir="$cwd/results"
 ppresults="$cwd/ppresults.txt"
-
-export grammardir lexdir grandom glang gmutlang gboltz resultsdir ppresults
-
-randomlex="$lexdir/random.lex"
-boltzlex="$lexdir/boltz.lex"
-export randomlex boltzlex
+export resultsdir ppresults
 
 export accentdir="$wrkdir/accent"
-# required for SinBAD
 export ACCENT_DIR=$accentdir

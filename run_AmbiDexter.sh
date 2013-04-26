@@ -34,7 +34,7 @@ print_summary() {
     echo -e "\nSummary: $summary \n--"
 }
 
-run_random1000() {
+run_randomcfg() {
     result="$resultsdir/ambidexter/$torun/${timelimit}_${filter}f_${memlimit}_`echo $ambidexteroptions | sed -e 's/\s/_/g'`"
     cp /dev/null $result
     cnt=0
@@ -42,11 +42,13 @@ run_random1000() {
     ratiocnt=0.0
     ambcnt=0
     avgratio=0    
-    for g in `seq 1 $nrandom`
+    for randomsize in $randomcfgsizes
     do
+        for g in $(seq 1 $nrandom)
+        do
         # first convert accent format to yacc format
-        gacc="$grandom/$g.acc"
-        gy="$grandom/$g.y"
+        gacc="$grandom/$randomsize/$g.acc"
+        gy="$grandom/$randomsize/$g.y"
         cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
         tmp="`mktemp`"
         $cmd -s $gy > $tmp 2>&1
@@ -55,9 +57,9 @@ run_random1000() {
         then
             if [ "$filter" == "" ]
             then
-                echo "$g,yes" | tee -a $result
+                echo "$randomsize - $g,yes" | tee -a $result
             else
-                echo "$g,,,yes" | tee -a $result
+                echo "$randomsize - $g,,,yes" | tee -a $result
             fi
             ((ambcnt+=1))
             continue
@@ -68,9 +70,9 @@ run_random1000() {
         then 
             if [ "$filter" == "" ]
             then 
-                echo "$g," | tee -a $result  && continue
+                echo "$randomsize - $g," | tee -a $result  && continue
             else
-                echo "$g,,," | tee -a $result && continue
+                echo "$randomsize - $g,,," | tee -a $result && continue
             fi
         fi
         rm $tmp
@@ -88,7 +90,8 @@ run_random1000() {
         ((cnt+=1))
         amb=$(echo $output | awk -F, '{print $NF}')
         [ "$amb" == "yes" ] && ((ambcnt+=1))
-        echo "$g,$output" | tee -a $result        
+        echo "$randomsize - $g,$output" | tee -a $result        
+        done
     done
     print_summary $ambcnt $cnt $fcnt $ratiocnt
 }
@@ -103,7 +106,7 @@ run_lang() {
     avgratio=0        
     for g in $lgrammars
     do
-        for i in `seq 1 $nlang`
+        for i in $(seq 1 $nlang)
         do
             gacc="$glang/acc/$g.$i.acc"
             gy="$glang/y/$g.$i.y"
@@ -168,7 +171,7 @@ run_mutlang() {
         echo "===> $type, result - $result"
         for g in $lgrammars
         do
-          for n in `seq 1 $nmutations`
+          for n in $(seq 1 $nmutations)
           do
             # convert grammar to yacc format
             gacc="$gmutlang/acc/$type/$g.0_$n.acc"
@@ -178,7 +181,7 @@ run_mutlang() {
             grep "^%token" $glang/y/$g.0.y > $gy
             printf "\n%%%%\n" >> $gy
             egrep -v "^%token|^%nodefault" $gacc >> $gy
-            tmp="`mktemp`"
+            tmp=$(mktemp)
             $cmd -s $gy > $tmp 2>&1
             message="`cat $tmp | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3`"
             if [ "$message" != "" ]
@@ -234,11 +237,13 @@ run_boltzcfg() {
     ratiocnt=0.0
     ambcnt=0
     avgratio=0    
-    for g in `seq 1 $nboltz`
+    for boltzsize in $boltzcfgsizes
     do
+        for g in $(seq 1 $nboltz)
+        do
         # first convert accent format to yacc format
-        gacc="$gboltz/$g.acc"
-        gy="$gboltz/$g.y"
+        gacc="$gboltz/$boltzsize/$g.acc"
+        gy="$gboltz/$boltzsize/$g.y"
         cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
         tmp="`mktemp`"
         $cmd -s $gy > $tmp 2>&1
@@ -247,9 +252,9 @@ run_boltzcfg() {
         then
             if [ "$filter" == "" ]
             then
-                echo "$g,yes" | tee -a $result
+                echo "$boltzsize - $g,yes" | tee -a $result
             else
-                echo "$g,,,yes" | tee -a $result
+                echo "$boltzsize - $g,,,yes" | tee -a $result
             fi
             ((ambcnt+=1))
             continue
@@ -260,9 +265,9 @@ run_boltzcfg() {
         then 
             if [ "$filter" == "" ]
             then 
-                echo "$g," | tee -a $result  && continue
+                echo "$boltzsize - $g," | tee -a $result  && continue
             else
-                echo "$g,,," | tee -a $result && continue
+                echo "$boltzsize - $g,,," | tee -a $result && continue
             fi
         fi
         rm $tmp
@@ -280,7 +285,8 @@ run_boltzcfg() {
         ((cnt+=1))
         amb=$(echo $output | awk -F, '{print $NF}')
         [ "$amb" == "yes" ] && ((ambcnt+=1))
-        echo "$g,$output" | tee -a $result        
+        echo "$boltzsize - $g,$output" | tee -a $result        
+        done
     done
     print_summary $ambcnt $cnt $fcnt $ratiocnt
 }
