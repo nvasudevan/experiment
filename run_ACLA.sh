@@ -27,7 +27,7 @@ run_randomcfg() {
             # first convert accent format to cfg format
             gacc="$grandom/$randomsize/$g.acc"
             gcfg="$grandom/$randomsize/$g.cfg"    
-            cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
+            cat $gacc | egrep -v "^%nodefault|^%token" | sed -e "s/'/\"/g" -e 's/;$//' > $gcfg
             sentence=$(timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq)
             ((cnt+=1))
             if [ "$sentence" == "ambiguous string" ]
