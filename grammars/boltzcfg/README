@@ -1,0 +1,5 @@
+Boltzmann sampled grammars generated using Haskell implementation.
+Boltzmann details:
+version: http://genal.algo-prog.info/?p=syb_qc;a=snapshot;h=bc1ccc3b855fde726a16c5979b9f686624327a5c;sf=tgz
+singular precision: 0.0000001
+value precision: 0.0001
