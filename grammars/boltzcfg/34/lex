@@ -1,0 +1,42 @@
+%{
+#include "yygrammar.h"
+%}
+%%
+"I"     { return 'I'; }
+"K"     { return 'K'; }
+"L"     { return 'L'; }
+"N"     { return 'N'; }
+"P"     { return 'P'; }
+"T"     { return 'T'; }
+"Y"     { return 'Y'; }
+"X"     { return 'X'; }
+"C"     { return 'C'; }
+"XL"     { return TK_XL; }
+"JGXJ"     { return TK_JGXJ; }
+"ARCDD"     { return TK_ARCDD; }
+"GFSO"     { return TK_GFSO; }
+"OM"     { return TK_OM; }
+"MU"     { return TK_MU; }
+"OOWXW"     { return TK_OOWXW; }
+"BZGCK"     { return TK_BZGCK; }
+"LFZKG"     { return TK_LFZKG; }
+"TRYL"     { return TK_TRYL; }
+"VHPLQ"     { return TK_VHPLQ; }
+"EGPN"     { return TK_EGPN; }
+"VZB"     { return TK_VZB; }
+"RURN"     { return TK_RURN; }
+"LC"     { return TK_LC; }
+"BTT"     { return TK_BTT; }
+"UW"     { return TK_UW; }
+"SW"     { return TK_SW; }
+"ILUCK"     { return TK_ILUCK; }
+"UX"     { return TK_UX; }
+"KKA"     { return TK_KKA; }
+"QYX"     { return TK_QYX; }
+"SLC"     { return TK_SLC; }
+"SE"     { return TK_SE; }
+"IO"     { return TK_IO; }
+" "    { /* skip blank */ }
+\n     { yypos++; /* adjust linenumber and skip newline */ }
+\r     { yypos++; /* adjust linenumber and skip newline */ }
+.      { yyerror("illegal token"); }

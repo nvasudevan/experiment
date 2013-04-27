@@ -1,0 +1,27 @@
+%{
+#include "yygrammar.h"
+%}
+%%
+"I"     { return 'I'; }
+"N"     { return 'N'; }
+"T"     { return 'T'; }
+"V"     { return 'V'; }
+"Z"     { return 'Z'; }
+"DLQ"     { return TK_DLQ; }
+"CDPMX"     { return TK_CDPMX; }
+"TT"     { return TK_TT; }
+"CQCH"     { return TK_CQCH; }
+"IPC"     { return TK_IPC; }
+"VTKPC"     { return TK_VTKPC; }
+"MGBQ"     { return TK_MGBQ; }
+"XOQ"     { return TK_XOQ; }
+"FMJ"     { return TK_FMJ; }
+"XPF"     { return TK_XPF; }
+"KQ"     { return TK_KQ; }
+"FKC"     { return TK_FKC; }
+"UPX"     { return TK_UPX; }
+"GDD"     { return TK_GDD; }
+" "    { /* skip blank */ }
+\n     { yypos++; /* adjust linenumber and skip newline */ }
+\r     { yypos++; /* adjust linenumber and skip newline */ }
+.      { yyerror("illegal token"); }

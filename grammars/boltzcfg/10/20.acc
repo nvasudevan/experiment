@@ -1,0 +1,24 @@
+%token TK_WKLJ, TK_ZT, TK_TCN, TK_WIP, TK_JX, TK_AU, TK_SM;
+
+%nodefault
+
+root: 'S' TK_JX;
+
+PS: TK_WIP;
+
+NIXU: K | 'S' TK_WIP TK_ZT 'S';
+
+SNSB: 'P' | TK_TCN I | SNSB | NIXU TK_ZT 'Z' DPDY YRYTE DPDY TK_SM I | LDOE SNSB PS;
+
+YRYTE: TK_AU PS 'S' | NIXU 'P';
+
+I: TK_JX;
+
+LDOE: TK_ZT | ;
+
+K: TK_SM LDOE 'P' | YRYTE | I TK_JX PS;
+
+M: TK_SM 'Z' 'Z' 'S' TK_WKLJ | 'S' | 'Z' | TK_WKLJ NIXU | I;
+
+DPDY: TK_ZT TK_TCN TK_WIP | NIXU | PS SNSB | TK_WKLJ;
+
