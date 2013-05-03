@@ -1,0 +1,32 @@
+%token TK_NVD, TK_MEDU, TK_DLCSA, TK_IVESS, TK_DUUU;
+
+%nodefault
+
+root:  | TK_DLCSA;
+
+QXI: MTP 'F' 'Z' | NXIED | MTP XQD | 'T';
+
+NXIED: TK_IVESS QXI 'Z';
+
+MTP: TK_NVD ZOZBJ XQD;
+
+LHFI: TK_MEDU OXHH 'T' DNYT 'T' TK_DUUU;
+
+XQD: 'F' 'X';
+
+DNYT: OXHH;
+
+WADST: 'P' TK_MEDU 'D' | NKZX TK_MEDU | XQD 'D';
+
+NNFK: QXI TK_DLCSA;
+
+FB: 'X';
+
+ZOZBJ: 'H' | 'D' 'L' | NNFK | 'L' TK_MEDU 'T' LHFI NXIED ZOZBJ 'F' TK_DUUU 'F';
+
+ZNU: NNFK DNYT NXIED;
+
+OXHH: 'X' LHFI | QXI ZOZBJ;
+
+NKZX: FB | 'F' NXIED;
+
