@@ -88,11 +88,15 @@ do
             echo "$cwd/run_AmbiDexter.sh $g $timelimit -q -pg -k $ambilen || exit $?" >> $scriptlist
             echo "$cwd/run_AmbiDexter.sh $g $timelimit slr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
             echo "$cwd/run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh $g $timelimit lr0 -q -pg -k $ambilen || exit $?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh $g $timelimit lr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
         done
             
         echo "$cwd/run_AmbiDexter.sh $g $timelimit -q -pg -ik 0 || exit \$?" >> $scriptlist
         echo "$cwd/run_AmbiDexter.sh $g $timelimit slr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
         echo "$cwd/run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh $g $timelimit lr0 -q -pg -ik 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh $g $timelimit lr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
     done
 done
 
@@ -116,10 +120,9 @@ done
 
 echo "Generated list of scripts ($scriptlist); running them in parallel ..."
 
-# we rely on ~/machinefile to provide list of nodes (one node on each line)
 nodelist=""
 for host in $(cat ~/machinefile)
-do
+do 
     nodelist="8/$host,$nodelist"
 done
 pllnodes=$(echo $nodelist | sed -e 's/,$//')
