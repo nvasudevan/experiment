@@ -63,6 +63,8 @@ pp_ambidexter_len() {
     do
         frow=""
         slr1frow=""
+	lr0frow=""
+	lr1frow=""
         lalr1frow=""
         koptions="-q_-pg_-k_${ambilen}"
         for timelimit in $timelimits
@@ -75,17 +77,29 @@ pp_ambidexter_len() {
             [ ! -z "$2" ] && result_slr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_slr1f_${memlimit}_${koptions}"
             n_amb_ambidexter_slr1f_k=$(grep -c "yes" $result_slr1)
 
+            result_lr0="$resultsdir/ambidexter/$g/${timelimit}s_lr0f_${memlimit}_${koptions}"
+            [ ! -z "$2" ] && result_lr0="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lr0f_${memlimit}_${koptions}"
+            n_amb_ambidexter_lr0f_k=$(grep -c "yes" $result_lr0)
+
+            result_lr1="$resultsdir/ambidexter/$g/${timelimit}s_lr1f_${memlimit}_${koptions}"
+            [ ! -z "$2" ] && result_lr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lr1f_${memlimit}_${koptions}"
+            n_amb_ambidexter_lr1f_k=$(grep -c "yes" $result_lr1)
+
             result_lalr1="$resultsdir/ambidexter/$g/${timelimit}s_lalr1f_${memlimit}_${koptions}"
             [ ! -z "$2" ] && result_lalr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lalr1f_${memlimit}_${koptions}"
             n_amb_ambidexter_lalr1f_k=$(grep -c "yes" $result_lalr1)
 
             frow="$frow | ($timelimit,$n_amb_ambidexter_f_k)"
             slr1frow="$slr1frow | ($timelimit,$n_amb_ambidexter_slr1f_k)"
+            lr0frow="$lr0frow | ($timelimit,$n_amb_ambidexter_lr0f_k)"
+            lr1frow="$lr1frow | ($timelimit,$n_amb_ambidexter_lr1f_k)"
             lalr1frow="$lalr1frow | ($timelimit,$n_amb_ambidexter_lalr1f_k)"                
         done
-        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $amberlen, filter: n/a]" "$frow"
-        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $amberlen, filter: slr1]" "$slr1frow"
-        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $amberlen, filter: lalr1]" "$lalr1frow"             
+        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $ambilen, filter: n/a]" "$frow"
+        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $ambilen, filter: slr1]" "$slr1frow"
+        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $ambilen, filter: lr0]" "$lr0frow"
+        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $ambilen, filter: lr1]" "$lr1frow"
+        printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] [len $ambilen, filter: lalr1]" "$lalr1frow"             
     done
 }
 
@@ -93,6 +107,8 @@ pp_ambidexter_inclen() {
     g="$1"
     ik_frow=""
     ik_slr1frow=""
+    ik_lr0frow=""
+    ik_lr1frow=""
     ik_lalr1frow=""
     ikoptions="-q_-pg_-ik_0"
     for timelimit in $timelimits
@@ -105,16 +121,28 @@ pp_ambidexter_inclen() {
         [ ! -z "$2" ] && result_slr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_slr1f_${memlimit}_${ikoptions}"
         n_amb_ambidexter_slr1f_ik=$(grep -c "yes" $result_slr1)
 
+        result_lr0="$resultsdir/ambidexter/$g/${timelimit}s_lr0f_${memlimit}_${ikoptions}"
+        [ ! -z "$2" ] && result_lr0="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lr0f_${memlimit}_${ikoptions}"
+        n_amb_ambidexter_lr0f_ik=$(grep -c "yes" $result_lr0)
+
+        result_lr1="$resultsdir/ambidexter/$g/${timelimit}s_lr1f_${memlimit}_${ikoptions}"
+        [ ! -z "$2" ] && result_lr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lr1f_${memlimit}_${ikoptions}"
+        n_amb_ambidexter_lr1f_ik=$(grep -c "yes" $result_lr1)
+
         result_lalr1="$resultsdir/ambidexter/$g/${timelimit}s_lalr1f_${memlimit}_${ikoptions}"
         [ ! -z "$2" ] && result_lalr1="$resultsdir/ambidexter/$g/${2}_${timelimit}s_lalr1f_${memlimit}_${ikoptions}"
         n_amb_ambidexter_lalr1f_ik=$(grep -c "yes" $result_lalr1)
 
         ik_frow="$ik_frow | ($timelimit,$n_amb_ambidexter_f_ik)"
         ik_slr1frow="$ik_slr1frow | ($timelimit,$n_amb_ambidexter_slr1f_ik)"
+        ik_lr0frow="$ik_lr0frow | ($timelimit,$n_amb_ambidexter_lr0f_ik)"
+        ik_lr1frow="$ik_lr1frow | ($timelimit,$n_amb_ambidexter_lr1f_ik)"
         ik_lalr1frow="$ik_lalr1frow | ($timelimit,$n_amb_ambidexter_lalr1f_ik)"            
     done
     printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] (ik, filter: n/a)" "$ik_frow"
     printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] (ik, filter: slr1)" "$ik_slr1frow"
+    printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] (ik, filter: lr0)" "$ik_lr0frow"
+    printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] (ik, filter: lr1)" "$ik_slr1frow"
     printf '%-20s %-200s\n' "AmbiDexter [$g ${2}] (ik, filter: lalr1)" "$ik_lalr1frow"
 }
 
