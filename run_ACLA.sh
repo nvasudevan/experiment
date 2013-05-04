@@ -26,9 +26,11 @@ run_randomcfg() {
         do
             # first convert accent format to cfg format
             gacc="$grandom/$randomsize/$g.acc"
-            gcfg="$grandom/$randomsize/$g.cfg"    
+            _gcfg="$grandom/$randomsize/$g.cfg"    
+	    gcfg=$(mktemp ${_gcfg}.XXXXXX)
             cat $gacc | egrep -v "^%nodefault|^%token" | sed -e "s/'/\"/g" -e 's/;$//' > $gcfg
             sentence=$(timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq)
+	    rm $gcfg
             ((cnt+=1))
             if [ "$sentence" == "ambiguous string" ]
             then 
@@ -54,8 +56,9 @@ run_lang() {
         do
             # convert yacc grammars from AmbiDexter to ACLA format
             gacc="$glang/acc/$g.$i.acc"
-            gcfg="$grammardir/cfg/$g.$i.cfg"
+            _gcfg="$grammardir/cfg/$g.$i.cfg"
             [ ! -d $grammardir/cfg ] && mkdir -p $grammardir/cfg    
+	    gcfg=$(mktemp ${_gcfg}.XXXXXX)
             cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
             tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
             for token in $tokenlist
@@ -70,6 +73,7 @@ run_lang() {
 #                fi
             done            
             sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
+	    rm $gcfg
             ((cnt+=1))
             if [ "$sentence" == "ambiguous string" ]
             then 
@@ -98,8 +102,9 @@ run_mutlang() {
           do
              # convert grammar to cfg format
              gacc="$gmutlang/acc/$type/$g.0_$n.acc"
-             gcfg="$gmutlang/cfg/$type/$g.0_$n.cfg"
+             _gcfg="$gmutlang/cfg/$type/$g.0_$n.cfg"
              [ ! -d $gmutlang/cfg/$type ] && mkdir -p $gmutlang/cfg/$type
+	     gcfg=$(mktemp ${_gcfg}.XXXXXX)
              cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
              tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
              for token in $tokenlist
@@ -114,6 +119,7 @@ run_mutlang() {
 #                fi                
              done
              sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
+	     rm $gcfg
              ((cnt+=1))
              if [ "$sentence" == "ambiguous string" ]
              then
@@ -140,7 +146,8 @@ run_boltzcfg() {
         do
             # first convert accent format to cfg format
             gacc="$gboltz/$boltzsize/$g.acc"
-            gcfg="$gboltz/$boltzsize/$g.cfg"    
+            _gcfg="$gboltz/$boltzsize/$g.cfg"    
+	    gcfg=$(mktemp ${_gcfg}.XXXXXX)
             cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " | sed -e 's/;$//g' > $gcfg
             tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
             for token in $tokenlist
@@ -148,6 +155,7 @@ run_boltzcfg() {
                sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" $gcfg
             done        
             sentence=$(timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq)
+	    rm $gcfg
             ((cnt+=1))
             if [ "$sentence" == "ambiguous string" ]
             then 

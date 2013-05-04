@@ -48,7 +48,8 @@ run_randomcfg() {
         do
         # first convert accent format to yacc format
         gacc="$grandom/$randomsize/$g.acc"
-        gy="$grandom/$randomsize/$g.y"
+        _gy="$grandom/$randomsize/$g.y"
+	gy=$(mktemp ${_gy}.XXXXXX.y)
         cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
         tmp="`mktemp`"
         $cmd -s $gy > $tmp 2>&1
@@ -75,8 +76,8 @@ run_randomcfg() {
                 echo "$randomsize - $g,,," | tee -a $result && continue
             fi
         fi
-        rm $tmp
         output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+        rm $tmp $gy
         if [ "$filter" != "" ]
         then
             harmless=$(echo $output | cut -d, -f1)
@@ -136,8 +137,8 @@ run_lang() {
                 fi
             fi
             
-            rm $tmp
             output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+            rm $tmp
             if [ "$filter" != "" ]
             then
                 harmless=$(echo $output | cut -d, -f1)
@@ -175,8 +176,9 @@ run_mutlang() {
           do
             # convert grammar to yacc format
             gacc="$gmutlang/acc/$type/$g.0_$n.acc"
-            gy="$gmutlang/y/$type/$g.0_$n.y"
+            _gy="$gmutlang/y/$type/$g.0_$n.y"
             [ ! -d "$gmutlang/y/$type" ] && mkdir -p $gmutlang/y/$type
+	    gy=$(mktemp ${_gy}.XXXXXX.y)
             # add %token lines from grammar.0.y to the yacc one
             grep "^%token" $glang/y/$g.0.y > $gy
             printf "\n%%%%\n" >> $gy
@@ -207,8 +209,8 @@ run_mutlang() {
                 fi
             fi
             
-            rm $tmp
             output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+            rm $tmp $gy
             if [ "$filter" != "" ]
             then
                 harmless=$(echo $output | cut -d, -f1)
@@ -243,7 +245,8 @@ run_boltzcfg() {
         do
         # first convert accent format to yacc format
         gacc="$gboltz/$boltzsize/$g.acc"
-        gy="$gboltz/$boltzsize/$g.y"
+        _gy="$gboltz/$boltzsize/$g.y"
+	gy=$(mktemp ${_gy}.XXXXXX.y)
         cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
         tmp="`mktemp`"
         $cmd -s $gy > $tmp 2>&1
@@ -270,8 +273,8 @@ run_boltzcfg() {
                 echo "$boltzsize - $g,,," | tee -a $result && continue
             fi
         fi
-        rm $tmp
         output=$($bdir/AmbiDexter.sh $timelimit $gy $filter $ambidexteroptions | tr '\n' ',') || exit $?
+        rm $tmp $gy
         if [ "$filter" != "" ]
         then
             harmless=$(echo $output | cut -d, -f1)
