@@ -32,6 +32,12 @@ class MutateGrammar:
         self.cfg = CFG.parse(self.lex, open(gf, "r").read())
         self.mutype = mutype
         self.symbolic_tokens = []
+        #create a list of all nonterminal and terminal symbols
+        self.tokens = [rule.name for rule in self.cfg.rules if rule.name != 'root']
+        self.tokens += self.lex.keys()
+        random.shuffle(self.tokens)
+        print self.tokens
+
         gf_lines = open(gf, "r").readlines()
         header = "%nodefault\n\n"
         for line in gf_lines:
@@ -50,7 +56,7 @@ class MutateGrammar:
         i = 1
         while i <= self.variations_cnt:
             _cfg = self.modify_grammar()
-            _f_file = open(('%s/%s_%s.acc' % (mu_g_dir, os.path.splitext(g_file)[0], i+100)),"w")
+            _f_file = open(('%s/%s_%s.acc' % (mu_g_dir, os.path.splitext(g_file)[0], i)),"w")
             _f_file.write(header)
             _f_file.write(self.cfg_repr(_cfg))
             _f_file.close()
@@ -80,40 +86,61 @@ class MutateGrammar:
 
 
     def modify_seq(self, rule):
-        i_seq = random.randint(0, rule.seqs.__len__()-1)
-        seq =  rule.seqs[i_seq]
-        tokens = [rule.name for rule in self.cfg.rules if rule.name != 'root']
-        tokens += self.lex.keys()
-        random.shuffle(tokens)
-        _tok = random.choice(tokens)
-        if self.lex.keys().__contains__(_tok):
-            tok = CFG.Term(_tok)
-        else:
-            tok = CFG.Non_Term_Ref(_tok)
-            
-        if seq.__len__() == 0: 
-            seq.append(tok)
-        else:
+        if self.mutype == 'type2' or self.mutype == 'type3':
+            i_seq = random.randint(0, rule.seqs.__len__()-1)
+            seq =  rule.seqs[i_seq]
+            _tok = random.choice(self.tokens)
+            if self.lex.keys().__contains__(_tok):
+                tok = CFG.Term(_tok)
+            else:
+                tok = CFG.Non_Term_Ref(_tok)
+                    
+            if seq.__len__() == 0: 
+                seq.append(tok)
+            else:
+                if self.mutype == 'type2':
+                    i = random.randint(0, seq.__len__() - 1)
+                    seq[i] = tok
+                elif self.mutype == 'type3':
+                    # we can also add a symbol at the end, so we don't include "-1"
+                    i = random.randint(0, seq.__len__())
+                    seq.insert(i,tok)
+        elif self.mutype == 'type4':
+            i_non_empty_seqs = []
+            for _ind,_seq in enumerate(rule.seqs):
+                if _seq.__len__() > 0:
+                    i_non_empty_seqs.append(_ind)
+            seq = rule.seqs[random.choice(i_non_empty_seqs)]
             i = random.randint(0, seq.__len__() - 1)
-            if self.mutype == 'type2':
-                seq[i] = tok
-            elif self.mutype == 'type3':
-                seq.insert(i,tok)
-            elif self.mutype == 'type4':
-                del seq[i]
+            del seq[i]
                  
     
     def modify_grammar(self):
         cloned_g = self.cfg.clone()
-        rule_keys = [rule.name for rule in cloned_g.rules]
-        key_to_modify = random.choice(rule_keys)
-        print key_to_modify
-        rule = cloned_g.get_rule(key_to_modify)
-        print "++ rule: ", rule
-
         if self.mutype == 'type1':
+            # iterate through rules that does not have empty alts
+            non_empty_keys = []
+            for _rule in cloned_g.rules:
+                _empty = False
+                for _seq in _rule.seqs:
+                    if _seq.__len__() == 0:
+                        _empty = True
+                        break
+                        
+                if _empty == False:
+                    non_empty_keys.append(_rule.name)
+                        
+            print non_empty_keys
+            key_to_modify = random.choice(non_empty_keys)
+            print key_to_modify
+            rule = cloned_g.get_rule(key_to_modify)
+            print "++ rule: ", rule            
             rule.seqs.append([])
         elif self.mutype in ['type2','type3','type4']:
+            rule_keys = [rule.name for rule in cloned_g.rules]
+            key_to_modify = random.choice(rule_keys)
+            rule = cloned_g.get_rule(key_to_modify)
+            print "++ rule: ", rule
             self.modify_seq(rule)
         else:
             pass
