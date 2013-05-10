@@ -128,7 +128,7 @@ compilation_unit : package_declaration import_declarations type_declarations | i
 ;
 interface_type : class_or_interface_type
 ;
-for_statement_nsi : for_begin method_header SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
+for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : PACKAGE_TK name SC_TK
+package_declaration : single_type_import_declaration PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;

@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type variable_declarators
+local_variable_declaration : final type variable_declarators | type CONTINUE_TK variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;
@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : type_declarations relational_expression type_declaration | type_declaration
+type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;

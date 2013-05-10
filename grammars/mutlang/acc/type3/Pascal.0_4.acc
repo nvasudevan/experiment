@@ -84,7 +84,7 @@ member : expression DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
-members : member | members ',' member
+members : declarations member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
@@ -120,7 +120,7 @@ type_def : newident '=' type
 ;
 labels : label | labels ',' label
 ;
-direction : DOWNTO | VAR TO
+direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;

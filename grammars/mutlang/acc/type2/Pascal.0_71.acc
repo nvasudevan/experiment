@@ -2,7 +2,7 @@
 
 %nodefault
 
-program : PROGRAM newident external_files ';' block '.'
+program : PROGRAM newident external_files ';' block actual_params
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
@@ -84,7 +84,7 @@ member : expression DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
-members : index_specs | members ',' member
+members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;

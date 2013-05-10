@@ -162,7 +162,7 @@ statement_without_trailing_substatement : assert_statement | try_statement | thr
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;
-statement_expression : class_instance_creation_expression | try_statement | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
+statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
@@ -254,7 +254,7 @@ array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_T
 ;
 single_type_import_declaration : IMPORT_TK name SC_TK
 ;
-array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
+array_access : array_initializer OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;

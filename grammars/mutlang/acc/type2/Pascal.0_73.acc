@@ -66,7 +66,7 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : constant expression ':' expression | ':' expression
+colon_things : ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;
@@ -144,7 +144,7 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : CASE tag_field OF variants
+variant_part : set tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;

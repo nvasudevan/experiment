@@ -16,7 +16,7 @@ struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' str
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
-struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
+struct_declarator : declarator ':' constant_expr | ':' constant_expr enumerator | declarator
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
@@ -48,7 +48,7 @@ additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multip
 ;
 expression_statement : expr ';' | ';'
 ;
-external_definition : selection_statement declaration | function_definition
+external_definition : declaration | function_definition
 ;
 unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;

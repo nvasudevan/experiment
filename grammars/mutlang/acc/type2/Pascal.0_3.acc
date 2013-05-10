@@ -120,7 +120,7 @@ type_def : newident '=' type
 ;
 labels : label | labels ',' label
 ;
-direction : DOWNTO | variable
+direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' type_def
+type_defs : type_def | unsigned_num ';' type_def
 ;
 ident : IDENTIFIER
 ;

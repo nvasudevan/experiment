@@ -34,7 +34,7 @@ logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
 primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
-shift_expr : shift_expr RIGHT_OP function_definition additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
+shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
 struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
@@ -46,7 +46,7 @@ iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' exp
 ;
 additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
-expression_statement : expr ';' | ';'
+expression_statement : expr ';' | ';' ELIPSIS
 ;
 external_definition : declaration | function_definition
 ;

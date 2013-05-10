@@ -106,7 +106,7 @@ exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_ex
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
-static_initializer : argument_list block
+static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
@@ -144,7 +144,7 @@ for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_
 ;
 block_begin : OCB_TK
 ;
-final : modifiers
+final : static_initializer
 ;
 shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;

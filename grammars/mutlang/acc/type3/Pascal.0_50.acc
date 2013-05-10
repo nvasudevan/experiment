@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
+simple_type : ident TYPE | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' label type_def
+type_defs : type_def | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;

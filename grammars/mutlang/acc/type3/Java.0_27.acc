@@ -114,7 +114,7 @@ name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
-expression_statement : IMPLEMENTS_TK statement_expression SC_TK
+expression_statement : statement_expression SC_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;
@@ -184,7 +184,7 @@ abstract_method_declaration : method_header SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;
-class_or_interface_type : name
+class_or_interface_type : name this_or_super
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;

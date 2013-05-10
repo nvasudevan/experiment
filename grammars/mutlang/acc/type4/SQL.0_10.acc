@@ -36,7 +36,7 @@ y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN
 ;
 y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
 ;
-y_comparison : y_expression NOT NULL_VALUE | y_expression IS NULL_VALUE | y_expression COMPARISON_OPERATOR y_expression | y_expression EQUAL y_expression
+y_comparison : y_expression NOT NULL_VALUE | y_expression NULL_VALUE | y_expression COMPARISON_OPERATOR y_expression | y_expression EQUAL y_expression
 ;
 y_value : FLOATNUM | INTNUM | STRING
 ;
@@ -56,7 +56,7 @@ y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;
 y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SELECT y_columns FROM y_table ORDER BY y_order | SELECT y_columns FROM y_table WHERE y_condition | SELECT y_columns FROM y_table
 ;
-y_boolean : y_boolean | '(' y_sub_condition ')' | y_comparison
+y_boolean : NOT y_boolean | '(' y_sub_condition ')' | y_comparison
 ;
 y_column_list : y_column_list ',' NAME | NAME
 ;

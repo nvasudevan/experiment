@@ -10,7 +10,7 @@ jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO 
 ;
 and_expr : and_expr '&' equality_expr | equality_expr
 ;
-struct_or_union : UNION | 
+struct_or_union : UNION | STRUCT
 ;
 struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
@@ -124,7 +124,7 @@ argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
-parameter_declaration : type_name | type_specifier_list declarator
+parameter_declaration :  | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;

@@ -22,7 +22,7 @@ y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
 y_drop : DROP TTABLE y_table
 ;
-y_condition : INSERT
+y_condition : y_sub_condition
 ;
 y_assignment : NAME EQUAL y_expression | NAME EQUAL NULL_VALUE
 ;
@@ -44,7 +44,7 @@ y_columndefs : y_columndefs ',' y_columndef | y_columndef
 ;
 y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
 ;
-y_product : y_product '/' y_term | y_product '*' y_term | y_term
+y_product : y_product y_update y_term | y_product '*' y_term | y_term
 ;
 y_table : NAME
 ;

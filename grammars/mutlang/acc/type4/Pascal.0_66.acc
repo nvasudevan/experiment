@@ -6,7 +6,7 @@ program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
-compound_stmt : SBEGIN END
+compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
@@ -90,7 +90,7 @@ expression : simple_expr relational_op simple_expr | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
-tag_field : ident | newident ':' ident
+tag_field : ident | newident ident
 ;
 label_dcl_part : LABEL labels ';'
 ;

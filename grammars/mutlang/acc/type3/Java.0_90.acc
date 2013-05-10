@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : type_import_on_demand_declaration | single_type_import_declaration
+import_declaration : unary_expression type_import_on_demand_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK expression primitive_type CSB_TK
+dim_expr : OSB_TK expression CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;

@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type variable_declarators
+local_variable_declaration : final type variable_declarators | type
 ;
 expression_statement : statement_expression SC_TK
 ;
@@ -248,7 +248,7 @@ statement_expression_list : statement_expression_list C_TK statement_expression 
 ;
 synchronized : modifiers
 ;
-constant_expression : 
+constant_expression : expression
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;

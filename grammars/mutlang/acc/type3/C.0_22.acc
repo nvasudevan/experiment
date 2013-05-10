@@ -56,7 +56,7 @@ enumerator : identifier '=' constant_expr | identifier
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
-labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' parameter_identifier_list statement
+labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
 declaration_list : declaration_list declaration | declaration
 ;
@@ -98,7 +98,7 @@ storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;
-type_name : type_specifier_list abstract_declarator | type_specifier_list
+type_name : type_specifier_list abstract_declarator equality_expr | type_specifier_list
 ;
 exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;

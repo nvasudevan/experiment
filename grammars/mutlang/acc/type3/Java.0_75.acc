@@ -222,7 +222,7 @@ if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK stat
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
-do_statement_begin : DO_TK
+do_statement_begin : DO_TK CP_TK
 ;
 constructor_block_end : block_end
 ;
@@ -272,7 +272,7 @@ and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
 for_update : statement_expression_list | 
 ;
-empty_statement : dim_expr SC_TK
+empty_statement : SC_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;

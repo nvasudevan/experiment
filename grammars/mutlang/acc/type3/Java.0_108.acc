@@ -52,7 +52,7 @@ assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK e
 ;
 constructor_declaration : constructor_header constructor_body
 ;
-field_declaration : modifiers type variable_declarators SC_TK | C_TK type variable_declarators SC_TK
+field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
 class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
@@ -146,7 +146,7 @@ block_begin : OCB_TK
 ;
 final : modifiers
 ;
-shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
+shift_expression : shift_expression ZRS_TK additive_expression | identifier shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;

@@ -76,7 +76,7 @@ init_declarator_list : init_declarator_list ',' init_declarator | init_declarato
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
-selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' RETURN ELSE statement
+selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
 declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;
@@ -94,7 +94,7 @@ identifier_list : identifier_list ',' identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
-storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
+storage_class_specifier : equality_expr | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;

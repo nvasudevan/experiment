@@ -28,7 +28,7 @@ case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : formal_params ':' ident | 
+function_form : formal_params ':' ident | constant
 ;
 procedure_call : ident actual_params
 ;
@@ -146,7 +146,7 @@ proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
-term : term mult_op factor | PACKED
+term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;

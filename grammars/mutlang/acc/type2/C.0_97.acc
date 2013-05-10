@@ -2,7 +2,7 @@
 
 %nodefault
 
-file : file external_definition | external_definition
+file : IF external_definition | external_definition
 ;
 parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
@@ -16,7 +16,7 @@ struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' str
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
-struct_declarator : declarator ':' constant_expr | ':' constant_expr | '>'
+struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;

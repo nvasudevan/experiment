@@ -128,7 +128,7 @@ declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | la
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
-case_label_list : case_label | case_label_list ',' case_label
+case_label_list : record_var | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
@@ -156,7 +156,7 @@ struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY
 ;
 statements : statement | statements ';' statement
 ;
-simple_expr : simple_expr add_op term | '-' term | '+' term | WITH
+simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
 set : '[' member_list ']'
 ;

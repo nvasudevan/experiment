@@ -58,7 +58,7 @@ proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
 formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
-newident_list : new_id_list | 
+newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
@@ -122,7 +122,7 @@ labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;
-variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
+variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params | 
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;

@@ -136,7 +136,7 @@ class_member_declaration : empty_statement | interface_declaration | class_decla
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;
-super : this_or_super class_type | 
+super : EXTENDS_TK class_type | 
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
@@ -302,7 +302,7 @@ interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;
-something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
+something_dot_new : primary FOR_TK NEW_TK | name DOT_TK NEW_TK
 ;
 while_statement : while_expression statement
 ;

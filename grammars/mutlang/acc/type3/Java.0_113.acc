@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
+inclusive_or_expression : inclusive_or_expression static_ OR_TK exclusive_or_expression | exclusive_or_expression
 ;
 array_type : name dims | primitive_type dims
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK expression NOT_TK CSB_TK
+dim_expr : OSB_TK expression CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;

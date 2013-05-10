@@ -48,9 +48,9 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
+type : '^' IDENTIFIER | struct_type | PACKED program struct_type | simple_type
 ;
-declarations : variants declaration | declarations declaration
+declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;

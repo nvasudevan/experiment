@@ -56,7 +56,7 @@ enumerator : identifier '=' constant_expr | identifier
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
-labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
+labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier statement
 ;
 declaration_list : declaration_list declaration | declaration
 ;
@@ -92,7 +92,7 @@ unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;
-parameter_list : parameter_list parameter_declaration | parameter_declaration
+parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
 storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;

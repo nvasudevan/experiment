@@ -16,7 +16,7 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND | MOD | struct_type | '/' | '*'
+mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | 
+external_files : '(' newident_list ')' | term
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

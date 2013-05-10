@@ -38,7 +38,7 @@ shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_exp
 ;
 struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
-conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
+conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | constant_expr
 ;
 relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | shift_expr
 ;
@@ -124,7 +124,7 @@ argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
-parameter_declaration : type_name | '<' declarator
+parameter_declaration : type_name | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;

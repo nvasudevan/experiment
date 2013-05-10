@@ -74,7 +74,7 @@ constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsig
 ;
 new_id_list : newident | new_id_list ',' newident
 ;
-member_list : members | 
+member_list : type | 
 ;
 body : IDENTIFIER | block
 ;
@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : '+' statement_part
+block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;

@@ -98,7 +98,7 @@ variants : variant | variants ';' variant
 ;
 block : opt_declarations statement_part
 ;
-type_dcl_part : TYPE '*' ';'
+type_dcl_part : TYPE newident ';'
 ;
 variable_dcl : newident_list ':' type
 ;

@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION newident function_form
+func_heading : FUNCTION actual_param newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
@@ -130,7 +130,7 @@ relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;
-actuals_list : variable_dcls actual_param | actuals_list ',' actual_param
+actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;

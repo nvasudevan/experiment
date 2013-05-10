@@ -16,7 +16,7 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND | MOD | var_dcl_part DIV | '/' | '*'
+mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
+simple_type : ident ARRAY | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;

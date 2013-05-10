@@ -36,7 +36,7 @@ paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']'
 ;
 opt_declarations : declarations | 
 ;
-statement_part : SBEGIN
+statement_part : compound_stmt
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
@@ -86,7 +86,7 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr relational_op simple_expr | simple_expr
+expression : simple_expr relational_op simple_expr | WITH
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;

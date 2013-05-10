@@ -16,7 +16,7 @@ struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' str
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
-struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
+struct_declarator : declarator ':' cast_expr | ':' constant_expr | declarator
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
@@ -56,7 +56,7 @@ enumerator : identifier '=' constant_expr | identifier
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
-labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' struct_declaration | identifier ':' statement
+labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
 declaration_list : declaration_list declaration | declaration
 ;

@@ -14,7 +14,7 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : IDENTIFIER
+newident : record_var IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression colon_things | GOTO expression
+actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;

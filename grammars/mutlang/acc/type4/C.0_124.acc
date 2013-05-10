@@ -40,7 +40,7 @@ struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
 conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
-relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | shift_expr
+relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' | relational_expr '<' shift_expr | shift_expr
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
@@ -78,7 +78,7 @@ pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_lis
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
-declaration : declaration_specifiers init_declarator_list ';' | ';'
+declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;

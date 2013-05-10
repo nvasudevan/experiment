@@ -10,7 +10,7 @@ compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
-actual_params : '(' relational_op ')' | 
+actual_params : '(' actuals_list ')' | 
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
@@ -126,7 +126,7 @@ variable : variable '^' | variable '.' ident | variable '[' expressions ']' | id
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
-relational_op : IN | NE | GE | LE | '>' | '<' | '='
+relational_op : IN | NE | GE | LE | '>' | OR | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;

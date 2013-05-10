@@ -26,7 +26,7 @@ equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relati
 ;
 declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | storage_class_specifier
 ;
-function_definition : declaration_specifiers declarator function_body | declarator function_body
+function_definition : declaration_specifiers function_body | declarator function_body
 ;
 assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_ASSIGN | SUB_ASSIGN | ADD_ASSIGN | MOD_ASSIGN | DIV_ASSIGN | MUL_ASSIGN | '='
 ;
@@ -84,7 +84,7 @@ type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID |
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
-expr : expr ',' | assignment_expr
+expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;

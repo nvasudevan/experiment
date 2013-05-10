@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' type_def
+type_defs : type_def | type_defs type_def type_def
 ;
 ident : IDENTIFIER
 ;
@@ -144,7 +144,7 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : CASE SBEGIN OF variants
+variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;

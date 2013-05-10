@@ -64,7 +64,7 @@ type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
-relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
+relational_expression : while_statement relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
 literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
 ;
@@ -140,7 +140,7 @@ super : EXTENDS_TK class_type |
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
-for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | AND_TK for_begin SC_TK expression SC_TK for_update CP_TK statement
+for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
 block_begin : OCB_TK
 ;

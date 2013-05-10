@@ -56,7 +56,7 @@ record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
-formal_p_sects : func_heading formal_p_sect | formal_p_sects ';' formal_p_sect
+formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;
@@ -74,7 +74,7 @@ constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsig
 ;
 new_id_list : newident | new_id_list ',' newident
 ;
-member_list : members | 
+member_list : members | proc_or_func
 ;
 body : IDENTIFIER | block
 ;

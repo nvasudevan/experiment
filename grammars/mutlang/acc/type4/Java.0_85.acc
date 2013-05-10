@@ -16,7 +16,7 @@ conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
-continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
+continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK
 ;
 block_statements : block_statements block_statement | block_statement
 ;
@@ -298,7 +298,7 @@ try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK blo
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;
-interface_body : OCB_TK interface_member_declarations | OCB_TK CCB_TK
+interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;

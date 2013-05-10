@@ -26,7 +26,7 @@ assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
-unsigned_lit : NIL | STRING | unsigned_num
+unsigned_lit :  | STRING | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;
@@ -68,7 +68,7 @@ simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
-case_label : 
+case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;

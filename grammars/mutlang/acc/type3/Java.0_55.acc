@@ -200,7 +200,7 @@ field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
 class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration
 ;
-method_body : assignment_operator SC_TK | block
+method_body : SC_TK | block qualified_name
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;

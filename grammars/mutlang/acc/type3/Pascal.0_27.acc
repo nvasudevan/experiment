@@ -6,7 +6,7 @@ program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
-compound_stmt : SBEGIN statements END
+compound_stmt : SBEGIN '(' statements END
 ;
 expressions : expression | expressions ',' expression
 ;
@@ -60,7 +60,7 @@ formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;
-const_def : newident const_defs '=' constant
+const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;

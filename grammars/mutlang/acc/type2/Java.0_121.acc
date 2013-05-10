@@ -216,7 +216,7 @@ break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
-block_end : CCB_TK
+block_end : THROWS_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
@@ -304,5 +304,5 @@ while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
-while_statement : while_expression AND_TK
+while_statement : while_expression statement
 ;

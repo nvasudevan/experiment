@@ -152,7 +152,7 @@ interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces int
 ;
 statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;
-catch_clause : catch_clause_parameter block | 
+catch_clause : catch_clause_parameter block
 ;
 constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK expression CSB_TK
+dim_expr : OSB_TK expression CSB_TK | 
 ;
 assignment_expression : assignment | conditional_expression
 ;

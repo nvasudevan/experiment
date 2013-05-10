@@ -66,7 +66,7 @@ static_ : modifiers
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
-literal : NULL_TK | catches | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
+literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
 ;
 class_body_declarations : class_body_declarations class_body_declaration | class_body_declaration
 ;
@@ -250,7 +250,7 @@ synchronized : modifiers
 ;
 constant_expression : expression
 ;
-array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
+array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK expression_statement dim_exprs
 ;
 single_type_import_declaration : IMPORT_TK name SC_TK
 ;

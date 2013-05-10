@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
+type : '^' IDENTIFIER | struct_type | PACKED struct_type | case_list_elem
 ;
 declarations : declaration | declarations declaration
 ;
@@ -102,7 +102,7 @@ type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
-index_spec : IF DOTDOT newident ':' ident
+index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;

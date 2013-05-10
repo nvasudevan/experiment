@@ -76,7 +76,7 @@ method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER
 ;
 method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
-identifier : type_import_on_demand_declaration ID_TK
+identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
@@ -116,7 +116,7 @@ local_variable_declaration : final type variable_declarators | type variable_dec
 ;
 expression_statement : statement_expression SC_TK
 ;
-pre_increment_expression : INCR_TK unary_expression
+pre_increment_expression : INCR_TK unary_expression XOR_TK
 ;
 switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;

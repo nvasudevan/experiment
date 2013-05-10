@@ -174,7 +174,7 @@ array_type : name dims | primitive_type dims
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;
-constant_declaration : OP_TK
+constant_declaration : field_declaration
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
@@ -278,7 +278,7 @@ interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
 equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
-array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
+array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers for_init | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;
 simple_name : identifier
 ;

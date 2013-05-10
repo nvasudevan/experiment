@@ -62,7 +62,7 @@ for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
-static_ : catch_clause_parameter modifiers
+static_ : modifiers
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
@@ -300,7 +300,7 @@ additive_expression : additive_expression MINUS_TK multiplicative_expression | a
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
-while_statement_nsi : while_expression statement_nsi
+while_statement_nsi : while_expression statement_nsi FP_LIT_TK
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;

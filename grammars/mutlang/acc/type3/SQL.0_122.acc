@@ -30,7 +30,7 @@ y_value_list : y_value_list ',' '-' FLOATNUM | y_value_list ',' FLOATNUM | y_val
 ;
 y_term : '-' y_term | y_atom
 ;
-y_delete : DELETE FROM y_table WHERE y_condition | y_assignments DELETE FROM y_table
+y_delete : DELETE FROM y_table WHERE y_condition | DELETE FROM y_table
 ;
 y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_columndef
 ;
@@ -50,7 +50,7 @@ y_table : NAME
 ;
 y_order : NAME
 ;
-y_values : VALUES '(' y_value_list ')'
+y_values : VALUES '(' y_sub_condition y_value_list ')'
 ;
 y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;

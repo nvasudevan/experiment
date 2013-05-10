@@ -238,7 +238,7 @@ type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;
-interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
+interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | 
 ;
 primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
@@ -282,7 +282,7 @@ array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_i
 ;
 simple_name : identifier
 ;
-type_declaration :  | interface_declaration | class_declaration
+type_declaration : empty_statement | interface_declaration | class_declaration
 ;
 conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;

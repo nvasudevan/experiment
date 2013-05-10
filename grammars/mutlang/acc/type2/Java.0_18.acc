@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | trap_overflow_corner_case
+variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
@@ -264,7 +264,7 @@ synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;
-primary : array_creation_expression | primary_no_new_array
+primary : variable_initializer | primary_no_new_array
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;

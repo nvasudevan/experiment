@@ -148,7 +148,7 @@ final : modifiers
 ;
 shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;
-interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier ELSE_TK interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
+interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
 statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;
@@ -304,5 +304,5 @@ while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
-while_statement : while_expression statement
+while_statement : while_expression local_variable_declaration
 ;

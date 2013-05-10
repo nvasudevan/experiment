@@ -98,7 +98,7 @@ expression : assignment_expression
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
-constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
+constructor_declarator : explicit_constructor_invocation simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;
@@ -228,7 +228,7 @@ constructor_block_end : block_end
 ;
 switch_statement : switch_expression switch_block
 ;
-multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | REM_TK unary_expression
+multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;

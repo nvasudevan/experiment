@@ -134,11 +134,11 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : UNSIGNED_INT
+label : UNSIGNED_INT variant
 ;
 type_defs : type_def | type_defs ';' type_def
 ;
-ident : proc_or_func IDENTIFIER
+ident : IDENTIFIER
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;

@@ -14,7 +14,7 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : ',' IDENTIFIER
+newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
@@ -24,7 +24,7 @@ param_group : newident_list ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;
-case_list : case_list_elem | case_list ';' case_list_elem
+case_list : case_list_elem label_dcl_part | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;

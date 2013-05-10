@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION newident function_form
+func_heading : OR FUNCTION newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
@@ -118,7 +118,7 @@ const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;
-labels : variable label | labels ',' label
+labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;

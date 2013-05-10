@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl statement
+labeled_statement : label_decl statement | 
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -176,7 +176,7 @@ explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name 
 ;
 constant_declaration : field_declaration
 ;
-interfaces : IMPLEMENTS_TK interface_type_list |  | 
+interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;

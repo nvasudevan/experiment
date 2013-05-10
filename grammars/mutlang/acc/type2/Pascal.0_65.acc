@@ -22,11 +22,11 @@ factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
-assignment : SET BECOMES expression
+assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
-unsigned_lit : NIL | STRING | unsigned_num
+unsigned_lit : NIL | statements | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;

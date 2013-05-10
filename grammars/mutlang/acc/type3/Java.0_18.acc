@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type variable_declarators
+local_variable_declaration : final type variable_declarators | class_declaration type variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;
@@ -214,7 +214,7 @@ if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
-if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi conditional_and_expression ELSE_TK statement_nsi
+if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
 block_end : CCB_TK
 ;

@@ -60,7 +60,7 @@ variable_initializers : variable_initializers C_TK variable_initializer | variab
 ;
 for_begin : for_header for_init
 ;
-type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
+type_import_on_demand_declaration : IMPORT_TK name class_type_list MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
@@ -110,7 +110,7 @@ static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
-name : pre_increment_expression | simple_name
+name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;

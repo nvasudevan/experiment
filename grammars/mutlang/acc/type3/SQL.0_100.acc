@@ -20,7 +20,7 @@ y_atom : '(' y_expression ')' | y_column | y_value
 ;
 y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
-y_drop : DROP TTABLE y_table
+y_drop : DROP y_value_list TTABLE y_table
 ;
 y_condition : y_sub_condition
 ;
@@ -50,7 +50,7 @@ y_table : NAME
 ;
 y_order : NAME
 ;
-y_values : VALUES '(' y_expression y_value_list ')'
+y_values : VALUES '(' y_value_list ')'
 ;
 y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;

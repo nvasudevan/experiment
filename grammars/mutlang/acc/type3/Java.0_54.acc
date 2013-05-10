@@ -56,7 +56,7 @@ field_declaration : modifiers type variable_declarators SC_TK | type variable_de
 ;
 class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
-variable_initializers : variable_initializers C_TK variable_initializer | REL_QM_TK variable_initializer
+variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
 for_begin : for_header for_init
 ;
@@ -184,7 +184,7 @@ abstract_method_declaration : method_header SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;
-class_or_interface_type : name
+class_or_interface_type : name method_declarator
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;

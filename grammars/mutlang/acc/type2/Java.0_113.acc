@@ -50,7 +50,7 @@ interface_member_declarations : interface_member_declarations interface_member_d
 ;
 assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
 ;
-constructor_declaration : constructor_header block_begin
+constructor_declaration : constructor_header constructor_body
 ;
 field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | CP_TK
 ;
 synchronized : modifiers
 ;

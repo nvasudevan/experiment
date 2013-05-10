@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | expression
+variable_initializer : array_initializer | expression | 
 ;
 expression : assignment_expression
 ;
@@ -110,7 +110,7 @@ static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
-name : qualified_name | simple_name | 
+name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;

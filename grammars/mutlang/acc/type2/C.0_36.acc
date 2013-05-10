@@ -18,7 +18,7 @@ logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
 struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
-initializer_list : initializer_list ',' initializer | initializer
+initializer_list : initializer_list ',' initializer | VOLATILE
 ;
 compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
@@ -82,7 +82,7 @@ declaration : declaration_specifiers init_declarator_list ';' | declaration_spec
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
-enumerator_list : enumerator_list ',' enumerator | function_definition
+enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;

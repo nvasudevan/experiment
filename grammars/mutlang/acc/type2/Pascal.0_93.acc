@@ -118,7 +118,7 @@ const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;
-labels : label | labels ',' label
+labels : IF | labels ',' label
 ;
 direction : DOWNTO | TO
 ;
@@ -154,7 +154,7 @@ const_defs : const_def | const_defs ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;
-statements : IF | statements ';' statement
+statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;

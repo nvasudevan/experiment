@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : param_group formal_p_sects ')' | 
+formal_params : '(' formal_p_sects ')' | 
 ;
 newident : IDENTIFIER
 ;
@@ -158,5 +158,5 @@ statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
-set : '[' member_list ']'
+set : '[' member_list compound_stmt
 ;

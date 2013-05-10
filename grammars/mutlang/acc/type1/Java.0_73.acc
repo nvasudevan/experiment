@@ -38,7 +38,7 @@ labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
-switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
+switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK | 
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
@@ -56,7 +56,7 @@ field_declaration : modifiers type variable_declarators SC_TK | type variable_de
 ;
 class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
-variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer | 
+variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
 for_begin : for_header for_init
 ;

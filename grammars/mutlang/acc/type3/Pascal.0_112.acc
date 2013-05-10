@@ -60,7 +60,7 @@ formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;
-const_def : newident '=' constant
+const_def : UNSIGNED_INT newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
@@ -126,7 +126,7 @@ variable : variable '^' | variable '.' ident | variable '[' expressions ']' | id
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
-relational_op : newident_list IN | NE | GE | LE | '>' | '<' | '='
+relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;

@@ -66,11 +66,11 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : ':' expression ':' expression | ':' expression
+colon_things : ':' expression ':' expression | expressions ':' expression
 ;
 case_label : constant
 ;
-constant : STRING | '-' ident | '+' ident | label_dcl_part ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
+constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
 new_id_list : newident | new_id_list ',' newident
 ;

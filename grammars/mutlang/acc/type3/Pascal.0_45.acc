@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations statement_part
+block : opt_declarations ident statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
@@ -108,7 +108,7 @@ func_heading : FUNCTION newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
-rec_var_list : const_dcl_part record_var | rec_var_list ',' record_var
+rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;

@@ -38,7 +38,7 @@ opt_declarations : declarations |
 ;
 statement_part : compound_stmt
 ;
-field_list : GE variant_part | fixed_part ';' variant_part | fixed_part
+field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
@@ -56,7 +56,7 @@ record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
-formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
+formal_p_sects : opt_declarations formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;

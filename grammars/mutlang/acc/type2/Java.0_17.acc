@@ -30,7 +30,7 @@ labeled_statement_nsi : label_decl statement_nsi
 ;
 constructor_body : block_begin explicit_constructor_invocation block_statements constructor_block_end | block_begin block_statements constructor_block_end | block_begin explicit_constructor_invocation constructor_block_end | block_begin constructor_block_end
 ;
-for_init : local_variable_declaration | statement_expression_list | 
+for_init : local_variable_declaration | assignment | 
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
@@ -182,7 +182,7 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression for_begin
+throw_statement : THROW_TK expression SC_TK
 ;
 class_or_interface_type : name
 ;

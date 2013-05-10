@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
+unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case for_statement_nsi
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
@@ -152,7 +152,7 @@ interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces int
 ;
 statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;
-catch_clause : catch_clause_parameter abstract_method_declaration block
+catch_clause : catch_clause_parameter block
 ;
 constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
 ;

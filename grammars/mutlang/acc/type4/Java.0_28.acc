@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : PACKAGE_TK name SC_TK
+package_declaration : name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
@@ -302,7 +302,7 @@ interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;
-something_dot_new : primary NEW_TK | name DOT_TK NEW_TK
+something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
 while_statement : while_expression statement
 ;

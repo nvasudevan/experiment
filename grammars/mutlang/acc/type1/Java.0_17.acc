@@ -50,7 +50,7 @@ interface_member_declarations : interface_member_declarations interface_member_d
 ;
 assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
 ;
-constructor_declaration : constructor_header constructor_body
+constructor_declaration : constructor_header constructor_body | 
 ;
 field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
@@ -62,7 +62,7 @@ for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
-static_ : modifiers | 
+static_ : modifiers
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;

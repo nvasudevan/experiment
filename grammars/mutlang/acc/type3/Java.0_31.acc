@@ -20,7 +20,7 @@ continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
 block_statements : block_statements block_statement | block_statement
 ;
-assignment_operator : ASSIGN_TK | DIV_TK ASSIGN_ANY_TK
+assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
@@ -260,7 +260,7 @@ class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
-synchronized_statement : synchronized OP_TK expression CP_TK block
+synchronized_statement : synchronized OP_TK expression CP_TK block labeled_statement
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;

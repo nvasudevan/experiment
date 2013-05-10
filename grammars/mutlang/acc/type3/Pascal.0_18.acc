@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION expressions newident function_form
+func_heading : FUNCTION newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
@@ -156,7 +156,7 @@ struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY
 ;
 statements : statement | statements ';' statement
 ;
-simple_expr : simple_expr add_op term | '-' term | '+' term | term
+simple_expr : simple_expr add_op term | '-' LE term | '+' term | term
 ;
 set : '[' member_list ']'
 ;

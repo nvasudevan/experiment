@@ -20,7 +20,7 @@ continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
 block_statements : block_statements block_statement | block_statement
 ;
-assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
+assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK | 
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
@@ -288,7 +288,7 @@ conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_T
 ;
 trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expression | pre_decrement_expression | pre_increment_expression
 ;
-left_hand_side : array_access | field_access | name | 
+left_hand_side : array_access | field_access | name
 ;
 unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;

@@ -6,7 +6,7 @@ goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
-argument_list : argument_list C_TK expression | expression
+argument_list : argument_list C_TK CLASS_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
@@ -38,7 +38,7 @@ labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
-switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK interface_member_declaration CCB_TK
+switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;

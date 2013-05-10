@@ -18,7 +18,7 @@ anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK cla
 ;
 continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
-block_statements : block_statements block_statement | block_statement
+block_statements : block_statements block_statement | NEW_TK
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
@@ -302,7 +302,7 @@ interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;
-something_dot_new : primary DOT_TK NEW_TK | name DOT_TK static_initializer
+something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
 while_statement : while_expression statement
 ;

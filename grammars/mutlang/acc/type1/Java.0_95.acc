@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | expression | 
+variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
@@ -282,7 +282,7 @@ array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_i
 ;
 simple_name : identifier
 ;
-type_declaration : empty_statement | interface_declaration | class_declaration
+type_declaration : empty_statement | interface_declaration | class_declaration | 
 ;
 conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;

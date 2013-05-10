@@ -110,7 +110,7 @@ static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
-name : qualified_name | simple_name
+name : qualified_name | throw_statement
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
@@ -204,7 +204,7 @@ method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
-type : reference_type | simple_name
+type : reference_type | primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;

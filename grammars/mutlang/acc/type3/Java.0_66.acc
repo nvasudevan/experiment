@@ -56,7 +56,7 @@ field_declaration : modifiers type variable_declarators SC_TK | type variable_de
 ;
 class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
-variable_initializers : variable_initializers C_TK variable_initializer | statement_nsi variable_initializer
+variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
 for_begin : for_header for_init
 ;
@@ -94,7 +94,7 @@ this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
-expression : assignment_expression
+expression : package_declaration assignment_expression
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;

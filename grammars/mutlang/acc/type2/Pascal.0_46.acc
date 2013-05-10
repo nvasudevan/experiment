@@ -14,7 +14,7 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : DOWNTO
+newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
@@ -50,7 +50,7 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : declaration | declarations declaration
+declarations : mult_op | declarations declaration
 ;
 record_var : variable
 ;

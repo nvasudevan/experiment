@@ -56,7 +56,7 @@ enumerator : identifier '=' constant_expr | identifier
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
-labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' MUL_ASSIGN | identifier ':' statement
+labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
 declaration_list : declaration_list declaration | declaration
 ;
@@ -82,7 +82,7 @@ declaration : declaration_specifiers init_declarator_list ';' | declaration_spec
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
-enumerator_list : enumerator_list ',' enumerator | enumerator
+enumerator_list : enumerator_list ',' enumerator | jump_statement
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;

@@ -62,7 +62,7 @@ for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
-static_ : relational_expression
+static_ : modifiers
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
@@ -264,7 +264,7 @@ synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;
-primary : array_creation_expression | primary_no_new_array
+primary : array_creation_expression | while_statement_nsi
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;

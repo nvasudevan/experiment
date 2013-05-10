@@ -158,7 +158,7 @@ constructor_header : modifiers constructor_declarator throws | constructor_decla
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;
-statement_without_trailing_substatement : assert_statement | try_statement | throw_statement |  | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
+statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;
@@ -302,7 +302,7 @@ interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;
-something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
+something_dot_new : primary DOT_TK NEW_TK | name DOT_TK
 ;
 while_statement : while_expression statement
 ;

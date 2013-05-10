@@ -84,7 +84,7 @@ member : expression DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
-members : member | members ',' member
+members : member | ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | block
+external_files : '(' newident_list ')' | 
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

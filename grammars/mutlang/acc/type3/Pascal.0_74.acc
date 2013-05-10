@@ -10,7 +10,7 @@ compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
-actual_params : '(' actuals_list ')' | 
+actual_params : '(' actuals_list ')' | program
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
@@ -44,7 +44,7 @@ case_list_elem :  | case_label_list ':' statement
 ;
 add_op : OR | '-' | '+'
 ;
-var_dcl_part : VAR variable_dcls formal_params ';'
+var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;

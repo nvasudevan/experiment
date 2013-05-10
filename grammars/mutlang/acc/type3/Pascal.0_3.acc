@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : SET FUNCTION newident function_form
+func_heading : FUNCTION newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
@@ -144,7 +144,7 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : CASE tag_field OF variants
+variant_part : CASE tag_field OF variants formal_params
 ;
 term : term mult_op factor | factor
 ;

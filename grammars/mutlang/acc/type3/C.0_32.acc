@@ -36,7 +36,7 @@ primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
-struct_declaration : type_specifier_list struct_declarator_list ';'
+struct_declaration : type_specifier_list struct_declarator_list DOUBLE ';'
 ;
 conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
@@ -82,7 +82,7 @@ declaration : declaration_specifiers init_declarator_list ';' | declaration_spec
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
-enumerator_list : enumerator_list ',' enumerator | primary_expr enumerator
+enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;

@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects ')' | 
+formal_params : '(' formal_p_sects BECOMES ')' | 
 ;
 newident : IDENTIFIER
 ;
@@ -122,7 +122,7 @@ labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;
-variable : variable '^' | GE variable '.' ident | variable '[' expressions ']' | ident actual_params
+variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;

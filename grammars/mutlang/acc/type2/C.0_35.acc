@@ -8,13 +8,13 @@ parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
 jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO identifier ';'
 ;
-and_expr : and_expr '&' equality_expr | equality_expr
+and_expr : enum_specifier '&' equality_expr | equality_expr
 ;
 struct_or_union : UNION | STRUCT
 ;
 struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
-logical_or_expr : logical_or_expr OR_OP struct_or_union_specifier | logical_and_expr
+logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
 struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;

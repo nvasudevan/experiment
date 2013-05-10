@@ -54,7 +54,7 @@ declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;
-proc_or_func : func_heading ';' GOTO ';' | proc_heading ';' body ';'
+proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
 formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
@@ -68,7 +68,7 @@ simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
-case_label : constant
+case_label : body
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;

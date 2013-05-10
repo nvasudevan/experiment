@@ -122,7 +122,7 @@ switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
 finally : FINALLY_TK block
 ;
-switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
+switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | if_then_statement switch_block_statement_group
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
@@ -202,7 +202,7 @@ class_body_declaration : block | constructor_declaration | static_initializer | 
 ;
 method_body : SC_TK | block
 ;
-block_statement : class_declaration | formal_parameter_list statement | local_variable_declaration_statement
+block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
 type : reference_type | primitive_type
 ;

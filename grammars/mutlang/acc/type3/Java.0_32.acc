@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : import_declaration type_import_on_demand_declaration | single_type_import_declaration
+import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : modifiers
+synchronized : continue_statement modifiers
 ;
 constant_expression : expression
 ;

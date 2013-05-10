@@ -74,7 +74,7 @@ constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsig
 ;
 new_id_list : newident | new_id_list ',' newident
 ;
-member_list : members | 
+member_list : statement_part members | 
 ;
 body : IDENTIFIER | block
 ;
@@ -148,7 +148,7 @@ variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
-index_specs : index_spec | index_specs unsigned_num ';' index_spec
+index_specs : index_spec | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

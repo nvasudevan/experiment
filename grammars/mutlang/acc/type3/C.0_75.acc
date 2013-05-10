@@ -24,7 +24,7 @@ compound_statement : '{' declaration_list statement_list '}' | '{' declaration_l
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
-declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | ELIPSIS storage_class_specifier
+declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | storage_class_specifier
 ;
 function_definition : declaration_specifiers declarator function_body | declarator function_body
 ;
@@ -96,7 +96,7 @@ parameter_list : parameter_list ',' parameter_declaration | parameter_declaratio
 ;
 storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
-declarator : pointer declarator2 | declarator2
+declarator : pointer AUTO declarator2 | declarator2
 ;
 type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;

@@ -16,7 +16,7 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND | MOD | DIV | UNSIGNED_REAL | '*'
+mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' type_def
+type_defs : struct_type | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;

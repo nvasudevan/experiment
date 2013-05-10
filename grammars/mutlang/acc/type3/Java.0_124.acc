@@ -46,13 +46,13 @@ local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
 do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
-interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
+interface_member_declarations : interface_member_declarations interface_member_declaration shift_expression | interface_member_declaration
 ;
 assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
 ;
 constructor_declaration : constructor_header constructor_body
 ;
-field_declaration : modifiers type variable_declarators SC_TK | type method_body variable_declarators SC_TK
+field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
 class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;

@@ -78,7 +78,7 @@ method_header : modifiers VOID_TK method_declarator throws | modifiers type meth
 ;
 identifier : ID_TK
 ;
-catches : catches catch_clause | catch_clause
+catches : catches CSB_TK | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
@@ -144,7 +144,7 @@ for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_
 ;
 block_begin : OCB_TK
 ;
-final : OCB_TK
+final : modifiers
 ;
 shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;

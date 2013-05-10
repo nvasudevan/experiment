@@ -42,7 +42,7 @@ switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_T
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
-local_variable_declaration_statement : local_variable_declaration SC_TK
+local_variable_declaration_statement : SC_TK
 ;
 do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
@@ -194,7 +194,7 @@ throws : THROWS_TK class_type_list |
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
-assignment_expression :  | conditional_expression
+assignment_expression : assignment | conditional_expression
 ;
 field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;

@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations type statement_part
+block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
@@ -130,7 +130,7 @@ relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;
-actuals_list : actual_param | actuals_list ',' actual_param
+actuals_list : actual_param member_list | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;

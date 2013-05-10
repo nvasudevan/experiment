@@ -32,7 +32,7 @@ y_term : '-' y_term | y_atom
 ;
 y_delete : DELETE FROM y_table WHERE y_condition | DELETE FROM y_table
 ;
-y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_columndef
+y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_columndef y_condition
 ;
 y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
 ;
@@ -58,5 +58,5 @@ y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SE
 ;
 y_boolean : NOT y_boolean | '(' y_sub_condition ')' | y_comparison
 ;
-y_column_list : y_column_list y_value ',' NAME | NAME
+y_column_list : y_column_list ',' NAME | NAME
 ;

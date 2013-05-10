@@ -162,7 +162,7 @@ statement_without_trailing_substatement : assert_statement | try_statement | thr
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;
-statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
+statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | package_declaration | pre_decrement_expression | pre_increment_expression | assignment
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
@@ -240,7 +240,7 @@ method_declaration : method_header method_body
 ;
 interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
 ;
-primary_no_new_array : name DOT_TK THIS_TK | type_literals | static_ | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
+primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
 label_decl : identifier REL_CL_TK
 ;

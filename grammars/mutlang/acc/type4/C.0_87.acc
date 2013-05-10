@@ -52,7 +52,7 @@ external_definition : declaration | function_definition
 ;
 unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
-enumerator : identifier '=' constant_expr | identifier
+enumerator : identifier '=' constant_expr | 
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
@@ -116,7 +116,7 @@ parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;
-function_body : declaration_list compound_statement | 
+function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;

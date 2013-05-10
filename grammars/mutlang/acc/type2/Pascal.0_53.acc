@@ -86,7 +86,7 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr relational_op simple_expr | simple_expr
+expression : simple_expr relational_op simple_expr | ':'
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : actuals_list
+label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;

@@ -20,7 +20,7 @@ y_atom : '(' y_expression ')' | y_column | y_value
 ;
 y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
-y_drop : DROP y_assignment TTABLE y_table
+y_drop : DROP TTABLE y_table
 ;
 y_condition : y_sub_condition
 ;
@@ -52,7 +52,7 @@ y_order : NAME
 ;
 y_values : VALUES '(' y_value_list ')'
 ;
-y_create : CREATE TTABLE y_table '(' y_columndefs ')'
+y_create : CREATE TTABLE y_table '(' y_columndefs ')' INT
 ;
 y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SELECT y_columns FROM y_table ORDER BY y_order | SELECT y_columns FROM y_table WHERE y_condition | SELECT y_columns FROM y_table
 ;

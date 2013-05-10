@@ -74,7 +74,7 @@ inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;
-pointer : '*' type_specifier_list pointer | '*' ')' pointer | '*' type_specifier_list | '*'
+pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
@@ -112,7 +112,7 @@ statement_list : statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
+parameter_type_list : parameter_list ',' ELIPSIS | GE_OP parameter_list
 ;
 identifier : IDENTIFIER
 ;

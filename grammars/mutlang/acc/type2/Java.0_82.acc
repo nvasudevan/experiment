@@ -204,7 +204,7 @@ method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
-type : reference_type | primitive_type
+type : reference_type | CCB_TK
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
@@ -296,7 +296,7 @@ dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
 try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;
-additive_expression : additive_expression MINUS_TK multiplicative_expression | NEW_TK PLUS_TK multiplicative_expression | multiplicative_expression
+additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;

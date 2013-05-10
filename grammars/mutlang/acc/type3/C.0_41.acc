@@ -112,7 +112,7 @@ statement_list : statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' SUB_ASSIGN ELIPSIS | parameter_list
+parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;
@@ -120,7 +120,7 @@ function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
-argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
+argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr TYPE_NAME
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;

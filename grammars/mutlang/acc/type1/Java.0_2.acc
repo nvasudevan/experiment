@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl statement | 
+labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -248,7 +248,7 @@ statement_expression_list : statement_expression_list C_TK statement_expression 
 ;
 synchronized : modifiers
 ;
-constant_expression : expression
+constant_expression : expression | 
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;

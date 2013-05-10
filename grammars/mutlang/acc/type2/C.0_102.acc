@@ -18,7 +18,7 @@ logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
 struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
-initializer_list : initializer_list ',' initializer | initializer
+initializer_list : initializer_list ',' initializer | logical_and_expr
 ;
 compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
@@ -44,7 +44,7 @@ relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
-additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' '~' | multiplicative_expr
+additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
 expression_statement : expr ';' | ';'
 ;

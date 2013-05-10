@@ -62,7 +62,7 @@ declaration_list : declaration_list declaration | declaration
 ;
 struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
-init_declarator : declarator '=' initializer | declarator
+init_declarator : declarator '=' initializer | declarator type_name
 ;
 enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;
@@ -88,7 +88,7 @@ expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
-unary_operator : '!' | '~' | '-' | INT '+' | '*' | '&'
+unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;

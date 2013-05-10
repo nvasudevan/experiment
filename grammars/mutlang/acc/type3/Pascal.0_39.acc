@@ -62,7 +62,7 @@ newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
-variable_dcls : variable_dcl | variable_dcls UNSIGNED_INT ';' variable_dcl
+variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
@@ -146,7 +146,7 @@ proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
-term : term mult_op factor | factor
+term : term mult_op factor statement_part | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;

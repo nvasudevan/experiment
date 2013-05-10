@@ -26,7 +26,7 @@ assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
-unsigned_lit : NIL | index_t_list | unsigned_num
+unsigned_lit : NIL | STRING | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;
@@ -154,7 +154,7 @@ const_defs : const_def | const_defs ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;
-statements : statement | statements ';' statement
+statements : statement | statements PROGRAM statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;

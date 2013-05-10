@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects ')' | 
+formal_params : '(' formal_p_sects '<' ')' | 
 ;
 newident : IDENTIFIER
 ;
@@ -42,7 +42,7 @@ field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
-add_op : OR | set '-' | '+'
+add_op : OR | '-' | '+'
 ;
 var_dcl_part : VAR variable_dcls ';'
 ;

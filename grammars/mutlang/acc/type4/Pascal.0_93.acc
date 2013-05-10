@@ -86,7 +86,7 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr relational_op simple_expr | simple_expr
+expression : simple_expr relational_op simple_expr | 
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
@@ -122,7 +122,7 @@ labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;
-variable : variable '^' | '.' ident | variable '[' expressions ']' | ident actual_params
+variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;

@@ -46,11 +46,11 @@ iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' exp
 ;
 additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
-expression_statement : expr ';' | ';'
+expression_statement : multiplicative_expr expr ';' | ';'
 ;
 external_definition : declaration | function_definition
 ;
-unary_expr : SIZEOF '(' type_name ')' | SIZEOF initializer_list unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
+unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
 enumerator : identifier '=' constant_expr | identifier
 ;

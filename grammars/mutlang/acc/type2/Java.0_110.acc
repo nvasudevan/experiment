@@ -96,9 +96,9 @@ variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
-cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
+cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims assert_statement unary_expression
 ;
-constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name primary_no_new_array CP_TK
+constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;

@@ -56,7 +56,7 @@ field_declaration : modifiers type variable_declarators SC_TK | type variable_de
 ;
 class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
-variable_initializers : variable_initializers C_TK variable_initializer | INSTANCEOF_TK
+variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
 for_begin : for_header for_init
 ;
@@ -282,7 +282,7 @@ array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_i
 ;
 simple_name : identifier
 ;
-type_declaration : empty_statement | interface_declaration | class_declaration
+type_declaration : empty_statement | interface_declaration | CONTINUE_TK
 ;
 conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;

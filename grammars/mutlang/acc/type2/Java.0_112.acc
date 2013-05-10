@@ -20,7 +20,7 @@ continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
 block_statements : block_statements block_statement | block_statement
 ;
-assignment_operator : ASSIGN_TK | CHAR_LIT_TK
+assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
@@ -122,7 +122,7 @@ switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
 finally : FINALLY_TK block
 ;
-switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
+switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | return_statement
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;

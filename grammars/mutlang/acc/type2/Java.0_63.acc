@@ -46,7 +46,7 @@ local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
 do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
-interface_member_declarations : switch_labels interface_member_declaration | interface_member_declaration
+interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
 ;
 assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
 ;
@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
+inclusive_or_expression : inclusive_or_expression OR_TK pre_decrement_expression | exclusive_or_expression
 ;
 array_type : name dims | primitive_type dims
 ;

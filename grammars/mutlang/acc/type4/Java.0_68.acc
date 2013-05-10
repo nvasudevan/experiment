@@ -106,7 +106,7 @@ exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_ex
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
-static_initializer : static_ block
+static_initializer : block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
@@ -292,7 +292,7 @@ left_hand_side : array_access | field_access | name
 ;
 unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;
-dims : dims OSB_TK CSB_TK | OSB_TK
+dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
 try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;

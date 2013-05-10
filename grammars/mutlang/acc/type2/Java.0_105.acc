@@ -188,7 +188,7 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : name DOT_TK statement_without_trailing_substatement
+qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
@@ -210,7 +210,7 @@ class_declaration : CLASS_TK identifier super interfaces class_body | modifiers 
 ;
 switch_block_statement_group : switch_labels block_statements
 ;
-if_then_statement : IF_TK OP_TK expression CP_TK statement
+if_then_statement : IF_TK BOOL_LIT_TK expression CP_TK statement
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;

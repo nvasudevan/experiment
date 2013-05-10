@@ -40,7 +40,7 @@ for_header : FOR_TK OP_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
-extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
+extends_interfaces : extends_interfaces C_TK interface_type | type_declaration interface_type
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
@@ -154,7 +154,7 @@ statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement
 ;
 catch_clause : catch_clause_parameter block
 ;
-constructor_header : modifiers constructor_declarator throws | constructor_declarator array_type
+constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;

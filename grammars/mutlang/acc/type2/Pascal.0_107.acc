@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects ')' | 
+formal_params : '(' formal_p_sects case_label_list | 
 ;
 newident : IDENTIFIER
 ;
@@ -146,7 +146,7 @@ proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
-term : term mult_op factor | WHILE
+term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;

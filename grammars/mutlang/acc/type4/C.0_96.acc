@@ -40,7 +40,7 @@ struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
 conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
-relational_expr : relational_expr GE_OP | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | shift_expr
+relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | shift_expr
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
@@ -66,7 +66,7 @@ init_declarator : declarator '=' initializer | declarator
 ;
 enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;
-postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr ']' | primary_expr
+postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr ')' | postfix_expr '[' expr ']' | primary_expr
 ;
 multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' cast_expr | cast_expr
 ;

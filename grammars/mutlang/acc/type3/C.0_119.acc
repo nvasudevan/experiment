@@ -34,7 +34,7 @@ logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
 primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
-shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
+shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | assignment_expr additive_expr
 ;
 struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
@@ -44,7 +44,7 @@ relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
-additive_expr : additive_expr ELIPSIS '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
+additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
 expression_statement : expr ';' | ';'
 ;

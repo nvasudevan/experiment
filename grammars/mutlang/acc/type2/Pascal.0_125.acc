@@ -6,7 +6,7 @@ program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
-compound_stmt : SBEGIN members END
+compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION newident function_form
+func_heading : variant_part newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;

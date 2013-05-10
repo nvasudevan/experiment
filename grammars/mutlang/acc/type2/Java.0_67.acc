@@ -258,7 +258,7 @@ array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expre
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
-type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
+type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | for_statement DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
@@ -270,7 +270,7 @@ package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
-for_update : name | 
+for_update : statement_expression_list | 
 ;
 empty_statement : SC_TK
 ;

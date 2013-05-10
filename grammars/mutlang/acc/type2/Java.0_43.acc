@@ -94,7 +94,7 @@ this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
-expression : assignment_expression
+expression : continue_statement
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
@@ -190,7 +190,7 @@ method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_pa
 ;
 qualified_name : name DOT_TK identifier
 ;
-throws : THROWS_TK class_type_list | OSB_TK
+throws : THROWS_TK class_type_list | 
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;

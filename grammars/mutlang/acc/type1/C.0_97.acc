@@ -10,7 +10,7 @@ jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO 
 ;
 and_expr : and_expr '&' equality_expr | equality_expr
 ;
-struct_or_union : UNION | STRUCT
+struct_or_union : UNION | STRUCT | 
 ;
 struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
@@ -98,7 +98,7 @@ storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;
-type_name : type_specifier_list abstract_declarator | type_specifier_list | 
+type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
 exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;

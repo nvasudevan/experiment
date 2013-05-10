@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : ident | constant DOTDOT constant | add_op '(' newident_list ')'
+simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
@@ -130,7 +130,7 @@ relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;
-actuals_list : actual_param | actuals_list ',' actual_param
+actuals_list : actual_param members | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;

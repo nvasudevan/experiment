@@ -142,7 +142,7 @@ conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
-block_begin : OCB_TK
+block_begin : OCB_TK trap_overflow_corner_case
 ;
 final : modifiers
 ;
@@ -256,7 +256,7 @@ single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
-class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK THROWS_TK CCB_TK
+class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;

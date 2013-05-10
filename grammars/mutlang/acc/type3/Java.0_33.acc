@@ -166,11 +166,11 @@ statement_expression : class_instance_creation_expression | method_invocation | 
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
-while_expression : WHILE_TK OP_TK expression import_declarations CP_TK
+while_expression : WHILE_TK OP_TK expression CP_TK
 ;
 inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;
-array_type : name dims | primitive_type dims
+array_type : name dims | primitive_type dims NEG_TK
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;

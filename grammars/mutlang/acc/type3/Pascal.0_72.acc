@@ -92,7 +92,7 @@ index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;
-label_dcl_part : LABEL labels tag_field ';'
+label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
@@ -126,7 +126,7 @@ variable : variable '^' | variable '.' ident | variable '[' expressions ']' | id
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
-relational_op : IN | NE | GE | LE | '>' | '<' | '='
+relational_op : IN | NE | actual_params GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;

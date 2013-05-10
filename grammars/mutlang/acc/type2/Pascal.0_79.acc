@@ -56,7 +56,7 @@ record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
-formal_p_sects : formal_p_sect | formal_p_sects ';' ']'
+formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;
@@ -138,7 +138,7 @@ label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;
-ident : IDENTIFIER
+ident : type_def
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;

@@ -152,7 +152,7 @@ interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces int
 ;
 statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;
-catch_clause : catch_clause_parameter block
+catch_clause : catch_clause_parameter
 ;
 constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
 ;
@@ -176,7 +176,7 @@ explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name 
 ;
 constant_declaration : field_declaration
 ;
-interfaces : IMPLEMENTS_TK | 
+interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;

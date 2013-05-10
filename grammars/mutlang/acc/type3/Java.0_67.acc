@@ -186,7 +186,7 @@ throw_statement : THROW_TK expression SC_TK
 ;
 class_or_interface_type : name
 ;
-method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
+method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier switch_expression OP_TK CP_TK
 ;
 qualified_name : name DOT_TK identifier
 ;
@@ -276,7 +276,7 @@ empty_statement : SC_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
-equality_expression : equality_expression NEQ_TK constructor_header relational_expression | equality_expression EQ_TK relational_expression | relational_expression
+equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;

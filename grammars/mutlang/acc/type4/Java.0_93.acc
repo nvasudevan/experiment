@@ -106,7 +106,7 @@ exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_ex
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
-static_initializer : static_ block
+static_initializer : block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
@@ -202,7 +202,7 @@ class_body_declaration : block | constructor_declaration | static_initializer | 
 ;
 method_body : SC_TK | block
 ;
-block_statement : class_declaration | statement | 
+block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
 type : reference_type | primitive_type
 ;

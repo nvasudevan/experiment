@@ -62,7 +62,7 @@ for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
-static_ : modifiers
+static_ : INT_LIT_TK
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
@@ -226,7 +226,7 @@ do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;
-switch_statement : switch_expression expression
+switch_statement : switch_expression switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;

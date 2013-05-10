@@ -50,7 +50,7 @@ expression_statement : expr ';' | ';'
 ;
 external_definition : declaration | function_definition
 ;
-unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
+unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr declarator | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
 enumerator : identifier '=' constant_expr | identifier
 ;
@@ -60,7 +60,7 @@ labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | i
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : struct_declarator_list ',' struct_declarator | additive_expr struct_declarator
+struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
 init_declarator : declarator '=' initializer | declarator
 ;

@@ -204,7 +204,7 @@ method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
-type : reference_type | primitive_type | 
+type : reference_type | primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
@@ -218,7 +218,7 @@ if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK 
 ;
 block_end : CCB_TK
 ;
-if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
+if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement | 
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;

@@ -212,7 +212,7 @@ switch_block_statement_group : switch_labels block_statements
 ;
 if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
-break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
+break_statement : BREAK_TK identifier method_header SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : PACKAGE_TK LS_TK name SC_TK
+package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;

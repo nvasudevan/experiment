@@ -68,7 +68,7 @@ simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
-case_label : constant
+case_label : CONST constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
@@ -124,7 +124,7 @@ direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
-declaration : proc_dcl_part | newident var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
+declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;

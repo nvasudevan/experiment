@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : SUPER_TK | 
+this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type variable_declarators
+local_variable_declaration : final type variable_declarators | type
 ;
 expression_statement : statement_expression SC_TK
 ;

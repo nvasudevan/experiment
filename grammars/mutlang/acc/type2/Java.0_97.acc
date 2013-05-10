@@ -190,7 +190,7 @@ method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_pa
 ;
 qualified_name : name DOT_TK identifier
 ;
-throws : THROWS_TK class_type_list | 
+throws : THROWS_TK class_type_list | left_hand_side
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : MULT_TK type_declaration | type_declaration
+type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;

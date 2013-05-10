@@ -42,7 +42,7 @@ y_value : FLOATNUM | INTNUM | STRING
 ;
 y_columndefs : y_columndefs ',' y_columndef | y_columndef
 ;
-y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME '(' INTNUM ')'
+y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
 ;
 y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
@@ -58,5 +58,5 @@ y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SE
 ;
 y_boolean : NOT y_boolean | '(' y_sub_condition ')' | y_comparison
 ;
-y_column_list : y_column_list ',' NAME | NAME
+y_column_list : y_column_list ',' NAME | 
 ;

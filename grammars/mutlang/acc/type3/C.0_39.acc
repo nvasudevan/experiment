@@ -2,7 +2,7 @@
 
 %nodefault
 
-file : SIZEOF file external_definition | external_definition
+file : file external_definition | external_definition
 ;
 parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
@@ -44,7 +44,7 @@ relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
-additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
+additive_expr : additive_expr conditional_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
 expression_statement : expr ';' | ';'
 ;

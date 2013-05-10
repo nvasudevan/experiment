@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
+type : '^' CASE | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
@@ -98,7 +98,7 @@ variants : variant | variants ';' variant
 ;
 block : opt_declarations statement_part
 ;
-type_dcl_part : TYPE type_defs member_list
+type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;

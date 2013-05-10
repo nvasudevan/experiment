@@ -38,7 +38,7 @@ labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
-switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | IMPLEMENTS_TK CCB_TK
+switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
@@ -216,7 +216,7 @@ break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
-block_end : CCB_TK
+block_end : for_statement_nsi
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;

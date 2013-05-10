@@ -92,7 +92,7 @@ unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;
-parameter_list : parameter_list ',' parameter_declaration | logical_and_expr
+parameter_list : parameter_list ',' ENUM | parameter_declaration
 ;
 storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;

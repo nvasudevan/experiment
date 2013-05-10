@@ -4,7 +4,7 @@
 
 program : PROGRAM newident external_files ';' block '.'
 ;
-fixed_part : record_section | fixed_part actual_param ';' record_section
+fixed_part : record_section | fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
@@ -30,7 +30,7 @@ unsigned_lit : NIL | STRING | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;
-procedure_call : ident actual_params
+procedure_call : ident IDENTIFIER actual_params
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;

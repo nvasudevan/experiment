@@ -4,7 +4,7 @@
 
 file : file external_definition | external_definition
 ;
-parameter_identifier_list : identifier_list ',' ELIPSIS | AND_OP
+parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
 jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO identifier ';'
 ;
@@ -128,5 +128,5 @@ parameter_declaration : type_name | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;
-declarator2 : declarator2 '(' parameter_identifier_list ')' | declarator2 '(' parameter_type_list ')' | declarator2 '(' ')' | declarator2 '[' constant_expr ']' | declarator2 '[' ']' | '(' declarator ')' | identifier
+declarator2 : declarator2 '(' parameter_identifier_list ')' | declarator2 '(' parameter_type_list ')' | declarator2 '(' ')' | declarator2 '[' constant_expr compound_statement | declarator2 '[' ']' | '(' declarator ')' | identifier
 ;

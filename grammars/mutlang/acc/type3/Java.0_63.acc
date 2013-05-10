@@ -190,7 +190,7 @@ method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_pa
 ;
 qualified_name : name DOT_TK identifier
 ;
-throws : modifiers THROWS_TK class_type_list | 
+throws : THROWS_TK class_type_list | 
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
@@ -284,7 +284,7 @@ simple_name : identifier
 ;
 type_declaration : empty_statement | interface_declaration | class_declaration
 ;
-conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
+conditional_expression : conditional_or_expression REL_QM_TK NEG_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;
 trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expression | pre_decrement_expression | pre_increment_expression
 ;

@@ -14,7 +14,7 @@ catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
 conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
-anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type while_statement OP_TK argument_list CP_TK class_body
+anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
 continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression | name | primary
+postfix_expression : post_decrement_expression | post_increment_expression catch_clause_parameter | name | primary
 ;
 class_type : class_or_interface_type
 ;

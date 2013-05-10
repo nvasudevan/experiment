@@ -36,7 +36,7 @@ primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
-struct_declaration : abstract_declarator struct_declarator_list ';'
+struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
 conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
@@ -60,7 +60,7 @@ labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | i
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
+struct_declarator_list : declarator ',' struct_declarator | struct_declarator
 ;
 init_declarator : declarator '=' initializer | declarator
 ;

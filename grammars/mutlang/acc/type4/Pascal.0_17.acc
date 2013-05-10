@@ -86,9 +86,9 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr relational_op simple_expr | simple_expr
+expression : simple_expr relational_op simple_expr | 
 ;
-index_t_list : simple_type | index_t_list ','
+index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;

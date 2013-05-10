@@ -166,7 +166,7 @@ statement_expression : class_instance_creation_expression | method_invocation | 
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
-while_expression : WHILE_TK expression CP_TK
+while_expression : WHILE_TK OP_TK expression CP_TK
 ;
 inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;
@@ -186,7 +186,7 @@ throw_statement : THROW_TK expression SC_TK
 ;
 class_or_interface_type : name
 ;
-method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
+method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | OP_TK CP_TK
 ;
 qualified_name : name DOT_TK identifier
 ;

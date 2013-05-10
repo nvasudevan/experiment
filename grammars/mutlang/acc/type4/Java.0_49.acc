@@ -66,7 +66,7 @@ static_ : modifiers
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
-literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK |  | FP_LIT_TK | INT_LIT_TK
+literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
 ;
 class_body_declarations : class_body_declarations class_body_declaration | class_body_declaration
 ;
@@ -230,7 +230,7 @@ switch_statement : switch_expression switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
-return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
+return_statement : RETURN_TK expression SC_TK | SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;

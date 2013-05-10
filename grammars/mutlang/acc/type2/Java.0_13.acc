@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK BREAK_TK | trap_overflow_corner_case
+unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
@@ -214,7 +214,7 @@ if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
-if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
+if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK INTERFACE_TK ELSE_TK statement_nsi
 ;
 block_end : CCB_TK
 ;

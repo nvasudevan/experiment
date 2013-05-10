@@ -278,7 +278,7 @@ interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
 equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
-array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
+array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers modifiers | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;
 simple_name : identifier
 ;
@@ -300,7 +300,7 @@ additive_expression : additive_expression MINUS_TK multiplicative_expression | a
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
-while_statement_nsi : while_expression statement_expression
+while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;

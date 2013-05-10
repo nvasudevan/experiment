@@ -38,7 +38,7 @@ opt_declarations : declarations |
 ;
 statement_part : compound_stmt
 ;
-field_list : variant_part | fixed_part ';' variant_part | block
+field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
@@ -152,7 +152,7 @@ index_specs : index_spec | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;
-struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
+struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY TO index_t_list ']' OF type
 ;
 statements : statement | statements ';' statement
 ;

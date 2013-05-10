@@ -22,7 +22,7 @@ factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
-assignment : variable_dcls variable BECOMES expression
+assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
@@ -132,7 +132,7 @@ case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
-record_section :  | newident_list ':' type
+record_section : ELSE | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;

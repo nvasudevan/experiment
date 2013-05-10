@@ -18,7 +18,7 @@ newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
-factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
+factor : NOT factor const_defs | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
@@ -100,7 +100,7 @@ block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
-variable_dcl : newident_list ':' ident type
+variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;

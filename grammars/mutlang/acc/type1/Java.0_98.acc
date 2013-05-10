@@ -104,7 +104,7 @@ import_declarations : import_declarations import_declaration | import_declaratio
 ;
 exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
-primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK | 
+primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
 static_initializer : static_ block
 ;
@@ -304,5 +304,5 @@ while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
-while_statement : while_expression statement
+while_statement : while_expression statement | 
 ;

@@ -34,7 +34,7 @@ procedure_call : ident actual_params
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
-opt_declarations : declarations | unsigned_num
+opt_declarations : declarations | 
 ;
 statement_part : compound_stmt
 ;
@@ -158,5 +158,5 @@ statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
-set : '[' member_list ']'
+set : param_group '[' member_list ']'
 ;

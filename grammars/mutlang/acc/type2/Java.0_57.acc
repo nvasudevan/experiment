@@ -74,7 +74,7 @@ reference_type : array_type | class_or_interface_type
 ;
 method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;
-method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
+method_header : modifiers VOID_TK method_declarator exclusive_or_expression | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
 identifier : ID_TK
 ;
@@ -174,7 +174,7 @@ array_type : name dims | primitive_type dims
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;
-constant_declaration : constructor_header
+constant_declaration : field_declaration
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;

@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression | name | primary
+postfix_expression : post_decrement_expression | post_increment_expression | name primitive_type | primary
 ;
 class_type : class_or_interface_type
 ;
@@ -136,7 +136,7 @@ class_member_declaration : empty_statement | interface_declaration | class_decla
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;
-super : EXTENDS_TK class_type | MULT_TK
+super : EXTENDS_TK class_type | 
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;

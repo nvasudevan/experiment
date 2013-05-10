@@ -38,7 +38,7 @@ labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
-switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | EQ_TK OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
+switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
@@ -68,7 +68,7 @@ relational_expression : relational_expression INSTANCEOF_TK reference_type | rel
 ;
 literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
 ;
-class_body_declarations : class_body_declarations class_body_declaration | class_body_declaration
+class_body_declarations : class_body_declarations DIV_TK class_body_declaration | class_body_declaration
 ;
 reference_type : array_type | class_or_interface_type
 ;
