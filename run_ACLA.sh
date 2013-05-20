@@ -29,6 +29,11 @@ run_randomcfg() {
             _gcfg="$grandom/$randomsize/$g.cfg"    
 	    gcfg=$(mktemp ${_gcfg}.XXXXXX)
             cat $gacc | egrep -v "^%nodefault|^%token" | sed -e "s/'/\"/g" -e 's/;$//' > $gcfg
+            tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
+            for token in $tokenlist
+            do
+                sed -i -e "s/\b$token\b/\"$token\"/g" -e "s/'/\"/g" $gcfg
+            done
             sentence=$(timeout $timelimit $cmd -a $gcfg| egrep -o 'unambiguous\!|ambiguous string' | uniq)
 	    rm $gcfg
             ((cnt+=1))
@@ -74,7 +79,7 @@ run_lang() {
 #                fi
             done            
             sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
-	    #rm $gcfg
+	    rm $gcfg
             ((cnt+=1))
             if [ "$sentence" == "ambiguous string" ]
             then 
