@@ -59,11 +59,12 @@ run_lang() {
             _gcfg="$grammardir/cfg/$g.$i.cfg"
             [ ! -d $grammardir/cfg ] && mkdir -p $grammardir/cfg    
 	    gcfg=$(mktemp ${_gcfg}.XXXXXX)
+	    echo "$gcfg"
             cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
             tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
             for token in $tokenlist
             do
-                sed -i -e "s/\b$token\b/\"$token}\"/g" -e "s/'/\"/g" $gcfg
+                sed -i -e "s/\b$token\b/\"$token\"/g" -e "s/'/\"/g" $gcfg
 #                if [ "${grammar}" == "Pascal" ]
 #                then 
 #                    sed -i -e 's/"UNSIGNED_INT"/"1"/g' ${CFG_GRAMMAR_FILE}
@@ -73,7 +74,7 @@ run_lang() {
 #                fi
             done            
             sentence=$(timeout $timelimit $cmd -a $gcfg | egrep -o 'unambiguous\!|ambiguous string' | uniq)
-	    rm $gcfg
+	    #rm $gcfg
             ((cnt+=1))
             if [ "$sentence" == "ambiguous string" ]
             then 
