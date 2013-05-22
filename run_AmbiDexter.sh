@@ -50,7 +50,9 @@ run_randomcfg() {
         gacc="$grandom/$randomsize/$g.acc"
         _gy="$grandom/$randomsize/$g.y"
 	gy=$(mktemp ${_gy}.XXXXXX.y)
-        cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
+        cat $gacc | grep  "%token" | sed -e 's/,//g' -e 's/;$//' > $gy
+	echo "" >> $gy
+        cat $gacc | grep -v "%token" | sed -e 's/%nodefault/%start root\n\n%%/' >> $gy
         tmp="`mktemp`"
         $cmd -s $gy > $tmp 2>&1
         message="`cat $tmp | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3`"
@@ -58,14 +60,14 @@ run_randomcfg() {
         then
             if [ "$filter" == "" ]
             then
-                echo "$randomsize - $g,yes" | tee -a $result
+                echo "$randomsize - $g,yes(cycle)" | tee -a $result
             else
-                echo "$randomsize - $g,,,yes" | tee -a $result
+                echo "$randomsize - $g,,,yes(cycle)" | tee -a $result
             fi
             ((ambcnt+=1))
             continue
         fi
-            
+
         message="`cat $tmp | egrep -i 'Unproductive start symbol' | cut -d: -f2,3`"
         if [ "$message" != "" ]
         then 
@@ -118,14 +120,14 @@ run_lang() {
             then
                 if [ "$filter" == "" ]
                 then
-                    echo "$g.$i,yes" | tee -a $result
+                    echo "$g.$i,yes(cycle)" | tee -a $result
                 else
-                    echo "$g.$i,,,yes" | tee -a $result
+                    echo "$g.$i,,,yes(cycle)" | tee -a $result
                 fi
                 ((ambcnt+=1))
                 continue
             fi
-            
+
             message=$(cat $tmp | egrep -i 'Unproductive start symbol' | cut -d: -f2,3)
             if [ "$message" != "" ]
             then 
@@ -190,14 +192,14 @@ run_mutlang() {
             then
                 if [ "$filter" == "" ]
                 then
-                    echo "$g.0_$n,yes" | tee -a $result
+                    echo "$g.0_$n,yes(cycle)" | tee -a $result
                 else
-                    echo "$g.0_$n,,,yes" | tee -a $result
+                    echo "$g.0_$n,,,yes(cycle)" | tee -a $result
                 fi
                 ((ambcnt+=1))
                 continue                
             fi
-            
+
             message="`cat $tmp | egrep -i 'Unproductive start symbol' | cut -d: -f2,3`"
             if [ "$message" != "" ]
             then 
@@ -247,7 +249,9 @@ run_boltzcfg() {
         gacc="$gboltz/$boltzsize/$g.acc"
         _gy="$gboltz/$boltzsize/$g.y"
 	gy=$(mktemp ${_gy}.XXXXXX.y)
-        cat $gacc | sed -e 's/%nodefault/%start root\n\n%%/' > $gy
+        cat $gacc | grep  "%token" | sed -e 's/,//g' -e 's/;$//' > $gy
+	echo "" >> $gy
+        cat $gacc | grep -v "%token" | sed -e 's/%nodefault/%start root\n\n%%/' >> $gy
         tmp="`mktemp`"
         $cmd -s $gy > $tmp 2>&1
         message="`cat $tmp | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3`"
@@ -255,14 +259,14 @@ run_boltzcfg() {
         then
             if [ "$filter" == "" ]
             then
-                echo "$boltzsize - $g,yes" | tee -a $result
+                echo "$boltzsize - $g,yes(cycle)" | tee -a $result
             else
-                echo "$boltzsize - $g,,,yes" | tee -a $result
+                echo "$boltzsize - $g,,,yes(cycle)" | tee -a $result
             fi
             ((ambcnt+=1))
             continue
         fi
-            
+
         message="`cat $tmp | egrep -i 'Unproductive start symbol' | cut -d: -f2,3`"
         if [ "$message" != "" ]
         then 
