@@ -85,39 +85,43 @@ class MutateGrammar:
         return _cfg_repr
 
 
+    def randomTok(self):
+        _tok = random.choice(self.tokens)
+        if self.lex.keys().__contains__(_tok):
+            return CFG.Term(_tok)
+        else:
+            return CFG.Non_Term_Ref(_tok)        
+
+
     def modify_seq(self, rule):
-        if self.mutype == 'type2' or self.mutype == 'type3':
+        if self.mutype == 'add':
             i_seq = random.randint(0, rule.seqs.__len__()-1)
             seq =  rule.seqs[i_seq]
-            _tok = random.choice(self.tokens)
-            if self.lex.keys().__contains__(_tok):
-                tok = CFG.Term(_tok)
-            else:
-                tok = CFG.Non_Term_Ref(_tok)
-                    
+            tok = self.randomTok()
+            
             if seq.__len__() == 0: 
                 seq.append(tok)
             else:
-                if self.mutype == 'type2':
-                    i = random.randint(0, seq.__len__() - 1)
-                    seq[i] = tok
-                elif self.mutype == 'type3':
-                    # we can also add a symbol at the end, so we don't include "-1"
-                    i = random.randint(0, seq.__len__())
-                    seq.insert(i,tok)
-        elif self.mutype == 'type4':
+                # we can also add a symbol at the end, so we don't include "-1"
+                i = random.randint(0, seq.__len__())
+                seq.insert(i,tok)
+        elif self.mutype in ['mutate','delete']:
             i_non_empty_seqs = []
             for _ind,_seq in enumerate(rule.seqs):
                 if _seq.__len__() > 0:
                     i_non_empty_seqs.append(_ind)
             seq = rule.seqs[random.choice(i_non_empty_seqs)]
             i = random.randint(0, seq.__len__() - 1)
-            del seq[i]
+            if self.mutype == 'mutate':
+                seq[i] = self.randomTok()
+            elif self.mutype == 'delete':
+                del seq[i]
+                
                  
     
     def modify_grammar(self):
         cloned_g = self.cfg.clone()
-        if self.mutype == 'type1':
+        if self.mutype == 'empty':
             # iterate through rules that does not have empty alts
             non_empty_keys = []
             for _rule in cloned_g.rules:
@@ -136,7 +140,7 @@ class MutateGrammar:
             rule = cloned_g.get_rule(key_to_modify)
             print "++ rule: ", rule            
             rule.seqs.append([])
-        elif self.mutype in ['type2','type3','type4']:
+        elif self.mutype in ['mutate','add','delete']:
             rule_keys = [rule.name for rule in cloned_g.rules]
             key_to_modify = random.choice(rule_keys)
             rule = cloned_g.get_rule(key_to_modify)
@@ -162,10 +166,10 @@ def usage(msg=None):
     "-t <type of mutation> " \
     "-n <number of variations to generate> <grammar> <lexer> " \
     "\n\n - type of mutation can be one of the following: " \
-    "\n   - type1 - add empty alternative" \
-    "\n   - type2 - mutate symbol" \
-    "\n   - type3 - add a symbol" \
-    "\n   - type4 - remove a symbol\n\n")
+    "\n   - empty - add empty alternative" \
+    "\n   - mutate - mutate symbol" \
+    "\n   - add - add a symbol" \
+    "\n   - delete - remove a symbol\n\n")
     sys.exit(1)
     
     
@@ -183,8 +187,8 @@ if __name__ == "__main__":
         
     if mutype == None:
         usage("\nProvide -t <type of mutation> \n\n")
-    elif mutype not in ['type1','type2','type3','type4']:
-        usage("\nMutation type can only be of type1 or type2 or type3 or type4\n\n")
+    elif mutype not in ['empty','mutate','add','delete']:
+        usage("\nMutation type can only be of empty or mutate or add or delete\n\n")
     elif cnt == None:
         usage("\nProvide -n <no of variants to generate> \n\n")
         
