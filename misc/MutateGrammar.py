@@ -97,14 +97,9 @@ class MutateGrammar:
         if self.mutype == 'add':
             i_seq = random.randint(0, rule.seqs.__len__()-1)
             seq =  rule.seqs[i_seq]
-            tok = self.randomTok()
-            
-            if seq.__len__() == 0: 
-                seq.append(tok)
-            else:
-                # we can also add a symbol at the end, so we don't include "-1"
-                i = random.randint(0, seq.__len__())
-                seq.insert(i,tok)
+            # we can also add a symbol at the end, so we don't include "-1"
+            i = random.randint(0, seq.__len__())
+            seq.insert(i,self.randomTok())
         elif self.mutype in ['mutate','delete']:
             i_non_empty_seqs = []
             for _ind,_seq in enumerate(rule.seqs):
