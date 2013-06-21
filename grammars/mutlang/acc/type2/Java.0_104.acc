@@ -88,7 +88,7 @@ dim_exprs : dim_exprs dim_expr | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
-class_type : class_or_interface_type
+class_type : PACKAGE_TK
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
@@ -190,7 +190,7 @@ method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_pa
 ;
 qualified_name : name DOT_TK identifier
 ;
-throws : THROWS_TK class_type_list | type
+throws : THROWS_TK class_type_list | 
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
