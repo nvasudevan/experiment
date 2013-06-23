@@ -104,7 +104,7 @@ import_declarations : import_declarations import_declaration | import_declaratio
 ;
 exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
-primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
+primitive_type : BOOLEAN_TK | statement | INTEGRAL_TK
 ;
 static_initializer : static_ block
 ;
@@ -136,7 +136,7 @@ class_member_declaration : empty_statement | interface_declaration | class_decla
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;
-super : EXTENDS_TK class_type | constructor_declaration
+super : EXTENDS_TK class_type | 
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;

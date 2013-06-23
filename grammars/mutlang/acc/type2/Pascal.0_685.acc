@@ -118,7 +118,7 @@ const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;
-labels : label | labels ',' label
+labels : function_form | labels ',' label
 ;
 direction : DOWNTO | TO
 ;
@@ -132,7 +132,7 @@ case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
-record_section : CONST | newident_list ':' type
+record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;

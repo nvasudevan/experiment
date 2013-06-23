@@ -34,7 +34,7 @@ procedure_call : ident actual_params
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
-opt_declarations : declarations | case_label_list
+opt_declarations : declarations | 
 ;
 statement_part : compound_stmt
 ;
@@ -52,7 +52,7 @@ type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
-record_var : variable
+record_var : declaration
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;

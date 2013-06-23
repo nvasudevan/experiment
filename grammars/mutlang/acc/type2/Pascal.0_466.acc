@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects ')' | IF
+formal_params : '(' formal_p_sects ')' | 
 ;
 newident : IDENTIFIER
 ;
@@ -62,7 +62,7 @@ newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
-variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
+variable_dcls : variable_dcl | DO ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;

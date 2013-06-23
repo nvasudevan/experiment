@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects ')' | '^'
+formal_params : '(' formal_p_sects ')' | 
 ;
 newident : IDENTIFIER
 ;
@@ -36,7 +36,7 @@ paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']'
 ;
 opt_declarations : declarations | 
 ;
-statement_part : compound_stmt
+statement_part : func_heading
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;

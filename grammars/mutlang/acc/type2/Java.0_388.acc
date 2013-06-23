@@ -84,7 +84,7 @@ unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_cas
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
-dim_exprs : dim_exprs dim_expr | dim_expr
+dim_exprs : dim_exprs labeled_statement_nsi | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
@@ -190,7 +190,7 @@ method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_pa
 ;
 qualified_name : name DOT_TK identifier
 ;
-throws : THROWS_TK class_type_list | switch_block_statement_groups
+throws : THROWS_TK class_type_list | 
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;

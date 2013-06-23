@@ -4,7 +4,7 @@
 
 program : PROGRAM newident external_files ';' block '.'
 ;
-fixed_part : record_section | fixed_part ';' record_section
+fixed_part : newident_list | fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
@@ -132,7 +132,7 @@ case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
-record_section : declarations | newident_list ':' type
+record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;

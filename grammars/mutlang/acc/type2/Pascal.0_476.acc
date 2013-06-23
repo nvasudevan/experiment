@@ -28,7 +28,7 @@ case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : formal_params ':' ident | index_t_list
+function_form : formal_params ':' ident | 
 ;
 procedure_call : ident actual_params
 ;
@@ -44,7 +44,7 @@ case_list_elem :  | case_label_list ':' statement
 ;
 add_op : OR | '-' | '+'
 ;
-var_dcl_part : VAR variable_dcls ';'
+var_dcl_part : VAR variable_dcls labels
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;

@@ -28,7 +28,7 @@ case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : formal_params ':' ident | '*'
+function_form : formal_params ':' ident | 
 ;
 procedure_call : ident actual_params
 ;
@@ -68,7 +68,7 @@ simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
-case_label : constant
+case_label : const_defs
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;

@@ -106,7 +106,7 @@ index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
-variant : PROCEDURE | case_label_list ':' '(' field_list ')'
+variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
@@ -128,7 +128,7 @@ declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | la
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
-case_label_list : case_label | case_label_list ',' case_label
+case_label_list : UNSIGNED_REAL | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;

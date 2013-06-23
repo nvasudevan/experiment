@@ -26,7 +26,7 @@ assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
-unsigned_lit : NIL | STRING | unsigned_num
+unsigned_lit : NIL | STRING | body
 ;
 function_form : formal_params ':' ident | 
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | '>'
+external_files : '(' newident_list ')' | 
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

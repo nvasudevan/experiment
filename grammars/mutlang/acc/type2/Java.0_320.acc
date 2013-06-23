@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl statement
+labeled_statement : WHILE_TK statement
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -270,7 +270,7 @@ package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
-for_update : statement_expression_list | type_declarations
+for_update : statement_expression_list | 
 ;
 empty_statement : SC_TK
 ;

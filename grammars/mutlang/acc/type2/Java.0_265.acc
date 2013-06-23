@@ -176,7 +176,7 @@ explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name 
 ;
 constant_declaration : field_declaration
 ;
-interfaces : IMPLEMENTS_TK interface_type_list | something_dot_new
+interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
@@ -218,7 +218,7 @@ if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK 
 ;
 block_end : CCB_TK
 ;
-if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
+if_then_else_statement : CSB_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
