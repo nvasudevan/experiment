@@ -76,7 +76,7 @@ method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER
 ;
 method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
-identifier : ID_TK class_or_interface_type
+identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
@@ -88,7 +88,7 @@ dim_exprs : dim_exprs dim_expr | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
-class_type : class_or_interface_type
+class_type : class_or_interface_type compilation_unit
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;

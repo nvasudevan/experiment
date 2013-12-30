@@ -112,9 +112,9 @@ statement_list : statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
+parameter_type_list : parameter_list ',' ELIPSIS | ']'
 ;
-identifier : init_declarator_list
+identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;

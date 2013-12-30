@@ -90,7 +90,7 @@ cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
-identifier_list : identifier_list ',' identifier | parameter_identifier_list
+identifier_list : identifier_list ',' identifier | jump_statement
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;

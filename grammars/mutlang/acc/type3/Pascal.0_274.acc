@@ -20,7 +20,7 @@ mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
-param_group : newident_list ':' paramtype param_group
+param_group : newident_list ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;
@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION newident function_form
+func_heading : FUNCTION add_op newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;

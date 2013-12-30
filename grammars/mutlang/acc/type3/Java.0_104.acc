@@ -266,9 +266,9 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : PACKAGE_TK name SC_TK
+package_declaration : PACKAGE_TK name DO_TK SC_TK
 ;
-and_expression : and_expression AND_TK equality_expression | equality_expression conditional_expression
+and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
 for_update : statement_expression_list | 
 ;
