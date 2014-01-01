@@ -12,6 +12,7 @@ TK_MAXSIZE = 5
 # for validation
 EMPTYALTS_ALLOWED_RATIO = 0.05
 MAXALTS_ALLOWED = 5
+MAX_ALT_LENGTH = 7
 
 class BoltzGrammarGenerator:
 
@@ -133,7 +134,8 @@ class BoltzGrammarGenerator:
             sys.stdout.write(".");sys.stdout.flush()
             cfg = self.genCfg()
             Utils.write(cfg, self.lexterms_multi, tf)
-            if Utils.valid(tf, lf, MAXALTS_ALLOWED, EMPTYALTS_ALLOWED_RATIO):
+            if Utils.valid(tf, lf, MAXALTS_ALLOWED, 
+                           EMPTYALTS_ALLOWED_RATIO, MAX_ALT_LENGTH):
                 gf = os.path.join(gdir, str(i) + ".acc")
                 r = subprocess.call(["cp",tf,gf])
                 if r != 0:

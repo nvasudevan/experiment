@@ -84,22 +84,46 @@ def write(cfg, tokenlist, gf):
         f_cfg.write(key + ": " + cfg.pop(key) + ";\n\n")
     f_cfg.close()        
 
-
-def ambiguous(cfg):
-    """ Checks if the rule is ambiguous:
-        a) X : A | A | Z
-        b) A: A """
-
-    # (a)
+def verticalamb(cfg):
+    """ Check for vertical ambiguity """
     for rule in cfg.rules:
         seqs_set = Set()
         for seq in rule.seqs:
             seqs_set.add(" ".join(str(x) for x in seq))
                 
         if len(rule.seqs) != len(list(seqs_set)):
-            return True    
+            return True     
+    
+    return False
+
+
+def cyclicamb(cfg):
+    """ Check for cyclic ambiguity"""
+    print "cyc"
+    for rule in cfg.rules:
+#        print "rule: " , rule
+        for seq in rule.seqs:
+#            print "seq: " , seq
+            if len(seq) == 1:
+                if str(rule.name) == str(seq[0]):
+                    print "rule: " , rule
+                    return True
+        
+    return False
+    
+
+def ambiguous(cfg):
+    """ Checks if the rule is ambiguous:
+        a) X : A | A | Z
+        b) A: A """
+    
+    # (a)
+    if verticalamb(cfg):
+        return True
     
     # (b) - to be done
+    if cyclicamb(cfg):
+        return True
     
     return False
 
@@ -113,7 +137,7 @@ def unproductive(cfg, lex):
         return True
         
         
-def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
+def valid(gf, lf, maxalts_allowed, emptyalts_ratio, max_alt_length):
     """ Checks if the generated grammar is valid. That is:
         a) number of alternative for a rule < X
         b) contains no empty rules (so A: ;)
@@ -131,7 +155,7 @@ def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
         totalalts += n_alts
 
         if n_alts > maxalts_allowed:
-            sys.stdout.write("l>")
+            sys.stdout.write("n>")
             sys.stdout.flush()
             return False            
         
@@ -142,6 +166,11 @@ def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
             
         for seq in rule.seqs:
             n_syms = len(seq)
+            if n_syms > max_alt_length:
+                sys.stdout.write("l>")
+                sys.stdout.flush()
+                return False
+                
             if n_syms == 0:
                 emptyalts += 1          
 
@@ -149,17 +178,17 @@ def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
         sys.stdout.write(">%s" % str(emptyalts_ratio))
         sys.stdout.flush()
         return False
-                
-    # Check the grammar for trivial ambiguities
-    if ambiguous(cfg):
-        sys.stdout.write("a")
-        sys.stdout.flush()
-        return False
-        
+
     # Check if the grammar is unproductive        
     if unproductive(cfg,lex):
         sys.stdout.write("u")
         sys.stdout.flush()    
+        return False
+                        
+    # Check the grammar for trivial ambiguities
+    if ambiguous(cfg):
+        sys.stdout.write("a")
+        sys.stdout.flush()
         return False
         
     return True        
@@ -169,4 +198,4 @@ if __name__ == "__main__":
     gf = sys.argv[1]
     lf = sys.argv[2]
     print gf, lf     
-    print valid(gf,lf)
+    print valid(gf,lf,5,0.05,7)
