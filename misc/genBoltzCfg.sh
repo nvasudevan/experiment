@@ -11,15 +11,13 @@ n_nt=""
 n_t=""
 n_inst=""
 
-# point these to the Boltzmann software
-BOLTZ_DIR="$HOME/codespace/boltzmann/current"
-BOLTZ_SPEC="${BOLTZ_DIR}/test/Cfg.hs"
+if ([ -z "$BOLTZ_DIR" ] || [ -z "$BOLTZ_SPEC" ]  || [ -z "$SINBAD_DIR" ])
+then
+    echo "BOLTZ_DIR, BOLTZ_SPEC, and SINBAD_DIR need to be set first"
+    exit 1
+fi
 
-# download sinbad from there: https://github.com/nvasudevan/sinbad
-SINBAD_DIR="/var/tmp/git/sinbad/src"
 export PYTHONPATH=$PYTHONPATH:$SINBAD_DIR
-
-export BOLTZ_DIR BOLTZ_SPEC
 
 set -- $(getopt d:N:p:v:n:t:i: "$@")
 

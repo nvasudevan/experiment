@@ -83,15 +83,42 @@ def write(cfg, tokenlist, gf):
     for key in _keys:
         f_cfg.write(key + ": " + cfg.pop(key) + ";\n\n")
     f_cfg.close()        
+
+
+def ambiguous(cfg):
+    """ Checks if the rule is ambiguous:
+        a) X : A | A | Z
+        b) A: A """
+
+    # (a)
+    for rule in cfg.rules:
+        seqs_set = Set()
+        for seq in rule.seqs:
+            seqs_set.add(" ".join(str(x) for x in seq))
+                
+        if len(rule.seqs) != len(list(seqs_set)):
+            return True    
     
-# filter out: 
-# 1) no of alternatives > 5
-# 2) X: ''; - empty rules
-# 3) percentage of empty alternatives > 5
-# 4) X : A | A | Z
-# 5) nonterminating type rules: A: B; B: C; C: A
+    # (b) - to be done
+    
+    return False
+
+    
+def unproductive(cfg, lex):
+    """ Checks if the grammar is unproductive.
+        Grammar is unproductive if it contains rules of the type:
+        A: B; B: C; C: A """
+    unproductive_rules = GrammarInfo.cyclicInfo(cfg,lex)
+    if len(unproductive_rules) > 0:
+        return True
+        
         
 def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
+    """ Checks if the generated grammar is valid. That is:
+        a) number of alternative for a rule < X
+        b) contains no empty rules (so A: ;)
+        c) %age of empty alternatives < Y """
+       
     import Lexer, CFG
     lex = Lexer.parse(open(lf, "r").read())
     cfg = CFG.parse(lex, open(gf, "r").read())
@@ -119,28 +146,21 @@ def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
                 emptyalts += 1          
 
     if (emptyalts * 1.0)/totalalts > emptyalts_ratio:
-        sys.stdout.write("5")
+        sys.stdout.write(">%s" % str(emptyalts_ratio))
         sys.stdout.flush()
         return False
                 
-    # 2
-    for rule in cfg.rules:
-        seqs_set = Set()
-        for seq in rule.seqs:
-            seqs_set.add(" ".join(str(x) for x in seq))
-                
-        if len(rule.seqs) != len(list(seqs_set)):
-            sys.stdout.write("a")
-            sys.stdout.flush()
-            return False
-       
-    # 3         
-    cyclic_rules = GrammarInfo.cyclicInfo(cfg,lex)
-    if len(cyclic_rules) > 0:
-        sys.stdout.write("c")
+    # Check the grammar for trivial ambiguities
+    if ambiguous(cfg):
+        sys.stdout.write("a")
         sys.stdout.flush()
         return False
         
+    # Check if the grammar is unproductive        
+    if unproductive(cfg,lex):
+        sys.stdout.write("u")
+        sys.stdout.flush()    
+        return False
         
     return True        
     
