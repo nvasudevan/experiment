@@ -27,16 +27,22 @@ import CFG, Lexer
 def altsInfo(cfg, size):
     _total, _empty = 0,0
     _n_size = 0
+    _max_alt_len = 0
     for rule in cfg.rules:
         _total += len(rule.seqs)
         for ind,seq in enumerate(rule.seqs):
-            if len(seq) == 0:
+            _len = len(seq)
+            if _len == 0:
                 _empty += 1
                 
-            if len(seq) > size:
+            if _len > size:
                 _n_size += 1
                 
-    return _total, _empty, _n_size
+            if _len > _max_alt_len:
+                print "seq: " , seq
+                _max_alt_len = _len
+                
+    return _total, _empty, _n_size, _max_alt_len
 
 
 def symbolInfo(cfg):
@@ -128,12 +134,13 @@ if __name__ == "__main__":
     print "--"
     print lex
     cyclic_rules = cyclicInfo(cfg,lex)
-    total_alts, empty_alts, n_alts_size = altsInfo(cfg, int(alt_size))
+    total_alts, empty_alts, n_alts_size, max_alt_len = altsInfo(cfg, int(alt_size))
     nt_pts,t_pts = symbolInfo(cfg)
     
     print "no_rules: " , len(cfg.rules)
     print "empty/total alts: %s/%s" % (str(empty_alts),str(total_alts))
     print "alt_size_greater > %s: %s" % (alt_size,str(n_alts_size))
+    print "max alt length: %s" % (str(max_alt_len))
     print "nonterminal_pts: %i,%f" % (nt_pts,(nt_pts*1.0/(nt_pts+t_pts)))
     print "terminal_pts: %i,%f" % (t_pts,(t_pts*1.0/(nt_pts+t_pts)))     
     print "nonterminating_rules: %s" % (" \n ".join(cyclic_rules))
