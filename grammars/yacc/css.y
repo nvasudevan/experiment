@@ -3,7 +3,7 @@
  * For original grammar, refer to http://www.w3.org/TR/CSS21/grammar.html
  */
 
-%token CHARSET_SYM STRING S CDO CDC URI MEDIA_SYM IMPORT_SYM IDENT PAGE_SYM HASH INCLUDES DASHMATCH FUNCTION IMPORTANT_SYM NUMBER PERCENTAGE LENGTH EMS EXS ANGLE TIME FREQ SC_TK
+%token CHARSET_SYM STRING S CDO CDC URI MEDIA_SYM IMPORT_SYM IDENT PAGE_SYM HASH INCLUDES DASHMATCH FUNCTION IMPORTANT_SYM NUMBER PERCENTAGE LENGTH EMS EXS ANGLE TIME FREQ SC_TK COLON_TK
 
 %%
 
@@ -85,7 +85,7 @@ declaration_tail : SC_TK S_multi declaration_opt
 declaration_multi : | declaration_tail declaration_multi
   ;
   
-pseudo_page : ':' IDENT S_multi
+pseudo_page : COLON_TK IDENT S_multi
   ;
   
 operator : '/' S_multi | ',' S_multi
@@ -155,7 +155,7 @@ attrib_tail_opt : | attrib_includes S_multi id_or_string S_multi
 id_or_string :  IDENT | STRING
   ;
    
-pseudo : ':' pseudo_tail
+pseudo : COLON_TK pseudo_tail
   ;
   
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
@@ -164,7 +164,7 @@ pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 pseudo_tail_2_opt : | IDENT S_multi 
   ;
 
-declaration : property ':' S_multi expr prio_opt
+declaration : property COLON_TK S_multi expr prio_opt
   ;
   
 prio_opt : | prio
