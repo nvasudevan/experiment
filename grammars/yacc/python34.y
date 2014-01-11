@@ -10,6 +10,7 @@
 %token PLUS_ASSIGN_TK MINUS_ASSIGN_TK MULT_ASSIGN_TK DIV_ASSIGN_TK MOD_ASSIGN_TK 
 %token AND_ASSIGN_TK OR_ASSIGN_TK XOR_ASSIGN_TK LSHIFT_ASSIGN_TK RSHIFT_ASSIGN_TK 
 %token EXP_ASSIGN_TK DIV2_ASSIGN_TK
+%token DOT_TK COLON_TK
 
 %start root
 
@@ -51,7 +52,7 @@ eq_test_opt : | eq_test
 tfpdef_opt : | tfpdef
 ;
      
-tfpdef: NAME_TK | NAME_TK ':' test
+tfpdef: NAME_TK | NAME_TK COLON_TK test
 ;
 
 varargslist: vfpdef eq_test_opt multi_vfpdef_eq_test_opt varargslist_tail_1 
@@ -110,40 +111,40 @@ augassign: PLUS_ASSIGN_TK | MINUS_ASSIGN_TK | MULT_ASSIGN_TK | DIV_ASSIGN_TK
 compound_stmt : if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | funcdef | classdef | decorated
 ;
 
-if_stmt: IF_TK test ':' suite multi_elifs | IF_TK test ':' suite multi_elifs ELSE_TK ':' suite
+if_stmt: IF_TK test COLON_TK suite multi_elifs | IF_TK test COLON_TK suite multi_elifs ELSE_TK COLON_TK suite
 ;
 
-multi_elifs : | multi_elifs ELIF_TK test ':' suite
+multi_elifs : | multi_elifs ELIF_TK test COLON_TK suite
 ;
 
 suite: simple_stmt | NEWLINE INDENT_TK multi_stmts DEDENT_TK
 ;
 
-else_opt : | ELSE_TK ':' suite
+else_opt : | ELSE_TK COLON_TK suite
 ;
 
-while_stmt: WHILE_TK test ':' suite else_opt
+while_stmt: WHILE_TK test COLON_TK suite else_opt
 ;
 
-for_stmt: FOR_TK exprlist IN_TK test ':' suite else_opt | FOR_TK exprlist IN_TK test ',' ':' suite else_opt | FOR_TK exprlist IN_TK test ',' test multi_tests comma_opt ':' suite else_opt
+for_stmt: FOR_TK exprlist IN_TK test COLON_TK suite else_opt | FOR_TK exprlist IN_TK test ',' COLON_TK suite else_opt | FOR_TK exprlist IN_TK test ',' test multi_tests comma_opt COLON_TK suite else_opt
 ;
 
-try_stmt: TRY_TK ':' suite try_stmt_tail
+try_stmt: TRY_TK COLON_TK suite try_stmt_tail
 ;
 
 try_stmt_tail : multi_except_clauses else_opt finally_clause_opt | finally_clause
 ;
 
-multi_except_clauses : except_clause ':' suite | multi_except_clauses except_clause ':' suite
+multi_except_clauses : except_clause COLON_TK suite | multi_except_clauses except_clause COLON_TK suite
 ;
 
-finally_clause : FINALLY_TK ':' suite
+finally_clause : FINALLY_TK COLON_TK suite
 ;
 
 finally_clause_opt : | finally_clause
 ;
 
-with_stmt: WITH_TK with_item multi_with_items ':' suite
+with_stmt: WITH_TK with_item multi_with_items COLON_TK suite
 ;
 
 with_item: test | test AS_TK expr
@@ -155,7 +156,7 @@ multi_with_items : | multi_with_items ',' with_item
 except_clause: EXCEPT_TK | EXCEPT_TK test | EXCEPT_TK test AS_TK NAME_TK
 ;
 
-funcdef: DEF_TK NAME_TK parameters funcdef_parameters_opt ':' suite
+funcdef: DEF_TK NAME_TK parameters funcdef_parameters_opt COLON_TK suite
 ;
 
 funcdef_parameters_opt :  | FWDARROW_TK test
@@ -164,7 +165,7 @@ funcdef_parameters_opt :  | FWDARROW_TK test
 parameters: '(' ')' | '(' typedargslist ')'
 ;
 
-classdef: CLASS_TK NAME_TK ':' suite | CLASS_TK NAME_TK '(' arglist_opt ')' ':' suite
+classdef: CLASS_TK NAME_TK COLON_TK suite | CLASS_TK NAME_TK '(' arglist_opt ')' COLON_TK suite
 ;
 
 arglist_opt : | arglist
@@ -197,11 +198,11 @@ multi_decorators : decorator | multi_decorators decorator
 decorated: decorators classdef | decorators funcdef
 ;
 
-// | LAMBDA_TK vfpdef eq_test_opt multi_vfpdef_eq_test_opt DOUBLESTAR_TK vfpdef ':' test
-lambdef : LAMBDA_TK ':' test | LAMBDA_TK varargslist ':' test 
+// | LAMBDA_TK vfpdef eq_test_opt multi_vfpdef_eq_test_opt DOUBLESTAR_TK vfpdef COLON_TK test
+lambdef : LAMBDA_TK COLON_TK test | LAMBDA_TK varargslist COLON_TK test 
 ;
 
-lambdef_nocond: LAMBDA_TK ':' test_nocond | LAMBDA_TK varargslist ':' test_nocond
+lambdef_nocond: LAMBDA_TK COLON_TK test_nocond | LAMBDA_TK varargslist COLON_TK test_nocond
 ;
 
 test : or_test | or_test IF_TK or_test ELSE_TK test | lambdef
@@ -347,19 +348,19 @@ comp_if: IF_TK test_nocond comp_iter_opt
 multi_strings : STRING_TK | multi_strings STRING_TK
 ;
 
-trailer : '(' ')' | '(' arglist ')' | '[' subscriptlist ']' | '.' NAME_TK
+trailer : '(' ')' | '(' arglist ')' | '[' subscriptlist ']' | DOT_TK NAME_TK
 ;
 
 subscriptlist: subscript multi_subscripts comma_opt
 ;
 
-subscript: test | test_opt ':' test_opt sliceop_opt 
+subscript: test | test_opt COLON_TK test_opt sliceop_opt 
 ;
 
 multi_subscripts: | multi_subscripts ',' subscript
 ;
 
-sliceop: ':' test_opt
+sliceop: COLON_TK test_opt
 ;
  
 sliceop_opt : | sliceop
@@ -368,13 +369,13 @@ sliceop_opt : | sliceop
 test_opt : | test
 ;
 
-dictorsetmaker: test ':' test dictorsetmaker_tail_1 | test dictorsetmaker_tail_2
+dictorsetmaker: test COLON_TK test dictorsetmaker_tail_1 | test dictorsetmaker_tail_2
 ;                  
       
 dictorsetmaker_tail_1 : comp_for | multi_tests_2 comma_opt
 ;
 
-multi_tests_2 : | multi_tests_2 ',' test ':' test
+multi_tests_2 : | multi_tests_2 ',' test COLON_TK test
 ;
 
 dictorsetmaker_tail_2 : comp_for | multi_tests comma_opt
@@ -428,7 +429,7 @@ import_from: FROM_TK import_from_dotted_tail IMPORT_TK import_tail
 import_from_dotted_tail : multi_dot_or_ellipsis dotted_name |  multi_dot_or_ellipsis dot_or_ellipsis
 ;
 
-dot_or_ellipsis : '.' | ELLIPSIS_TK
+dot_or_ellipsis : DOT_TK | ELLIPSIS_TK
 ;
 
 multi_dot_or_ellipsis : | multi_dot_or_ellipsis dot_or_ellipsis
@@ -458,7 +459,7 @@ dotted_as_names_tail : | dotted_as_names_tail ',' dotted_as_name
 dotted_name: NAME_TK dotted_name_tail
 ;
 
-dotted_name_tail : | dotted_name_tail '.' NAME_TK
+dotted_name_tail : | dotted_name_tail DOT_TK NAME_TK
 ;
 
 addl_names : | addl_names ',' NAME_TK
