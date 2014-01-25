@@ -99,11 +99,8 @@ def verticalamb(cfg):
 
 def cyclicamb(cfg):
     """ Check for cyclic ambiguity"""
-    print "cyc"
     for rule in cfg.rules:
-#        print "rule: " , rule
         for seq in rule.seqs:
-#            print "seq: " , seq
             if len(seq) == 1:
                 if str(rule.name) == str(seq[0]):
                     print "rule: " , rule
