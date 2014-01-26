@@ -22,8 +22,7 @@
 import random, string
 import sys
 from sets import Set
-import GrammarInfo
-
+import Lexer, CFG
 
 def genSymbols(cfggen, minsize, maxsize):
     # we need one less nonterminal as we have start symbol - root
@@ -84,6 +83,7 @@ def write(cfg, tokenlist, gf):
         f_cfg.write(key + ": " + cfg.pop(key) + ";\n\n")
     f_cfg.close()        
 
+
 def verticalamb(cfg):
     """ Check for vertical ambiguity """
     for rule in cfg.rules:
@@ -97,16 +97,53 @@ def verticalamb(cfg):
     return False
 
 
+def prune_rules(cfg):
+    _cfg = {}
+    to_remove = []
+    for key in cfg.keys():
+        seqs = []
+        for seq in cfg[key]:
+            if (str(seq[0]) in cfg.keys()):
+                if (str(seq[0]) not in to_remove):
+                    seqs.append(seq)
+            
+        if len(seqs) > 0:
+            _cfg[key] = seqs
+        else:
+            to_remove.append(key)
+            
+    return _cfg
+
+def printcfg(cfg):
+    for key in cfg.keys():
+        print "-> %s: %s" % (key,cfg[key])
+
 def cyclicamb(cfg):
     """ Check for cyclic ambiguity"""
+    # we can remove the root rule for this.
+    # A: A
+    _cfg = {}
     for rule in cfg.rules:
-        for seq in rule.seqs:
-            if len(seq) == 1:
-                if str(rule.name) == str(seq[0]):
-                    print "rule: " , rule
-                    return True
-        
-    return False
+        if rule.name != 'root':
+            single_sym_alts = []
+            for seq in rule.seqs:
+                if len(seq) == 1:
+                    if isinstance(seq[0],CFG.Non_Term_Ref):
+                        single_sym_alts.append(seq)
+
+            if len(single_sym_alts) > 0:
+                _cfg[rule.name] = single_sym_alts
+
+    _found = True
+    while _found:
+        pruned_cfg = prune_rules(_cfg)
+        if pruned_cfg != _cfg:
+            _cfg = pruned_cfg
+            _found = True
+        else:
+            _found = False
+                    
+    return _cfg
     
 
 def ambiguous(cfg):
@@ -118,29 +155,115 @@ def ambiguous(cfg):
     if verticalamb(cfg):
         return True
     
-    # (b) - to be done
+    # (b)
     if cyclicamb(cfg):
         return True
     
     return False
 
+def removeTerms(cfg):
+    _rules, _indices, _r_remove = {}, {}, []
+    for rule in cfg.rules:
+        rule_seqs = []
+        for ind,seq in enumerate(rule.seqs):
+            _seq = []
+            for e in seq:
+                if isinstance(e, CFG.Non_Term_Ref):
+                    _seq.append(e.name)
+
+            if len(_seq) == 0:
+                if not _indices.__contains__(rule.name):
+                    _indices[rule.name] = ind
+                    _r_remove.append(rule.name)
+            rule_seqs.append(_seq)
+        if not _indices.__contains__(rule.name):
+            _rules[rule.name] = rule_seqs
+            
+    return _rules, _indices, _r_remove
+    
+    
+
+def removeMatchedRuleRefs(rules, indices):
+    _r_remove = []
+    for key in rules.keys():
+        rule_seqs = []
+        for ind,seq in enumerate(rules[key]):
+            _seq = []
+            for e in seq:
+                if e not in indices.keys():
+                    _seq.append(e)
+            if len(_seq)== 0:
+                indices[key] = ind
+                _r_remove.append(key)
+                break
+            rule_seqs.append(_seq)
+                
+        rules[key] = rule_seqs
+        
+    return _r_remove
+
+       
+def cyclicInfo(cfg,lex):
+    rules, indices, r_remove = removeTerms(cfg)
+    
+    if len(r_remove) > 0:
+        while True:
+            r_remove = removeMatchedRuleRefs(rules,indices)
+            if len(r_remove) == 0:
+                break
+                
+            for _key in r_remove:
+                del rules[_key]
+        
+    cyclic_rules = []
+    for key in rules.keys():
+        if key not in indices.keys():
+            cyclic_rules.append("%s : %s" % (key, rules[key]))
+
+    return cyclic_rules
+
     
 def unproductive(cfg, lex):
-    """ Checks if the grammar is unproductive.
-        Grammar is unproductive if it contains rules of the type:
+    """ Checks if the grammar contains rules that don't consume any input'.
+        Rules of this type don't consume any input:
         A: B; B: C; C: A """
-    unproductive_rules = GrammarInfo.cyclicInfo(cfg,lex)
+    unproductive_rules = cyclicInfo(cfg,lex)
     if len(unproductive_rules) > 0:
         return True
+
+def unreachable(cfg):
+    """ Checks if all non-terminals are reachable from start symbol"""
+    reachable = True
+    root_rule = cfg.rules[0]
+    nonterms = [(rule.name) for rule in cfg.rules if rule.name != root_rule.name]
+    reach_nonterms = []
+    for seq in root_rule.seqs:
+        for e in seq:
+            if isinstance(e, CFG.Non_Term_Ref):
+                if e.name not in reach_nonterms:
+                    reach_nonterms.append(e.name)
+
+    for name in reach_nonterms:
+        rule = cfg.get_rule(name)
+        for seq in rule.seqs:
+            for e in seq:
+                if isinstance(e, CFG.Non_Term_Ref):
+                    if e.name not in reach_nonterms:
+                         reach_nonterms.append(e.name)
+
+    unreach_nonterms = list(set(nonterms)-set(reach_nonterms))
+
+    return unreach_nonterms  
+
         
-        
-def valid(gf, lf, maxalts_allowed, emptyalts_ratio, max_alt_length):
+def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
     """ Checks if the generated grammar is valid. That is:
-        a) number of alternative for a rule < X
+        a) number of alternatives for a rule < maxalts_allowed
         b) contains no empty rules (so A: ;)
-        c) %age of empty alternatives < Y """
+        c) %age of empty alternatives < Y 
+        d) contains no unreachable rules 
+        e) doesn't contain a subset which taken no input """
        
-    import Lexer, CFG
     lex = Lexer.parse(open(lf, "r").read())
     cfg = CFG.parse(lex, open(gf, "r").read())
 
@@ -162,19 +285,19 @@ def valid(gf, lf, maxalts_allowed, emptyalts_ratio, max_alt_length):
             return False
             
         for seq in rule.seqs:
-            n_syms = len(seq)
-            if n_syms > max_alt_length:
-                sys.stdout.write("l>")
-                sys.stdout.flush()
-                return False
-                
-            if n_syms == 0:
+            if len(seq) == 0:
                 emptyalts += 1          
 
     if (emptyalts * 1.0)/totalalts > emptyalts_ratio:
         sys.stdout.write(">%s" % str(emptyalts_ratio))
         sys.stdout.flush()
         return False
+
+    # Check if all the rules are reachable from the start rule.
+    if (len(unreachable(cfg)) > 0):
+        sys.stdout.write("r")
+        sys.stdout.flush()
+        return False       
 
     # Check if the grammar is unproductive        
     if unproductive(cfg,lex):
@@ -187,7 +310,7 @@ def valid(gf, lf, maxalts_allowed, emptyalts_ratio, max_alt_length):
         sys.stdout.write("a")
         sys.stdout.flush()
         return False
-        
+
     return True        
     
 if __name__ == "__main__":
@@ -195,4 +318,4 @@ if __name__ == "__main__":
     gf = sys.argv[1]
     lf = sys.argv[2]
     print gf, lf     
-    print valid(gf,lf,5,0.05,7)
+    print valid(gf,lf,5,0.05,10)
