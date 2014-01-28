@@ -22,12 +22,13 @@
 # IN THE SOFTWARE.
 
 
-import getopt, sys, os, random, math
+import getopt, sys, os, random, math, tempfile, subprocess
 import CFG, Lexer
+import Utils
 
 class MutateGrammar:
 
-    def __init__(self, gf, lf, mutype, cnt):
+    def __init__(self, gf, lf, mutype, cnt, gdir):
         self.lex = Lexer.parse(open(lf, "r").read())
         self.cfg = CFG.parse(self.lex, open(gf, "r").read())
         self.mutype = mutype
@@ -46,8 +47,8 @@ class MutateGrammar:
                 header = "{0}\n%nodefault\n\n".format(line)
                 break
         
-        g_dir, g_file = os.path.dirname(gf), os.path.basename(gf)
-        mu_g_dir = g_dir + "/" + self.mutype
+        g_file = os.path.basename(gf)
+        mu_g_dir = gdir + "/" + self.mutype
         if not os.path.exists(mu_g_dir):
             os.makedirs(mu_g_dir)
         
@@ -56,11 +57,21 @@ class MutateGrammar:
         i = 1
         while i <= self.variations_cnt:
             _cfg = self.modify_grammar()
-            _f_file = open(('%s/%s_%s.acc' % (mu_g_dir, os.path.splitext(g_file)[0], i)),"w")
-            _f_file.write(header)
-            _f_file.write(self.cfg_repr(_cfg))
-            _f_file.close()
-            i += 1
+            tf = tempfile.mktemp()
+            tfile = open(tf,"w")
+            tfile.write(header)
+            tfile.write(self.cfg_repr(_cfg))
+            tfile.close()
+            
+            if Utils.valid(tf, lf, 5, 0.05):
+                gf = '%s/%s_%s.acc' % (mu_g_dir, os.path.splitext(g_file)[0], i)
+                r = subprocess.call(["cp", tf, gf])
+                if r != 0:
+                    Utils.error("Copy failed.\n", r)
+                    
+                i += 1
+            else:
+                print "** invalid **"
             
 
     def cfg_repr(self, cfg):
@@ -149,8 +160,8 @@ class MutateGrammar:
         return cloned_g
 
 
-def generate(cfg, lex, mutype, cnt):
-    MutateGrammar(cfg, lex, mutype, cnt)
+def generate(cfg, lex, mutype, cnt, gdir):
+    MutateGrammar(cfg, lex, mutype, cnt, gdir)
     
 
 def usage(msg=None):
@@ -158,6 +169,7 @@ def usage(msg=None):
         sys.stderr.write(msg)
         
     sys.stderr.write("MutateGrammar.py " \
+    "-d <where to create grammars>" \
     "-t <type of mutation> " \
     "-n <number of variations to generate> <grammar> <lexer> " \
     "\n\n - type of mutation can be one of the following: " \
@@ -169,8 +181,8 @@ def usage(msg=None):
     
     
 if __name__ == "__main__":
-    opts, args = getopt.getopt(sys.argv[1 : ], "hn:t:")
-    mutype,cnt = None,None
+    opts, args = getopt.getopt(sys.argv[1 : ], "hn:t:d:")
+    mutype,cnt,gdir = None,None,None
 
     if len(args) != 2:
         usage()
@@ -179,6 +191,8 @@ if __name__ == "__main__":
             mutype = opt[1]
         elif opt[0] == "-n":
             cnt = int(opt[1])
+        elif opt[0] == "-d":
+            gdir = opt[1]
         
     if mutype == None:
         usage("\nProvide -t <type of mutation> \n\n")
@@ -186,6 +200,8 @@ if __name__ == "__main__":
         usage("\nMutation type can only be of empty or mutate or add or delete\n\n")
     elif cnt == None:
         usage("\nProvide -n <no of variants to generate> \n\n")
+    elif gdir == None:
+        usage("\nProvide a directory for creating grammars \n\n")
         
         
-    generate(args[0], args[1], mutype, cnt)
+    generate(args[0], args[1], mutype, cnt, gdir)

@@ -318,4 +318,4 @@ if __name__ == "__main__":
     gf = sys.argv[1]
     lf = sys.argv[2]
     print gf, lf     
-    print valid(gf,lf,5,0.05,10)
+    print valid(gf,lf,5,0.05)
