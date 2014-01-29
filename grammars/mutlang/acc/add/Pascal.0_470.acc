@@ -16,7 +16,7 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND | MOD | DIV | '/' | '*'
+mult_op : AND | MOD | DIV | variant '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
@@ -34,7 +34,7 @@ procedure_call : ident actual_params
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
-opt_declarations : declarations | declarations
+opt_declarations : declarations | 
 ;
 statement_part : compound_stmt
 ;
