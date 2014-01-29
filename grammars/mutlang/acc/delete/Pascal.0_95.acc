@@ -6,7 +6,7 @@ program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
-compound_stmt : SBEGIN END
+compound_stmt : statements END
 ;
 expressions : expression | expressions ',' expression
 ;

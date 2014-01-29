@@ -36,7 +36,7 @@ formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_par
 ;
 labeled_statement : label_decl statement
 ;
-for_header : FOR_TK OP_TK
+for_header : FOR_TK ZRS_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
@@ -158,7 +158,7 @@ constructor_header : modifiers constructor_declarator throws | constructor_decla
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;
-statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | abstract_method_declaration | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
+statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;

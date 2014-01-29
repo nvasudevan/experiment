@@ -84,9 +84,9 @@ member : expression DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
-members : member | members ',' member
+members : case_label_list | members ',' member
 ;
-expression : simple_expr index_specs simple_expr | simple_expr
+expression : simple_expr relational_op simple_expr | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;

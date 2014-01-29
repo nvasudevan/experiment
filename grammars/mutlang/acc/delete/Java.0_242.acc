@@ -2,7 +2,7 @@
 
 %nodefault
 
-goal : 
+goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl statement
+labeled_statement : label_decl
 ;
 for_header : FOR_TK OP_TK
 ;

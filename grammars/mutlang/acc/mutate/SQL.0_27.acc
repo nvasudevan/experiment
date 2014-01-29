@@ -8,7 +8,7 @@ y_assignments : y_assignments ',' y_assignment | y_assignment
 ;
 y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table y_values
 ;
-y_expression : y_expression '-' y_product | y_expression '+' y_product | y_product
+y_expression : INSERT '-' y_product | y_expression '+' y_product | y_product
 ;
 y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
@@ -22,7 +22,7 @@ y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
 y_drop : DROP TTABLE y_table
 ;
-y_condition : ADD
+y_condition : y_sub_condition
 ;
 y_assignment : NAME EQUAL y_expression | NAME EQUAL NULL_VALUE
 ;

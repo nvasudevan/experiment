@@ -96,9 +96,9 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations OF
+block : opt_declarations statement_part
 ;
-type_dcl_part : TYPE type_defs ';'
+type_dcl_part : TYPE type_defs member_list
 ;
 variable_dcl : newident_list ':' type
 ;

@@ -58,7 +58,7 @@ class_instance_creation_expression : something_dot_new identifier OP_TK argument
 ;
 variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
-for_begin : for_init
+for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
@@ -182,7 +182,7 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression SC_TK
+throw_statement : THROW_TK SC_TK
 ;
 class_or_interface_type : name
 ;

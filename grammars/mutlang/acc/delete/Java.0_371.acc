@@ -198,7 +198,7 @@ assignment_expression : assignment | conditional_expression
 ;
 field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
-class_body_declaration : block |  | static_initializer | class_member_declaration
+class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration
 ;
 method_body : SC_TK | block
 ;
@@ -242,7 +242,7 @@ interface_member_declaration : interface_declaration | class_declaration | abstr
 ;
 primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
-label_decl : identifier REL_CL_TK
+label_decl : REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;

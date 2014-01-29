@@ -10,9 +10,9 @@ compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
-actual_params : '(' ')' | 
+actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects ')' | 
+formal_params : formal_p_sects ')' | 
 ;
 newident : IDENTIFIER
 ;

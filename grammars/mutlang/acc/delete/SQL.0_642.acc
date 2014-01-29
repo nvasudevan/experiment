@@ -36,7 +36,7 @@ y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN
 ;
 y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
 ;
-y_comparison : y_expression NOT NULL_VALUE | y_expression IS NULL_VALUE | y_expression COMPARISON_OPERATOR y_expression | y_expression EQUAL y_expression
+y_comparison : y_expression NOT NULL_VALUE | IS NULL_VALUE | y_expression COMPARISON_OPERATOR y_expression | y_expression EQUAL y_expression
 ;
 y_value : FLOATNUM | INTNUM | STRING
 ;
@@ -46,7 +46,7 @@ y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | N
 ;
 y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
-y_table : 
+y_table : NAME
 ;
 y_order : NAME
 ;

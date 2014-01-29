@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations members
+block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : UNSIGNED_INT
+label : simple_expr
 ;
 type_defs : type_def | type_defs ';' type_def
 ;

@@ -58,7 +58,7 @@ class_instance_creation_expression : something_dot_new identifier OP_TK argument
 ;
 variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
-for_begin : for_init
+for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
@@ -202,7 +202,7 @@ class_body_declaration : block | constructor_declaration | static_initializer | 
 ;
 method_body : SC_TK | block
 ;
-block_statement : class_declaration | statement | local_variable_declaration_statement
+block_statement :  | statement | local_variable_declaration_statement
 ;
 type : reference_type | primitive_type
 ;

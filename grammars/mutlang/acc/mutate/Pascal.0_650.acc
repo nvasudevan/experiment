@@ -80,7 +80,7 @@ body : IDENTIFIER | block
 ;
 actual_param : expression colon_things | expression
 ;
-member : expression DOTDOT expression | expression
+member : expression ':' expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
@@ -124,7 +124,7 @@ direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
-declaration : IDENTIFIER | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
+declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;

@@ -108,9 +108,9 @@ statement : jump_statement | iteration_statement | selection_statement | express
 ;
 abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
-statement_list : statement_list statement | statement
+statement_list : statement_list statement | 
 ;
-struct_declaration_list : struct_declaration | struct_declaration
+struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;

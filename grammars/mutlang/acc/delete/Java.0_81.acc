@@ -226,7 +226,7 @@ do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;
-switch_statement : switch_expression
+switch_statement : switch_expression switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
@@ -298,7 +298,7 @@ try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK blo
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;
-interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
+interface_body : OCB_TK interface_member_declarations CCB_TK | CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;

@@ -10,13 +10,13 @@ y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table 
 ;
 y_expression : y_expression '-' y_product | y_expression '+' y_product | y_product
 ;
-y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
+y_sub_condition2 : y_sub_condition2 AND y_select | y_boolean
 ;
 y_column : NAME
 ;
 y_columns : y_column_list | '*'
 ;
-y_atom : '(' y_expression ')' | y_column | y_assignment
+y_atom : '(' y_expression ')' | y_column | y_value
 ;
 y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;

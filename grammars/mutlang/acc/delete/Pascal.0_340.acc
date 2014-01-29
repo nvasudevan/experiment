@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
+type : '^' IDENTIFIER |  | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression | expression
+actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;

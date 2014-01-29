@@ -14,7 +14,7 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : IDENTIFIER
+newident : record_section
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
@@ -58,7 +58,7 @@ proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
 formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
-newident_list : DO
+newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;

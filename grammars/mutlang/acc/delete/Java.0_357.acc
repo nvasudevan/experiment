@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : trap_overflow_corner_case | trap_overflow_corner_case
+unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
@@ -288,7 +288,7 @@ conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_T
 ;
 trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expression | pre_decrement_expression | pre_increment_expression
 ;
-left_hand_side : array_access | field_access | name
+left_hand_side : array_access | field_access | 
 ;
 unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;

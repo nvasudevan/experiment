@@ -26,7 +26,7 @@ variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | va
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
-labeled_statement_nsi : statement_nsi
+labeled_statement_nsi : label_decl statement_nsi
 ;
 constructor_body : block_begin explicit_constructor_invocation block_statements constructor_block_end | block_begin block_statements constructor_block_end | block_begin explicit_constructor_invocation constructor_block_end | block_begin constructor_block_end
 ;
@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type variable_declarators
+local_variable_declaration : final type variable_declarators | variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;

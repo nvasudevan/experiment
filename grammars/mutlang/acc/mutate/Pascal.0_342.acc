@@ -28,7 +28,7 @@ case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : formal_params ':' ident | 
+function_form : formal_params proc_or_func ident | 
 ;
 procedure_call : ident actual_params
 ;
@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression direction | expression
+actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;

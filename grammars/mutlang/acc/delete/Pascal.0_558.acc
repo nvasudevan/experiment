@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
+simple_type : ident | constant DOTDOT constant | '(' ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : statement_part
+block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;

@@ -24,7 +24,7 @@ y_drop : DROP TTABLE y_table
 ;
 y_condition : y_sub_condition
 ;
-y_assignment : NAME EQUAL y_expression | NAME EQUAL NULL_VALUE
+y_assignment : NAME EQUAL y_expression | NAME EQUAL
 ;
 y_value_list : y_value_list ',' '-' FLOATNUM | y_value_list ',' FLOATNUM | y_value_list ',' '-' INTNUM | y_value_list ',' INTNUM | y_value_list ',' STRING | y_value_list ',' NULL_VALUE | '-' FLOATNUM | FLOATNUM | '-' INTNUM | INTNUM | STRING | NULL_VALUE
 ;
@@ -46,7 +46,7 @@ y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | N
 ;
 y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
-y_table : 
+y_table : NAME
 ;
 y_order : NAME
 ;

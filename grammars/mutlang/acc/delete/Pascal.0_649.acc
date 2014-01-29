@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression colon_things | expression
+actual_param : expression colon_things | 
 ;
 member : expression DOTDOT expression | expression
 ;
@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations
+block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;

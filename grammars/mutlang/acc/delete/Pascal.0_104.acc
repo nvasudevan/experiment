@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION newident function_form
+func_heading : FUNCTION function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
@@ -142,7 +142,7 @@ ident : IDENTIFIER
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;
-proc_dcl_part : 
+proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;

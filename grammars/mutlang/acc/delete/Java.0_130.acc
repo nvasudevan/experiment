@@ -110,7 +110,7 @@ static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
-name : qualified_name | simple_name
+name : qualified_name | 
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : 
+synchronized : modifiers
 ;
 constant_expression : expression
 ;

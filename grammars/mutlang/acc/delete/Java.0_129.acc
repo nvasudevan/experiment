@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl statement
+labeled_statement : label_decl
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -58,7 +58,7 @@ class_instance_creation_expression : something_dot_new identifier OP_TK argument
 ;
 variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
-for_begin : for_init
+for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;

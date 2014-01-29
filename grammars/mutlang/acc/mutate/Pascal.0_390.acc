@@ -2,7 +2,7 @@
 
 %nodefault
 
-program : PROGRAM newident DIV ';' block '.'
+program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
@@ -148,7 +148,7 @@ variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
-index_specs : index_spec | index_specs ';' index_spec
+index_specs : MOD | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

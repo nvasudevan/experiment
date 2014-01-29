@@ -2,7 +2,7 @@
 
 %nodefault
 
-program : PROGRAM newident SET ';' block '.'
+program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' type_def
+type_defs : GOTO | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;

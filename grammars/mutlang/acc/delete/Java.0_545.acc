@@ -208,7 +208,7 @@ type : reference_type | primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
-switch_block_statement_group : switch_labels block_statements
+switch_block_statement_group : block_statements
 ;
 if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : 
+synchronized : modifiers
 ;
 constant_expression : expression
 ;

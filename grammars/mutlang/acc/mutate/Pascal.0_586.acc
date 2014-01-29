@@ -142,7 +142,7 @@ ident : IDENTIFIER
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;
-proc_dcl_part : actual_param
+proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
@@ -154,7 +154,7 @@ const_defs : const_def | const_defs ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;
-statements : statement | statements ';' statement
+statements : statement | statements ';' '^'
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;

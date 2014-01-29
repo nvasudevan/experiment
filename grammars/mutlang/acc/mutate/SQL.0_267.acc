@@ -20,9 +20,9 @@ y_atom : '(' y_expression ')' | y_column | y_value
 ;
 y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
-y_drop : DROP TTABLE y_table
+y_drop : '(' TTABLE y_table
 ;
-y_condition : FROM
+y_condition : y_sub_condition
 ;
 y_assignment : NAME EQUAL y_expression | NAME EQUAL NULL_VALUE
 ;

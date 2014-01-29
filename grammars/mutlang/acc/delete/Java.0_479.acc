@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration :  | single_type_import_declaration
+import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -268,7 +268,7 @@ primary : array_creation_expression | primary_no_new_array
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;
-and_expression : and_expression AND_TK equality_expression | equality_expression
+and_expression : and_expression equality_expression | equality_expression
 ;
 for_update : statement_expression_list | 
 ;

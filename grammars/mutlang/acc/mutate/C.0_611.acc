@@ -80,9 +80,9 @@ selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement 
 ;
 declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;
-type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | SIGNED | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
+type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
-enumerator_list : enumerator_list ',' enumerator | enumerator
+enumerator_list : enumerator_list ',' enumerator | enum_specifier
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;

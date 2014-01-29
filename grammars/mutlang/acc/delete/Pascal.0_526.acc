@@ -56,7 +56,7 @@ record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
-formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
+formal_p_sects :  | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;
@@ -92,7 +92,7 @@ index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;
-label_dcl_part : LABEL ';'
+label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
