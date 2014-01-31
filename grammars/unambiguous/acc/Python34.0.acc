@@ -1,18 +1,6 @@
-/*
- * Python grammar in BNF form. 
- * For original grammar, refer to: http://docs.python.org/3.4/reference/grammar.html
- * Couple of things to note:
- *  - This grammar only supports Python programs in file format
- *  - see the comments below for typedargslist and varargslist to resolve s-r conflicts
- */
-%token NEWLINE ENDMARKER SC_TK YIELD_TK FROM_TK DEL_TK PASS_TK BREAK_TK RAISE_TK CONTINUE_TK RETURN_TK AS_TK NAME_TK IMPORT_TK ELLIPSIS_TK GLOBAL_TK NONLOCAL_TK ASSERT_TK IF_TK ELSE_TK ELIF_TK OR_TK AND_TK NOT_TK PIPE_TK LEFTSHIFT_TK RIGHTSHIFT_TK DOUBLESLASH_TK DOUBLESTAR_TK NUMBER_TK TRUE_TK FALSE_TK STRING_TK NONE_TK FOR_TK IN_TK INDENT_TK DEDENT_TK WHILE_TK WITH_TK TRY_TK EXCEPT_TK FINALLY_TK DEF_TK CLASS_TK FWDARROW_TK LAMBDA_TK EQ_TK GE_TK IS_TK LE_TK NOTEQ_TK NOTEQ2_TK 
+%token NEWLINE, ENDMARKER, SC_TK, YIELD_TK, FROM_TK, DEL_TK, PASS_TK, BREAK_TK, RAISE_TK, CONTINUE_TK, RETURN_TK, AS_TK, NAME_TK, IMPORT_TK, ELLIPSIS_TK, GLOBAL_TK, NONLOCAL_TK, ASSERT_TK, IF_TK, ELSE_TK, ELIF_TK, OR_TK, AND_TK, NOT_TK, PIPE_TK, LEFTSHIFT_TK, RIGHTSHIFT_TK, DOUBLESLASH_TK, DOUBLESTAR_TK, NUMBER_TK, TRUE_TK, FALSE_TK, STRING_TK, NONE_TK, FOR_TK, IN_TK, INDENT_TK, DEDENT_TK, WHILE_TK, WITH_TK, TRY_TK, EXCEPT_TK, FINALLY_TK, DEF_TK, CLASS_TK, FWDARROW_TK, LAMBDA_TK, EQ_TK, GE_TK, IS_TK, LE_TK, NOTEQ_TK, NOTEQ2_TK, PLUS_ASSIGN_TK, MINUS_ASSIGN_TK, MULT_ASSIGN_TK, DIV_ASSIGN_TK, MOD_ASSIGN_TK, AND_ASSIGN_TK, OR_ASSIGN_TK, XOR_ASSIGN_TK, LSHIFT_ASSIGN_TK, RSHIFT_ASSIGN_TK, EXP_ASSIGN_TK, DIV2_ASSIGN_TK, DOT_TK, COLON_TK;
 
-%token PLUS_ASSIGN_TK MINUS_ASSIGN_TK MULT_ASSIGN_TK DIV_ASSIGN_TK MOD_ASSIGN_TK 
-%token AND_ASSIGN_TK OR_ASSIGN_TK XOR_ASSIGN_TK LSHIFT_ASSIGN_TK RSHIFT_ASSIGN_TK 
-%token EXP_ASSIGN_TK DIV2_ASSIGN_TK
-%token DOT_TK COLON_TK
-
-%%
+%nodefault
 
 file_input: multi_newline_statements ENDMARKER
 ;
@@ -28,7 +16,6 @@ typedargslist: tfpdef eq_test_opt multi_tfpdef_eq_test_opt typedargslist_tail_1
    | DOUBLESTAR_TK tfpdef
 ;
 
-//Adding  "'**' tfpdef" as an alternative results in s-r conflict
 typedargslist_tail_1 : | ','  | ',' '*' tfpdef_opt multi_tfpdef_eq_test_opt typedargslist_tail_2 
 ;
 
@@ -55,7 +42,6 @@ varargslist: vfpdef eq_test_opt multi_vfpdef_eq_test_opt varargslist_tail_1
     |  DOUBLESTAR_TK vfpdef
 ;
 
-//Adding  "'**' vfpdef" as an alternative results in s-r conflict
 varargslist_tail_1 : | ',' | ',' '*' vfpdef_opt multi_vfpdef_eq_test_opt varargslist_tail_2 
 ;
 
@@ -86,13 +72,26 @@ multi_small_stmts : | multi_small_stmts SC_TK small_stmt
 small_stmt : expr_stmt | del_stmt | pass_stmt | flow_stmt | import_stmt | global_stmt | nonlocal_stmt | assert_stmt
 ;
 
-expr_stmt: test expr_stmt_tail | test ',' expr_stmt_tail | test ',' test_or_star_expr multi_test_or_star_expr comma_opt expr_stmt_tail | star_expr testlist_star_expr_tail expr_stmt_tail
+expr_stmt: test expr_stmt_tail 
+    | test ',' expr_stmt_tail 
+    | test ',' test_or_star_expr multi_test_or_star_expr comma_opt expr_stmt_tail 
+    | star_expr testlist_star_expr_tail expr_stmt_tail
 ;
 
-expr_stmt_tail : augassign yield_expr | augassign test | augassign test ',' | augassign test ',' test multi_tests comma_opt | multi_yield_expr_testlist_star_expr
+expr_stmt_tail : augassign yield_expr 
+    | augassign test 
+    | augassign test ',' 
+    | augassign test ',' test multi_tests comma_opt 
+    | multi_yield_expr_testlist_star_expr
 ;
 
-yield_expr_or_testlist_star_expr : yield_expr | test | test ',' | test ',' test_or_star_expr multi_test_or_star_expr comma_opt | star_expr | star_expr ',' | star_expr ',' test_or_star_expr multi_test_or_star_expr comma_opt
+yield_expr_or_testlist_star_expr : yield_expr 
+    | test 
+    | test ',' 
+    | test ',' test_or_star_expr multi_test_or_star_expr comma_opt 
+    | star_expr 
+    | star_expr ',' 
+    | star_expr ',' test_or_star_expr multi_test_or_star_expr comma_opt
 ;
 
 multi_yield_expr_testlist_star_expr :  | multi_yield_expr_testlist_star_expr '=' yield_expr_or_testlist_star_expr
@@ -103,10 +102,18 @@ augassign: PLUS_ASSIGN_TK | MINUS_ASSIGN_TK | MULT_ASSIGN_TK | DIV_ASSIGN_TK
     | LSHIFT_ASSIGN_TK | RSHIFT_ASSIGN_TK | EXP_ASSIGN_TK | DIV2_ASSIGN_TK
 ;
             
-compound_stmt : if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | funcdef | classdef | decorated
+compound_stmt : if_stmt 
+    | while_stmt 
+    | for_stmt 
+    | try_stmt 
+    | with_stmt 
+    | funcdef 
+    | classdef 
+    | decorated
 ;
 
-if_stmt: IF_TK test COLON_TK suite multi_elifs | IF_TK test COLON_TK suite multi_elifs ELSE_TK COLON_TK suite
+if_stmt: IF_TK test COLON_TK suite multi_elifs 
+    | IF_TK test COLON_TK suite multi_elifs ELSE_TK COLON_TK suite
 ;
 
 multi_elifs : | multi_elifs ELIF_TK test COLON_TK suite
@@ -121,7 +128,9 @@ else_opt : | ELSE_TK COLON_TK suite
 while_stmt: WHILE_TK test COLON_TK suite else_opt
 ;
 
-for_stmt: FOR_TK exprlist IN_TK test COLON_TK suite else_opt | FOR_TK exprlist IN_TK test ',' COLON_TK suite else_opt | FOR_TK exprlist IN_TK test ',' test multi_tests comma_opt COLON_TK suite else_opt
+for_stmt: FOR_TK exprlist IN_TK test COLON_TK suite else_opt 
+    | FOR_TK exprlist IN_TK test ',' COLON_TK suite else_opt 
+    | FOR_TK exprlist IN_TK test ',' test multi_tests comma_opt COLON_TK suite else_opt
 ;
 
 try_stmt: TRY_TK COLON_TK suite try_stmt_tail
@@ -130,7 +139,8 @@ try_stmt: TRY_TK COLON_TK suite try_stmt_tail
 try_stmt_tail : multi_except_clauses else_opt finally_clause_opt | finally_clause
 ;
 
-multi_except_clauses : except_clause COLON_TK suite | multi_except_clauses except_clause COLON_TK suite
+multi_except_clauses : except_clause COLON_TK suite 
+    | multi_except_clauses except_clause COLON_TK suite
 ;
 
 finally_clause : FINALLY_TK COLON_TK suite
@@ -160,7 +170,8 @@ funcdef_parameters_opt :  | FWDARROW_TK test
 parameters: '(' ')' | '(' typedargslist ')'
 ;
 
-classdef: CLASS_TK NAME_TK COLON_TK suite | CLASS_TK NAME_TK '(' arglist_opt ')' COLON_TK suite
+classdef: CLASS_TK NAME_TK COLON_TK suite 
+    | CLASS_TK NAME_TK '(' arglist_opt ')' COLON_TK suite
 ;
 
 arglist_opt : | arglist
@@ -172,7 +183,10 @@ multi_args_comma : | multi_args_comma argument ','
 arglist: multi_args_comma arglist_tail
 ;
                          
-arglist_tail : argument comma_opt | '*' test multi_comma_args | '*' test multi_comma_args ',' DOUBLESTAR_TK test | DOUBLESTAR_TK test
+arglist_tail : argument comma_opt 
+    | '*' test multi_comma_args 
+    | '*' test multi_comma_args ',' DOUBLESTAR_TK test 
+    | DOUBLESTAR_TK test
 ;
                          
 multi_comma_args : | multi_comma_args ',' argument
@@ -193,7 +207,6 @@ multi_decorators : decorator | multi_decorators decorator
 decorated: decorators classdef | decorators funcdef
 ;
 
-// | LAMBDA_TK vfpdef eq_test_opt multi_vfpdef_eq_test_opt DOUBLESTAR_TK vfpdef COLON_TK test
 lambdef : LAMBDA_TK COLON_TK test | LAMBDA_TK varargslist COLON_TK test 
 ;
 
@@ -302,7 +315,6 @@ factor: prefix_factor factor | power
 prefix_factor : plus_or_minus | '~'
 ;
 
-// power: atom trailer* ['**' factor]
 power: atom multi_trailers | atom multi_trailers DOUBLESTAR_TK factor
 ;
 
