@@ -12,12 +12,7 @@
 %token EXP_ASSIGN_TK DIV2_ASSIGN_TK
 %token DOT_TK COLON_TK
 
-%start root
-
 %%
-
-root : file_input
-;
 
 file_input: ENDMARKER | multi_newline_statements ENDMARKER
 ;
