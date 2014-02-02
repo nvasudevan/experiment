@@ -820,7 +820,7 @@ remove_accessor_declaration
 
 event_accessor_block
 	: opt_semicolon
-	| block;
+	| block
 	;
 
 attributes_without_members
