@@ -33,7 +33,6 @@ class MutateGrammar:
         self.cfg = CFG.parse(self.lex, open(gf, "r").read())
         self.mutype = mutype
         self.symbolic_tokens = []
-        #create a list of all nonterminal and terminal symbols
         self.tokens = [rule.name for rule in self.cfg.rules if rule.name != 'root']
         self.tokens += self.lex.keys()
         random.shuffle(self.tokens)
@@ -52,7 +51,7 @@ class MutateGrammar:
         if not os.path.exists(mu_g_dir):
             os.makedirs(mu_g_dir)
         
-        print "type: %s, cnt: %s" % (self.mutype, cnt)
+        print "==> type: %s, cnt: %s" % (self.mutype, cnt)
         self.variations_cnt = cnt
         i = 1
         while i <= self.variations_cnt:
@@ -70,8 +69,6 @@ class MutateGrammar:
                     Utils.error("Copy failed.\n", r)
                     
                 i += 1
-            else:
-                print "** invalid **"
             
 
     def cfg_repr(self, cfg):
@@ -109,7 +106,7 @@ class MutateGrammar:
             i_seq = random.randint(0, rule.seqs.__len__()-1)
             seq =  rule.seqs[i_seq]
             # we can also add a symbol at the end, so we don't include "-1"
-            i = random.randint(0, seq.__len__())
+            i = random.randint(0, len(seq))
             seq.insert(i,self.randomTok())
         elif self.mutype in ['mutate','delete']:
             i_non_empty_seqs = []
@@ -117,13 +114,29 @@ class MutateGrammar:
                 if _seq.__len__() > 0:
                     i_non_empty_seqs.append(_ind)
             seq = rule.seqs[random.choice(i_non_empty_seqs)]
-            i = random.randint(0, seq.__len__() - 1)
+            i = random.randint(0, len(seq) - 1)
             if self.mutype == 'mutate':
                 seq[i] = self.randomTok()
             elif self.mutype == 'delete':
                 del seq[i]
-                
-                 
+        elif self.mutype == 'switchadj':
+            _seqs = [_seq for _seq in rule.seqs if len(_seq) >= 2]
+            seq = random.choice(_seqs)
+            i = random.randint(0, len(seq)-2)
+            j = i+1
+            # switch the tokens seq[i] <-> seq[j]
+            _tmp = seq[i]
+            seq[i] = seq[j]
+            seq[j] = _tmp
+        elif self.mutype == 'switchany':
+            _seqs = [_seq for _seq in rule.seqs if len(_seq) >= 2]
+            seq = random.choice(_seqs)
+            i,j = random.sample(xrange(len(seq)),2)
+            # switch the tokens seq[i] <-> seq[j]
+            _tmp = seq[i]
+            seq[i] = seq[j]
+            seq[j] = _tmp
+            
     
     def modify_grammar(self):
         cloned_g = self.cfg.clone()
@@ -141,22 +154,35 @@ class MutateGrammar:
                     non_empty_keys.append(_rule.name)
                         
             print non_empty_keys
-            key_to_modify = random.choice(non_empty_keys)
-            print key_to_modify
-            rule = cloned_g.get_rule(key_to_modify)
-            print "++ rule: ", rule            
+            _key = random.choice(non_empty_keys)
+            print _key
+            rule = cloned_g.get_rule(_key)
             rule.seqs.append([])
         elif self.mutype in ['mutate','add','delete']:
-            rule_keys = [rule.name for rule in cloned_g.rules]
-            key_to_modify = random.choice(rule_keys)
+            _keys = [rule.name for rule in cloned_g.rules]
+            _key = random.choice(rule_keys)
             rule = cloned_g.get_rule(key_to_modify)
-            print "++ rule: ", rule
             self.modify_seq(rule)
+        elif self.mutype in ['switchadj','switchany']:
+            _keys = []
+            for rule in cloned_g.rules:
+                _switch = False
+                for seq in rule.seqs:
+                    if len(seq) >= 2:
+                        _switch = True
+                        break
+                        
+                if _switch:
+                    _keys.append(rule.name)
+                        
+            print _keys
+            _key = random.choice(_keys)
+            print _key
+            rule = cloned_g.get_rule(_key)
+            self.modify_seq(rule)    
         else:
-            pass
+            assert "Incorrect mutation type!"
             
-        print "-- rule: ", rule
-        
         return cloned_g
 
 
@@ -169,14 +195,16 @@ def usage(msg=None):
         sys.stderr.write(msg)
         
     sys.stderr.write("MutateGrammar.py " \
-    "-d <where to create grammars>" \
+    "-d <where to create grammars> " \
     "-t <type of mutation> " \
     "-n <number of variations to generate> <grammar> <lexer> " \
     "\n\n - type of mutation can be one of the following: " \
     "\n   - empty - add empty alternative" \
     "\n   - mutate - mutate symbol" \
     "\n   - add - add a symbol" \
-    "\n   - delete - remove a symbol\n\n")
+    "\n   - delete - remove a symbol" \
+    "\n   - switchadj - switch adjacent symbols" \
+    "\n   - switchany - switch any two symbols in an alternative\n\n")
     sys.exit(1)
     
     
@@ -196,8 +224,8 @@ if __name__ == "__main__":
         
     if mutype == None:
         usage("\nProvide -t <type of mutation> \n\n")
-    elif mutype not in ['empty','mutate','add','delete']:
-        usage("\nMutation type can only be of empty or mutate or add or delete\n\n")
+    elif mutype not in ['empty','mutate','add','delete','switchadj','switchany']:
+        usage("\nIncorrect mutation type. See usage.\n\n")
     elif cnt == None:
         usage("\nProvide -n <no of variants to generate> \n\n")
     elif gdir == None:
