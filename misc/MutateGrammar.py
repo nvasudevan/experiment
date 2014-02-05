@@ -160,8 +160,8 @@ class MutateGrammar:
             rule.seqs.append([])
         elif self.mutype in ['mutate','add','delete']:
             _keys = [rule.name for rule in cloned_g.rules]
-            _key = random.choice(rule_keys)
-            rule = cloned_g.get_rule(key_to_modify)
+            _key = random.choice(_keys)
+            rule = cloned_g.get_rule(_key)
             self.modify_seq(rule)
         elif self.mutype in ['switchadj','switchany']:
             _keys = []

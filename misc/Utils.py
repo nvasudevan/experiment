@@ -274,10 +274,10 @@ def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
         n_alts = len(rule.seqs)
         totalalts += n_alts
 
-        if n_alts > maxalts_allowed:
-            sys.stdout.write("n>")
-            sys.stdout.flush()
-            return False            
+        #if n_alts > maxalts_allowed:
+        #    sys.stdout.write("n>")
+        #    sys.stdout.flush()
+        #    return False            
         
         if n_alts == 1 and len(rule.seqs[0]) == 0:
             sys.stdout.write("e")
@@ -288,10 +288,10 @@ def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
             if len(seq) == 0:
                 emptyalts += 1          
 
-    if (emptyalts * 1.0)/totalalts > emptyalts_ratio:
-        sys.stdout.write(">%s" % str(emptyalts_ratio))
-        sys.stdout.flush()
-        return False
+    #if (emptyalts * 1.0)/totalalts > emptyalts_ratio:
+    #    sys.stdout.write(">%s" % str(emptyalts_ratio))
+    #    sys.stdout.flush()
+    #    return False
 
     # Check if all the rules are reachable from the start rule.
     if (len(unreachable(cfg)) > 0):
