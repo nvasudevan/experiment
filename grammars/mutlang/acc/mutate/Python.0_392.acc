@@ -1,0 +1,296 @@
+%token NEWLINE, ENDMARKER, SC_TK, YIELD_TK, FROM_TK, DEL_TK, PASS_TK, BREAK_TK, RAISE_TK, CONTINUE_TK, RETURN_TK, AS_TK, NAME_TK, IMPORT_TK, ELLIPSIS_TK, GLOBAL_TK, NONLOCAL_TK, ASSERT_TK, IF_TK, ELSE_TK, ELIF_TK, OR_TK, AND_TK, NOT_TK, PIPE_TK, LEFTSHIFT_TK, RIGHTSHIFT_TK, DOUBLESLASH_TK, DOUBLESTAR_TK, NUMBER_TK, TRUE_TK, FALSE_TK, STRING_TK, NONE_TK, FOR_TK, IN_TK, INDENT_TK, DEDENT_TK, WHILE_TK, WITH_TK, TRY_TK, EXCEPT_TK, FINALLY_TK, DEF_TK, CLASS_TK, FWDARROW_TK, LAMBDA_TK, EQ_TK, GE_TK, IS_TK, LE_TK, NOTEQ_TK, NOTEQ2_TK, PLUS_ASSIGN_TK, MINUS_ASSIGN_TK, MULT_ASSIGN_TK, DIV_ASSIGN_TK, MOD_ASSIGN_TK, AND_ASSIGN_TK, OR_ASSIGN_TK, XOR_ASSIGN_TK, LSHIFT_ASSIGN_TK, RSHIFT_ASSIGN_TK, EXP_ASSIGN_TK, DIV2_ASSIGN_TK, DOT_TK, COLON_TK;
+
+%nodefault
+
+file_input : multi_newline_statements ENDMARKER
+;
+newline_statement : NEWLINE | stmt
+;
+multi_newline_statements : newline_statement | newline_statement multi_newline_statements
+;
+typedargslist : tfpdef eq_test_opt multi_tfpdef_eq_test_opt typedargslist_tail_1 | '*' tfpdef_opt multi_tfpdef_eq_test_opt typedargslist_tail_2 | DOUBLESTAR_TK tfpdef
+;
+typedargslist_tail_1 :  | ',' | ',' '*' tfpdef_opt multi_tfpdef_eq_test_opt typedargslist_tail_2
+;
+typedargslist_tail_2 :  | ',' DOUBLESTAR_TK tfpdef
+;
+multi_tfpdef_eq_test_opt :  | multi_tfpdef_eq_test_opt ',' tfpdef eq_test_opt
+;
+eq_test : '=' test
+;
+eq_test_opt :  | eq_test
+;
+tfpdef_opt :  | tfpdef
+;
+tfpdef : NAME_TK | NAME_TK COLON_TK test
+;
+varargslist : vfpdef eq_test_opt multi_vfpdef_eq_test_opt varargslist_tail_1 | '*' vfpdef_opt multi_vfpdef_eq_test_opt varargslist_tail_2 | DOUBLESTAR_TK vfpdef
+;
+varargslist_tail_1 :  | ',' | ',' '*' vfpdef_opt multi_vfpdef_eq_test_opt varargslist_tail_2
+;
+varargslist_tail_2 :  | ',' DOUBLESTAR_TK vfpdef
+;
+multi_vfpdef_eq_test_opt :  | multi_vfpdef_eq_test_opt ',' vfpdef eq_test_opt
+;
+vfpdef_opt :  | vfpdef
+;
+vfpdef : NAME_TK
+;
+multi_stmts : stmt | multi_stmts stmt
+;
+stmt : simple_stmt | compound_stmt
+;
+simple_stmt : small_stmt multi_small_stmts NEWLINE | small_stmt multi_small_stmts SC_TK NEWLINE
+;
+multi_small_stmts :  | multi_small_stmts SC_TK small_stmt
+;
+small_stmt : expr_stmt | del_stmt | pass_stmt | flow_stmt | import_stmt | global_stmt | nonlocal_stmt | assert_stmt
+;
+expr_stmt : test expr_stmt_tail | test ',' expr_stmt_tail | test ',' test_or_star_expr multi_test_or_star_expr comma_opt expr_stmt_tail | star_expr testlist_star_expr_tail expr_stmt_tail
+;
+expr_stmt_tail : augassign yield_expr | augassign test | augassign test ',' | augassign test ',' test multi_tests comma_opt | multi_yield_expr_testlist_star_expr
+;
+yield_expr_or_testlist_star_expr : yield_expr | test | test ',' | test ',' test_or_star_expr multi_test_or_star_expr comma_opt | star_expr | star_expr ',' | star_expr ',' test_or_star_expr multi_test_or_star_expr comma_opt
+;
+multi_yield_expr_testlist_star_expr :  | multi_yield_expr_testlist_star_expr '=' yield_expr_or_testlist_star_expr
+;
+augassign : PLUS_ASSIGN_TK | MINUS_ASSIGN_TK | MULT_ASSIGN_TK | DIV_ASSIGN_TK | MOD_ASSIGN_TK | AND_ASSIGN_TK | OR_ASSIGN_TK | XOR_ASSIGN_TK | LSHIFT_ASSIGN_TK | RSHIFT_ASSIGN_TK | EXP_ASSIGN_TK | DIV2_ASSIGN_TK
+;
+compound_stmt : if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | funcdef | classdef | decorated
+;
+if_stmt : IF_TK test COLON_TK suite multi_elifs | IF_TK test COLON_TK suite varargslist_tail_1 ELSE_TK COLON_TK suite
+;
+multi_elifs :  | multi_elifs ELIF_TK test COLON_TK suite
+;
+suite : simple_stmt | NEWLINE INDENT_TK multi_stmts DEDENT_TK
+;
+else_opt :  | ELSE_TK COLON_TK suite
+;
+while_stmt : WHILE_TK test COLON_TK suite else_opt
+;
+for_stmt : FOR_TK exprlist IN_TK test COLON_TK suite else_opt | FOR_TK exprlist IN_TK test ',' COLON_TK suite else_opt | FOR_TK exprlist IN_TK test ',' test multi_tests comma_opt COLON_TK suite else_opt
+;
+try_stmt : TRY_TK COLON_TK suite try_stmt_tail
+;
+try_stmt_tail : multi_except_clauses else_opt finally_clause_opt | finally_clause
+;
+multi_except_clauses : except_clause COLON_TK suite | multi_except_clauses except_clause COLON_TK suite
+;
+finally_clause : FINALLY_TK COLON_TK suite
+;
+finally_clause_opt :  | finally_clause
+;
+with_stmt : WITH_TK with_item multi_with_items COLON_TK suite
+;
+with_item : test | test AS_TK expr
+;
+multi_with_items :  | multi_with_items ',' with_item
+;
+except_clause : EXCEPT_TK | EXCEPT_TK test | EXCEPT_TK test AS_TK NAME_TK
+;
+funcdef : DEF_TK NAME_TK parameters funcdef_parameters_opt COLON_TK suite
+;
+funcdef_parameters_opt :  | FWDARROW_TK test
+;
+parameters : '(' ')' | '(' typedargslist ')'
+;
+classdef : CLASS_TK NAME_TK COLON_TK suite | CLASS_TK NAME_TK '(' arglist_opt ')' COLON_TK suite
+;
+arglist_opt :  | arglist
+;
+multi_args_comma :  | multi_args_comma argument ','
+;
+arglist : multi_args_comma arglist_tail
+;
+arglist_tail : argument comma_opt | '*' test multi_comma_args | '*' test multi_comma_args ',' DOUBLESTAR_TK test | DOUBLESTAR_TK test
+;
+multi_comma_args :  | multi_comma_args ',' argument
+;
+argument : test | test comp_for | test '=' test
+;
+decorator : '@' dotted_name NEWLINE | '@' dotted_name '(' arglist_opt ')' NEWLINE
+;
+decorators : multi_decorators
+;
+multi_decorators : decorator | multi_decorators decorator
+;
+decorated : decorators classdef | decorators funcdef
+;
+lambdef : LAMBDA_TK COLON_TK test | LAMBDA_TK varargslist COLON_TK test
+;
+lambdef_nocond : LAMBDA_TK COLON_TK test_nocond | LAMBDA_TK varargslist COLON_TK test_nocond
+;
+test : or_test | or_test IF_TK or_test ELSE_TK test | lambdef
+;
+test_nocond : or_test | lambdef_nocond
+;
+or_test : and_test addl_or_tests
+;
+addl_or_tests :  | addl_or_tests OR_TK and_test
+;
+and_test : not_test addl_and_tests
+;
+addl_and_tests :  | addl_and_tests AND_TK not_test
+;
+not_test : NOT_TK not_test | comparison
+;
+comparison : expr multi_comparisons
+;
+multi_comparisons :  | multi_comparisons comp_op expr
+;
+comp_op : '<' | '>' | EQ_TK | GE_TK | LE_TK | NOTEQ_TK | NOTEQ2_TK | IN_TK | NOT_TK IN_TK | IS_TK | IS_TK NOT_TK
+;
+star_expr : '*' expr
+;
+multi_tests :  | multi_tests ',' test
+;
+test_or_star_expr : test | star_expr
+;
+multi_test_or_star_expr :  | multi_test_or_star_expr ',' test_or_star_expr
+;
+comma_opt :  | ','
+;
+testlist_star_expr_tail : multi_test_or_star_expr comma_opt
+;
+testlist_comp_tail : comp_for | testlist_star_expr_tail
+;
+del_stmt : DEL_TK exprlist
+;
+pass_stmt : PASS_TK
+;
+expr : xor_expr multi_xor_expr
+;
+multi_xor_expr :  | multi_xor_expr PIPE_TK xor_expr
+;
+xor_expr : and_expr multi_and_expr
+;
+multi_and_expr :  | multi_and_expr '^' and_expr
+;
+and_expr : shift_expr multi_shift_expr
+;
+multi_shift_expr :  | multi_shift_expr '&' shift_expr
+;
+shift_expr : arith_expr shift_expr_tail
+;
+shift_ops : LEFTSHIFT_TK | RIGHTSHIFT_TK
+;
+shift_expr_tail :  | shift_expr_tail shift_ops arith_expr
+;
+arith_expr : term arith_expr_tail
+;
+term : factor term_tail
+;
+factor_op : '*' | '/' | '%' | DOUBLESLASH_TK
+;
+term_tail :  | term_tail factor_op factor
+;
+factor : prefix_factor factor | power
+;
+prefix_factor : plus_or_minus | '~'
+;
+power : atom multi_trailers | atom multi_trailers DOUBLESTAR_TK factor
+;
+multi_trailers :  | multi_trailers trailer
+;
+atom : '(' ')' | '(' yield_expr_or_testlist_comp ')' | '[' ']' | '[' test testlist_comp_tail ']' | '[' star_expr testlist_comp_tail ']' | '{' '}' | '{' dictorsetmaker '}' | NAME_TK | NUMBER_TK | multi_strings | ELLIPSIS_TK | NONE_TK | TRUE_TK | FALSE_TK
+;
+yield_expr_or_testlist_comp : yield_expr | test testlist_comp_tail | star_expr testlist_comp_tail
+;
+comp_iter : comp_for | comp_if
+;
+comp_iter_opt :  | comp_iter
+;
+comp_for : FOR_TK exprlist IN_TK or_test comp_iter_opt
+;
+comp_if : IF_TK test_nocond comp_iter_opt
+;
+multi_strings : STRING_TK | multi_strings STRING_TK
+;
+trailer : '(' ')' | '(' arglist ')' | '[' subscriptlist ']' | DOT_TK NAME_TK
+;
+subscriptlist : subscript multi_subscripts comma_opt
+;
+subscript : test | test_opt COLON_TK test_opt sliceop_opt
+;
+multi_subscripts :  | multi_subscripts ',' subscript
+;
+sliceop : COLON_TK test_opt
+;
+sliceop_opt :  | sliceop
+;
+test_opt :  | test
+;
+dictorsetmaker : test COLON_TK test dictorsetmaker_tail_1 | test dictorsetmaker_tail_2
+;
+dictorsetmaker_tail_1 : comp_for | multi_tests_2 comma_opt
+;
+multi_tests_2 :  | multi_tests_2 ',' test COLON_TK test
+;
+dictorsetmaker_tail_2 : comp_for | multi_tests comma_opt
+;
+plus_or_minus : '+' | '-'
+;
+arith_expr_tail :  | arith_expr_tail plus_or_minus term
+;
+expr_or_star_expr : expr | star_expr
+;
+addl_expr_or_star_expr :  | addl_expr_or_star_expr ',' expr_or_star_expr
+;
+exprlist : expr_or_star_expr addl_expr_or_star_expr comma_opt
+;
+flow_stmt : break_stmt | continue_stmt | return_stmt | raise_stmt | yield_stmt
+;
+break_stmt : BREAK_TK
+;
+continue_stmt : CONTINUE_TK
+;
+return_stmt : RETURN_TK | RETURN_TK test | RETURN_TK test ',' | RETURN_TK test ',' test multi_tests comma_opt
+;
+yield_stmt : yield_expr
+;
+raise_stmt : RAISE_TK raise_stmt_tail
+;
+raise_stmt_tail :  | test | test FROM_TK test
+;
+import_stmt : import_name | import_from
+;
+import_name : IMPORT_TK dotted_as_names
+;
+import_from : FROM_TK import_from_dotted_tail IMPORT_TK import_tail
+;
+import_from_dotted_tail : multi_dot_or_ellipsis dotted_name | multi_dot_or_ellipsis dot_or_ellipsis
+;
+dot_or_ellipsis : DOT_TK | ELLIPSIS_TK
+;
+multi_dot_or_ellipsis :  | multi_dot_or_ellipsis dot_or_ellipsis
+;
+import_tail : '*' | '(' import_as_names ')' | import_as_names
+;
+import_as_name : NAME_TK | NAME_TK AS_TK NAME_TK
+;
+dotted_as_name : dotted_name | dotted_name AS_TK NAME_TK
+;
+import_as_names : import_as_name import_as_names_tail comma_opt
+;
+import_as_names_tail :  | import_as_names_tail ',' import_as_name
+;
+dotted_as_names : dotted_as_name dotted_as_names_tail
+;
+dotted_as_names_tail :  | dotted_as_names_tail ',' dotted_as_name
+;
+dotted_name : NAME_TK dotted_name_tail
+;
+dotted_name_tail :  | dotted_name_tail DOT_TK NAME_TK
+;
+addl_names :  | addl_names ',' NAME_TK
+;
+global_stmt : GLOBAL_TK NAME_TK addl_names
+;
+nonlocal_stmt : NONLOCAL_TK NAME_TK addl_names
+;
+assert_stmt : ASSERT_TK test | ASSERT_TK test ',' test
+;
+yield_expr : YIELD_TK | YIELD_TK yield_arg
+;
+yield_arg : FROM_TK test | test | test ',' | test ',' test multi_tests comma_opt
+;
