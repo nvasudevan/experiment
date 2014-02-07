@@ -1,0 +1,69 @@
+%{
+#include "yygrammar.h"
+%}
+%%
+"F"     { return 'F'; }
+"N"     { return 'N'; }
+"R"     { return 'R'; }
+"V"     { return 'V'; }
+"B"     { return 'B'; }
+"A"     { return 'A'; }
+"E"     { return 'E'; }
+"I"     { return 'I'; }
+"Q"     { return 'Q'; }
+"Y"     { return 'Y'; }
+"MDA"     { return TK_MDA; }
+"HANLS"     { return TK_HANLS; }
+"BWRE"     { return TK_BWRE; }
+"FUAS"     { return TK_FUAS; }
+"QT"     { return TK_QT; }
+"HEPDS"     { return TK_HEPDS; }
+"FOGJG"     { return TK_FOGJG; }
+"JBB"     { return TK_JBB; }
+"KISSW"     { return TK_KISSW; }
+"XSIZ"     { return TK_XSIZ; }
+"CGEP"     { return TK_CGEP; }
+"WGEUU"     { return TK_WGEUU; }
+"DBRU"     { return TK_DBRU; }
+"OFJJ"     { return TK_OFJJ; }
+"TO"     { return TK_TO; }
+"YYU"     { return TK_YYU; }
+"KXK"     { return TK_KXK; }
+"ME"     { return TK_ME; }
+"CRXBF"     { return TK_CRXBF; }
+"DDLO"     { return TK_DDLO; }
+"JKC"     { return TK_JKC; }
+"MQOA"     { return TK_MQOA; }
+"WWH"     { return TK_WWH; }
+"KQ"     { return TK_KQ; }
+"ETCL"     { return TK_ETCL; }
+"VPRI"     { return TK_VPRI; }
+"ND"     { return TK_ND; }
+"ASAQX"     { return TK_ASAQX; }
+"JWWCV"     { return TK_JWWCV; }
+"VFKJ"     { return TK_VFKJ; }
+"CR"     { return TK_CR; }
+"FSV"     { return TK_FSV; }
+"FROVT"     { return TK_FROVT; }
+"CLKTR"     { return TK_CLKTR; }
+"HMAIE"     { return TK_HMAIE; }
+"UU"     { return TK_UU; }
+"EEYED"     { return TK_EEYED; }
+"HSJX"     { return TK_HSJX; }
+"CS"     { return TK_CS; }
+"YI"     { return TK_YI; }
+"NI"     { return TK_NI; }
+"NU"     { return TK_NU; }
+"AAJ"     { return TK_AAJ; }
+"SSX"     { return TK_SSX; }
+"ZGVA"     { return TK_ZGVA; }
+"ETM"     { return TK_ETM; }
+"LPYFD"     { return TK_LPYFD; }
+"FZX"     { return TK_FZX; }
+"IRJ"     { return TK_IRJ; }
+"KHNL"     { return TK_KHNL; }
+"UI"     { return TK_UI; }
+" "    { /* skip blank */ }
+\n     { yypos++; /* adjust linenumber and skip newline */ }
+\r     { yypos++; /* adjust linenumber and skip newline */ }
+.      { yyerror("illegal token"); }
