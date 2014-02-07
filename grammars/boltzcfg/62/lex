@@ -1,0 +1,70 @@
+%{
+#include "yygrammar.h"
+%}
+%%
+"F"     { return 'F'; }
+"J"     { return 'J'; }
+"N"     { return 'N'; }
+"Z"     { return 'Z'; }
+"A"     { return 'A'; }
+"E"     { return 'E'; }
+"I"     { return 'I'; }
+"Q"     { return 'Q'; }
+"Y"     { return 'Y'; }
+"FEXTA"     { return TK_FEXTA; }
+"UHUQJ"     { return TK_UHUQJ; }
+"BITEP"     { return TK_BITEP; }
+"OJYL"     { return TK_OJYL; }
+"HASI"     { return TK_HASI; }
+"HJPNQ"     { return TK_HJPNQ; }
+"XMX"     { return TK_XMX; }
+"BOTL"     { return TK_BOTL; }
+"MJDS"     { return TK_MJDS; }
+"LAVET"     { return TK_LAVET; }
+"EZIU"     { return TK_EZIU; }
+"HXW"     { return TK_HXW; }
+"QZBBV"     { return TK_QZBBV; }
+"CLBL"     { return TK_CLBL; }
+"KM"     { return TK_KM; }
+"KC"     { return TK_KC; }
+"KWI"     { return TK_KWI; }
+"XI"     { return TK_XI; }
+"RIC"     { return TK_RIC; }
+"IC"     { return TK_IC; }
+"PQJR"     { return TK_PQJR; }
+"QIGAN"     { return TK_QIGAN; }
+"TS"     { return TK_TS; }
+"MHYP"     { return TK_MHYP; }
+"XNNSR"     { return TK_XNNSR; }
+"PINC"     { return TK_PINC; }
+"VUZMT"     { return TK_VUZMT; }
+"IF"     { return TK_IF; }
+"AJT"     { return TK_AJT; }
+"BCEWT"     { return TK_BCEWT; }
+"VAMG"     { return TK_VAMG; }
+"SLTAL"     { return TK_SLTAL; }
+"ASN"     { return TK_ASN; }
+"HUIT"     { return TK_HUIT; }
+"CV"     { return TK_CV; }
+"QRSFI"     { return TK_QRSFI; }
+"SHOEH"     { return TK_SHOEH; }
+"ZQFNV"     { return TK_ZQFNV; }
+"NF"     { return TK_NF; }
+"ZRJ"     { return TK_ZRJ; }
+"YS"     { return TK_YS; }
+"RUM"     { return TK_RUM; }
+"YXX"     { return TK_YXX; }
+"DP"     { return TK_DP; }
+"ELL"     { return TK_ELL; }
+"KULO"     { return TK_KULO; }
+"VHCCY"     { return TK_VHCCY; }
+"FN"     { return TK_FN; }
+"ZQQR"     { return TK_ZQQR; }
+"HSGPD"     { return TK_HSGPD; }
+"GDTF"     { return TK_GDTF; }
+"OVORS"     { return TK_OVORS; }
+"QF"     { return TK_QF; }
+" "    { /* skip blank */ }
+\n     { yypos++; /* adjust linenumber and skip newline */ }
+\r     { yypos++; /* adjust linenumber and skip newline */ }
+.      { yyerror("illegal token"); }
