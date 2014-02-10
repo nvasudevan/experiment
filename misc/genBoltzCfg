@@ -12,7 +12,6 @@ TK_MAXSIZE = 5
 # for validation
 EMPTYALTS_ALLOWED_RATIO = 0.05
 MAXALTS_ALLOWED = 5
-# not needed for now
 #MAX_ALT_LENGTH = 7
 
 class BoltzGrammarGenerator:
@@ -55,11 +54,9 @@ class BoltzGrammarGenerator:
         if (self.no_samples == None) or \
            (self.sing_prec == None) or \
            (self.val_prec == None) or \
-           (self.no_nonterms == None) or \
-           (self.no_terms == None) or \
            (self.grammardir == None):
             self.usage("Not enough arguments")  
-            
+
         if not os.path.exists(self.grammardir):
             os.makedirs(self.grammardir)
 

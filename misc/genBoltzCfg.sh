@@ -4,12 +4,18 @@
 
 boltzprog="./genBoltzCfg"
 grammardir=""
+boltzlexdir=""
 n_samples=""
 sprec=""
 vprec=""
 n_nt=""
 n_t=""
 n_inst=""
+
+export BOLTZ_DIR="$HOME/codespace/boltzmann/current"
+export BOLTZ_SPEC="${BOLTZ_DIR}/test/Cfg.hs"
+export SINBAD_DIR="$HOME/codespace/sinbad/src"
+export PYTHONPATH=$PYTHONPATH:$SINBAD_DIR
 
 if ([ -z "$BOLTZ_DIR" ] || [ -z "$BOLTZ_SPEC" ]  || [ -z "$SINBAD_DIR" ])
 then
@@ -19,12 +25,13 @@ fi
 
 export PYTHONPATH=$PYTHONPATH:$SINBAD_DIR
 
-set -- $(getopt d:N:p:v:n:t:i: "$@")
+set -- $(getopt d:D:N:p:v:n:t:i: "$@")
 
 while [ $# -gt 0 ]
 do
   case "$1" in 
    -d) grammardir=$2 ; shift;;
+   -D) boltzlexdir=$2 ; shift;;
    -N) n_samples=$2 ; shift;;
    -p) sprec=$2 ; shift;;
    -v) vprec=$2 ; shift;;
@@ -39,22 +46,38 @@ do
 done
 
 usage() {
-    echo "Usage: "
-    echo "$0 -d <grammar dir> -N <no of samples> -p <singular precision> " \
-         "-v <value precision> -n <no of nonterminals> -t <no of terminals> " \
-         "-i <no of parallel generators>"
+    echo -e "\nUsage: \n\n$0 [options]\n" \
+         "options include: \n\n" \
+         " -d <directory where grammars will be generated>\n" \
+         " -N <no of samples to generate>\n" \
+         " -n <no of non-terminal symbols>\n" \
+         " -t <no of terminal symbols>\n" \
+         " -D <directory containing lex related files for symbols>\n" \
+         "     (option OVERRIDES values of -n and -t, if provided)\n" \
+         " -i <no of parallel generators>\n"
     exit 1
 }
 
 genBoltzSpec() {
+    if [ "$1" == "-D" ]
+    then
+        # use existing boltz stuff
+        nt_str=$(cat $boltzlexdir/nonterms)
+        terms_str=$(cat $boltzlexdir/terms)
+        n_rules=$(echo $nt_str | sed -e 's/|//g' | wc -w)
+        n_rules=$(($n_rules + 1))
+    else
+        nt_str=$(cat $grammardir/nonterms)
+        terms_str=$(cat $grammardir/terms)   
+        n_rules=$n_nt
+    fi
+    echo -e "nt: $nt_str \nterms_str: $terms_str"
+    
     rule_str=""
-    for i in $(seq 1 $n_nt)
+    for i in $(seq 1 $n_rules)
     do
         rule_str="$rule_str Rule"
     done
-    nt_str=$(cat $grammardir/nonterms)
-    terms_str=$(cat $grammardir/terms)
-    echo -e "nt: $nt_str \nterms_str: $terms_str"
     header1="{-# LANGUAGE DeriveDataTypeable #-}"
     header2="module Cfg where"
     header3="import Data.Generics"
@@ -68,43 +91,70 @@ genBoltzSpec() {
     " \n$symbol_rule \n$nt_rule \n$t_rule\n" > $BOLTZ_SPEC
     cwd=$(pwd)
     cd $BOLTZ_DIR
-    make clean || exit $?
-    make || exit $?
+    make clean > /dev/null 2>&1|| exit $?
+    make > /dev/null 2>&1|| exit $?
     cd $cwd
 }
 
-([ -z "$grammardir" ] || [ -z "$n_samples" ] || [ -z "$sprec" ] || [ -z "$vprec" ] ||\
- [ -z "$n_nt" ] || [ -z "$n_t" ]) && usage
-
-echo "$grammardir, $n_samples ($i_samples), $sprec, $vprec, $n_nt, $n_t, $n_inst"
-
-bstart=$(date +%s)
-
-if [ -z "$n_inst" ]
-then
-    $boltzprog -d $grammardir -N $n_samples -p $sprec -v $vprec -n $n_nt -t $n_t -l || exit $?
-    genBoltzSpec
-    export BOLTZ_PROG="${BOLTZ_DIR}/test/prog"
-    $boltzprog -d $grammardir -N $n_samples -p $sprec -v $vprec -n $n_nt -t $n_t -L
-else
-    echo "generate lex first, and make"
-    $boltzprog -d $grammardir -N $n_samples -p $sprec -v $vprec -n $n_nt -t $n_t -l || exit $?
-    genBoltzSpec
-    
-    i_samples=$(python -c "from math import ceil; print int(ceil(($n_samples * 1.0)/$n_inst))")
-    echo "Invoking $n_inst instances of genBoltzCfg. Each instance to generate $i_samples samples"
-
-    for i in $(seq 1 $n_inst)
+launch(){
+    times="$1"
+    samples="$2"
+    boltz="$3"
+    for i in $(seq 1 $times)
     do
         subdir="${grammardir}/$i"
         mkdir -p $subdir
         cp $BOLTZ_DIR/test/prog $subdir
-        (export BOLTZ_PROG="$subdir/prog";$boltzprog -d $grammardir -N $i_samples -p $sprec -v $vprec -n $n_nt -t $n_t -i $i -L) &
+        xtraoptions="-n $n_nt -t $n_t"
+        if [ "$boltz" == "-D" ]
+        then
+            xtraoptions=""
+            cp $boltzlexdir/nonterms $grammardir/
+            cp $boltzlexdir/terms $grammardir/
+            cp $boltzlexdir/lexterms $grammardir/
+            cp $boltzlexdir/lexterms_multi $grammardir/
+            cp $boltzlexdir/lex $grammardir/
+        fi
+        (export BOLTZ_PROG="$subdir/prog";$boltzprog -d $grammardir -N $samples -p $sprec -v $vprec $xtraoptions -i $i -L) &
         sleep 2
-    done
+    done    
+}
 
+([ -z "$grammardir" ] || [ -z "$n_samples" ] || [ -z "$sprec" ] || [ -z "$vprec" ]) && usage
+
+if ([ -z "$boltzlexdir" ]) && ([ -z "$n_nt" ] || [ -z "$n_t" ])
+then
+  echo -e "\n**Either provide -D option or (-n and -t) options. See usage.**"
+  usage
 fi
+
+if [ -z "$n_inst" ]
+then
+    i_samples="$n_samples"
+    n_inst="1"
+else
+    i_samples=$(python -c "from math import ceil; print int(ceil(($n_samples * 1.0)/$n_inst))")
+    echo "Invoking $n_inst instances of genBoltzCfg. Each instance to generate $i_samples samples"
+fi
+
+echo "$grammardir, $n_samples ($i_samples), $sprec, $vprec, $n_inst"
+bstart=$(date +%s)
+
+if [ -z "$boltzlexdir" ] 
+then
+  echo "nonterms/terms: $n_nt, $n_t"
+  echo "generate lex first, and make"
+  $boltzprog -d $grammardir -N $n_samples -p $sprec -v $vprec -n $n_nt -t $n_t -l || exit $?
+  genBoltzSpec
+  launch $n_inst $i_samples
+else
+  echo "boltzlexdir: $boltzlexdir"
+  genBoltzSpec -D
+  launch $n_inst $i_samples -D
+fi
+
 wait
+
 bend=$(date +%s)
 belapsed=$(($bend - $bstart))
 

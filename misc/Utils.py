@@ -321,4 +321,5 @@ if __name__ == "__main__":
     import sys
     gf = sys.argv[1]
     lf = sys.argv[2]
+    print gf, lf     
     print valid(gf,lf,5,0.05)
