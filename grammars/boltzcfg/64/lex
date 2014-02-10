@@ -1,0 +1,72 @@
+%{
+#include "yygrammar.h"
+%}
+%%
+"F"     { return 'F'; }
+"J"     { return 'J'; }
+"N"     { return 'N'; }
+"R"     { return 'R'; }
+"V"     { return 'V'; }
+"I"     { return 'I'; }
+"Q"     { return 'Q'; }
+"U"     { return 'U'; }
+"Y"     { return 'Y'; }
+"NFFNC"     { return TK_NFFNC; }
+"BGQOY"     { return TK_BGQOY; }
+"AZH"     { return TK_AZH; }
+"QITER"     { return TK_QITER; }
+"ORE"     { return TK_ORE; }
+"QV"     { return TK_QV; }
+"MQDZ"     { return TK_MQDZ; }
+"PUR"     { return TK_PUR; }
+"ZXBAS"     { return TK_ZXBAS; }
+"YZPST"     { return TK_YZPST; }
+"KTV"     { return TK_KTV; }
+"HQL"     { return TK_HQL; }
+"FQX"     { return TK_FQX; }
+"ZZDLD"     { return TK_ZZDLD; }
+"DCIMG"     { return TK_DCIMG; }
+"GQBSV"     { return TK_GQBSV; }
+"CRAQ"     { return TK_CRAQ; }
+"YGR"     { return TK_YGR; }
+"GQ"     { return TK_GQ; }
+"XV"     { return TK_XV; }
+"WOHZX"     { return TK_WOHZX; }
+"SUGP"     { return TK_SUGP; }
+"IF"     { return TK_IF; }
+"KTN"     { return TK_KTN; }
+"TQ"     { return TK_TQ; }
+"URGFW"     { return TK_URGFW; }
+"BQD"     { return TK_BQD; }
+"BHC"     { return TK_BHC; }
+"PNR"     { return TK_PNR; }
+"AA"     { return TK_AA; }
+"MPFYB"     { return TK_MPFYB; }
+"LA"     { return TK_LA; }
+"NKEF"     { return TK_NKEF; }
+"QNM"     { return TK_QNM; }
+"WIIR"     { return TK_WIIR; }
+"LY"     { return TK_LY; }
+"WKBD"     { return TK_WKBD; }
+"HKMT"     { return TK_HKMT; }
+"QCLG"     { return TK_QCLG; }
+"SV"     { return TK_SV; }
+"VK"     { return TK_VK; }
+"YF"     { return TK_YF; }
+"POT"     { return TK_POT; }
+"LM"     { return TK_LM; }
+"YO"     { return TK_YO; }
+"NU"     { return TK_NU; }
+"QABT"     { return TK_QABT; }
+"KFO"     { return TK_KFO; }
+"YS"     { return TK_YS; }
+"MYJCZ"     { return TK_MYJCZ; }
+"RUR"     { return TK_RUR; }
+"MSP"     { return TK_MSP; }
+"YZ"     { return TK_YZ; }
+"QC"     { return TK_QC; }
+"JHHV"     { return TK_JHHV; }
+" "    { /* skip blank */ }
+\n     { yypos++; /* adjust linenumber and skip newline */ }
+\r     { yypos++; /* adjust linenumber and skip newline */ }
+.      { yyerror("illegal token"); }
