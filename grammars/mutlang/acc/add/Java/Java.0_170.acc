@@ -100,7 +100,7 @@ cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK 
 ;
 constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;
-import_declarations : import_declarations import_declaration method_header | import_declaration
+import_declarations : import_declarations import_declaration | import_declaration
 ;
 exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
@@ -184,7 +184,7 @@ abstract_method_declaration : method_header SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;
-class_or_interface_type : name
+class_or_interface_type : name INT_LIT_TK
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;

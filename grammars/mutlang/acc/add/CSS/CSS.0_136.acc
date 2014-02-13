@@ -34,7 +34,7 @@ string_or_uri : STRING | URI
 ;
 media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
-ruleset_multi :  | ruleset CHARSET_SYM ruleset_multi
+ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
@@ -48,7 +48,7 @@ page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_
 ;
 pseudo_page_opt :  | pseudo_page
 ;
-declaration_opt :  | declaration
+declaration_opt :  | combinator declaration
 ;
 declaration_tail : SC_TK S_multi declaration_opt
 ;

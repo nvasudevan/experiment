@@ -18,7 +18,7 @@ anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK cla
 ;
 continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
-block_statements : block_statements continue_statement | block_statement
+block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
@@ -144,7 +144,7 @@ for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_
 ;
 block_begin : OCB_TK
 ;
-final : modifiers
+final : try_statement
 ;
 shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;

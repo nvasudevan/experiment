@@ -96,7 +96,7 @@ attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
-attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
+attrib_tail_opt :  | attrib_includes declaration_opt id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM selector_tail_opt
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

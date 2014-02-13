@@ -26,7 +26,7 @@ stylesheet_parts : ruleset | media | page
 ;
 stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
-import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi selector
+import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
 media_list_opt :  | media_list
 ;
@@ -58,7 +58,7 @@ pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
-combinator : '+' S_multi | '>' S_multi
+combinator : TIME '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;

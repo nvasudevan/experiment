@@ -86,7 +86,7 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr relational_op simple_expr | simple_expr
+expression : simple_expr relational_op assignment | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | paramtype ';' type_def
+type_defs : type_def | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;

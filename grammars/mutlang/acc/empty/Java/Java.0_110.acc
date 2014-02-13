@@ -204,7 +204,7 @@ method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
-type : reference_type | primitive_type | 
+type : reference_type | primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
@@ -264,7 +264,7 @@ synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;
-primary : array_creation_expression | primary_no_new_array
+primary : array_creation_expression | primary_no_new_array | 
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;

@@ -2,7 +2,7 @@
 
 %nodefault
 
-stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
+stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi S
 ;
 stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
@@ -76,7 +76,7 @@ combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
-selector_tail : combinator selector TIME | S S_multi selector_tail_2_opt
+selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;

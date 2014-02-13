@@ -50,13 +50,13 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : declaration | declarations declaration
+declarations : declaration const_def | declarations declaration
 ;
 record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
-formal_p_sects : formal_p_sect | formal_p_sects ';' record_section formal_p_sect
+formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;

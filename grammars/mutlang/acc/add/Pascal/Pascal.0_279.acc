@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
+type : '^' IDENTIFIER | struct_type | PACKED rec_var_list struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' proc_or_func newident_list ')' | 
+external_files : '(' newident_list ')' | 
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

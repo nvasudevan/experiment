@@ -14,7 +14,7 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : IDENTIFIER
+newident : variant_part
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
@@ -146,7 +146,7 @@ proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
-term : term mult_op PROGRAM | factor
+term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;

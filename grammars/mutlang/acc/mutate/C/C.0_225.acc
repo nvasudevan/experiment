@@ -86,7 +86,7 @@ enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;
-cast_expr : '(' type_name ')' cast_expr | unary_expr
+cast_expr : '(' conditional_expr ')' cast_expr | unary_expr
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
@@ -118,7 +118,7 @@ identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;
-assignment_expr : unary_expr assignment_operator assignment_expr | equality_expr
+assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;

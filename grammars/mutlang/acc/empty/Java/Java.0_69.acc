@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression | name | primary
+postfix_expression : post_decrement_expression | post_increment_expression | name | primary | 
 ;
 class_type : class_or_interface_type
 ;
@@ -222,7 +222,7 @@ if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK stat
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
-do_statement_begin : DO_TK | 
+do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;

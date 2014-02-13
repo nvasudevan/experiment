@@ -10,7 +10,7 @@ cdo_cdc : S | CDO | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
-cdo_cdc_s : term_types S_multi | CDC S_multi
+cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
@@ -90,7 +90,7 @@ simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : IDENT | '*'
+element_name : IDENT | COLON_TK
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;

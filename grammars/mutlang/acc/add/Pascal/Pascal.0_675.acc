@@ -76,7 +76,7 @@ new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
-body : IDENTIFIER | block IDENTIFIER
+body : IDENTIFIER | block
 ;
 actual_param : expression colon_things | expression
 ;
@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION newident function_form
+func_heading : FUNCTION newident function_form constant
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;

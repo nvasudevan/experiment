@@ -62,7 +62,7 @@ newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
-variable_dcls : variable_dcl | variable_dcls constant ';' variable_dcl
+variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
@@ -124,7 +124,7 @@ direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
-declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
+declaration : proc_dcl_part | index_t_list var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;

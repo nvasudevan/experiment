@@ -76,7 +76,7 @@ new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
-body : IDENTIFIER | actual_param
+body : IDENTIFIER | block
 ;
 actual_param : expression colon_things | expression
 ;
@@ -148,7 +148,7 @@ variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
-index_specs : index_spec | index_specs ';' index_spec
+index_specs : UNSIGNED_INT | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

@@ -50,7 +50,7 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : LABEL | declarations declaration
+declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;
@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION newident function_form
+func_heading : FUNCTION case_label_list function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;

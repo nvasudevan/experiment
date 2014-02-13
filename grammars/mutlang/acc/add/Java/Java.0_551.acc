@@ -44,7 +44,7 @@ extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interfa
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
-do_statement : do_statement_begin statement REL_QM_TK WHILE_TK OP_TK expression CP_TK SC_TK
+do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
 interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
 ;
@@ -144,7 +144,7 @@ for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_
 ;
 block_begin : OCB_TK
 ;
-final : modifiers
+final : do_statement_begin modifiers
 ;
 shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;

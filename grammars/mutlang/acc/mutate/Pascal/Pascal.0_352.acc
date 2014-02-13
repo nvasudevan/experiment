@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
+simple_type : ident | index_t_list DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
@@ -86,7 +86,7 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr relational_op IDENTIFIER | simple_expr
+expression : simple_expr relational_op simple_expr | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;

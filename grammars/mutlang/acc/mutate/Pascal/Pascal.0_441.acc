@@ -68,7 +68,7 @@ simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
-case_label : constant
+case_label : '.'
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
@@ -100,7 +100,7 @@ block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
-variable_dcl : newident_list NIL type
+variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;

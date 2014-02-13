@@ -12,7 +12,7 @@ y_expression : y_expression '-' y_product | y_expression '+' y_product | y_produ
 ;
 y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
-y_column : y_boolean
+y_column : VARCHAR
 ;
 y_columns : y_column_list | '*'
 ;

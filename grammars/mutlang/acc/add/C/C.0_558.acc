@@ -104,7 +104,7 @@ exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
 constant_expr : conditional_expr
 ;
-statement : jump_statement declarator | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
+statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;
 abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
@@ -124,7 +124,7 @@ argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
-parameter_declaration : type_name | type_specifier_list declarator
+parameter_declaration : type_name | type_specifier_list declarator ','
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;

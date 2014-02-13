@@ -152,7 +152,7 @@ interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces int
 ;
 statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;
-catch_clause : catch_clause_parameter block
+catch_clause : catch_clause_parameter block | 
 ;
 constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
 ;
@@ -216,7 +216,7 @@ break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
-block_end : CCB_TK | 
+block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;

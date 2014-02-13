@@ -28,7 +28,7 @@ case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : formal_params ':' ident tag_field | 
+function_form : formal_params ':' ident | 
 ;
 procedure_call : ident actual_params
 ;
@@ -46,7 +46,7 @@ add_op : OR | '-' | '+'
 ;
 var_dcl_part : VAR variable_dcls ';'
 ;
-unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
+unsigned_num : UNSIGNED_REAL | '+' UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;

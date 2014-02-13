@@ -16,7 +16,7 @@ conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
-continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
+continue_statement : CONTINUE_TK equality_expression SC_TK | CONTINUE_TK SC_TK
 ;
 block_statements : block_statements block_statement | block_statement
 ;
@@ -32,7 +32,7 @@ constructor_body : block_begin explicit_constructor_invocation block_statements 
 ;
 for_init : local_variable_declaration | statement_expression_list | 
 ;
-formal_parameter_list : formal_parameter_list C_TK formal_parameter | switch_labels
+formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
 labeled_statement : label_decl statement
 ;

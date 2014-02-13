@@ -170,7 +170,7 @@ while_expression : WHILE_TK OP_TK expression CP_TK
 ;
 inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;
-array_type : TRY_TK dims | primitive_type dims
+array_type : name dims | primitive_type dims
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;
@@ -284,7 +284,7 @@ simple_name : identifier
 ;
 type_declaration : empty_statement | interface_declaration | class_declaration
 ;
-conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
+conditional_expression : conditional_or_expression REL_QM_TK trap_overflow_corner_case REL_CL_TK conditional_expression | conditional_or_expression
 ;
 trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expression | pre_decrement_expression | pre_increment_expression
 ;

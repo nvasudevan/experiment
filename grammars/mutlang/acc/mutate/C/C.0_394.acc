@@ -82,7 +82,7 @@ declaration : declaration_specifiers init_declarator_list ';' | declaration_spec
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
-enumerator_list : enumerator_list ',' enumerator | type_name
+enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;
@@ -120,7 +120,7 @@ function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
-argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
+argument_expr_list : argument_expr_list ',' ELIPSIS | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;

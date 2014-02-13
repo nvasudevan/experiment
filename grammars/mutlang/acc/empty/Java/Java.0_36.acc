@@ -64,7 +64,7 @@ type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
-relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
+relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression | 
 ;
 literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
 ;
@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type variable_declarators | 
+local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;

@@ -44,7 +44,7 @@ media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
-page : PAGE_SYM URI pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
+page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
 pseudo_page_opt :  | pseudo_page
 ;
@@ -64,7 +64,7 @@ unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
-ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
+ruleset : selector multi_addl_selector media_list_tail S_multi declaration_opt declaration_multi '}' S_multi
 ;
 addl_selector : ',' S_multi selector
 ;

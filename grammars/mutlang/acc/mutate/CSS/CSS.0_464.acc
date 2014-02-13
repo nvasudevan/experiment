@@ -54,7 +54,7 @@ declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
-pseudo_page : hexcolor IDENT S_multi
+pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
@@ -100,7 +100,7 @@ attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;
-pseudo : COLON_TK pseudo_tail
+pseudo : stylesheet_imports_multi pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;

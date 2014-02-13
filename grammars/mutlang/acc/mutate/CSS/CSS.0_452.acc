@@ -32,7 +32,7 @@ media_list_opt :  | media_list
 ;
 string_or_uri : STRING | URI
 ;
-media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
+media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' hexcolor
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;
@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | media_list_opt
+combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;

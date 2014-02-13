@@ -46,7 +46,7 @@ local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
 do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
-interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
+interface_member_declarations : interface_member_declarations interface_member_declaration | 
 ;
 assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
 ;
@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type
+local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;

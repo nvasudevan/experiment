@@ -50,7 +50,7 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : declaration | declarations declaration
+declarations : declaration | declarations declaration | 
 ;
 record_var : variable
 ;
@@ -102,7 +102,7 @@ type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
-index_spec : newident DOTDOT newident ':' ident | 
+index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;

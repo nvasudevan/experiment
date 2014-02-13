@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | 
+type : '^' IDENTIFIER | struct_type | PACKED | simple_type
 ;
 declarations : declaration | declarations declaration
 ;

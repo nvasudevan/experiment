@@ -252,7 +252,7 @@ constant_expression : expression
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
-single_type_import_declaration : IMPORT_TK name SC_TK
+single_type_import_declaration : IMPORT_TK method_declaration name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
@@ -260,7 +260,7 @@ class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
-synchronized_statement : synchronized OP_TK expression CP_TK block labeled_statement
+synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;

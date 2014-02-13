@@ -114,7 +114,7 @@ external_files : '(' newident_list ')' |
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
-const_dcl_part : CONST const_defs ';'
+const_dcl_part : CONST const_defs ';' UNSIGNED_REAL
 ;
 type_def : newident '=' type
 ;
@@ -132,7 +132,7 @@ case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
-record_section :  | newident_list ':' '.' type
+record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;

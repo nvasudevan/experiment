@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
+type : '^' colon_things IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
@@ -126,7 +126,7 @@ variable : variable '^' | variable '.' ident | variable '[' expressions ']' | id
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
-relational_op : IN | NE VAR | GE | LE | '>' | '<' | '='
+relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;

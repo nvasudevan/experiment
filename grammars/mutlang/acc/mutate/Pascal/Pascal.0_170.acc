@@ -54,7 +54,7 @@ declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;
-proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
+proc_or_func : func_heading ';' body ';' | proc_heading NOT body ';'
 ;
 formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
@@ -84,7 +84,7 @@ member : expression DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
-members : IF | members ',' member
+members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;

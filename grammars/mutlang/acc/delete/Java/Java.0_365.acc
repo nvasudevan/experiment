@@ -40,7 +40,7 @@ for_header : FOR_TK OP_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
-extends_interfaces : extends_interfaces C_TK | EXTENDS_TK interface_type
+extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
@@ -66,7 +66,7 @@ static_ : modifiers
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
-literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
+literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK |  | INT_LIT_TK
 ;
 class_body_declarations : class_body_declarations class_body_declaration | class_body_declaration
 ;

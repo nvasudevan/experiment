@@ -132,7 +132,7 @@ for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_b
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
-class_member_declaration :  | interface_declaration | class_declaration | method_declaration | field_declaration
+class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;
@@ -254,7 +254,7 @@ array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_T
 ;
 single_type_import_declaration : IMPORT_TK name SC_TK
 ;
-array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
+array_access : primary_no_new_array OSB_TK expression | name OSB_TK expression CSB_TK
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;

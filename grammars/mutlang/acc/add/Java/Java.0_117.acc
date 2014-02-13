@@ -122,7 +122,7 @@ switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
 finally : FINALLY_TK block
 ;
-switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | if_then_statement switch_block_statement_group
+switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
@@ -162,7 +162,7 @@ statement_without_trailing_substatement : assert_statement | try_statement | thr
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;
-statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
+statement_expression : class_instance_creation_expression class_body_declarations | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;

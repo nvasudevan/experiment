@@ -182,7 +182,7 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression SC_TK
+throw_statement : THROW_TK expression
 ;
 class_or_interface_type : name
 ;
@@ -242,7 +242,7 @@ interface_member_declaration : interface_declaration | class_declaration | abstr
 ;
 primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
-label_decl : REL_CL_TK
+label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;

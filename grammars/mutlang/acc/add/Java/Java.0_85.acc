@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
+variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id assert_statement
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : type_declarations type_declaration | return_statement type_declaration
+type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;

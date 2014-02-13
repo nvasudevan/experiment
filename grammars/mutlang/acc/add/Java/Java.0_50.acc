@@ -78,7 +78,7 @@ method_header : modifiers VOID_TK method_declarator throws | modifiers type meth
 ;
 identifier : ID_TK
 ;
-catches : catches catch_clause | catch_clause while_statement_nsi
+catches : catches catch_clause | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
@@ -258,7 +258,7 @@ array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expre
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
-type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
+type_literals : VOID_TK conditional_expression DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;

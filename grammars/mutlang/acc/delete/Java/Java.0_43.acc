@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression | name | primary
+postfix_expression :  | post_increment_expression | name | primary
 ;
 class_type : class_or_interface_type
 ;
@@ -178,7 +178,7 @@ constant_declaration : field_declaration
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
-formal_parameter : final type variable_declarator_id | type
+formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
 abstract_method_declaration : method_header SC_TK
 ;

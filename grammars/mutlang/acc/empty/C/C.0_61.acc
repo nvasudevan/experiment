@@ -36,7 +36,7 @@ primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
-struct_declaration : type_specifier_list struct_declarator_list ';'
+struct_declaration : type_specifier_list struct_declarator_list ';' | 
 ;
 conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
@@ -70,7 +70,7 @@ postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP i
 ;
 multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' cast_expr | cast_expr
 ;
-inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr | 
+inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;

@@ -54,7 +54,7 @@ declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
-pseudo_page : COLON_TK prio_opt S_multi
+pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
@@ -94,7 +94,7 @@ element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
-attrib_includes : '=' | INCLUDES | DASHMATCH
+attrib_includes : '=' | INCLUDES | '-'
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;

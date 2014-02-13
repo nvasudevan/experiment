@@ -32,7 +32,7 @@ assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_
 ;
 logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
-primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
+primary_expr : DIV_ASSIGN expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
@@ -50,7 +50,7 @@ expression_statement : expr ';' | ';'
 ;
 external_definition : declaration | function_definition
 ;
-unary_expr : external_definition '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
+unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
 enumerator : identifier '=' constant_expr | identifier
 ;

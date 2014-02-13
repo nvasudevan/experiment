@@ -102,7 +102,7 @@ type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
-index_spec : newident ']' DOTDOT newident ':' ident
+index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
@@ -122,7 +122,7 @@ labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;
-variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
+variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params func_heading
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;

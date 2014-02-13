@@ -62,7 +62,7 @@ newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
-variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
+variable_dcls : const_def variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
@@ -156,7 +156,7 @@ struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY
 ;
 statements : statement | statements ';' statement
 ;
-simple_expr : simple_expr add_op term | IN '-' term | '+' term | term
+simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
 set : '[' member_list ']'
 ;

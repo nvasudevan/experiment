@@ -18,7 +18,7 @@ y_columns : y_column_list | '*'
 ;
 y_atom : '(' y_expression ')' | y_column | y_value
 ;
-y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
+y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2 VALUES
 ;
 y_drop : DROP TTABLE y_table
 ;
@@ -40,7 +40,7 @@ y_comparison : y_expression NOT NULL_VALUE | y_expression IS NULL_VALUE | y_expr
 ;
 y_value : FLOATNUM | INTNUM | STRING
 ;
-y_columndefs : y_columndefs ',' DROP y_columndef | y_columndef
+y_columndefs : y_columndefs ',' y_columndef | y_columndef
 ;
 y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
 ;

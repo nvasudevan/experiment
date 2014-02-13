@@ -32,7 +32,7 @@ function_form : formal_params ':' ident |
 ;
 procedure_call : ident actual_params
 ;
-paramtype : PACKED ARRAY '[' IN index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
+paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
 opt_declarations : declarations | 
 ;
@@ -70,7 +70,7 @@ colon_things : ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;
-constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
+constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | WITH '+' unsigned_num | unsigned_num
 ;
 new_id_list : newident | new_id_list ',' newident
 ;

@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : type_import_on_demand_declaration ID_TK | single_type_import_declaration
+import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -182,7 +182,7 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression SC_TK
+throw_statement : THROW_TK label_decl expression SC_TK
 ;
 class_or_interface_type : name
 ;

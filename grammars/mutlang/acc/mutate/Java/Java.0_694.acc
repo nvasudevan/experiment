@@ -104,7 +104,7 @@ import_declarations : import_declarations import_declaration | import_declaratio
 ;
 exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
-primitive_type : do_statement_begin | FP_TK | INTEGRAL_TK
+primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
 static_initializer : static_ block
 ;
@@ -130,7 +130,7 @@ interface_type : class_or_interface_type
 ;
 for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
-modifiers : modifiers MODIFIER_TK | MODIFIER_TK
+modifiers : modifiers MODIFIER_TK | PLUS_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;

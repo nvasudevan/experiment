@@ -128,7 +128,7 @@ compilation_unit : package_declaration import_declarations type_declarations | i
 ;
 interface_type : class_or_interface_type
 ;
-for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
+for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
@@ -188,7 +188,7 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : name identifier
+qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;

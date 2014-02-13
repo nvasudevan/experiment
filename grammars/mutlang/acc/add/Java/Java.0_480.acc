@@ -180,7 +180,7 @@ interfaces : IMPLEMENTS_TK interface_type_list |
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
-abstract_method_declaration : method_header SC_TK
+abstract_method_declaration : FINALLY_TK method_header SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;
@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : CCB_TK PACKAGE_TK name SC_TK
+package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;

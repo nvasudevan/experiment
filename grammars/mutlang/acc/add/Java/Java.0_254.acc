@@ -24,7 +24,7 @@ assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
-assignment : if_then_statement left_hand_side assignment_operator assignment_expression
+assignment : left_hand_side assignment_operator assignment_expression
 ;
 labeled_statement_nsi : label_decl statement_nsi
 ;
@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression | name | primary
+postfix_expression : post_decrement_expression | post_increment_expression | name | type_import_on_demand_declaration primary
 ;
 class_type : class_or_interface_type
 ;

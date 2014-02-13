@@ -74,7 +74,7 @@ reference_type : array_type | class_or_interface_type
 ;
 method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;
-method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
+method_header : modifiers method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
 identifier : ID_TK
 ;
@@ -188,7 +188,7 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : name DOT_TK
+qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;

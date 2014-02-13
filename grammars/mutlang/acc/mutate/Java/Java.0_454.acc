@@ -30,7 +30,7 @@ labeled_statement_nsi : label_decl statement_nsi
 ;
 constructor_body : block_begin explicit_constructor_invocation block_statements constructor_block_end | block_begin block_statements constructor_block_end | block_begin explicit_constructor_invocation constructor_block_end | block_begin constructor_block_end
 ;
-for_init : local_variable_declaration | statement_expression_list | 
+for_init : local_variable_declaration | OSB_TK | 
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : PLUS_TK
+synchronized : modifiers
 ;
 constant_expression : expression
 ;

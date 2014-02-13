@@ -26,7 +26,7 @@ assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
-unsigned_lit : NIL | STRING | unsigned_num
+unsigned_lit : NIL | STRING | simple_type
 ;
 function_form : formal_params ':' ident | 
 ;
@@ -108,7 +108,7 @@ func_heading : FUNCTION newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
-rec_var_list : record_var | rec_var_list case_label record_var
+rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;

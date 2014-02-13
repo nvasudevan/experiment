@@ -10,7 +10,7 @@ jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO 
 ;
 and_expr : and_expr '&' equality_expr | equality_expr
 ;
-struct_or_union : UNION | STRUCT ENUM
+struct_or_union : UNION | STRUCT
 ;
 struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
@@ -78,7 +78,7 @@ pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_lis
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
-declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
+declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers declaration_specifiers ';'
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;

@@ -24,7 +24,7 @@ param_group : newident_list ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;
-case_list : case_list_elem | case_list ';' case_list_elem
+case_list : case_list_elem | case_list ';' REPEAT case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
@@ -62,7 +62,7 @@ newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
-variable_dcls : variable_dcl IDENTIFIER | variable_dcls ';' variable_dcl
+variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;

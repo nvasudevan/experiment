@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident | new_id_list ',' newident
+new_id_list : newident | new_id_list ',' newident | 
 ;
 member_list : members | 
 ;
@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : simple_type | index_t_list ',' simple_type | 
+index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;

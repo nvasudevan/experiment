@@ -32,7 +32,7 @@ media_list_opt :  | media_list
 ;
 string_or_uri : STRING | URI
 ;
-media : MEDIA_SYM S_multi class '{' S_multi ruleset_multi '}' S_multi
+media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;
@@ -104,7 +104,7 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT S_multi
+pseudo_tail_2_opt :  | IDENT URI
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;

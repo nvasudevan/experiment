@@ -32,7 +32,7 @@ constructor_body : block_begin explicit_constructor_invocation block_statements 
 ;
 for_init : local_variable_declaration | statement_expression_list | 
 ;
-formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
+formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter | 
 ;
 labeled_statement : label_decl statement
 ;
@@ -280,7 +280,7 @@ equality_expression : equality_expression NEQ_TK relational_expression | equalit
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;
-simple_name : identifier | 
+simple_name : identifier
 ;
 type_declaration : empty_statement | interface_declaration | class_declaration
 ;

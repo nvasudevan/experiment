@@ -106,7 +106,7 @@ exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_ex
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
-static_initializer : static_ inclusive_or_expression
+static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
@@ -260,7 +260,7 @@ class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
-synchronized_statement : synchronized OP_TK expression CP_TK block
+synchronized_statement : synchronized BOOLEAN_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;

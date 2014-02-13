@@ -42,7 +42,7 @@ field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
-add_op : OR | variable_dcl | '+'
+add_op : OR | '-' | '+'
 ;
 var_dcl_part : VAR variable_dcls ';'
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' type_def
+type_defs : type_def | type_defs WHILE type_def
 ;
 ident : IDENTIFIER
 ;

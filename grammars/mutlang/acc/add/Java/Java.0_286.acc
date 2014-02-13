@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression | name | GT_TK primary
+postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
 class_type : class_or_interface_type
 ;
@@ -194,7 +194,7 @@ throws : THROWS_TK class_type_list |
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
-assignment_expression : assignment | conditional_expression
+assignment_expression : assignment | ELSE_TK conditional_expression
 ;
 field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;

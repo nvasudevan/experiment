@@ -22,11 +22,11 @@ initializer_list : initializer_list ',' initializer | initializer
 ;
 compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
-equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
+equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr | 
 ;
 declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | storage_class_specifier
 ;
-function_definition : declaration_specifiers declarator function_body | declarator function_body | 
+function_definition : declaration_specifiers declarator function_body | declarator function_body
 ;
 assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_ASSIGN | SUB_ASSIGN | ADD_ASSIGN | MOD_ASSIGN | DIV_ASSIGN | MUL_ASSIGN | '='
 ;

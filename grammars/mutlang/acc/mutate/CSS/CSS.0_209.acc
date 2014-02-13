@@ -16,7 +16,7 @@ S_multi :  | S S_multi
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
-stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
+stylesheet_imports_multi :  | stylesheet_imports medium
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
@@ -50,7 +50,7 @@ pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
-declaration_tail : SC_TK IMPORT_SYM declaration_opt
+declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;

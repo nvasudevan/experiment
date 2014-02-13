@@ -16,7 +16,7 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND |  | DIV | '/' | '*'
+mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
@@ -118,7 +118,7 @@ const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;
-labels : label | labels ',' label
+labels : label | labels ','
 ;
 direction : DOWNTO | TO
 ;

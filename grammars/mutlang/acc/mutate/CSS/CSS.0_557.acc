@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '+'
+unary_operator : FUNCTION | '+'
 ;
 property : IDENT S_multi
 ;
@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | operator_opt S_multi pseudo_tail_2_opt ')'
+pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;

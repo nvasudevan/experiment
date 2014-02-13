@@ -14,7 +14,7 @@ cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
-cdo_cdc_multi : selector | cdo_cdc cdo_cdc_multi
+cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
+pseudo_tail : IDENT IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;

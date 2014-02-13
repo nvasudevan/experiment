@@ -46,7 +46,7 @@ iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' exp
 ;
 additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
-expression_statement : expr ';' | 
+expression_statement : expr ';' | ';'
 ;
 external_definition : declaration | function_definition
 ;
@@ -66,7 +66,7 @@ init_declarator : declarator '=' initializer | declarator
 ;
 enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;
-postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr ']' | primary_expr
+postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr | primary_expr
 ;
 multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' cast_expr | cast_expr
 ;

@@ -128,7 +128,7 @@ compilation_unit : package_declaration import_declarations type_declarations | i
 ;
 interface_type : class_or_interface_type
 ;
-for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
+for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin expression SC_TK for_update CP_TK statement_nsi
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
@@ -242,7 +242,7 @@ interface_member_declaration : interface_declaration | class_declaration | abstr
 ;
 primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
-label_decl : identifier
+label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;

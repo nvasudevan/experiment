@@ -8,7 +8,7 @@ import_declaration : type_import_on_demand_declaration | single_type_import_decl
 ;
 argument_list : argument_list C_TK expression | expression
 ;
-pre_decrement_expression : DECR_TK unary_expression
+pre_decrement_expression : DECR_TK unary_expression | 
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
@@ -44,7 +44,7 @@ extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interfa
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
-do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK | 
+do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
 interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
 ;

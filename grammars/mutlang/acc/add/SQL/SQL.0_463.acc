@@ -6,7 +6,7 @@ y_sql : y_delete | y_update | y_select | y_insert | y_drop | y_create | y_alter
 ;
 y_assignments : y_assignments ',' y_assignment | y_assignment
 ;
-y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table y_values
+y_insert : INSERT INTO y_table '(' y_columns ')' y_columns y_values | INSERT INTO y_table y_values
 ;
 y_expression : y_expression '-' y_product | y_expression '+' y_product | y_product
 ;
@@ -46,7 +46,7 @@ y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | N
 ;
 y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
-y_table : y_column NAME
+y_table : NAME
 ;
 y_order : NAME
 ;

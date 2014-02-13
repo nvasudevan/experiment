@@ -48,7 +48,7 @@ additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multip
 ;
 expression_statement : expr ';' | ';'
 ;
-external_definition : declaration SIZEOF | function_definition
+external_definition : declaration | function_definition
 ;
 unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
@@ -70,7 +70,7 @@ postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP i
 ;
 multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' cast_expr | cast_expr
 ;
-inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
+inclusive_or_expr : inclusive_or_expr function_body '|' exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;

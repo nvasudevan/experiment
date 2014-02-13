@@ -46,7 +46,7 @@ iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' exp
 ;
 additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
-expression_statement : expr ';' | ';'
+expression_statement : expr ';' | SIZEOF
 ;
 external_definition : declaration | function_definition
 ;
@@ -88,7 +88,7 @@ expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
-unary_operator : '!' | '~' | '-' | GE_OP | '*' | '&'
+unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;

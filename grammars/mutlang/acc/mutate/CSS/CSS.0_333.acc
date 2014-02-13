@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | operator
+combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
@@ -92,7 +92,7 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
+attrib : '[' combinator IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;

@@ -60,7 +60,7 @@ formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;
-const_def : newident '=' constant
+const_def : newident '=' constant CASE
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
@@ -152,7 +152,7 @@ index_specs : index_spec | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;
-struct_type : SFILE OF GE type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
+struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;
 statements : statement | statements ';' statement
 ;

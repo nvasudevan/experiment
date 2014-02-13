@@ -18,7 +18,7 @@ logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
 struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
-initializer_list : initializer_list ',' initializer | initializer
+initializer_list : initializer_list relational_expr ',' initializer | initializer
 ;
 compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
@@ -40,7 +40,7 @@ struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
 conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
-relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | STRING_LITERAL shift_expr
+relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | shift_expr
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;

@@ -16,7 +16,7 @@ struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' str
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
-struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
+struct_declarator : declarator enumerator ':' constant_expr | ':' constant_expr | declarator
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
@@ -98,7 +98,7 @@ storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;
-type_name : type_specifier_list abstract_declarator equality_expr | type_specifier_list
+type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
 exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;

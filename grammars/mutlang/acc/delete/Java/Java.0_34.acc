@@ -122,7 +122,7 @@ switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
 finally : FINALLY_TK block
 ;
-switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
+switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | 
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
@@ -152,7 +152,7 @@ interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces int
 ;
 statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;
-catch_clause : catch_clause_parameter
+catch_clause : catch_clause_parameter block
 ;
 constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
 ;

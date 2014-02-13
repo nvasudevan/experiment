@@ -110,9 +110,9 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM S_multi
+prio : IMPORTANT_SYM PAGE_SYM
 ;
-expr : cdo_cdc_s_multi expr_tail_multi
+expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;

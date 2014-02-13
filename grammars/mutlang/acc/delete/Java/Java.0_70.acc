@@ -108,7 +108,7 @@ primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
 static_initializer : static_ block
 ;
-block : block_begin block_statements block_end | block_begin block_end
+block : block_begin block_statements | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
@@ -200,7 +200,7 @@ field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
 class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration
 ;
-method_body :  | block
+method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;

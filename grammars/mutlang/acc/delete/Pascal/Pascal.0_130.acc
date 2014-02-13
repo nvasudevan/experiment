@@ -100,7 +100,7 @@ block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
-variable_dcl : newident_list ':'
+variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
@@ -158,5 +158,5 @@ statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
-set : '[' member_list ']'
+set : '[' member_list
 ;

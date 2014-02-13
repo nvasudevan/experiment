@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | prio
+combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
@@ -86,7 +86,7 @@ simple_selector : element_name simple_selector_tail_multi | simple_selector_tail
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
-simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
+simple_selector_tail_multi :  | simple_selector_tail PERCENTAGE
 ;
 class : SC_TK IDENT
 ;

@@ -40,7 +40,7 @@ media_list : medium media_list_tail_multi
 ;
 media_list_tail : ',' S_multi medium
 ;
-media_list_tail_multi :  | media_list_tail cdo_cdc_multi
+media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
@@ -128,5 +128,5 @@ unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;
-hexcolor : HASH S_multi
+hexcolor : TIME S_multi
 ;

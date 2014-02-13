@@ -10,7 +10,7 @@ argument_list : argument_list C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
-catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
+catch_clause_parameter : CATCH_TK OP_TK PACKAGE_TK CP_TK
 ;
 conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
@@ -32,7 +32,7 @@ constructor_body : block_begin explicit_constructor_invocation block_statements 
 ;
 for_init : local_variable_declaration | statement_expression_list | 
 ;
-formal_parameter_list : formal_parameter_list C_TK formal_parameter | INTERFACE_TK
+formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
 labeled_statement : label_decl statement
 ;

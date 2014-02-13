@@ -66,7 +66,7 @@ static_ : modifiers
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
-literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK GTE_TK | INT_LIT_TK
+literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
 ;
 class_body_declarations : class_body_declarations class_body_declaration | class_body_declaration
 ;
@@ -148,7 +148,7 @@ final : modifiers
 ;
 shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;
-interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
+interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | if_then_else_statement INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
 statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;

@@ -38,9 +38,9 @@ y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table S
 ;
 y_comparison : y_expression NOT NULL_VALUE | y_expression IS NULL_VALUE | y_expression COMPARISON_OPERATOR y_expression | y_expression EQUAL y_expression
 ;
-y_value : y_sub_condition2 | INTNUM | STRING
+y_value : FLOATNUM | INTNUM | STRING
 ;
-y_columndefs : y_columndefs ',' y_columndef | y_columndef
+y_columndefs : '(' ',' y_columndef | y_columndef
 ;
 y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
 ;

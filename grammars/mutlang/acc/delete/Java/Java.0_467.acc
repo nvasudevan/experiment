@@ -114,7 +114,7 @@ name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
-expression_statement : statement_expression
+expression_statement : statement_expression SC_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;
@@ -238,7 +238,7 @@ type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;
-interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
+interface_member_declaration :  | class_declaration | abstract_method_declaration | constant_declaration
 ;
 primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;

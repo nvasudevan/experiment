@@ -38,7 +38,7 @@ opt_declarations : declarations |
 ;
 statement_part : compound_stmt
 ;
-field_list : variant_part | fixed_part ';' variant_part | fixed_part
+field_list : assignment variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
@@ -130,7 +130,7 @@ relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;
-actuals_list : actual_param member_list | actuals_list ',' actual_param
+actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;

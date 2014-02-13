@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | expression
+variable_initializer : array_initializer | expression catch_clause_parameter
 ;
 expression : assignment_expression
 ;
@@ -216,7 +216,7 @@ break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
-block_end : empty_statement CCB_TK
+block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;

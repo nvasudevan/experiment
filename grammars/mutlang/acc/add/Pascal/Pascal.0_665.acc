@@ -42,7 +42,7 @@ field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
-add_op : OR | '-' rec_var_list | '+'
+add_op : OR | '-' | '+'
 ;
 var_dcl_part : VAR variable_dcls ';'
 ;
@@ -148,7 +148,7 @@ variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
-index_specs : index_spec | index_specs ';' index_spec
+index_specs : index_spec | index_specs ';' case_list index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

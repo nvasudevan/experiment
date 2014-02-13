@@ -220,7 +220,7 @@ block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
-switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
+switch_label : class_declaration DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;
@@ -262,7 +262,7 @@ type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
-post_decrement_expression : postfix_expression DECR_TK interface_member_declarations
+post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;

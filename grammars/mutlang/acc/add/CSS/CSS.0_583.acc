@@ -56,7 +56,7 @@ declaration_multi :  | declaration_tail declaration_multi
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;
-operator : '/' S_multi | ',' S_multi
+operator : '/' S_multi EMS | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
@@ -128,5 +128,5 @@ unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;
-hexcolor : HASH S_multi '/'
+hexcolor : HASH S_multi
 ;

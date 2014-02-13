@@ -46,7 +46,7 @@ local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
 do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
-interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
+interface_member_declarations : interface_member_declarations interface_member_declaration | RETURN_TK
 ;
 assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
 ;
@@ -134,7 +134,7 @@ modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
-class_type_list : class_type_list C_TK class_type | NEQ_TK
+class_type_list : class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;

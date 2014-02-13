@@ -60,7 +60,7 @@ variable_initializers : variable_initializers C_TK variable_initializer | variab
 ;
 for_begin : for_header for_init
 ;
-type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
+type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK | 
 ;
 static_ : modifiers
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK expression CSB_TK | 
+dim_expr : OSB_TK expression CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;

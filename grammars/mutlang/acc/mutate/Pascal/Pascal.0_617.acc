@@ -66,7 +66,7 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : ':' expression ':' expression | ':' expression
+colon_things : ':' expression ':' expression | ',' expression
 ;
 case_label : constant
 ;
@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression colon_things | '+'
+actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;

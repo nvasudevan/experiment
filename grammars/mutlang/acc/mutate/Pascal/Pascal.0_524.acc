@@ -38,7 +38,7 @@ opt_declarations : declarations |
 ;
 statement_part : compound_stmt
 ;
-field_list : variant_part | fixed_part ';' variant_part | fixed_part
+field_list : variant_part | fixed_part ';' variant_part | labels
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
@@ -70,7 +70,7 @@ colon_things : ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;
-constant : STRING | '-' ident | '+' ident | ident | '-' '=' | '+' unsigned_num | unsigned_num
+constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
 new_id_list : newident | new_id_list ',' newident
 ;

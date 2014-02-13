@@ -102,7 +102,7 @@ type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
 exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
-constant_expr : conditional_expr
+constant_expr : conditional_expr '/'
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;
@@ -112,7 +112,7 @@ statement_list : statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' ELIPSIS | GE_OP parameter_list
+parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;

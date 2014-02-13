@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects '<' ')' | 
+formal_params : '(' formal_p_sects ')' | 
 ;
 newident : IDENTIFIER
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | 
+external_files : '(' newident_list ')' OF | 
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

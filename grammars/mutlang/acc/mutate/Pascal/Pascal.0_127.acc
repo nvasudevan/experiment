@@ -24,7 +24,7 @@ param_group : newident_list ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;
-case_list : case_list_elem | case_list ';' case_list_elem
+case_list : case_list_elem | case_list ';' body
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : index_spec
+label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;

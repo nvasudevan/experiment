@@ -8,7 +8,7 @@ stylesheet_opt_1 : CHARSET_SYM STRING SC_TK |
 ;
 cdo_cdc : S | CDO | CDC
 ;
-stylesheet_imports : import cdo_cdc_s_multi
+stylesheet_imports : import stylesheet_parts
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
@@ -88,7 +88,7 @@ simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : prio_opt IDENT
+class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;

@@ -12,7 +12,7 @@ stylesheet_imports : import cdo_cdc_s_multi
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
-S_multi :  | S S_multi
+S_multi :  | S S_multi S_multi
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
@@ -32,7 +32,7 @@ media_list_opt :  | media_list
 ;
 string_or_uri : STRING | URI
 ;
-media : MEDIA_SYM EMS S_multi media_list '{' S_multi ruleset_multi '}' S_multi
+media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;

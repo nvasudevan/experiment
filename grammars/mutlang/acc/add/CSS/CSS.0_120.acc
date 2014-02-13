@@ -20,7 +20,7 @@ stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
-stylesheet_tail : CDO stylesheet_parts cdo_cdc_s_multi
+stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
 stylesheet_parts : ruleset | media | page
 ;
@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '+'
+unary_operator : '-' '-' | '+'
 ;
 property : IDENT S_multi
 ;

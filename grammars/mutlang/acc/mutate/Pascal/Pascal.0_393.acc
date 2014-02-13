@@ -106,7 +106,7 @@ index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
-variant :  | case_label_list ':' '(' field_list ')'
+variant :  | case_label_list ':' WITH field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : GOTO | type_defs ';' type_def
+type_defs : type_def | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;

@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
+inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | class_member_declaration
 ;
 array_type : name dims | primitive_type dims
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : NEG_TK
+synchronized : modifiers
 ;
 constant_expression : expression
 ;

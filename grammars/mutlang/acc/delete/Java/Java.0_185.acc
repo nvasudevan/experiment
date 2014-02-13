@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression | name | primary
+postfix_expression : post_decrement_expression | post_increment_expression |  | primary
 ;
 class_type : class_or_interface_type
 ;
@@ -170,7 +170,7 @@ while_expression : WHILE_TK OP_TK expression CP_TK
 ;
 inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;
-array_type : name dims | dims
+array_type : name dims | primitive_type dims
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;

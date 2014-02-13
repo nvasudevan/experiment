@@ -10,7 +10,7 @@ argument_list : argument_list C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
-catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
+catch_clause_parameter : CATCH_TK relational_expression formal_parameter CP_TK
 ;
 conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
@@ -94,7 +94,7 @@ this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
-expression : class_member_declaration
+expression : assignment_expression
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;

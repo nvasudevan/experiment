@@ -98,7 +98,7 @@ variants : variant | variants ';' variant
 ;
 block : opt_declarations statement_part
 ;
-type_dcl_part : index_t_list type_defs ';'
+type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
@@ -130,7 +130,7 @@ relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;
-actuals_list : actual_param | actuals_list ',' actual_param
+actuals_list : actual_param | actuals_list ',' '-'
 ;
 record_section :  | newident_list ':' type
 ;

@@ -38,7 +38,7 @@ ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
-media_list_tail : ',' element_name medium
+media_list_tail : ',' S_multi medium
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
@@ -106,7 +106,7 @@ pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;
-declaration : property COLON_TK S_multi expr prio_opt
+declaration : property FUNCTION S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;

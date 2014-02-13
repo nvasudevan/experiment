@@ -60,7 +60,7 @@ labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | i
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
+struct_declarator_list : struct_declarator_list ',' struct_declarator | ',' struct_declarator
 ;
 init_declarator : declarator '=' initializer | declarator
 ;
@@ -74,7 +74,7 @@ inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;
-pointer : '*' type_specifier_list pointer | '*' pointer | '*' DOUBLE type_specifier_list | '*'
+pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;

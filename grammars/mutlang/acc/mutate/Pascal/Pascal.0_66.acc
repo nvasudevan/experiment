@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : ELSE | index_t_list ',' simple_type
+index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;
@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : UNSIGNED_INT
+label : struct_type
 ;
 type_defs : type_def | type_defs ';' type_def
 ;

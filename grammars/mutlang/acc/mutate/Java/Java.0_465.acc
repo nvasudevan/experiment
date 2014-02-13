@@ -82,7 +82,7 @@ catches : catches catch_clause | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
-post_increment_expression : postfix_expression INCR_TK
+post_increment_expression : postfix_expression OR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : identifier
+synchronized : modifiers
 ;
 constant_expression : expression
 ;

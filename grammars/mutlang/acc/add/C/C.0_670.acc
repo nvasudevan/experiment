@@ -60,7 +60,7 @@ labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | i
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
+struct_declarator_list : struct_declarator_list labeled_statement ',' struct_declarator | struct_declarator
 ;
 init_declarator : declarator '=' initializer | declarator
 ;
@@ -114,7 +114,7 @@ struct_declaration_list : struct_declaration_list struct_declaration | struct_de
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
-identifier : statement_list IDENTIFIER
+identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;

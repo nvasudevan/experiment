@@ -202,7 +202,7 @@ class_body_declaration : block | constructor_declaration | static_initializer | 
 ;
 method_body : SC_TK | block
 ;
-block_statement : class_declaration | statement | local_variable_declaration_statement
+block_statement : shift_expression class_declaration | statement | local_variable_declaration_statement
 ;
 type : reference_type | primitive_type
 ;
@@ -256,7 +256,7 @@ single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
-class_body : OCB_TK class_body_declarations CCB_TK class_type_list | OCB_TK CCB_TK
+class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;

@@ -102,7 +102,7 @@ type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
-index_spec : newident DOTDOT newident ':' ident
+index_spec : newident DOTDOT newident ':' expression ident
 ;
 func_heading : FUNCTION newident function_form
 ;
@@ -116,7 +116,7 @@ formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;
-type_def : paramtype newident '=' type
+type_def : newident '=' type
 ;
 labels : label | labels ',' label
 ;

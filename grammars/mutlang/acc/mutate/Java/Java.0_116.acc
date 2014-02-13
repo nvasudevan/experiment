@@ -84,7 +84,7 @@ unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_cas
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
-dim_exprs : dim_exprs dim_expr | dim_expr
+dim_exprs : dim_exprs dim_expr | this_or_super
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
@@ -94,7 +94,7 @@ this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
-expression : finally
+expression : assignment_expression
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;

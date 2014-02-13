@@ -214,7 +214,7 @@ if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
-if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK GTE_TK statement_nsi ELSE_TK statement_nsi
+if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
 block_end : CCB_TK
 ;
@@ -256,7 +256,7 @@ single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
-class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
+class_body : and_expression OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;

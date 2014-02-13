@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | STRING
+id_or_string : IDENT | STRING combinator
 ;
 pseudo : COLON_TK pseudo_tail
 ;
@@ -126,7 +126,7 @@ term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi 
 ;
 unary_operator_opt :  | unary_operator
 ;
-function : FUNCTION S_multi expr ')' IMPORTANT_SYM S_multi
+function : FUNCTION S_multi expr ')' S_multi
 ;
 hexcolor : HASH S_multi
 ;

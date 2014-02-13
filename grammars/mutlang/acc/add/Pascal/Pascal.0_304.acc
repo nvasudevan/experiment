@@ -126,9 +126,9 @@ variable : variable '^' | variable '.' ident | variable '[' expressions ']' | id
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
-relational_op : IN | NE compound_stmt | GE | LE | '>' | '<' | '='
+relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
-case_label_list : case_label | case_label_list ',' case_label
+case_label_list : case_label actual_params | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;

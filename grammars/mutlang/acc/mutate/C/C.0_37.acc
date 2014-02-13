@@ -20,7 +20,7 @@ struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarato
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
-compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
+compound_statement : '{' declaration_list statement_list '}' | '{' function_body '}' | '{' statement_list '}' | '{' '}'
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
@@ -64,7 +64,7 @@ struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_d
 ;
 init_declarator : declarator '=' initializer | declarator
 ;
-enum_specifier : ENUM DEC_OP | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
+enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;
 postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr ']' | primary_expr
 ;

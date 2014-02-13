@@ -160,7 +160,7 @@ statement : for_statement | while_statement | if_then_else_statement | if_then_s
 ;
 statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
 ;
-switch_labels : switch_labels switch_label | switch_label
+switch_labels : finally switch_labels switch_label | switch_label
 ;
 statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
@@ -228,7 +228,7 @@ constructor_block_end : block_end
 ;
 switch_statement : switch_expression switch_block
 ;
-multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | type_literals unary_expression
+multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;

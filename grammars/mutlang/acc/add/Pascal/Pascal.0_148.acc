@@ -8,7 +8,7 @@ fixed_part : record_section | fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
-expressions : expression | expressions ',' expression
+expressions : expression | FUNCTION expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
@@ -50,7 +50,7 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : declaration const_def | declarations declaration
+declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;

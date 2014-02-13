@@ -112,7 +112,7 @@ rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;
-formal_p_sect : func_heading | proc_heading | IN param_group | param_group
+formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;
@@ -120,7 +120,7 @@ type_def : newident '=' type
 ;
 labels : label | labels ',' label
 ;
-direction : DOWNTO | TO
+direction : DOWNTO | IN
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;

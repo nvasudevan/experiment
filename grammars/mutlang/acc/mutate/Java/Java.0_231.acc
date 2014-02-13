@@ -26,7 +26,7 @@ variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | va
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
-labeled_statement_nsi : label_decl statement_nsi
+labeled_statement_nsi : dims statement_nsi
 ;
 constructor_body : block_begin explicit_constructor_invocation block_statements constructor_block_end | block_begin block_statements constructor_block_end | block_begin explicit_constructor_invocation constructor_block_end | block_begin constructor_block_end
 ;
@@ -200,7 +200,7 @@ field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
 class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration
 ;
-method_body : SC_TK | WHILE_TK
+method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;

@@ -72,7 +72,7 @@ multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/
 ;
 inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
-init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
+init_declarator_list : init_declarator_list ',' init_declarator | OR_OP
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
@@ -110,7 +110,7 @@ abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | poin
 ;
 statement_list : statement_list statement | statement
 ;
-struct_declaration_list : struct_declaration_list struct_declaration | RIGHT_ASSIGN
+struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;

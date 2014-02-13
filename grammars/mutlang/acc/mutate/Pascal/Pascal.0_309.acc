@@ -68,7 +68,7 @@ simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
-case_label : constant
+case_label : variable_dcl
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
@@ -150,7 +150,7 @@ term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;
-const_defs : const_def | const_defs proc_or_func const_def
+const_defs : const_def | const_defs ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;

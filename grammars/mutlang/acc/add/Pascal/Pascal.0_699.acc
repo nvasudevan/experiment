@@ -18,7 +18,7 @@ newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
-factor : NOT factor body | set | '(' expression ')' | unsigned_lit | variable
+factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
@@ -46,7 +46,7 @@ add_op : OR | '-' | '+'
 ;
 var_dcl_part : VAR variable_dcls ';'
 ;
-unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
+unsigned_num : UNSIGNED_REAL | set UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;

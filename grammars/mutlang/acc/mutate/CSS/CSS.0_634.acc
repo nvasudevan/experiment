@@ -38,7 +38,7 @@ ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
-media_list_tail : ',' S_multi medium
+media_list_tail : ',' S_multi pseudo_page
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
@@ -96,7 +96,7 @@ attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
-attrib_tail_opt :  | attrib_includes '{' id_or_string S_multi
+attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;

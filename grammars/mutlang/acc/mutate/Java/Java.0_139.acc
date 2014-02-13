@@ -146,7 +146,7 @@ block_begin : OCB_TK
 ;
 final : modifiers
 ;
-shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
+shift_expression : shift_expression ZRS_TK labeled_statement_nsi | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
@@ -232,7 +232,7 @@ multiplicative_expression : multiplicative_expression REM_TK unary_expression | 
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
-variable_declarators : variable_declarators C_TK variable_declarator | DECR_TK
+variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;

@@ -12,7 +12,7 @@ stylesheet_imports : import cdo_cdc_s_multi
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
-S_multi :  | selector_tail_2 S_multi
+S_multi :  | S S_multi
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
@@ -112,7 +112,7 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : term expr_tail_multi
+expr : addl_selector expr_tail_multi
 ;
 operator_opt :  | operator
 ;

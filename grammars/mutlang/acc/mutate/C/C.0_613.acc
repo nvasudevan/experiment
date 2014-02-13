@@ -112,7 +112,7 @@ statement_list : statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
+parameter_type_list : parameter_list ',' ELIPSIS | OR_OP
 ;
 identifier : IDENTIFIER
 ;
@@ -128,5 +128,5 @@ parameter_declaration : type_name | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;
-declarator2 : declarator2 '(' parameter_identifier_list ')' | declarator2 '(' parameter_type_list ')' | declarator2 '(' ')' | declarator2 '[' constant_expr ']' | declarator2 '[' ']' | '(' declarator ')' | UNSIGNED
+declarator2 : declarator2 '(' parameter_identifier_list ')' | declarator2 '(' parameter_type_list ')' | declarator2 '(' ')' | declarator2 '[' constant_expr ']' | declarator2 '[' ']' | '(' declarator ')' | identifier
 ;

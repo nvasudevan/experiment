@@ -18,7 +18,7 @@ y_columns : y_column_list | '*'
 ;
 y_atom : '(' y_expression ')' | y_column | y_value
 ;
-y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
+y_sub_condition : y_sub_condition OR NULL_VALUE y_sub_condition2 | y_sub_condition2
 ;
 y_drop : DROP TTABLE y_table
 ;
@@ -28,7 +28,7 @@ y_assignment : NAME EQUAL y_expression | NAME EQUAL NULL_VALUE
 ;
 y_value_list : y_value_list ',' '-' FLOATNUM | y_value_list ',' FLOATNUM | y_value_list ',' '-' INTNUM | y_value_list ',' INTNUM | y_value_list ',' STRING | y_value_list ',' NULL_VALUE | '-' FLOATNUM | FLOATNUM | '-' INTNUM | INTNUM | STRING | NULL_VALUE
 ;
-y_term : '-' y_term | y_atom INT
+y_term : '-' y_term | y_atom
 ;
 y_delete : DELETE FROM y_table WHERE y_condition | DELETE FROM y_table
 ;

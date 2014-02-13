@@ -38,7 +38,7 @@ labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
-switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups ASSERT_TK CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
+switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
@@ -96,7 +96,7 @@ variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
-cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
+cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK LS_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
 constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;

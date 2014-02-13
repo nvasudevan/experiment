@@ -36,7 +36,7 @@ media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;
-media_list : medium media_list_tail_multi
+media_list : medium media_list_tail_multi pseudo
 ;
 media_list_tail : ',' S_multi medium
 ;
@@ -108,7 +108,7 @@ pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;
-prio_opt :  | stylesheet_parts prio
+prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;

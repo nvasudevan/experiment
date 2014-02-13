@@ -22,7 +22,7 @@ cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
 stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
-stylesheet_parts : SC_TK | media | page
+stylesheet_parts : ruleset | media | page
 ;
 stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
@@ -66,7 +66,7 @@ property : IDENT S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-addl_selector : ',' S_multi selector
+addl_selector : ',' S_multi pseudo
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;

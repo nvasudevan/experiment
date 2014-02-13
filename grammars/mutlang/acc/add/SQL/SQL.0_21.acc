@@ -12,7 +12,7 @@ y_expression : y_expression '-' y_product | y_expression '+' y_product | y_produ
 ;
 y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
-y_column : NAME
+y_column : ADD NAME
 ;
 y_columns : y_column_list | '*'
 ;
@@ -50,7 +50,7 @@ y_table : NAME
 ;
 y_order : NAME
 ;
-y_values : VALUES '(' y_value_list ')' y_create
+y_values : VALUES '(' y_value_list ')'
 ;
 y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;

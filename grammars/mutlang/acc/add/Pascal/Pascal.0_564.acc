@@ -28,7 +28,7 @@ case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : formal_params ':' ident | formal_p_sects
+function_form : formal_params ':' ident | 
 ;
 procedure_call : ident actual_params
 ;
@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations statement_part
+block : declaration opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;

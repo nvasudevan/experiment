@@ -92,7 +92,7 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
+attrib : '[' S_multi IDENT attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

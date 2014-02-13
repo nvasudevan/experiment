@@ -22,7 +22,7 @@ factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
-assignment : variable BECOMES expression
+assignment : formal_params BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
@@ -120,7 +120,7 @@ type_def : newident '=' type
 ;
 labels : label | labels ',' label
 ;
-direction : ',' | TO
+direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;

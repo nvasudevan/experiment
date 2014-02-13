@@ -16,7 +16,7 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND | MOD simple_expr | DIV | '/' | '*'
+mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
@@ -128,7 +128,7 @@ declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | la
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
-case_label_list : case_label | case_label_list ',' case_label
+case_label_list : case_label SET | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;

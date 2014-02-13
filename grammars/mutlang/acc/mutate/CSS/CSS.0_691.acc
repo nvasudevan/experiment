@@ -100,7 +100,7 @@ attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;
-pseudo : COLON_TK pseudo_tail
+pseudo : '{' pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM FUNCTION
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

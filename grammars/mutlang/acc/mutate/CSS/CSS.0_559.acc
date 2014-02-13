@@ -58,9 +58,9 @@ pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
-combinator : '+' S_multi | '>' S_multi
+combinator : '+' S_multi | '>' media_list_tail_multi
 ;
-unary_operator : '-' | prio
+unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;

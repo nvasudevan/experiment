@@ -12,7 +12,7 @@ y_expression : y_expression '-' y_product | y_expression '+' y_product | y_produ
 ;
 y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
-y_column : y_columns NAME
+y_column : NAME
 ;
 y_columns : y_column_list | '*'
 ;
@@ -20,7 +20,7 @@ y_atom : '(' y_expression ')' | y_column | y_value
 ;
 y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
-y_drop : DROP TTABLE y_table
+y_drop : DROP TTABLE y_table INTO
 ;
 y_condition : y_sub_condition
 ;

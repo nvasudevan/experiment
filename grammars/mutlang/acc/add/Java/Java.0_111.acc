@@ -142,7 +142,7 @@ conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
-block_begin : OCB_TK
+block_begin : OCB_TK OCB_TK
 ;
 final : modifiers
 ;
@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : type_declarations type_declaration | type_declaration local_variable_declaration
+type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;

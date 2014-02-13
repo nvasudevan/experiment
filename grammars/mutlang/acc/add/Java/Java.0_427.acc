@@ -102,7 +102,7 @@ constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;
-exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | import_declaration and_expression
+exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
@@ -226,7 +226,7 @@ do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;
-switch_statement : switch_expression switch_block
+switch_statement : switch_expression method_declarator switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;

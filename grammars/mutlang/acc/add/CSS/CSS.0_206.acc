@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | STRING
+id_or_string : IDENT | stylesheet_tail_multi STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
@@ -114,7 +114,7 @@ prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;
-operator_opt :  | INCLUDES operator
+operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;

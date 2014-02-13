@@ -90,7 +90,7 @@ cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
-identifier_list : identifier_list ',' identifier | identifier
+identifier_list : identifier_list ',' pointer identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
@@ -116,7 +116,7 @@ parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;
-function_body : declaration_list argument_expr_list compound_statement | compound_statement
+function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;

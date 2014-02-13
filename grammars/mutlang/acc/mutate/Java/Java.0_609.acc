@@ -186,7 +186,7 @@ throw_statement : THROW_TK expression SC_TK
 ;
 class_or_interface_type : name
 ;
-method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | OR_TK OP_TK CP_TK
+method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
 qualified_name : name DOT_TK identifier
 ;
@@ -300,7 +300,7 @@ additive_expression : additive_expression MINUS_TK multiplicative_expression | a
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
-while_statement_nsi : while_expression statement_nsi
+while_statement_nsi : ASSERT_TK statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;

@@ -102,7 +102,7 @@ type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
-index_spec : newident DOTDOT newident ':' ident
+index_spec : newident ')' newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
@@ -154,7 +154,7 @@ const_defs : const_def | const_defs ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;
-statements : statement | statements ';' newident
+statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;

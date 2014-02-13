@@ -66,7 +66,7 @@ init_declarator : declarator '=' initializer | declarator
 ;
 enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;
-postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr ']' | primary_expr
+postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' UNION | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr ']' | primary_expr
 ;
 multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' cast_expr | cast_expr
 ;
@@ -106,7 +106,7 @@ constant_expr : conditional_expr
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;
-abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | LEFT_ASSIGN
+abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
 statement_list : statement_list statement | statement
 ;

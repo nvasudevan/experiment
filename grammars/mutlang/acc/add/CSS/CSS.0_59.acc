@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '+'
+unary_operator : '-' PAGE_SYM | '+'
 ;
 property : IDENT S_multi
 ;
@@ -70,7 +70,7 @@ addl_selector : ',' S_multi selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;
-selector : multi_addl_selector simple_selector selector_tail_opt
+selector : simple_selector selector_tail_opt
 ;
 combinator_opt :  | combinator
 ;

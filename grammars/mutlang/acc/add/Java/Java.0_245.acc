@@ -280,9 +280,9 @@ equality_expression : equality_expression NEQ_TK relational_expression | equalit
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;
-simple_name : identifier primary
+simple_name : identifier
 ;
-type_declaration : empty_statement | interface_declaration | class_declaration
+type_declaration : empty_statement | interface_declaration | conditional_and_expression class_declaration
 ;
 conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;

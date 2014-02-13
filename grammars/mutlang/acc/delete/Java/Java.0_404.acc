@@ -228,7 +228,7 @@ constructor_block_end : block_end
 ;
 switch_statement : switch_expression switch_block
 ;
-multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
+multiplicative_expression : multiplicative_expression REM_TK | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
@@ -290,7 +290,7 @@ trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expr
 ;
 left_hand_side : array_access | field_access | name
 ;
-unary_expression_not_plus_minus : cast_expression | NEG_TK | NOT_TK unary_expression | postfix_expression
+unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;

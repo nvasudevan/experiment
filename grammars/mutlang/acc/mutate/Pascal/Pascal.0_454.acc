@@ -30,7 +30,7 @@ unsigned_lit : NIL | STRING | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;
-procedure_call : ident actual_params
+procedure_call : ident expression
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
@@ -84,7 +84,7 @@ member : expression DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
-members : case_label_list | members ',' member
+members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;

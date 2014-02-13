@@ -146,7 +146,7 @@ block_begin : OCB_TK
 ;
 final : modifiers
 ;
-shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression additive_expression | additive_expression
+shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK expression CSB_TK
+dim_expr : expression CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;

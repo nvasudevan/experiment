@@ -16,7 +16,7 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND | MOD | DIV | '/' | PROCEDURE '*'
+mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
@@ -98,7 +98,7 @@ variants : variant | variants ';' variant
 ;
 block : opt_declarations statement_part
 ;
-type_dcl_part : TYPE type_defs ';'
+type_dcl_part : label_dcl_part TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;

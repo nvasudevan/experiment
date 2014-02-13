@@ -140,7 +140,7 @@ super : EXTENDS_TK class_type |
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
-for_statement : for_begin SC_TK switch_block SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
+for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
 block_begin : OCB_TK
 ;
@@ -190,7 +190,7 @@ method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_pa
 ;
 qualified_name : name DOT_TK identifier
 ;
-throws : THROWS_TK class_type_list | 
+throws : THROWS_TK class_type_list | REM_TK
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;

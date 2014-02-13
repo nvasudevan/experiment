@@ -2,7 +2,7 @@
 
 %nodefault
 
-program : PROGRAM newident external_files ';' block '.'
+program : PROGRAM label_dcl_part newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : members '(' formal_p_sects ')' | 
+formal_params : '(' formal_p_sects ')' | 
 ;
 newident : IDENTIFIER
 ;

@@ -4,7 +4,7 @@
 
 file : file external_definition | external_definition
 ;
-parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
+parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list '^'
 ;
 jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO identifier ';'
 ;
@@ -84,7 +84,7 @@ type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID |
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
-expr : abstract_declarator2 expr ',' assignment_expr | assignment_expr
+expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;

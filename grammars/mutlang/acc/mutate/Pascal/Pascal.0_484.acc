@@ -144,13 +144,13 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : OR tag_field OF variants
+variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;
-const_defs : const_def | const_defs ';' const_def
+const_defs : const_def | const_defs newident_list const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;

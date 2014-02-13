@@ -148,7 +148,7 @@ variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
-index_specs : index_spec | proc_heading index_specs ';' index_spec
+index_specs : index_spec | index_specs ';' index_spec DO
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

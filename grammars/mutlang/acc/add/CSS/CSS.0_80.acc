@@ -24,7 +24,7 @@ stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
 stylesheet_parts : ruleset | media | page
 ;
-stylesheet_tail_multi : expr_tail | stylesheet_tail stylesheet_tail_multi
+stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
 import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
@@ -68,7 +68,7 @@ ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_m
 ;
 addl_selector : ',' S_multi selector
 ;
-multi_addl_selector :  | addl_selector multi_addl_selector
+multi_addl_selector : ruleset_multi | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;

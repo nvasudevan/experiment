@@ -104,7 +104,7 @@ import_declarations : import_declarations import_declaration | import_declaratio
 ;
 exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
-primitive_type : BOOLEAN_TK | FP_TK | statement_without_trailing_substatement
+primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
 static_initializer : static_ block
 ;
@@ -174,7 +174,7 @@ array_type : name dims | primitive_type dims
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;
-constant_declaration : field_declaration
+constant_declaration : CONTINUE_TK
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;

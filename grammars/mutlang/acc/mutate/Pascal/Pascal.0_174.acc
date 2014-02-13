@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | PROCEDURE
+type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
+simple_type : ident | constant DOTDOT MOD | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;

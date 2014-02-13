@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : THROWS_TK | expression
+variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
@@ -114,7 +114,7 @@ name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
-expression_statement : statement_expression SC_TK
+expression_statement : statement_expression CSB_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;

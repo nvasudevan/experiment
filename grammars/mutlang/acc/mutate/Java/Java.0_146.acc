@@ -206,7 +206,7 @@ block_statement : class_declaration | statement | local_variable_declaration_sta
 ;
 type : reference_type | primitive_type
 ;
-class_declaration : EQ_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
+class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
 switch_block_statement_group : switch_labels block_statements
 ;
@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : type_declarations type_declaration | type_declaration
+type_declarations : type_declarations type_declaration | type_import_on_demand_declaration
 ;
 method_declaration : method_header method_body
 ;

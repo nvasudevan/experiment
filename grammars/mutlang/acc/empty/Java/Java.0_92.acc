@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : SUPER_TK | THIS_TK | 
+this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
@@ -146,7 +146,7 @@ block_begin : OCB_TK
 ;
 final : modifiers
 ;
-shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
+shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression | 
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;

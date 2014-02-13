@@ -6,7 +6,7 @@ program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
-compound_stmt : term statements END
+compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
@@ -76,7 +76,7 @@ new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
-body : IDENTIFIER | block
+body : IDENTIFIER | var_dcl_part
 ;
 actual_param : expression colon_things | expression
 ;

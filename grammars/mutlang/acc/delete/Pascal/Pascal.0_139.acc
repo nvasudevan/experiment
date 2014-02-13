@@ -66,7 +66,7 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : ':' expression ':' expression | ':' expression
+colon_things : ':' expression ':' expression | ':'
 ;
 case_label : constant
 ;
@@ -120,7 +120,7 @@ type_def : newident '=' type
 ;
 labels : label | labels ',' label
 ;
-direction : DOWNTO | 
+direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;

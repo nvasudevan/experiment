@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : SC_TK type_import_on_demand_declaration | single_type_import_declaration
+import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -24,7 +24,7 @@ assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
-assignment : left_hand_side assignment_operator assignment_expression
+assignment : left_hand_side assignment_operator assignment_expression import_declarations
 ;
 labeled_statement_nsi : label_decl statement_nsi
 ;

@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
+pseudo_tail : IDENT | FUNCTION combinator pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;
@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt COLON_TK
+expr_tail : operator_opt term
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

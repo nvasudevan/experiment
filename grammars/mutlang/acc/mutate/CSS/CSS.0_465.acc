@@ -12,7 +12,7 @@ stylesheet_imports : import cdo_cdc_s_multi
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
-S_multi :  | NUMBER S_multi
+S_multi :  | S S_multi
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '+'
+unary_operator : '-' | expr
 ;
 property : IDENT S_multi
 ;

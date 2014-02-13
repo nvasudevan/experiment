@@ -146,7 +146,7 @@ block_begin : OCB_TK
 ;
 final : modifiers
 ;
-shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK literal | additive_expression
+shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
@@ -264,7 +264,7 @@ synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;
-primary : array_creation_expression | primary_no_new_array
+primary : array_creation_expression | synchronized
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;

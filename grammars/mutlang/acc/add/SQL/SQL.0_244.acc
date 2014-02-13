@@ -4,7 +4,7 @@
 
 y_sql : y_delete | y_update | y_select | y_insert | y_drop | y_create | y_alter
 ;
-y_assignments : y_assignments ',' STRING y_assignment | y_assignment
+y_assignments : y_assignments ',' y_assignment | y_assignment
 ;
 y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table y_values
 ;
@@ -44,7 +44,7 @@ y_columndefs : y_columndefs ',' y_columndef | y_columndef
 ;
 y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
 ;
-y_product : y_product '/' y_term | y_product '*' y_term | y_term
+y_product : y_product '/' y_term | y_product '*' y_term | y_term ')'
 ;
 y_table : NAME
 ;

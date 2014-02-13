@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' cdo_cdc_s | '+'
+unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM S_multi
+prio : IMPORTANT_SYM S_multi string_or_uri
 ;
 expr : term expr_tail_multi
 ;

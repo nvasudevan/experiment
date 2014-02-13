@@ -40,7 +40,7 @@ media_list : medium media_list_tail_multi
 ;
 media_list_tail : ',' S_multi medium
 ;
-media_list_tail_multi :  | media_list_tail ','
+media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | STRING
+id_or_string : IDENT | cdo_cdc_s
 ;
 pseudo : COLON_TK pseudo_tail
 ;

@@ -12,7 +12,7 @@ pre_decrement_expression : DECR_TK unary_expression
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
-conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
+conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression constructor_declarator
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
@@ -276,7 +276,7 @@ empty_statement : SC_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
-equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression SWITCH_TK
+equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;

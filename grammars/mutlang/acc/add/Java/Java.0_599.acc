@@ -82,7 +82,7 @@ catches : catches catch_clause | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
-post_increment_expression : postfix_expression THROW_TK INCR_TK
+post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | expression
+variable_initializer : CATCH_TK array_initializer | expression
 ;
 expression : assignment_expression
 ;

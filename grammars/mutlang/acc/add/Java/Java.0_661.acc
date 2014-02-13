@@ -224,7 +224,7 @@ switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;
-constructor_block_end : block_end
+constructor_block_end : labeled_statement_nsi block_end
 ;
 switch_statement : switch_expression switch_block
 ;
@@ -252,7 +252,7 @@ constant_expression : expression
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
-single_type_import_declaration : REL_QM_TK IMPORT_TK name SC_TK
+single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;

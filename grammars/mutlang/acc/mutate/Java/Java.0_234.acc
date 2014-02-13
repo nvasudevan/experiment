@@ -54,7 +54,7 @@ constructor_declaration : constructor_header constructor_body
 ;
 field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
-class_instance_creation_expression : something_dot_new constant_declaration OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
+class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
 variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
@@ -262,7 +262,7 @@ type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
-post_decrement_expression : postfix_expression DECR_TK
+post_decrement_expression : postfix_expression WHILE_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;

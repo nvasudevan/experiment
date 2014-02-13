@@ -60,7 +60,7 @@ variable_initializers : variable_initializers C_TK variable_initializer | variab
 ;
 for_begin : for_header for_init
 ;
-type_import_on_demand_declaration : IMPORT_TK EXTENDS_TK name DOT_TK MULT_TK SC_TK
+type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
@@ -276,7 +276,7 @@ empty_statement : SC_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
-equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
+equality_expression : equality_expression NEQ_TK relational_expression | equality_expression inclusive_or_expression EQ_TK relational_expression | relational_expression
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;

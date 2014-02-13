@@ -12,7 +12,7 @@ pre_decrement_expression : DECR_TK unary_expression
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
-conditional_and_expression : conditional_and_expression BOOL_AND_TK | inclusive_or_expression
+conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
@@ -302,7 +302,7 @@ interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;
-something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
+something_dot_new : DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
 while_statement : while_expression statement
 ;

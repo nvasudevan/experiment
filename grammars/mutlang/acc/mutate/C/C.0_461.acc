@@ -74,7 +74,7 @@ inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;
-pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
+pointer : INT type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
@@ -82,7 +82,7 @@ declaration : declaration_specifiers init_declarator_list ';' | declaration_spec
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
-enumerator_list : LEFT_OP ',' enumerator | enumerator
+enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;

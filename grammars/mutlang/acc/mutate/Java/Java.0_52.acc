@@ -232,7 +232,7 @@ multiplicative_expression : multiplicative_expression REM_TK unary_expression | 
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
-variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
+variable_declarators : variable_declarators C_TK variable_declarator | LS_TK
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;
@@ -250,7 +250,7 @@ synchronized : modifiers
 ;
 constant_expression : expression
 ;
-array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK expression_statement dim_exprs
+array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
 single_type_import_declaration : IMPORT_TK name SC_TK
 ;

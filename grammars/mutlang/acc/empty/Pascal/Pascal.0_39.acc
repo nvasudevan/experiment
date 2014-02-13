@@ -82,9 +82,9 @@ actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;
-proc_heading : PROCEDURE newident formal_params | 
+proc_heading : PROCEDURE newident formal_params
 ;
-members : member | members ',' member
+members : member | members ',' member | 
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;

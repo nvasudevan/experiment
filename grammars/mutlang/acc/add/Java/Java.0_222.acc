@@ -176,7 +176,7 @@ explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name 
 ;
 constant_declaration : field_declaration
 ;
-interfaces : IMPLEMENTS_TK interface_type_list | FP_LIT_TK
+interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
@@ -304,5 +304,5 @@ while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
-while_statement : while_expression statement
+while_statement : while_expression statement EQ_TK
 ;

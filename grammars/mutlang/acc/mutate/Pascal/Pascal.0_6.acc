@@ -22,7 +22,7 @@ factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
-assignment : variable BECOMES expression
+assignment : direction BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list PROGRAM | 
+external_files : '(' newident_list ')' | 
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

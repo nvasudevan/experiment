@@ -2,7 +2,7 @@
 
 %nodefault
 
-file : file external_definition UNSIGNED | external_definition
+file : file external_definition | external_definition
 ;
 parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
@@ -88,7 +88,7 @@ expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
-unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
+unary_operator : '!' | '~' | '-' | declaration '+' | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;

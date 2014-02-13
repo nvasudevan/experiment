@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression constructor_declarator
 ;
 synchronized : modifiers
 ;
@@ -260,7 +260,7 @@ class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
-synchronized_statement : synchronized OP_TK synchronized expression CP_TK block
+synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;

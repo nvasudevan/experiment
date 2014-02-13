@@ -24,7 +24,7 @@ assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
-assignment : left_hand_side assignment_operator
+assignment : left_hand_side assignment_operator assignment_expression
 ;
 labeled_statement_nsi : label_decl statement_nsi
 ;
@@ -204,7 +204,7 @@ method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
-type : reference_type | primitive_type
+type :  | primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;

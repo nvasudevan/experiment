@@ -120,7 +120,7 @@ pre_increment_expression : INCR_TK unary_expression
 ;
 switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
-finally : FINALLY_TK
+finally : FINALLY_TK block
 ;
 switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
@@ -254,7 +254,7 @@ array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_T
 ;
 single_type_import_declaration : IMPORT_TK name SC_TK
 ;
-array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
+array_access : primary_no_new_array expression CSB_TK | name OSB_TK expression CSB_TK
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;

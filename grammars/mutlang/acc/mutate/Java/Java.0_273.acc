@@ -14,7 +14,7 @@ catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
 conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
-anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | if_then_else_statement class_type OP_TK argument_list CP_TK class_body
+anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
 continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
@@ -198,7 +198,7 @@ assignment_expression : assignment | conditional_expression
 ;
 field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
-class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration
+class_body_declaration : qualified_name | constructor_declaration | static_initializer | class_member_declaration
 ;
 method_body : SC_TK | block
 ;

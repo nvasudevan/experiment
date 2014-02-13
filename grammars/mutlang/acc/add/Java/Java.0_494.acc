@@ -100,7 +100,7 @@ cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK 
 ;
 constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;
-import_declarations : import_declarations import_declaration | for_statement import_declaration
+import_declarations : import_declarations import_declaration | import_declaration
 ;
 exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
@@ -154,7 +154,7 @@ statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement
 ;
 catch_clause : catch_clause_parameter block
 ;
-constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
+constructor_header : modifiers constructor_declarator throws | constructor_declarator throws shift_expression
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;

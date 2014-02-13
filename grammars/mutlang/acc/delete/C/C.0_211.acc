@@ -56,7 +56,7 @@ enumerator : identifier '=' constant_expr | identifier
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
-labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
+labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier statement
 ;
 declaration_list : declaration_list declaration | declaration
 ;
@@ -68,7 +68,7 @@ enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENU
 ;
 postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr ']' | primary_expr
 ;
-multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' | cast_expr
+multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' cast_expr | cast_expr
 ;
 inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;

@@ -54,7 +54,7 @@ unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_
 ;
 enumerator : identifier '=' constant_expr | identifier
 ;
-abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
+abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | struct_declarator '(' abstract_declarator ')'
 ;
 labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
@@ -94,7 +94,7 @@ identifier_list : identifier_list ',' identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
-storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | DIV_ASSIGN TYPEDEF
+storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;

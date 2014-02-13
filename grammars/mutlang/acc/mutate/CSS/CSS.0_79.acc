@@ -36,7 +36,7 @@ media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;
-media_list : '=' media_list_tail_multi
+media_list : medium media_list_tail_multi
 ;
 media_list_tail : ',' S_multi medium
 ;
@@ -56,7 +56,7 @@ declaration_multi :  | declaration_tail declaration_multi
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;
-operator : '/' S_multi | ',' S_multi
+operator : '/' S_multi | ',' stylesheet_parts
 ;
 combinator : '+' S_multi | '>' S_multi
 ;

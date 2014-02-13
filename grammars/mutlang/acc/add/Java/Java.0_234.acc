@@ -214,13 +214,13 @@ if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
-if_then_else_statement_nsi : THIS_TK IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
+if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
 block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
-switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
+switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression NEQ_TK REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;

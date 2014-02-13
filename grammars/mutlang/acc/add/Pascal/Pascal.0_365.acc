@@ -92,7 +92,7 @@ index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;
-label_dcl_part : LABEL proc_or_func labels ';'
+label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
@@ -142,7 +142,7 @@ ident : IDENTIFIER
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;
-proc_dcl_part : proc_or_func
+proc_dcl_part : rec_var_list proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;

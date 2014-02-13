@@ -134,7 +134,7 @@ modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
-class_type_list : class_type_list C_TK class_type | dim_expr
+class_type_list : class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;
@@ -178,7 +178,7 @@ constant_declaration : field_declaration
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
-formal_parameter : final type variable_declarator_id | type variable_declarator_id
+formal_parameter : final XOR_TK variable_declarator_id | type variable_declarator_id
 ;
 abstract_method_declaration : method_header SC_TK
 ;

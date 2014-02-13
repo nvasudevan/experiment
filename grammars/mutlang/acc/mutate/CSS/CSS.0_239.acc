@@ -14,7 +14,7 @@ cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
-cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
+cdo_cdc_multi :  | cdo_cdc stylesheet_tail_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
@@ -68,7 +68,7 @@ ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_m
 ;
 addl_selector : ',' S_multi selector
 ;
-multi_addl_selector :  | addl_selector INCLUDES
+multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;

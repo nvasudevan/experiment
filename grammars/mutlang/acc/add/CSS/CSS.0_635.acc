@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM S_multi media_list
+prio : IMPORTANT_SYM attrib_includes S_multi
 ;
 expr : term expr_tail_multi
 ;

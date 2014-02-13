@@ -38,7 +38,7 @@ opt_declarations : declarations |
 ;
 statement_part : compound_stmt
 ;
-field_list : variant_part | fixed_part ';' variant_part | fixed_part
+field_list : variant_part | fixed_part ';' variant_part | declarations
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | case_list_elem
+type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;

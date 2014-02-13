@@ -184,7 +184,7 @@ abstract_method_declaration : method_header SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;
-class_or_interface_type : name
+class_or_interface_type : CCB_TK
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
@@ -302,7 +302,7 @@ interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;
-something_dot_new : primary DOT_TK for_begin | name DOT_TK NEW_TK
+something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
 while_statement : while_expression statement
 ;

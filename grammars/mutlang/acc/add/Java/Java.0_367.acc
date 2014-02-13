@@ -54,7 +54,7 @@ constructor_declaration : constructor_header constructor_body
 ;
 field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
-class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK name class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
+class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
 variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
@@ -166,7 +166,7 @@ statement_expression : class_instance_creation_expression | method_invocation | 
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
-while_expression : WHILE_TK OP_TK expression CP_TK
+while_expression : WHILE_TK try_statement OP_TK expression CP_TK
 ;
 inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;

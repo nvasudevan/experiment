@@ -44,7 +44,7 @@ media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
-page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' stylesheet_opt_1
+page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
 pseudo_page_opt :  | pseudo_page
 ;
@@ -112,7 +112,7 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : term expr_tail_multi
+expr : cdo_cdc expr_tail_multi
 ;
 operator_opt :  | operator
 ;

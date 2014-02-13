@@ -36,7 +36,7 @@ media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;
-media_list : medium media_list_tail_multi
+media_list : medium media_list_tail_multi pseudo_tail_2_opt
 ;
 media_list_tail : ',' S_multi medium
 ;
@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | FUNCTION S_multi PAGE_SYM pseudo_tail_2_opt ')'
+pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;

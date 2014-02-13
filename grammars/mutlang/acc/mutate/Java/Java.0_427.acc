@@ -40,7 +40,7 @@ for_header : FOR_TK OP_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
-extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
+extends_interfaces : extends_interfaces CCB_TK interface_type | EXTENDS_TK interface_type
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
@@ -290,7 +290,7 @@ trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expr
 ;
 left_hand_side : array_access | field_access | name
 ;
-unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | field_declaration
+unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;

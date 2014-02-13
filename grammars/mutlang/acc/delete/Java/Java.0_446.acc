@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl
+labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -230,7 +230,7 @@ switch_statement : switch_expression switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
-return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
+return_statement : expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;

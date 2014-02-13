@@ -14,11 +14,11 @@ cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
-cdo_cdc_multi :  | cdo_cdc FREQ
+cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
-cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
+cdo_cdc_s_multi :  | cdo_cdc_s PAGE_SYM
 ;
 stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;

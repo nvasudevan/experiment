@@ -92,7 +92,7 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt '='
+attrib : '[' S_multi IDENT S_multi attrib_tail_opt stylesheet_parts
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;

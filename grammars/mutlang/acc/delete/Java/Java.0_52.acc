@@ -74,7 +74,7 @@ reference_type : array_type | class_or_interface_type
 ;
 method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;
-method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
+method_header : modifiers VOID_TK throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
 identifier : ID_TK
 ;
@@ -278,7 +278,7 @@ interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
 equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
-array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK | OCB_TK CCB_TK
+array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;
 simple_name : identifier
 ;

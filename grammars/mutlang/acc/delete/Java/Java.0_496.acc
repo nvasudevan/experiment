@@ -172,7 +172,7 @@ inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression 
 ;
 array_type : name dims | primitive_type dims
 ;
-explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
+explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK
 ;
 constant_declaration : field_declaration
 ;
@@ -228,7 +228,7 @@ constructor_block_end : block_end
 ;
 switch_statement : switch_expression switch_block
 ;
-multiplicative_expression : REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
+multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;

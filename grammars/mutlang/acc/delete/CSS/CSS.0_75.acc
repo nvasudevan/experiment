@@ -62,7 +62,7 @@ combinator : '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
-property : IDENT S_multi
+property : IDENT
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
@@ -76,7 +76,7 @@ combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
-selector_tail : combinator | S S_multi selector_tail_2_opt
+selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;

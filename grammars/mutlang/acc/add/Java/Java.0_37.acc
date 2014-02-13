@@ -78,7 +78,7 @@ method_header : modifiers VOID_TK method_declarator throws | modifiers type meth
 ;
 identifier : ID_TK
 ;
-catches : catches catch_clause | name catch_clause
+catches : catches catch_clause | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
@@ -130,7 +130,7 @@ interface_type : class_or_interface_type
 ;
 for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
-modifiers : modifiers MODIFIER_TK | MODIFIER_TK
+modifiers : modifiers MODIFIER_TK | MODIFIER_TK trap_overflow_corner_case
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;

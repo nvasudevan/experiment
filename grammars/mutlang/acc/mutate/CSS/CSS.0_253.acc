@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt EXS
+pseudo_tail : attrib_includes | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;

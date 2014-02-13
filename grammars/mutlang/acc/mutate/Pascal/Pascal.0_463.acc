@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : simple_type | index_t_list ',' simple_type
+index_t_list : variable | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;
@@ -144,7 +144,7 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : CASE tag_field proc_or_func variants
+variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;

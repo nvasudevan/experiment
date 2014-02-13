@@ -52,7 +52,7 @@ external_definition : declaration | function_definition
 ;
 unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
-enumerator : identifier '=' constant_expr | identifier
+enumerator : identifier '=' '=' | identifier
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
@@ -64,7 +64,7 @@ struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_d
 ;
 init_declarator : declarator '=' initializer | declarator
 ;
-enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | identifier '{' enumerator_list '}'
+enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;
 postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr ']' | primary_expr
 ;

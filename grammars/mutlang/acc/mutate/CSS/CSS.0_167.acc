@@ -36,7 +36,7 @@ media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;
-media_list : medium media_list_tail_multi
+media_list : NUMBER media_list_tail_multi
 ;
 media_list_tail : ',' S_multi medium
 ;
@@ -50,7 +50,7 @@ pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
-declaration_tail : SC_TK IMPORTANT_SYM declaration_opt
+declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;

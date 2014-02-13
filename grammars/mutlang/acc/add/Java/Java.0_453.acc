@@ -270,7 +270,7 @@ package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
-for_update : statement_expression_list constant_expression | 
+for_update : statement_expression_list | while_statement_nsi
 ;
 empty_statement : SC_TK
 ;

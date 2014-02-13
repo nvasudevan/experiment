@@ -162,7 +162,7 @@ statement_without_trailing_substatement : assert_statement | try_statement | thr
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;
-statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
+statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | 
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
@@ -212,7 +212,7 @@ switch_block_statement_group : switch_labels block_statements
 ;
 if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
-break_statement : BREAK_TK identifier SC_TK | BREAK_TK
+break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;

@@ -6,7 +6,7 @@ goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
-argument_list : argument_list C_TK expression | expression
+argument_list : C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
@@ -296,7 +296,7 @@ dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
 try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;
-additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression multiplicative_expression | multiplicative_expression
+additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;

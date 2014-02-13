@@ -92,7 +92,7 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
+attrib : '[' medium IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
@@ -104,7 +104,7 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT selector_tail_2
+pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;

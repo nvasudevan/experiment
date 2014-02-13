@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : SUPER_TK | 
+this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
@@ -258,7 +258,7 @@ array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expre
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
-type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
+type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;

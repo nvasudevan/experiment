@@ -46,7 +46,7 @@ iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' exp
 ;
 additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
-expression_statement : expr ';' | ';' MOD_ASSIGN
+expression_statement : expr ';' | ';'
 ;
 external_definition : declaration | function_definition
 ;
@@ -78,7 +78,7 @@ pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_lis
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
-declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
+declaration : struct_declarator_list declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;

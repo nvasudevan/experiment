@@ -2,7 +2,7 @@
 
 %nodefault
 
-file : file external_definition | 
+file : file external_definition | external_definition
 ;
 parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
@@ -52,7 +52,7 @@ external_definition : declaration | function_definition
 ;
 unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
-enumerator : identifier '=' constant_expr | identifier
+enumerator : '=' constant_expr | identifier
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;

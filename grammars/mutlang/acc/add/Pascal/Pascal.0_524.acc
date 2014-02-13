@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression variant colon_things | expression
+actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;
@@ -106,7 +106,7 @@ index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
-variant :  | case_label_list ':' '(' field_list ')'
+variant : simple_type | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;

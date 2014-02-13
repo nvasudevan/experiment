@@ -202,7 +202,7 @@ class_body_declaration : block | constructor_declaration | static_initializer | 
 ;
 method_body : SC_TK | block
 ;
-block_statement : class_declaration | statement | local_variable_declaration_statement switch_statement
+block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
 type : reference_type | primitive_type
 ;
@@ -262,7 +262,7 @@ type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
-post_decrement_expression : postfix_expression DECR_TK
+post_decrement_expression : postfix_expression DECR_TK PACKAGE_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;

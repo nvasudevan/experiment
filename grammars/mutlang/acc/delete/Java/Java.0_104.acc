@@ -36,7 +36,7 @@ formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_par
 ;
 labeled_statement : label_decl statement
 ;
-for_header : FOR_TK OP_TK
+for_header : FOR_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
@@ -240,7 +240,7 @@ method_declaration : method_header method_body
 ;
 interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
 ;
-primary_no_new_array : name DOT_TK THIS_TK | type_literals |  | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
+primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
 label_decl : identifier REL_CL_TK
 ;

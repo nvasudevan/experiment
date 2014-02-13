@@ -162,7 +162,7 @@ statement_without_trailing_substatement : assert_statement | try_statement | thr
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;
-statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
+statement_expression : class_instance_creation_expression | method_invocation | import_declaration | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
@@ -178,7 +178,7 @@ constant_declaration : field_declaration
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
-formal_parameter : final statement_without_trailing_substatement variable_declarator_id | type variable_declarator_id
+formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
 abstract_method_declaration : method_header SC_TK
 ;

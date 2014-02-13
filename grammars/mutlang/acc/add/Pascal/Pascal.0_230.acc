@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : simple_type | index_t_list ',' simple_type
+index_t_list : simple_type | index_t_list case_label ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;
@@ -150,7 +150,7 @@ term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;
-const_defs : variant const_def | const_defs ';' const_def
+const_defs : const_def | const_defs ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;

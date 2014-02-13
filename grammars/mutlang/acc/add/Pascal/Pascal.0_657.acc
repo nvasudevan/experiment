@@ -54,7 +54,7 @@ declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;
-proc_or_func : func_heading ';' DOTDOT body ';' | proc_heading ';' body ';'
+proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
 formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
@@ -152,7 +152,7 @@ index_specs : index_spec | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;
-struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
+struct_type : SFILE OF type | SET func_heading OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;
 statements : statement | statements ';' statement
 ;

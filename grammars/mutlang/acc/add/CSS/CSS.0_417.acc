@@ -94,7 +94,7 @@ element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
-attrib_includes : '=' | INCLUDES | DASHMATCH
+attrib_includes : '=' | INCLUDES | DASHMATCH '>'
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : media operator_opt term
+expr_tail : operator_opt term
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

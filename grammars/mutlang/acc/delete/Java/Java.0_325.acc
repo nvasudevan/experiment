@@ -38,7 +38,7 @@ labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
-switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels | OCB_TK CCB_TK
+switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
@@ -254,7 +254,7 @@ array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_T
 ;
 single_type_import_declaration : IMPORT_TK name SC_TK
 ;
-array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
+array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK CSB_TK
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;

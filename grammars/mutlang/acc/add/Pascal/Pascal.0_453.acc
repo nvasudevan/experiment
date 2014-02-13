@@ -50,7 +50,7 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : declaration | declarations declaration
+declarations : declaration direction | declarations declaration
 ;
 record_var : variable
 ;
@@ -146,7 +146,7 @@ proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
-term : term mult_op mult_op factor | factor
+term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;

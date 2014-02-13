@@ -10,7 +10,7 @@ cdo_cdc : S | CDO | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
-cdo_cdc_s : CDO S_multi | CDC S_multi
+cdo_cdc_s : ']' S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
@@ -44,7 +44,7 @@ media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
-page : PAGE_SYM S_multi pseudo_page_opt '{' '*' declaration_opt declaration_multi '}' S_multi
+page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
 pseudo_page_opt :  | pseudo_page
 ;

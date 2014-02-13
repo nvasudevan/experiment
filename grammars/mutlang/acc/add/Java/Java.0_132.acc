@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
+inclusive_or_expression : block_statement inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;
 array_type : name dims | primitive_type dims
 ;
@@ -230,7 +230,7 @@ switch_statement : switch_expression switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
-return_statement : RETURN_TK expression SC_TK | OCB_TK RETURN_TK SC_TK
+return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;

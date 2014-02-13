@@ -70,7 +70,7 @@ colon_things : ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;
-constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
+constant : case_label_list STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
 new_id_list : newident | new_id_list ',' newident
 ;
@@ -146,7 +146,7 @@ proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
-term : term '=' mult_op factor | factor
+term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;

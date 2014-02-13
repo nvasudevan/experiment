@@ -28,7 +28,7 @@ stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
 import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
-media_list_opt :  | selector_tail_2
+media_list_opt :  | media_list
 ;
 string_or_uri : STRING | URI
 ;
@@ -56,7 +56,7 @@ declaration_multi :  | declaration_tail declaration_multi
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;
-operator : '/' S_multi | ',' S_multi
+operator : DASHMATCH S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;

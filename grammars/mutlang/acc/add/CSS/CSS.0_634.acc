@@ -40,7 +40,7 @@ media_list : medium media_list_tail_multi
 ;
 media_list_tail : ',' S_multi medium
 ;
-media_list_tail_multi :  | media_list_tail SC_TK media_list_tail_multi
+media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
@@ -118,7 +118,7 @@ operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;
-expr_tail_multi :  | expr_tail expr_tail_multi
+expr_tail_multi : combinator | expr_tail expr_tail_multi
 ;
 term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;

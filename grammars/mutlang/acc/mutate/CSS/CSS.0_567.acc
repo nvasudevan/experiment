@@ -50,7 +50,7 @@ pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
-declaration_tail : SC_TK S_multi declaration_opt
+declaration_tail : SC_TK S_multi '}'
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | PERCENTAGE
+id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;

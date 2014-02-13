@@ -54,7 +54,7 @@ declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
-pseudo_page : COLON_TK function S_multi
+pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM S_multi
+prio : IMPORTANT_SYM media_list_opt
 ;
 expr : term expr_tail_multi
 ;

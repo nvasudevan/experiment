@@ -42,7 +42,7 @@ switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_T
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
-local_variable_declaration_statement : local_variable_declaration SC_TK
+local_variable_declaration_statement : local_variable_declaration labeled_statement SC_TK
 ;
 do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
@@ -162,7 +162,7 @@ statement_without_trailing_substatement : assert_statement | try_statement | thr
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;
-statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | static_ assignment
+statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;

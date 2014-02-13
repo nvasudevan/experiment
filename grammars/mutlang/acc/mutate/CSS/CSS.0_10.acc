@@ -82,7 +82,7 @@ selector_tail_2_opt :  | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
-simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
+simple_selector : element_name simple_selector_tail_multi | simple_selector_tail '['
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | MEDIA_SYM
+id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;

@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
+type : '^' IDENTIFIER | struct_type | PACKED struct_type | '^'
 ;
 declarations : declaration | declarations declaration
 ;
@@ -156,7 +156,7 @@ struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY
 ;
 statements : statement | statements ';' statement
 ;
-simple_expr : simple_expr add_op term | expressions term | '+' term | term
+simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
 set : '[' member_list ']'
 ;

@@ -130,7 +130,7 @@ interface_type : class_or_interface_type
 ;
 for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
-modifiers : conditional_expression modifiers MODIFIER_TK | MODIFIER_TK
+modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : PACKAGE_TK name SC_TK
+package_declaration : PACKAGE_TK name SC_TK constructor_block_end
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;

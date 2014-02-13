@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
+type : '^' IDENTIFIER | struct_type | PACKED struct_type | declaration
 ;
 declarations : declaration | declarations declaration
 ;
@@ -148,7 +148,7 @@ variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
-index_specs : SET | index_specs ';' index_spec
+index_specs : index_spec | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

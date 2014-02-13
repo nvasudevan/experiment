@@ -110,7 +110,7 @@ static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
-name : qualified_name | simple_name
+name : qualified_name | simple_name | 
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
@@ -300,7 +300,7 @@ additive_expression : additive_expression MINUS_TK multiplicative_expression | a
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
-while_statement_nsi : while_expression statement_nsi | 
+while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;

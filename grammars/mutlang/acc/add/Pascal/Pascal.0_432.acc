@@ -110,11 +110,11 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | 
+external_files : '(' newident_list ')' | END
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
-const_dcl_part : CONST const_defs const_def ';'
+const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;

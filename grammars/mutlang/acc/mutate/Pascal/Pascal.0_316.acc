@@ -52,7 +52,7 @@ type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
-record_var : variable
+record_var : '*'
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : '=' | index_t_list ',' simple_type
+index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;

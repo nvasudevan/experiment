@@ -66,7 +66,7 @@ property : IDENT S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-addl_selector : ',' S_multi selector
+addl_selector : ',' S_multi cdo_cdc selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;
@@ -94,7 +94,7 @@ element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
-attrib_includes : combinator '=' | INCLUDES | DASHMATCH
+attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;

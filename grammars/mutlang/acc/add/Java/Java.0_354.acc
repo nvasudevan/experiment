@@ -50,7 +50,7 @@ interface_member_declarations : interface_member_declarations interface_member_d
 ;
 assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
 ;
-constructor_declaration : constructor_header variable_declarators constructor_body
+constructor_declaration : constructor_header constructor_body
 ;
 field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
@@ -220,7 +220,7 @@ block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
-switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
+switch_label : DEFAULT_TK REL_CL_TK do_statement_begin | CASE_TK constant_expression REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;

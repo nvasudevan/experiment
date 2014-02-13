@@ -140,7 +140,7 @@ super : EXTENDS_TK class_type |
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
-for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
+for_statement : for_begin SC_TK SC_TK for_update CP_TK statement for_begin | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
 block_begin : OCB_TK
 ;
@@ -252,7 +252,7 @@ constant_expression : expression
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
-single_type_import_declaration : IMPORT_TK name SC_TK modifiers
+single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;

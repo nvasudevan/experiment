@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations statement_part
+block : opt_declarations statement_part struct_type
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
@@ -114,7 +114,7 @@ external_files : '(' newident_list ')' |
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
-const_dcl_part : CONST const_defs ';' THEN
+const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;

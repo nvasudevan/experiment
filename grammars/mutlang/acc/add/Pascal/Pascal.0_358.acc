@@ -8,7 +8,7 @@ fixed_part : record_section | fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
-expressions : expression '=' | expressions ',' expression
+expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
@@ -62,7 +62,7 @@ newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
-variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
+variable_dcls : variable_dcl | variable_dcls ';' variable_dcl field_list
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;

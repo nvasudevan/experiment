@@ -218,7 +218,7 @@ if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK 
 ;
 block_end : CCB_TK
 ;
-if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
+if_then_else_statement : equality_expression IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
@@ -300,7 +300,7 @@ additive_expression : additive_expression MINUS_TK multiplicative_expression | a
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
-while_statement_nsi : while_expression statement_nsi FP_LIT_TK
+while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;

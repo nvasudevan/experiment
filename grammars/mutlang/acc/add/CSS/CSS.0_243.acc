@@ -8,7 +8,7 @@ stylesheet_opt_1 : CHARSET_SYM STRING SC_TK |
 ;
 cdo_cdc : S | CDO | CDC
 ;
-stylesheet_imports : media_list_tail import cdo_cdc_s_multi
+stylesheet_imports : import cdo_cdc_s_multi
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM S_multi
+prio : stylesheet_imports_multi IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

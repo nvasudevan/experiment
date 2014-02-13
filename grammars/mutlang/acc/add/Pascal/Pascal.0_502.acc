@@ -6,7 +6,7 @@ program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
-compound_stmt : SBEGIN statements END
+compound_stmt : SBEGIN statements END variable_dcls
 ;
 expressions : expression | expressions ',' expression
 ;
@@ -54,7 +54,7 @@ declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;
-proc_or_func : func_heading ';' body ';' IN | proc_heading ';' body ';'
+proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
 formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;

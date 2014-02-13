@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK trap_overflow_corner_case | finally
+unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
@@ -180,7 +180,7 @@ interfaces : IMPLEMENTS_TK interface_type_list |
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
-abstract_method_declaration : method_header SC_TK
+abstract_method_declaration : method_header for_header
 ;
 throw_statement : THROW_TK expression SC_TK
 ;

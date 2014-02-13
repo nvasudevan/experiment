@@ -98,7 +98,7 @@ expression : assignment_expression
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
-constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | array_access OP_TK CP_TK
+constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | FP_LIT_TK
 ;
 synchronized : modifiers
 ;

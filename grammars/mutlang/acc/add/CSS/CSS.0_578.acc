@@ -56,7 +56,7 @@ declaration_multi :  | declaration_tail declaration_multi
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;
-operator : '/' S_multi | ',' S_multi
+operator : '/' URI S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
@@ -92,7 +92,7 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']' element_name
+attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;

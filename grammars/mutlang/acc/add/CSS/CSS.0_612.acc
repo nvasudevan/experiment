@@ -46,7 +46,7 @@ medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-pseudo_page_opt :  | pseudo_page
+pseudo_page_opt : class | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
@@ -68,7 +68,7 @@ ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_m
 ;
 addl_selector : ',' S_multi selector
 ;
-multi_addl_selector : TIME | addl_selector multi_addl_selector
+multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;

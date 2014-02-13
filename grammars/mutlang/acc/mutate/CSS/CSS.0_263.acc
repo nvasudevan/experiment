@@ -6,7 +6,7 @@ stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_
 ;
 stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
-cdo_cdc : S | string_or_uri | CDC
+cdo_cdc : S | CDO | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
@@ -38,7 +38,7 @@ ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
-media_list_tail : ',' S_multi medium
+media_list_tail : ',' PERCENTAGE medium
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;

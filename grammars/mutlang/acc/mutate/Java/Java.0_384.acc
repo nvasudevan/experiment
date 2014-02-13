@@ -188,7 +188,7 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : primary_no_new_array DOT_TK identifier
+qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
@@ -256,7 +256,7 @@ single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
-class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
+class_body : OCB_TK class_body_declarations CCB_TK | type_declarations CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;

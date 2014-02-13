@@ -166,7 +166,7 @@ statement_expression : class_instance_creation_expression | method_invocation | 
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
-while_expression : WHILE_TK OP_TK expression CP_TK
+while_expression : WHILE_TK OP_TK CP_TK
 ;
 inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK CSB_TK
+dim_expr : OSB_TK expression CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;

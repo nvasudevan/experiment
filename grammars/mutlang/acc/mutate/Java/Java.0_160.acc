@@ -174,7 +174,7 @@ array_type : name dims | primitive_type dims
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;
-constant_declaration : field_declaration
+constant_declaration : switch_block_statement_group
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
@@ -292,7 +292,7 @@ left_hand_side : array_access | field_access | name
 ;
 unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;
-dims : dims OSB_TK CSB_TK | variable_declarators CSB_TK
+dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
 try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;

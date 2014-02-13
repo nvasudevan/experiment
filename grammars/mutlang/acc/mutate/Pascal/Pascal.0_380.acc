@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : SET newident_list ')' | 
+external_files : '(' newident_list ')' | 
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
@@ -152,7 +152,7 @@ index_specs : index_spec | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;
-struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
+struct_type : SFILE OF type | SET OF simple_type | variants field_list END | ARRAY '[' index_t_list ']' OF type
 ;
 statements : statement | statements ';' statement
 ;

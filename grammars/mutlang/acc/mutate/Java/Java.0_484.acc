@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
+variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | PACKAGE_TK
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
@@ -282,7 +282,7 @@ array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_i
 ;
 simple_name : identifier
 ;
-type_declaration : empty_statement | interface_declaration | block
+type_declaration : empty_statement | interface_declaration | class_declaration
 ;
 conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;

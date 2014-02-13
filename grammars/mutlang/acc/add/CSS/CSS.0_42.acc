@@ -90,7 +90,7 @@ simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : operator IDENT | '*'
+element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
+pseudo_tail : EXS IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;

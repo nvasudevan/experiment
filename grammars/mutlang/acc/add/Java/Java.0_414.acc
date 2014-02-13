@@ -196,7 +196,7 @@ dim_expr : OSB_TK expression CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;
-field_access : SUPER_TK DOT_TK switch_block_statement_groups identifier | primary DOT_TK identifier
+field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
 class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration
 ;
@@ -232,7 +232,7 @@ multiplicative_expression : multiplicative_expression REM_TK unary_expression | 
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
-variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
+variable_declarators : variable_declarators C_TK expression variable_declarator | variable_declarator
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;

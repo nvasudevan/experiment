@@ -10,7 +10,7 @@ y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table 
 ;
 y_expression : y_expression '-' y_product | y_expression '+' y_product | y_product
 ;
-y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
+y_sub_condition2 : y_sub_condition2 AND NULL_VALUE y_boolean | y_boolean
 ;
 y_column : NAME
 ;
@@ -44,7 +44,7 @@ y_columndefs : y_columndefs ',' y_columndef | y_columndef
 ;
 y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
 ;
-y_product : VALUES y_product '/' y_term | y_product '*' y_term | y_term
+y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
 y_table : NAME
 ;

@@ -50,7 +50,7 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : variant_part | declarations declaration
+declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;
@@ -150,7 +150,7 @@ term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;
-const_defs : const_def | const_defs ';' const_def
+const_defs : const_def | newident ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;

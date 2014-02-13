@@ -20,7 +20,7 @@ stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
-stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
+stylesheet_tail : stylesheet_parts cdo_cdc_s_multi attrib_tail_opt
 ;
 stylesheet_parts : ruleset | media | page
 ;
@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : CHARSET_SYM IDENT | STRING
+id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;

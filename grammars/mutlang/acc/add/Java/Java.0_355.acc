@@ -116,7 +116,7 @@ local_variable_declaration : final type variable_declarators | type variable_dec
 ;
 expression_statement : statement_expression SC_TK
 ;
-pre_increment_expression : INCR_TK unary_expression
+pre_increment_expression : INCR_TK unary_expression class_type
 ;
 switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
@@ -270,7 +270,7 @@ package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
-for_update : statement_expression_list throws | 
+for_update : statement_expression_list | 
 ;
 empty_statement : SC_TK
 ;

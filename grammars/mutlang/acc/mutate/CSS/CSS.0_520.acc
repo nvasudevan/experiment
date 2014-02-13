@@ -16,7 +16,7 @@ S_multi :  | S S_multi
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
-stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
+stylesheet_imports_multi :  | stylesheet_imports declaration_opt
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : attrib_tail_opt | '+'
+unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;

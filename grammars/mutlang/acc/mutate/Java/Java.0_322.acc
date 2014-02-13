@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : type_declarations type_declaration | CHAR_LIT_TK
+type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;
@@ -296,7 +296,7 @@ dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
 try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;
-additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
+additive_expression : additive_expression MINUS_TK multiplicative_expression | package_declaration PLUS_TK multiplicative_expression | multiplicative_expression
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;

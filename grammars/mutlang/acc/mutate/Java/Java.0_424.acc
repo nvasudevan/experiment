@@ -116,7 +116,7 @@ local_variable_declaration : final type variable_declarators | type variable_dec
 ;
 expression_statement : statement_expression SC_TK
 ;
-pre_increment_expression : INCR_TK unary_expression
+pre_increment_expression : INCR_TK FOR_TK
 ;
 switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
@@ -216,7 +216,7 @@ break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
-block_end : ASSIGN_ANY_TK
+block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;

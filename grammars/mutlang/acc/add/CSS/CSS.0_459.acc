@@ -54,7 +54,7 @@ declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
-pseudo_page : COLON_TK property IDENT S_multi
+pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
@@ -112,7 +112,7 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : term expr_tail_multi
+expr : term combinator expr_tail_multi
 ;
 operator_opt :  | operator
 ;

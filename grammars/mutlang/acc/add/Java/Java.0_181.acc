@@ -136,7 +136,7 @@ class_member_declaration : empty_statement | interface_declaration | class_decla
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;
-super : EXTENDS_TK class_type | 
+super : EXTENDS_TK class_type | expression
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
@@ -204,7 +204,7 @@ method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
-type : reference_type | CHAR_LIT_TK primitive_type
+type : reference_type | primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;

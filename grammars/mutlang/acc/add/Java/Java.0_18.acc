@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | class_declaration type variable_declarators
+local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;
@@ -272,7 +272,7 @@ and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
 for_update : statement_expression_list | 
 ;
-empty_statement : SC_TK
+empty_statement : SC_TK RETURN_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;

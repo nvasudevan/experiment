@@ -60,7 +60,7 @@ labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | i
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : struct_declarator_list ',' struct_declarator | 
+struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
 init_declarator : declarator '=' initializer | declarator
 ;
@@ -124,7 +124,7 @@ argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
-parameter_declaration : type_name | type_specifier_list declarator
+parameter_declaration :  | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;

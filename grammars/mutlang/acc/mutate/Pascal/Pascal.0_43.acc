@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident | new_id_list ',' newident
+new_id_list : expression | new_id_list ',' newident
 ;
 member_list : members | 
 ;
@@ -154,7 +154,7 @@ const_defs : const_def | const_defs ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;
-statements : statement | statements ';' block
+statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;

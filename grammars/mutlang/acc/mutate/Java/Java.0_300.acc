@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : SUPER_TK | THIS_TK
+this_or_super : MINUS_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : constructor_declarator
+synchronized : modifiers
 ;
 constant_expression : expression
 ;

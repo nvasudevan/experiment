@@ -50,7 +50,7 @@ expression_statement : expr ';' | ';'
 ;
 external_definition : declaration | function_definition
 ;
-unary_expr : FLOAT '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
+unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
 enumerator : identifier '=' constant_expr | identifier
 ;
@@ -114,7 +114,7 @@ struct_declaration_list : struct_declaration_list struct_declaration | struct_de
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
-identifier : IDENTIFIER
+identifier : INT
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;

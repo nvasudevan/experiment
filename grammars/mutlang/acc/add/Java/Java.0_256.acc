@@ -62,7 +62,7 @@ for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
-static_ : modifiers
+static_ : modifiers import_declaration
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
@@ -214,7 +214,7 @@ if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
-if_then_else_statement_nsi : class_body_declarations IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
+if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
 block_end : CCB_TK
 ;

@@ -106,7 +106,7 @@ exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_ex
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
-static_initializer : static_ block
+static_initializer : static_ block | 
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK expression CSB_TK | 
+dim_expr : OSB_TK expression CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;

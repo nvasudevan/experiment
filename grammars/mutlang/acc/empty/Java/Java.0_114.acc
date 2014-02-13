@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : PACKAGE_TK name SC_TK
+package_declaration : PACKAGE_TK name SC_TK | 
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
@@ -282,7 +282,7 @@ array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_i
 ;
 simple_name : identifier
 ;
-type_declaration : empty_statement | interface_declaration | class_declaration | 
+type_declaration : empty_statement | interface_declaration | class_declaration
 ;
 conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;

@@ -40,7 +40,7 @@ statement_part : compound_stmt
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
-case_list_elem :  | case_label_list ':' statement
+case_list_elem :  | case_label_list statement
 ;
 add_op : OR | '-' | '+'
 ;
@@ -66,7 +66,7 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : ':' expression ':' expression | expression
+colon_things : ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;

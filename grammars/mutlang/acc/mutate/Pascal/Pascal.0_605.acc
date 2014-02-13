@@ -18,7 +18,7 @@ newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
-factor : NOT ':' | set | '(' expression ')' | unsigned_lit | variable
+factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : UNSIGNED_INT
+label : new_id_list
 ;
 type_defs : type_def | type_defs ';' type_def
 ;

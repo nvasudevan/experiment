@@ -28,7 +28,7 @@ stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
 import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
-media_list_opt :  | id_or_string media_list
+media_list_opt :  | media_list
 ;
 string_or_uri : STRING | URI
 ;
@@ -126,7 +126,7 @@ term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi 
 ;
 unary_operator_opt :  | unary_operator
 ;
-function : FUNCTION S_multi expr ')' S_multi
+function : FUNCTION S_multi expr ')' EXS S_multi
 ;
 hexcolor : HASH S_multi
 ;

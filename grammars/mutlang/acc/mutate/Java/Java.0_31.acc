@@ -72,7 +72,7 @@ class_body_declarations : class_body_declarations class_body_declaration | class
 ;
 reference_type : array_type | class_or_interface_type
 ;
-method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
+method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK interface_type CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;
 method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
@@ -272,7 +272,7 @@ and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
 for_update : statement_expression_list | 
 ;
-empty_statement : primary
+empty_statement : SC_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;

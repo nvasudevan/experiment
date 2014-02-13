@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : SUPER_TK | for_statement_nsi
+this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
@@ -220,7 +220,7 @@ block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
-switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
+switch_label : DEFAULT_TK XOR_TK | CASE_TK constant_expression REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;

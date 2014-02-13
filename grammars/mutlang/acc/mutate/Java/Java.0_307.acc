@@ -76,13 +76,13 @@ method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER
 ;
 method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
-identifier : ZRS_TK
+identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
-post_increment_expression : postfix_expression INCR_TK
+post_increment_expression : postfix_expression field_declaration
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;

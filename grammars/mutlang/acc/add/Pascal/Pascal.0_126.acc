@@ -50,7 +50,7 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : declaration | '*' declarations declaration
+declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;
@@ -66,7 +66,7 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : ':' expression ':' expression | ':' expression
+colon_things : ':' expression ':' statement_part expression | ':' expression
 ;
 case_label : constant
 ;

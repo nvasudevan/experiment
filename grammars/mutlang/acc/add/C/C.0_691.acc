@@ -94,7 +94,7 @@ identifier_list : identifier_list ',' identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
-storage_class_specifier : REGISTER | AUTO | STATIC INT | EXTERN | TYPEDEF
+storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;
@@ -120,7 +120,7 @@ function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
-argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
+argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr GOTO
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;

@@ -24,7 +24,7 @@ param_group : newident_list ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;
-case_list : case_list_elem | case_list ';' LE
+case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
@@ -50,7 +50,7 @@ unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
 type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
-declarations : declaration | declarations declaration
+declarations : direction | declarations declaration
 ;
 record_var : variable
 ;

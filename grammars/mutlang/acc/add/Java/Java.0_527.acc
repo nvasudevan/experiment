@@ -58,7 +58,7 @@ class_instance_creation_expression : something_dot_new identifier OP_TK argument
 ;
 variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
-for_begin : for_header for_init
+for_begin : for_header for_init throw_statement
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
@@ -230,7 +230,7 @@ switch_statement : switch_expression switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
-return_statement : OR_TK RETURN_TK expression SC_TK | RETURN_TK SC_TK
+return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;

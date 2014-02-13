@@ -4,7 +4,7 @@
 
 program : PROGRAM newident external_files ';' block '.'
 ;
-fixed_part : record_section | fixed_part ';' record_section
+fixed_part : record_section | record_section fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression colon_things | simple_type expression
+actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;

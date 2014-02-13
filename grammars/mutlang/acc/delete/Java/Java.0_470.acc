@@ -54,7 +54,7 @@ constructor_declaration : constructor_header constructor_body
 ;
 field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
-class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
+class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
 variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
@@ -114,7 +114,7 @@ name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
-expression_statement : statement_expression
+expression_statement : statement_expression SC_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;

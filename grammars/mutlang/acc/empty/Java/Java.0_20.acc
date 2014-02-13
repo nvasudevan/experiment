@@ -126,7 +126,7 @@ switch_block_statement_groups : switch_block_statement_groups switch_block_state
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
-interface_type : class_or_interface_type
+interface_type : class_or_interface_type | 
 ;
 for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
@@ -198,7 +198,7 @@ assignment_expression : assignment | conditional_expression
 ;
 field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
-class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration | 
+class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration
 ;
 method_body : SC_TK | block
 ;

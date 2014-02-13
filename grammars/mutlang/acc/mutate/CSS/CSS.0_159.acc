@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | selector_tail_opt
+combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
@@ -94,7 +94,7 @@ element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
-attrib_includes : '=' | INCLUDES | DASHMATCH
+attrib_includes : '=' | INCLUDES | stylesheet
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;

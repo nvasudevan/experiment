@@ -150,11 +150,11 @@ shift_expression : shift_expression ZRS_TK additive_expression | shift_expressio
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
-statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi do_statement | statement_without_trailing_substatement
+statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;
 catch_clause : catch_clause_parameter block
 ;
-constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
+constructor_header : modifiers switch_block_statement_groups constructor_declarator throws | constructor_declarator throws
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;

@@ -22,7 +22,7 @@ factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
-assignment : variable PROCEDURE expression
+assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
@@ -100,7 +100,7 @@ block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
-variable_dcl : newident_list ':' type
+variable_dcl : newident_list '=' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;

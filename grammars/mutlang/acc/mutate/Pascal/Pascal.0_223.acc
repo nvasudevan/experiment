@@ -30,7 +30,7 @@ unsigned_lit : NIL | STRING | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;
-procedure_call : ident actual_params
+procedure_call : ident UNSIGNED_INT
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
@@ -106,7 +106,7 @@ index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
-variant :  | WHILE ':' '(' field_list ')'
+variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;

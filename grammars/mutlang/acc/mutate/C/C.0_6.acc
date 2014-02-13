@@ -50,7 +50,7 @@ expression_statement : expr ';' | ';'
 ;
 external_definition : declaration | function_definition
 ;
-unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
+unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator conditional_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
 enumerator : identifier '=' constant_expr | identifier
 ;
@@ -84,7 +84,7 @@ type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID |
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
-expr : multiplicative_expr ',' assignment_expr | assignment_expr
+expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;

@@ -94,7 +94,7 @@ this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
-expression : assignment_expression
+expression : CHAR_LIT_TK
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
@@ -138,7 +138,7 @@ class_type_list : class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;
-conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | variable_declarator_id
+conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;

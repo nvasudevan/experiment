@@ -226,9 +226,9 @@ do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;
-switch_statement : switch_expression switch_block
+switch_statement : switch_expression switch_block SC_TK
 ;
-multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK ASSIGN_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
+multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;

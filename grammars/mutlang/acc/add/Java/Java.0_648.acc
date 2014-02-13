@@ -248,7 +248,7 @@ statement_expression_list : statement_expression_list C_TK statement_expression 
 ;
 synchronized : modifiers
 ;
-constant_expression : expression
+constant_expression : conditional_expression expression
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
@@ -262,7 +262,7 @@ type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
-post_decrement_expression : postfix_expression DECR_TK TRY_TK
+post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;

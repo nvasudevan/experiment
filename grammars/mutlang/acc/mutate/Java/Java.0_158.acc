@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : GTE_TK | expression
+variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
@@ -252,7 +252,7 @@ constant_expression : expression
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
-single_type_import_declaration : IMPORT_TK name SC_TK
+single_type_import_declaration : IMPORT_TK field_declaration SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;

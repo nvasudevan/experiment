@@ -72,9 +72,9 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | element_name combinator
+combinator_opt :  | combinator
 ;
-selector_tail_opt :  | selector_tail
+selector_tail_opt : medium | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;

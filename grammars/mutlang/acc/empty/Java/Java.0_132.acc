@@ -142,7 +142,7 @@ conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
-block_begin : OCB_TK | 
+block_begin : OCB_TK
 ;
 final : modifiers
 ;
@@ -158,7 +158,7 @@ constructor_header : modifiers constructor_declarator throws | constructor_decla
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;
-statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
+statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block | 
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;

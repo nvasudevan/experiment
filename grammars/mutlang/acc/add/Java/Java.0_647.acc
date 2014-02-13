@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
+variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer statement | variable_declarator_id
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : do_statement_begin SUPER_TK | THIS_TK
+this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;

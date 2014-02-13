@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl statement
+labeled_statement : label_decl
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -294,7 +294,7 @@ unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NO
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
-try_statement : TRY_TK block catches finally | TRY_TK block | TRY_TK block catches
+try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;

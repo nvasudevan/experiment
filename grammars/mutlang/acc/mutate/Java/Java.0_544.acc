@@ -170,7 +170,7 @@ while_expression : WHILE_TK OP_TK expression CP_TK
 ;
 inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;
-array_type : name do_statement_begin | primitive_type dims
+array_type : name dims | primitive_type dims
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;
@@ -206,7 +206,7 @@ block_statement : class_declaration | statement | local_variable_declaration_sta
 ;
 type : reference_type | primitive_type
 ;
-class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
+class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces ID_TK
 ;
 switch_block_statement_group : switch_labels block_statements
 ;

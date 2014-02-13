@@ -10,7 +10,7 @@ compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
-actual_params : const_def '(' actuals_list ')' | 
+actual_params : '(' actuals_list ')' | 
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
@@ -112,7 +112,7 @@ rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;
-formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
+formal_p_sect : func_heading | proc_heading | VAR param_group MOD | param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;

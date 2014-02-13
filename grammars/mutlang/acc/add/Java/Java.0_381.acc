@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : type_import_on_demand_declaration | labeled_statement_nsi single_type_import_declaration
+import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -72,7 +72,7 @@ class_body_declarations : class_body_declarations class_body_declaration | class
 ;
 reference_type : array_type | class_or_interface_type
 ;
-method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
+method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK block | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;
 method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;

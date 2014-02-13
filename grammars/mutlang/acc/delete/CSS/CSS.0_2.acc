@@ -6,7 +6,7 @@ stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_
 ;
 stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
-cdo_cdc :  | CDO | CDC
+cdo_cdc : S | CDO | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '+'
+unary_operator : '-' | 
 ;
 property : IDENT S_multi
 ;

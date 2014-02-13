@@ -8,7 +8,7 @@ parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
 jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO identifier ';'
 ;
-and_expr : and_expr '&' equality_expr | equality_expr
+and_expr : and_expr '&' equality_expr | DIV_ASSIGN equality_expr
 ;
 struct_or_union : UNION | STRUCT
 ;
@@ -120,7 +120,7 @@ function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
-argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr IF
+argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;

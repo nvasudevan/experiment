@@ -182,9 +182,9 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression SC_TK
+throw_statement : THROW_TK expression SC_TK method_invocation
 ;
-class_or_interface_type : name constructor_header
+class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;

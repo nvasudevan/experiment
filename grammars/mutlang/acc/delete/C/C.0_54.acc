@@ -12,7 +12,7 @@ and_expr : and_expr '&' equality_expr | equality_expr
 ;
 struct_or_union : UNION | STRUCT
 ;
-struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier struct_declaration_list '}'
+struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
@@ -28,7 +28,7 @@ declaration_specifiers : type_specifier declaration_specifiers | type_specifier 
 ;
 function_definition : declaration_specifiers declarator function_body | declarator function_body
 ;
-assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_ASSIGN | SUB_ASSIGN | ADD_ASSIGN | MOD_ASSIGN | DIV_ASSIGN | MUL_ASSIGN | '='
+assignment_operator :  | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_ASSIGN | SUB_ASSIGN | ADD_ASSIGN | MOD_ASSIGN | DIV_ASSIGN | MUL_ASSIGN | '='
 ;
 logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;

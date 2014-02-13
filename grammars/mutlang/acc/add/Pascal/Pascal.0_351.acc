@@ -56,7 +56,7 @@ record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
-formal_p_sects : ARRAY formal_p_sect | formal_p_sects ';' formal_p_sect
+formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;
@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression colon_things | expression
+actual_param : expression index_t_list colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;

@@ -122,7 +122,7 @@ switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
 finally : FINALLY_TK block
 ;
-switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | while_statement switch_block_statement_group
+switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
@@ -172,7 +172,7 @@ inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression 
 ;
 array_type : name dims | primitive_type dims
 ;
-explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
+explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | GT_TK this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;
 constant_declaration : field_declaration
 ;

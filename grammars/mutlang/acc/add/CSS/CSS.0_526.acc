@@ -52,7 +52,7 @@ declaration_opt :  | declaration
 ;
 declaration_tail : SC_TK S_multi declaration_opt
 ;
-declaration_multi :  | declaration_tail URI declaration_multi
+declaration_multi :  | declaration_tail declaration_multi
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;
@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | STRING
+id_or_string : IDENT | selector_tail_opt STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;

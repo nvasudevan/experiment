@@ -188,7 +188,7 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : name identifier
+qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
@@ -294,7 +294,7 @@ unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NO
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
-try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
+try_statement : TRY_TK block catches finally | TRY_TK finally | TRY_TK block catches
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;

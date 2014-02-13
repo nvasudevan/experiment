@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | 
+external_files : '(' '(' newident_list ')' | 
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
@@ -138,7 +138,7 @@ label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;
-ident : IDENTIFIER FUNCTION
+ident : IDENTIFIER
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;

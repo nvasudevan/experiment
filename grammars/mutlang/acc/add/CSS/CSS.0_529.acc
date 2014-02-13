@@ -20,7 +20,7 @@ stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
-stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
+stylesheet_tail : stylesheet_parts cdo_cdc_s_multi declaration_multi
 ;
 stylesheet_parts : ruleset | media | page
 ;
@@ -68,7 +68,7 @@ ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_m
 ;
 addl_selector : ',' S_multi selector
 ;
-multi_addl_selector :  | addl_selector FREQ multi_addl_selector
+multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;

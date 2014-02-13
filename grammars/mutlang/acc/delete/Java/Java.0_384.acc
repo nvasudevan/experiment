@@ -206,7 +206,7 @@ block_statement : class_declaration | statement | local_variable_declaration_sta
 ;
 type : reference_type | primitive_type
 ;
-class_declaration : CLASS_TK identifier interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
+class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
 switch_block_statement_group : switch_labels block_statements
 ;
@@ -284,7 +284,7 @@ simple_name : identifier
 ;
 type_declaration : empty_statement | interface_declaration | class_declaration
 ;
-conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
+conditional_expression : conditional_or_expression expression REL_CL_TK conditional_expression | conditional_or_expression
 ;
 trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expression | pre_decrement_expression | pre_increment_expression
 ;

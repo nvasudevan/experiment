@@ -74,7 +74,7 @@ reference_type : array_type | class_or_interface_type
 ;
 method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;
-method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
+method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator
 ;
 identifier : ID_TK
 ;
@@ -110,7 +110,7 @@ static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
-name : qualified_name | 
+name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;

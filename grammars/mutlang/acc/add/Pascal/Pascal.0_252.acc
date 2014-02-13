@@ -14,7 +14,7 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : IDENTIFIER colon_things
+newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
@@ -22,7 +22,7 @@ factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
-assignment : variable BECOMES expression
+assignment : variable BECOMES expression NE
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;

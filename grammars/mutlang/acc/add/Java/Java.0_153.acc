@@ -78,7 +78,7 @@ method_header : modifiers VOID_TK method_declarator throws | modifiers type meth
 ;
 identifier : ID_TK
 ;
-catches : catches catch_clause | constructor_declaration catch_clause
+catches : catches catch_clause | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : modifiers
+synchronized : unary_expression modifiers
 ;
 constant_expression : expression
 ;

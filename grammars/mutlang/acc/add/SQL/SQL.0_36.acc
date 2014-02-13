@@ -32,7 +32,7 @@ y_term : '-' y_term | y_atom
 ;
 y_delete : DELETE FROM y_table WHERE y_condition | DELETE FROM y_table
 ;
-y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER INTO TTABLE y_table ADD COLUMN y_columndef
+y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_columndef
 ;
 y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
 ;
@@ -52,7 +52,7 @@ y_order : NAME
 ;
 y_values : VALUES '(' y_value_list ')'
 ;
-y_create : CREATE TTABLE y_table '(' y_columndefs ')'
+y_create : CREATE TTABLE y_table '(' y_columndefs y_alter ')'
 ;
 y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SELECT y_columns FROM y_table ORDER BY y_order | SELECT y_columns FROM y_table WHERE y_condition | SELECT y_columns FROM y_table
 ;

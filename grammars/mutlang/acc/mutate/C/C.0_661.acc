@@ -44,7 +44,7 @@ relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
-additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | MOD_ASSIGN
+additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
 expression_statement : expr ';' | ';'
 ;
@@ -96,7 +96,7 @@ parameter_list : parameter_list ',' parameter_declaration | parameter_declaratio
 ;
 storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
-declarator : pointer declarator2 | declarator2
+declarator : pointer declarator2 | CHAR
 ;
 type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;

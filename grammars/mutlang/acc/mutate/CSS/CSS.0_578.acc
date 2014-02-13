@@ -90,11 +90,11 @@ simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : IDENT | '*'
+element_name : S | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
-attrib_includes : addl_selector | INCLUDES | DASHMATCH
+attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;

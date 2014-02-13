@@ -94,7 +94,7 @@ identifier_list : identifier_list ',' identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
-storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
+storage_class_specifier : REGISTER | AUTO | STATIC | CONTINUE | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;
@@ -116,7 +116,7 @@ parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;
-function_body : declaration_list compound_statement | parameter_type_list
+function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;

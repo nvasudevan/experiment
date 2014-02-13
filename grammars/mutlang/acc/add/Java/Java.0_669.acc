@@ -32,7 +32,7 @@ constructor_body : block_begin explicit_constructor_invocation block_statements 
 ;
 for_init : local_variable_declaration | statement_expression_list | 
 ;
-formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
+formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter interface_declaration
 ;
 labeled_statement : label_decl statement
 ;
@@ -236,7 +236,7 @@ variable_declarators : variable_declarators C_TK variable_declarator | variable_
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;
-method_declaration : method_header method_body if_then_statement
+method_declaration : method_header method_body
 ;
 interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
 ;

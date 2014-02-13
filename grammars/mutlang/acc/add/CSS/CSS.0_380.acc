@@ -112,9 +112,9 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : term selector_tail_opt expr_tail_multi
+expr : term expr_tail_multi
 ;
-operator_opt :  | operator
+operator_opt :  | URI operator
 ;
 expr_tail : operator_opt term
 ;

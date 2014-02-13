@@ -94,7 +94,7 @@ element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
-attrib_includes : '=' | INCLUDES | DASHMATCH
+attrib_includes : '=' | INCLUDES | ruleset_multi
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
@@ -118,7 +118,7 @@ operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;
-expr_tail_multi :  | expr_tail '*'
+expr_tail_multi :  | expr_tail expr_tail_multi
 ;
 term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;

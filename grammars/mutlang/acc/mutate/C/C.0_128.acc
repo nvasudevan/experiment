@@ -80,7 +80,7 @@ selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement 
 ;
 declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;
-type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | labeled_statement | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
+type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
@@ -128,5 +128,5 @@ parameter_declaration : type_name | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;
-declarator2 : declarator2 '(' parameter_identifier_list ')' | declarator2 '(' parameter_type_list ')' | declarator2 '(' ')' | declarator2 '[' constant_expr ']' | declarator2 '[' ']' | '(' declarator ')' | identifier
+declarator2 : declarator2 '(' parameter_identifier_list ')' | declarator2 '(' initializer ')' | declarator2 '(' ')' | declarator2 '[' constant_expr ']' | declarator2 '[' ']' | '(' declarator ')' | identifier
 ;

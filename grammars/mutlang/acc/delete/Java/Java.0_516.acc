@@ -194,7 +194,7 @@ throws : THROWS_TK class_type_list |
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
-assignment_expression :  | conditional_expression
+assignment_expression : assignment | conditional_expression
 ;
 field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
@@ -218,7 +218,7 @@ if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK 
 ;
 block_end : CCB_TK
 ;
-if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
+if_then_else_statement : IF_TK OP_TK CP_TK statement_nsi ELSE_TK statement
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;

@@ -84,13 +84,13 @@ selector_tail_2 : combinator_opt selector
 ;
 simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
-simple_selector_tail : HASH | class | attrib | pseudo
+simple_selector_tail : HASH | class | attrib | FREQ pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : IDENT | selector_tail '*'
+element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;

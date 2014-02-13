@@ -10,7 +10,7 @@ compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
-actual_params : '(' actuals_list ')' | 
+actual_params : '(' actuals_list ')' VAR | 
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
@@ -102,7 +102,7 @@ type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
-index_spec : newident DOTDOT newident ':' direction ident
+index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;

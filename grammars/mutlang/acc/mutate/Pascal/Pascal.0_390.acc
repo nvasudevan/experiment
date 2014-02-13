@@ -10,7 +10,7 @@ compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
-actual_params : '(' actuals_list ')' | 
+actual_params : '(' actuals_list formal_p_sect | 
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
@@ -148,7 +148,7 @@ variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
-index_specs : MOD | index_specs ';' index_spec
+index_specs : index_spec | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

@@ -30,7 +30,7 @@ unsigned_lit : NIL | STRING | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;
-procedure_call : ident actual_params
+procedure_call : expressions ident actual_params
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
@@ -74,7 +74,7 @@ constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsig
 ;
 new_id_list : newident | new_id_list ',' newident
 ;
-member_list : members | function_form
+member_list : members | 
 ;
 body : IDENTIFIER | block
 ;

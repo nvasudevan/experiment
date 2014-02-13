@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : type_import_on_demand_declaration | single_type_import_declaration AND_TK
+import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -202,7 +202,7 @@ class_body_declaration : block | constructor_declaration | static_initializer | 
 ;
 method_body : SC_TK | block
 ;
-block_statement : class_declaration | statement | local_variable_declaration_statement
+block_statement : MULT_TK class_declaration | statement | local_variable_declaration_statement
 ;
 type : reference_type | primitive_type
 ;

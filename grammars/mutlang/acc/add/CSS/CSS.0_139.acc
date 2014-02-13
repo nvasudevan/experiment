@@ -4,7 +4,7 @@
 
 stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
 ;
-stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
+stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | attrib_tail_opt
 ;
 cdo_cdc : S | CDO | CDC
 ;
@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : prio '-' | '+'
+unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;

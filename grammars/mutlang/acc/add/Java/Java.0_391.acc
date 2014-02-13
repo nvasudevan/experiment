@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
+inclusive_or_expression : inclusive_or_expression assignment OR_TK exclusive_or_expression | exclusive_or_expression
 ;
 array_type : name dims | primitive_type dims
 ;
@@ -252,7 +252,7 @@ constant_expression : expression
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
-single_type_import_declaration : IMPORT_TK method_invocation name SC_TK
+single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;

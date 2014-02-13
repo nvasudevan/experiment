@@ -50,7 +50,7 @@ pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
-declaration_tail : CDC S_multi declaration_opt
+declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
@@ -62,7 +62,7 @@ combinator : '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
-property : IDENT S_multi
+property : LENGTH S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;

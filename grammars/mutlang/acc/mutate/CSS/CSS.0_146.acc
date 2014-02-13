@@ -88,7 +88,7 @@ simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : URI IDENT
+class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
@@ -104,7 +104,7 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT S_multi
+pseudo_tail_2_opt :  | IDENT pseudo_page
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;

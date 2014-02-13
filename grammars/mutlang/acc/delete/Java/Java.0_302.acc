@@ -6,7 +6,7 @@ goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
-argument_list : argument_list expression | expression
+argument_list : argument_list C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
@@ -162,7 +162,7 @@ statement_without_trailing_substatement : assert_statement | try_statement | thr
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;
-statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
+statement_expression : class_instance_creation_expression | method_invocation |  | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;

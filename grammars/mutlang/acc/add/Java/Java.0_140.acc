@@ -182,7 +182,7 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression SC_TK
+throw_statement : BOOL_LIT_TK THROW_TK expression SC_TK
 ;
 class_or_interface_type : name
 ;
@@ -292,7 +292,7 @@ left_hand_side : array_access | field_access | name
 ;
 unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;
-dims : dims qualified_name OSB_TK CSB_TK | OSB_TK CSB_TK
+dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
 try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;

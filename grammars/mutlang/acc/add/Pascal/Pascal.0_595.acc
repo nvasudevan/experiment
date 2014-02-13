@@ -52,7 +52,7 @@ type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
-record_var : variable
+record_var : case_label_list variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : ident | constant DOTDOT constant | '(' newident_list ')' term
+simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;

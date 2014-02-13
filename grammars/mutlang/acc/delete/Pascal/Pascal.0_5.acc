@@ -18,7 +18,7 @@ newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
-factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
+factor : NOT factor | set | expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
@@ -144,7 +144,7 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : tag_field OF variants
+variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;

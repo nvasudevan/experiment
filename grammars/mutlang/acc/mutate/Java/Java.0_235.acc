@@ -78,7 +78,7 @@ method_header : modifiers VOID_TK method_declarator throws | modifiers type meth
 ;
 identifier : ID_TK
 ;
-catches : catches catch_clause | catch_clause
+catches : assignment catch_clause | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
@@ -218,7 +218,7 @@ if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK 
 ;
 block_end : CCB_TK
 ;
-if_then_else_statement : IF_TK OP_TK expression catch_clause statement_nsi ELSE_TK statement
+if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;

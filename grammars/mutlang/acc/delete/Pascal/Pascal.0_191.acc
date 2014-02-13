@@ -4,7 +4,7 @@
 
 program : PROGRAM newident external_files ';' block '.'
 ;
-fixed_part :  | fixed_part ';' record_section
+fixed_part : record_section | fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
@@ -98,7 +98,7 @@ variants : variant | variants ';' variant
 ;
 block : opt_declarations statement_part
 ;
-type_dcl_part : TYPE type_defs ';'
+type_dcl_part : type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;

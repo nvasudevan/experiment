@@ -104,7 +104,7 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT S_multi
+pseudo_tail_2_opt :  | expr IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;
@@ -114,7 +114,7 @@ prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;
-operator_opt : media_list_opt | operator
+operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;

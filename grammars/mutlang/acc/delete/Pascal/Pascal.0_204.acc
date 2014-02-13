@@ -108,7 +108,7 @@ func_heading : FUNCTION newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
-rec_var_list : record_var | rec_var_list record_var
+rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' type_def
+type_defs : type_def | type_defs ';'
 ;
 ident : IDENTIFIER
 ;

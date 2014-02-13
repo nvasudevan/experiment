@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression | name | primary
+postfix_expression : post_decrement_expression | MULT_TK | name | primary
 ;
 class_type : class_or_interface_type
 ;
@@ -294,7 +294,7 @@ unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NO
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
-try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK try_statement catches
+try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;

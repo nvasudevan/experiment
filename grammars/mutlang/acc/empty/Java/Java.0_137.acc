@@ -26,7 +26,7 @@ variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | va
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
-labeled_statement_nsi : label_decl statement_nsi
+labeled_statement_nsi : label_decl statement_nsi | 
 ;
 constructor_body : block_begin explicit_constructor_invocation block_statements constructor_block_end | block_begin block_statements constructor_block_end | block_begin explicit_constructor_invocation constructor_block_end | block_begin constructor_block_end
 ;
@@ -304,5 +304,5 @@ while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
-while_statement : while_expression statement | 
+while_statement : while_expression statement
 ;

@@ -10,9 +10,9 @@ y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table 
 ;
 y_expression : y_expression '-' y_product | y_expression '+' y_product | y_product
 ;
-y_sub_condition2 : FROM AND y_boolean | y_boolean
+y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
-y_column : NAME
+y_column : SELECT
 ;
 y_columns : y_column_list | '*'
 ;

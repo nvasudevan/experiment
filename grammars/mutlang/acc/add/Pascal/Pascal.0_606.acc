@@ -114,7 +114,7 @@ external_files : '(' newident_list ')' |
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
-const_dcl_part : CONST const_defs ';'
+const_dcl_part : CONST const_defs IDENTIFIER ';'
 ;
 type_def : newident '=' type
 ;
@@ -158,5 +158,5 @@ statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
-set : '[' member_list ']' statement
+set : '[' member_list ']'
 ;

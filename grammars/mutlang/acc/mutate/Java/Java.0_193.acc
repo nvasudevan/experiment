@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type variable_declarators
+local_variable_declaration : final pre_decrement_expression variable_declarators | type variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;
@@ -130,7 +130,7 @@ interface_type : class_or_interface_type
 ;
 for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
-modifiers : variable_initializer MODIFIER_TK | MODIFIER_TK
+modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;

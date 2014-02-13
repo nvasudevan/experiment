@@ -2,7 +2,7 @@
 
 %nodefault
 
-program : PROGRAM newident external_files ';' block '.'
+program : PROGRAM '+' external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
@@ -122,7 +122,7 @@ labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;
-variable : variable '^' | variable CASE ident | variable '[' expressions ']' | ident actual_params
+variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;

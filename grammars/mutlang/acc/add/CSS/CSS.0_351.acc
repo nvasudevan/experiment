@@ -30,9 +30,9 @@ import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
 media_list_opt :  | media_list
 ;
-string_or_uri : STRING | INCLUDES URI
+string_or_uri : STRING | URI
 ;
-media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
+media : cdo_cdc_multi MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;

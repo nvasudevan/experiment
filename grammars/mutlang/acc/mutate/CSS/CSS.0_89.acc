@@ -12,7 +12,7 @@ stylesheet_imports : import cdo_cdc_s_multi
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
-S_multi :  | S S_multi
+S_multi :  | S attrib_includes
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
@@ -126,7 +126,7 @@ term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi 
 ;
 unary_operator_opt :  | unary_operator
 ;
-function : FUNCTION PERCENTAGE expr ')' S_multi
+function : FUNCTION S_multi expr ')' S_multi
 ;
 hexcolor : HASH S_multi
 ;

@@ -10,7 +10,7 @@ compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
-actual_params : '(' actuals_list ')' | MOD
+actual_params : '(' actuals_list ')' | 
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
@@ -108,7 +108,7 @@ func_heading : FUNCTION newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
-rec_var_list : record_var | rec_var_list ',' record_var
+rec_var_list : record_var param_group | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;

@@ -88,7 +88,7 @@ dim_exprs : dim_exprs dim_expr | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
-class_type : class_or_interface_type | 
+class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
@@ -268,7 +268,7 @@ primary : array_creation_expression | primary_no_new_array
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;
-and_expression : and_expression AND_TK equality_expression | equality_expression
+and_expression : and_expression AND_TK equality_expression | equality_expression | 
 ;
 for_update : statement_expression_list | 
 ;

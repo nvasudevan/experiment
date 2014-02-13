@@ -286,7 +286,7 @@ type_declaration : empty_statement | interface_declaration | class_declaration
 ;
 conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;
-trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expression | pre_decrement_expression | pre_increment_expression
+trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expression | interfaces | pre_increment_expression
 ;
 left_hand_side : array_access | field_access | name
 ;
@@ -296,7 +296,7 @@ dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
 try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;
-additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression FP_LIT_TK multiplicative_expression | multiplicative_expression
+additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;

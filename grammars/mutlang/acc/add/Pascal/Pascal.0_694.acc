@@ -124,7 +124,7 @@ direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
-declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
+declaration : proc_dcl_part | '[' var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
@@ -158,5 +158,5 @@ statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
-set : '[' actual_param member_list ']'
+set : '[' member_list ']'
 ;

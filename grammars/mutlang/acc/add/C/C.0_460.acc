@@ -12,7 +12,7 @@ and_expr : and_expr '&' equality_expr | equality_expr
 ;
 struct_or_union : UNION | STRUCT
 ;
-struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | CONTINUE struct_or_union identifier '{' struct_declaration_list '}'
+struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
@@ -32,7 +32,7 @@ assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_
 ;
 logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
-primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
+primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | type_name identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;

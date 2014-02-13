@@ -74,7 +74,7 @@ inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;
-pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
+pointer : LE_OP type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
@@ -126,7 +126,7 @@ type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
 parameter_declaration : type_name | type_specifier_list declarator
 ;
-initializer : '{' initializer_list identifier '}' | '{' initializer_list '}' | assignment_expr
+initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;
 declarator2 : declarator2 '(' parameter_identifier_list ')' | declarator2 '(' parameter_type_list ')' | declarator2 '(' ')' | declarator2 '[' constant_expr ']' | declarator2 '[' ']' | '(' declarator ')' | identifier
 ;

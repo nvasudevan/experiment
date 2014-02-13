@@ -88,7 +88,7 @@ expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
-unary_operator : '!' | '~' | '-' | '+' | '*' | identifier_list '&'
+unary_operator : '!' | '~' struct_or_union_specifier | '-' | '+' | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;

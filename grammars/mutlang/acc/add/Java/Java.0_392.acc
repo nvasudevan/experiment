@@ -126,7 +126,7 @@ switch_block_statement_groups : switch_block_statement_groups switch_block_state
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
-interface_type : class_or_interface_type switch_statement
+interface_type : class_or_interface_type
 ;
 for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
@@ -150,7 +150,7 @@ shift_expression : shift_expression ZRS_TK additive_expression | shift_expressio
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
-statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
+statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | XOR_TK labeled_statement_nsi | statement_without_trailing_substatement
 ;
 catch_clause : catch_clause_parameter block
 ;

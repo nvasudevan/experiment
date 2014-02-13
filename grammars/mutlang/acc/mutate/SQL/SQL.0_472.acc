@@ -42,11 +42,11 @@ y_value : FLOATNUM | INTNUM | STRING
 ;
 y_columndefs : y_columndefs ',' y_columndef | y_columndef
 ;
-y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
+y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM y_term
 ;
 y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
-y_table : '*'
+y_table : NAME
 ;
 y_order : NAME
 ;

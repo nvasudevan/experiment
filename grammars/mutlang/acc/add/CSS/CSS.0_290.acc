@@ -46,7 +46,7 @@ medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-pseudo_page_opt :  | pseudo_page
+pseudo_page_opt : LENGTH | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : stylesheet_imports IMPORTANT_SYM S_multi
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

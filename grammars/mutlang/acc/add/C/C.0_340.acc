@@ -114,11 +114,11 @@ struct_declaration_list : struct_declaration_list struct_declaration | struct_de
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
-identifier : IDENTIFIER ','
+identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;
-assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
+assignment_expr : unary_expr assignment_operator assignment_expr SWITCH | conditional_expr
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;

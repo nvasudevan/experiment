@@ -124,7 +124,7 @@ finally : FINALLY_TK block
 ;
 switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
-compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
+compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration array_access | type_declarations | import_declarations | package_declaration | 
 ;
 interface_type : class_or_interface_type
 ;
@@ -256,7 +256,7 @@ single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
-class_body : OCB_TK class_body_declarations literal | OCB_TK CCB_TK
+class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;

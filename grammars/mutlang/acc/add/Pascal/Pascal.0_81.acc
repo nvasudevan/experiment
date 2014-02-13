@@ -86,7 +86,7 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr PROCEDURE relational_op simple_expr | simple_expr
+expression : simple_expr relational_op simple_expr | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | 
+external_files : '(' newident_list ')' | block
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

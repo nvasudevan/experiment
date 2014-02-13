@@ -62,7 +62,7 @@ for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
-static_ : modifiers variable_initializer
+static_ : modifiers
 ;
 relational_expression : relational_expression INSTANCEOF_TK reference_type | relational_expression GTE_TK shift_expression | relational_expression LTE_TK shift_expression | relational_expression GT_TK shift_expression | relational_expression LT_TK shift_expression | shift_expression
 ;
@@ -220,7 +220,7 @@ block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
-switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
+switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression statement_nsi REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;

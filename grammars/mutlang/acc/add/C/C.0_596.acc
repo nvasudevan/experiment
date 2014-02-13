@@ -48,7 +48,7 @@ additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multip
 ;
 expression_statement : expr ';' | ';'
 ;
-external_definition : function_definition declaration | function_definition
+external_definition : declaration | function_definition
 ;
 unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
@@ -102,7 +102,7 @@ type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
 exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
-constant_expr : conditional_expr
+constant_expr : GOTO conditional_expr
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;

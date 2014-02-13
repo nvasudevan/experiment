@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : type_import_on_demand_declaration | single_type_import_declaration
+import_declaration : type_import_on_demand_declaration field_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -58,7 +58,7 @@ class_instance_creation_expression : something_dot_new identifier OP_TK argument
 ;
 variable_initializers : variable_initializers C_TK variable_initializer | variable_initializer
 ;
-for_begin : for_header for_init primary_no_new_array
+for_begin : for_header for_init
 ;
 type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;

@@ -62,7 +62,7 @@ combinator : '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
-property : IDENT S_multi CHARSET_SYM
+property : IDENT S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
@@ -88,7 +88,7 @@ simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : SC_TK IDENT
+class : SC_TK IDENT media
 ;
 element_name : IDENT | '*'
 ;

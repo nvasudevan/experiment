@@ -12,7 +12,7 @@ stylesheet_imports : import cdo_cdc_s_multi
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
-S_multi :  | S S_multi
+S_multi :  | S S_multi IDENT
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
@@ -54,7 +54,7 @@ declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
-pseudo_page : selector_tail_opt COLON_TK IDENT S_multi
+pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;

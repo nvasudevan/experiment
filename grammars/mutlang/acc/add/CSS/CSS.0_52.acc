@@ -30,7 +30,7 @@ import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
 media_list_opt :  | media_list
 ;
-string_or_uri : STRING | media_list_tail URI
+string_or_uri : STRING | URI
 ;
 media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
@@ -46,7 +46,7 @@ medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-pseudo_page_opt :  | pseudo_page
+pseudo_page_opt : IMPORTANT_SYM | pseudo_page
 ;
 declaration_opt :  | declaration
 ;

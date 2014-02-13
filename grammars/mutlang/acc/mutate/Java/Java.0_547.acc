@@ -102,7 +102,7 @@ constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;
-exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
+exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | RETURN_TK
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type final
+local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;

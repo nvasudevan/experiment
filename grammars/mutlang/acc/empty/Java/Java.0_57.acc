@@ -180,7 +180,7 @@ interfaces : IMPLEMENTS_TK interface_type_list |
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
-abstract_method_declaration : method_header SC_TK | 
+abstract_method_declaration : method_header SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : modifiers
+synchronized : modifiers | 
 ;
 constant_expression : expression
 ;

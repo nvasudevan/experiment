@@ -44,7 +44,7 @@ case_list_elem :  | case_label_list ':' statement
 ;
 add_op : OR | '-' | '+'
 ;
-var_dcl_part : VAR variable_dcls ';' STRING
+var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
@@ -132,7 +132,7 @@ case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
-record_section :  | newident_list ':' type
+record_section :  | newident_list ':' NOT type
 ;
 label : UNSIGNED_INT
 ;

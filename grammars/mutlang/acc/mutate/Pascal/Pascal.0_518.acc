@@ -130,7 +130,7 @@ relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;
-actuals_list : actual_param | actuals_list ',' actual_param
+actuals_list : const_defs | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
@@ -156,7 +156,7 @@ struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY
 ;
 statements : statement | statements ';' statement
 ;
-simple_expr : simple_expr add_op term | '-' term | '+' proc_heading | term
+simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
 set : '[' member_list ']'
 ;

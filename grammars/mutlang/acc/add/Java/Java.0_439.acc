@@ -194,7 +194,7 @@ throws : THROWS_TK class_type_list |
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
-assignment_expression : assignment | conditional_expression
+assignment_expression : assignment | conditional_expression synchronized
 ;
 field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | break_statement statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
 synchronized : modifiers
 ;

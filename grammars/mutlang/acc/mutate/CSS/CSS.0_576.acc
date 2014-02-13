@@ -26,7 +26,7 @@ stylesheet_parts : ruleset | media | page
 ;
 stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
-import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
+import : IMPORT_SYM S_multi string_or_uri attrib_includes media_list_opt SC_TK S_multi
 ;
 media_list_opt :  | media_list
 ;
@@ -104,7 +104,7 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT selector_tail_opt
+pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;

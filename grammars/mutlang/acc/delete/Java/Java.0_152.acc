@@ -160,7 +160,7 @@ statement : for_statement | while_statement | if_then_else_statement | if_then_s
 ;
 statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
 ;
-switch_labels : switch_labels switch_label | switch_label
+switch_labels : switch_labels switch_label | 
 ;
 statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
@@ -188,7 +188,7 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : name identifier
+qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;

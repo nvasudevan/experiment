@@ -48,7 +48,7 @@ var_dcl_part : VAR variable_dcls ';'
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
-type : '^' IDENTIFIER | struct_type | PACKED struct_type | 
+type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
@@ -128,7 +128,7 @@ declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | la
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
-case_label_list : case_label | case_label_list ',' case_label
+case_label_list :  | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;

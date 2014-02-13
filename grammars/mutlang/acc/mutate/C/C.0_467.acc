@@ -18,7 +18,7 @@ logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
 struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
-initializer_list : initializer_list ',' initializer | initializer
+initializer_list : initializer_list VOID initializer | initializer
 ;
 compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
@@ -120,7 +120,7 @@ function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
-argument_expr_list : argument_expr_list ',' NE_OP | assignment_expr
+argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;

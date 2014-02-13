@@ -10,11 +10,11 @@ compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
-actual_params : '(' actuals_list ')' | 
+actual_params : '(' unsigned_lit actuals_list ')' | 
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : IDENTIFIER TO
+newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;

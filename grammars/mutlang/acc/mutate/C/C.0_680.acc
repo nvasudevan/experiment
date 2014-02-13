@@ -6,7 +6,7 @@ file : file external_definition | external_definition
 ;
 parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
-jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO identifier ';'
+jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | logical_or_expr ';' | GOTO identifier ';'
 ;
 and_expr : and_expr '&' equality_expr | equality_expr
 ;
@@ -32,7 +32,7 @@ assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_
 ;
 logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
-primary_expr : '(' expr ')' | '+' | CONSTANT | identifier
+primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;

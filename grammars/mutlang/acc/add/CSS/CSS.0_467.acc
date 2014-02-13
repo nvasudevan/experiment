@@ -82,7 +82,7 @@ selector_tail_2_opt :  | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
-simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
+simple_selector : element_name simple_selector_tail_multi prio | simple_selector_tail simple_selector_tail_multi
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt cdo_cdc_multi term
+expr_tail : operator_opt term
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

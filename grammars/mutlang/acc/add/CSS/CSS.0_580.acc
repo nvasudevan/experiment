@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : PAGE_SYM IDENT | STRING
+id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
@@ -128,5 +128,5 @@ unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;
-hexcolor : HASH S_multi
+hexcolor : HASH IDENT S_multi
 ;

@@ -106,7 +106,7 @@ exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_ex
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
-static_initializer : static_
+static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
@@ -154,7 +154,7 @@ statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement
 ;
 catch_clause : catch_clause_parameter block
 ;
-constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
+constructor_header : modifiers constructor_declarator throws | constructor_declarator
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;

@@ -204,11 +204,11 @@ method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
-type : reference_type | package_declaration primitive_type
+type : reference_type | primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
-switch_block_statement_group : switch_labels block_statements
+switch_block_statement_group : switch_labels CATCH_TK block_statements
 ;
 if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;

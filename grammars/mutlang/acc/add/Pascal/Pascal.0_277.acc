@@ -52,7 +52,7 @@ type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
-record_var : mult_op variable
+record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
@@ -122,7 +122,7 @@ labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;
-variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
+variable : variable '^' | variable '.' colon_things ident | variable '[' expressions ']' | ident actual_params
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;

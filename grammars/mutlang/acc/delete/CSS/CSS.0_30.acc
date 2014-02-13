@@ -20,7 +20,7 @@ stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
-stylesheet_tail : stylesheet_parts
+stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
 stylesheet_parts : ruleset | media | page
 ;
@@ -104,7 +104,7 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT S_multi
+pseudo_tail_2_opt :  | S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;

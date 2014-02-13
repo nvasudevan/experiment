@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl statement | 
+labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | expression
+variable_initializer : array_initializer | expression | 
 ;
 expression : assignment_expression
 ;

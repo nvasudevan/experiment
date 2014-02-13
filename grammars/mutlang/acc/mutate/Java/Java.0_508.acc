@@ -74,7 +74,7 @@ reference_type : array_type | class_or_interface_type
 ;
 method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;
-method_header : modifiers VOID_TK method_declarator throws | modifiers type LT_TK throws | VOID_TK method_declarator throws | type method_declarator throws
+method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
 identifier : ID_TK
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | array_initializer
 ;
 synchronized : modifiers
 ;

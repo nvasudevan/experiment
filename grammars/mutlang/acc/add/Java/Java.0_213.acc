@@ -50,7 +50,7 @@ interface_member_declarations : interface_member_declarations interface_member_d
 ;
 assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
 ;
-constructor_declaration : constructor_header constructor_body
+constructor_declaration : SUPER_TK constructor_header constructor_body
 ;
 field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
@@ -114,7 +114,7 @@ name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
-expression_statement : statement_nsi statement_expression SC_TK
+expression_statement : statement_expression SC_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;

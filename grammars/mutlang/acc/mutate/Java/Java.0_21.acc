@@ -6,7 +6,7 @@ goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
-argument_list : argument_list C_TK expression | expression
+argument_list : NEW_TK C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
@@ -232,7 +232,7 @@ multiplicative_expression : multiplicative_expression REM_TK unary_expression | 
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
-variable_declarators : REL_QM_TK C_TK variable_declarator | variable_declarator
+variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;

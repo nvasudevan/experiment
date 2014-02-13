@@ -38,7 +38,7 @@ shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_exp
 ;
 struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
-conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | enumerator_list logical_or_expr
+conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
 relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | shift_expr
 ;
@@ -118,7 +118,7 @@ identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;
-assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
+assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr statement_list
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;

@@ -58,7 +58,7 @@ abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstra
 ;
 labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
-declaration_list : declaration_list declaration | declaration
+declaration_list : declaration_list declaration LONG | declaration
 ;
 struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
@@ -96,7 +96,7 @@ parameter_list : parameter_list ',' parameter_declaration | parameter_declaratio
 ;
 storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
-declarator : initializer pointer declarator2 | declarator2
+declarator : pointer declarator2 | declarator2
 ;
 type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;

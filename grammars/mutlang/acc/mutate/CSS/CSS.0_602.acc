@@ -64,7 +64,7 @@ unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
-ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
+ruleset : ruleset_multi multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
 addl_selector : ',' S_multi selector
 ;
@@ -88,7 +88,7 @@ simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : '[' IDENT
+class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;

@@ -28,7 +28,7 @@ declaration_specifiers : type_specifier declaration_specifiers | type_specifier 
 ;
 function_definition : declaration_specifiers declarator function_body | declarator function_body
 ;
-assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_ASSIGN | SUB_ASSIGN | ADD_ASSIGN | MOD_ASSIGN | DIV_ASSIGN | MUL_ASSIGN | '=' | 
+assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_ASSIGN | SUB_ASSIGN | ADD_ASSIGN | MOD_ASSIGN | DIV_ASSIGN | MUL_ASSIGN | '='
 ;
 logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
@@ -122,7 +122,7 @@ assignment_expr : unary_expr assignment_operator assignment_expr | conditional_e
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
-type_specifier_list : type_specifier_list type_specifier | type_specifier
+type_specifier_list : type_specifier_list type_specifier | type_specifier | 
 ;
 parameter_declaration : type_name | type_specifier_list declarator
 ;

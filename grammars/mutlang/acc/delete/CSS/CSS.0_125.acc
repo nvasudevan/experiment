@@ -82,7 +82,7 @@ selector_tail_2_opt :  | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
-simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
+simple_selector : element_name simple_selector_tail_multi | simple_selector_tail
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
@@ -104,7 +104,7 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | S_multi
+pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;

@@ -60,7 +60,7 @@ variable_initializers : variable_initializers C_TK variable_initializer | variab
 ;
 for_begin : for_header for_init
 ;
-type_import_on_demand_declaration : IMPORT_TK name DOT_TK RETURN_TK SC_TK
+type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
@@ -72,7 +72,7 @@ class_body_declarations : class_body_declarations class_body_declaration | class
 ;
 reference_type : array_type | class_or_interface_type
 ;
-method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
+method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary exclusive_or_expression identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;
 method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;

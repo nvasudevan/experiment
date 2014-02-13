@@ -18,7 +18,7 @@ anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK cla
 ;
 continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
-block_statements : block_statements block_statement | block_statement | 
+block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
@@ -252,7 +252,7 @@ constant_expression : expression
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
-single_type_import_declaration : IMPORT_TK name SC_TK
+single_type_import_declaration : IMPORT_TK name SC_TK | 
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;

@@ -42,7 +42,7 @@ switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_T
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
-local_variable_declaration_statement : local_variable_declaration
+local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
 do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
@@ -260,7 +260,7 @@ class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
-synchronized_statement : synchronized OP_TK expression CP_TK block
+synchronized_statement : synchronized OP_TK CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;

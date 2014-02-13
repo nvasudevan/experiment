@@ -24,7 +24,7 @@ assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
-assignment : left_hand_side assignment_operator assignment_expression
+assignment : left_hand_side assignment_operator assignment_expression block_statement
 ;
 labeled_statement_nsi : label_decl statement_nsi
 ;
@@ -184,7 +184,7 @@ abstract_method_declaration : method_header SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;
-class_or_interface_type : name variable_declarator
+class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;

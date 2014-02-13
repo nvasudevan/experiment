@@ -40,7 +40,7 @@ struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
 conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
-relational_expr : relational_expr parameter_declaration GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | shift_expr
+relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift_expr | relational_expr '>' shift_expr | relational_expr '<' shift_expr | shift_expr
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
@@ -104,7 +104,7 @@ exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
 constant_expr : conditional_expr
 ;
-statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
+statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | declarator2 labeled_statement
 ;
 abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;

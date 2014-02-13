@@ -40,11 +40,11 @@ for_header : FOR_TK OP_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
-extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
+extends_interfaces : extends_interfaces interface_type | EXTENDS_TK interface_type
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
-do_statement : do_statement_begin WHILE_TK OP_TK expression CP_TK SC_TK
+do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
 interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
 ;

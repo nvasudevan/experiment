@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : type_import_on_demand_declaration | single_type_import_declaration
+import_declaration : type_import_on_demand_declaration SC_TK | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : type_declarations type_import_on_demand_declaration type_declaration | type_declaration
+type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;

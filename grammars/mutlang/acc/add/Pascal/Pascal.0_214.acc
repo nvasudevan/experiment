@@ -66,7 +66,7 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : ':' expression ':' expression | ':' expression
+colon_things : unsigned_num ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;
@@ -138,7 +138,7 @@ label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;
-ident : IDENTIFIER IDENTIFIER
+ident : IDENTIFIER
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;

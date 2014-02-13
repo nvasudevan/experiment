@@ -10,7 +10,7 @@ argument_list : argument_list C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
-catch_clause_parameter : switch_block_statement_group CATCH_TK OP_TK formal_parameter CP_TK
+catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
 conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
@@ -70,7 +70,7 @@ literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_
 ;
 class_body_declarations : class_body_declarations class_body_declaration | class_body_declaration
 ;
-reference_type : array_type | class_or_interface_type
+reference_type : array_type trap_overflow_corner_case | class_or_interface_type
 ;
 method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;

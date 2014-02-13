@@ -86,7 +86,7 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr relational_op simple_expr | '<'
+expression : simple_expr relational_op simple_expr | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
@@ -104,7 +104,7 @@ variable_dcl : newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
-func_heading : FUNCTION newident function_form
+func_heading : FUNCTION TO function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;

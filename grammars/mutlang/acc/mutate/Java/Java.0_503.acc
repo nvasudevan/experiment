@@ -6,7 +6,7 @@ goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
-argument_list : argument_list interface_type expression | expression
+argument_list : argument_list C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
@@ -260,7 +260,7 @@ class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
-synchronized_statement : synchronized OP_TK expression CP_TK block
+synchronized_statement : synchronized OP_TK expression CP_TK switch_block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;

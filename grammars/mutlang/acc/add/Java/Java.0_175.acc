@@ -226,7 +226,7 @@ do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;
-switch_statement : switch_expression switch_block
+switch_statement : switch_expression EXTENDS_TK switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
@@ -264,7 +264,7 @@ synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;
-primary : BOOL_OR_TK array_creation_expression | primary_no_new_array
+primary : array_creation_expression | primary_no_new_array
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;

@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | single_type_import_declaration
+variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
@@ -30,7 +30,7 @@ labeled_statement_nsi : label_decl statement_nsi
 ;
 constructor_body : block_begin explicit_constructor_invocation block_statements constructor_block_end | block_begin block_statements constructor_block_end | block_begin explicit_constructor_invocation constructor_block_end | block_begin constructor_block_end
 ;
-for_init : local_variable_declaration | statement_expression_list | 
+for_init : something_dot_new | statement_expression_list | 
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;

@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : colon_things | new_id_list ',' newident
+new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
@@ -148,7 +148,7 @@ variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;
-index_specs : index_spec | index_specs ';' index_spec
+index_specs : index_spec | index_specs WHILE index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

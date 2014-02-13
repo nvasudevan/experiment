@@ -150,7 +150,7 @@ shift_expression : shift_expression ZRS_TK additive_expression | shift_expressio
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
-statement_nsi : constructor_declaration for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
+statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
 ;
 catch_clause : catch_clause_parameter block
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK expression CSB_TK
+dim_expr : OSB_TK expression abstract_method_declaration CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;

@@ -14,7 +14,7 @@ catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
 conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
-anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK while_statement argument_list CP_TK class_body
+anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
 continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
@@ -236,7 +236,7 @@ variable_declarators : variable_declarators C_TK variable_declarator | variable_
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;
-method_declaration : method_header method_body
+method_declaration : method_header BOOL_OR_TK method_body
 ;
 interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
 ;

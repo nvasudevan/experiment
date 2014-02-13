@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : OSB_TK expression CSB_TK
+dim_expr : OSB_TK SUPER_TK CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;
@@ -200,7 +200,7 @@ field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;
 class_body_declaration : block | constructor_declaration | static_initializer | class_member_declaration
 ;
-method_body : SC_TK | MINUS_TK
+method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;

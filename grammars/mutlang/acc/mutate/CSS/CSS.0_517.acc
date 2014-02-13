@@ -60,9 +60,9 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '/' | '+'
+unary_operator : '-' | '+'
 ;
-property : IDENT S_multi
+property : stylesheet_tail S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;

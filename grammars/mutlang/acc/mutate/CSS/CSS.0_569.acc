@@ -80,7 +80,7 @@ selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;
-selector_tail_2 : combinator_opt selector
+selector_tail_2 : combinator_opt expr
 ;
 simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORT_SYM S_multi
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

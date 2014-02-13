@@ -38,7 +38,7 @@ opt_declarations : declarations |
 ;
 statement_part : compound_stmt
 ;
-field_list : variant_part | fixed_part ';' variant_part | unsigned_lit
+field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
@@ -80,7 +80,7 @@ body : IDENTIFIER | block
 ;
 actual_param : expression colon_things | expression
 ;
-member : expression DOTDOT expression | expression
+member : actual_params DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;

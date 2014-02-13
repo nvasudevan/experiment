@@ -92,11 +92,11 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt attrib_tail_opt ']'
+attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
-attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
+attrib_tail_opt : STRING | attrib_includes S_multi id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;

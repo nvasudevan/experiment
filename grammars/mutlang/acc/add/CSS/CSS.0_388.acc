@@ -2,7 +2,7 @@
 
 %nodefault
 
-stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
+stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi EXS
 ;
 stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
@@ -124,7 +124,7 @@ term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_mu
 ;
 term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi | EXS S_multi | ANGLE S_multi | TIME S_multi | FREQ S_multi
 ;
-unary_operator_opt :  | unary_operator media
+unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;

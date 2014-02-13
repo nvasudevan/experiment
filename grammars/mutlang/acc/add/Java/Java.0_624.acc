@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK VOID_TK exclusive_or_expression | exclusive_or_expression
+inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;
 array_type : name dims | primitive_type dims
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | DOT_TK statement_expression
 ;
 synchronized : modifiers
 ;

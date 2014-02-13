@@ -98,7 +98,7 @@ variants : variant | variants ';' variant
 ;
 block : opt_declarations statement_part
 ;
-type_dcl_part : TYPE type_defs ';'
+type_dcl_part : TYPE type_defs OF
 ;
 variable_dcl : newident_list ':' type
 ;
@@ -118,7 +118,7 @@ const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;
-labels : label | labels ',' '.'
+labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;

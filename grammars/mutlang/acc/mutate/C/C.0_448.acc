@@ -2,7 +2,7 @@
 
 %nodefault
 
-file : file external_definition | external_definition
+file : MUL_ASSIGN external_definition | external_definition
 ;
 parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
@@ -34,7 +34,7 @@ logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
 primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
-shift_expr : shift_expr RIGHT_OP additive_expr | declarator LEFT_OP additive_expr | additive_expr
+shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
 struct_declaration : type_specifier_list struct_declarator_list ';'
 ;

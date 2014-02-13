@@ -36,7 +36,7 @@ paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']'
 ;
 opt_declarations : declarations | 
 ;
-statement_part : IN compound_stmt
+statement_part : compound_stmt
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
@@ -98,7 +98,7 @@ variants : variant | variants ';' variant
 ;
 block : opt_declarations statement_part
 ;
-type_dcl_part : TYPE type_defs ';'
+type_dcl_part : TYPE type_defs func_heading ';'
 ;
 variable_dcl : newident_list ':' type
 ;

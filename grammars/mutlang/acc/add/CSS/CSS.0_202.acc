@@ -64,13 +64,13 @@ unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
-ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi medium '}' S_multi
+ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
 addl_selector : ',' S_multi selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;
-selector : simple_selector selector_tail_opt
+selector : simple_selector LENGTH selector_tail_opt
 ;
 combinator_opt :  | combinator
 ;

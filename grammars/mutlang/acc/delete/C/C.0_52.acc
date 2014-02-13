@@ -16,7 +16,7 @@ struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' str
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
-struct_declarator : declarator ':' constant_expr | ':' constant_expr | 
+struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
@@ -32,7 +32,7 @@ assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_
 ;
 logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
-primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
+primary_expr : '(' expr ')' |  | CONSTANT | identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;

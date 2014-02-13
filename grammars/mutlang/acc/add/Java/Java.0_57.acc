@@ -208,7 +208,7 @@ type : reference_type | primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
-switch_block_statement_group : switch_labels block_statements
+switch_block_statement_group : switch_labels block_statements continue_statement
 ;
 if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
@@ -258,7 +258,7 @@ array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expre
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
-type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK formal_parameter | name DOT_TK CLASS_TK
+type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;

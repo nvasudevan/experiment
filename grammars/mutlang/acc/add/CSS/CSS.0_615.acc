@@ -10,7 +10,7 @@ cdo_cdc : S | CDO | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
-cdo_cdc_s : CDO S_multi | CDC S_multi declaration_multi
+cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
@@ -78,7 +78,7 @@ selector_tail_opt :  | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
-selector_tail_2_opt :  | selector_tail_2
+selector_tail_2_opt :  | selector_tail_2 '['
 ;
 selector_tail_2 : combinator_opt selector
 ;

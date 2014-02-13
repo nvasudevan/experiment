@@ -44,7 +44,7 @@ extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interfa
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
-do_statement : do_statement_begin statement WHILE_TK OP_TK expression expression CP_TK SC_TK
+do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
 interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
 ;
@@ -150,7 +150,7 @@ shift_expression : shift_expression ZRS_TK additive_expression | shift_expressio
 ;
 interface_declaration : modifiers INTERFACE_TK identifier extends_interfaces interface_body | INTERFACE_TK identifier extends_interfaces interface_body | modifiers INTERFACE_TK identifier interface_body | INTERFACE_TK identifier interface_body
 ;
-statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | statement_without_trailing_substatement
+statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement_nsi | labeled_statement_nsi | class_body_declaration statement_without_trailing_substatement
 ;
 catch_clause : catch_clause_parameter block
 ;

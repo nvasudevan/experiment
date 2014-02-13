@@ -58,7 +58,7 @@ pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
-combinator : '+' S_multi | '>' S_multi
+combinator : pseudo S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
@@ -90,7 +90,7 @@ simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : prio | '*'
+element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;

@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case for_statement_nsi
+unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
@@ -204,7 +204,7 @@ method_body : SC_TK | block
 ;
 block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
-type : reference_type | primitive_type
+type : reference_type | do_statement_begin primitive_type
 ;
 class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;

@@ -6,7 +6,7 @@ program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
-compound_stmt : LABEL SBEGIN statements END
+compound_stmt : SBEGIN statements END
 ;
 expressions : expression | expressions ',' expression
 ;
@@ -138,7 +138,7 @@ label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;
-ident : IDENTIFIER
+ident : STRING IDENTIFIER
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;

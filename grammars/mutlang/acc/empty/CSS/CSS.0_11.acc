@@ -20,7 +20,7 @@ stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
-stylesheet_tail : stylesheet_parts cdo_cdc_s_multi | 
+stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
 stylesheet_parts : ruleset | media | page
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM S_multi
+prio : IMPORTANT_SYM S_multi | 
 ;
 expr : term expr_tail_multi
 ;

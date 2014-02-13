@@ -58,7 +58,7 @@ pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
-combinator : '+' S_multi | '>' S_multi | 
+combinator : '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt term
+expr_tail : operator_opt term | 
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

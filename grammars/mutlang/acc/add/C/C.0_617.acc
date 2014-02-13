@@ -54,7 +54,7 @@ unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_
 ;
 enumerator : identifier '=' constant_expr | identifier
 ;
-abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' '/' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
+abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
 labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
@@ -112,7 +112,7 @@ statement_list : statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
+parameter_type_list : parameter_list storage_class_specifier ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;

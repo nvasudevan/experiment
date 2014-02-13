@@ -94,7 +94,7 @@ element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
-attrib_includes : expr_tail '=' | INCLUDES | DASHMATCH
+attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
@@ -106,7 +106,7 @@ pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;
-declaration : property COLON_TK S_multi expr prio_opt
+declaration : property COLON_TK S_multi expr DASHMATCH prio_opt
 ;
 prio_opt :  | prio
 ;

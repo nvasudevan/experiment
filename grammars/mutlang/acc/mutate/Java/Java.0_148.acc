@@ -116,7 +116,7 @@ local_variable_declaration : final type variable_declarators | type variable_dec
 ;
 expression_statement : statement_expression SC_TK
 ;
-pre_increment_expression : INCR_TK unary_expression
+pre_increment_expression : ASSERT_TK unary_expression
 ;
 switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
@@ -134,7 +134,7 @@ modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
-class_type_list : class_type_list C_TK RETURN_TK | class_type
+class_type_list : class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;

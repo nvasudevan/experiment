@@ -104,13 +104,13 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT S_multi
+pseudo_tail_2_opt :  | IDENT cdo_cdc_s
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM term_types
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

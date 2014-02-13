@@ -8,7 +8,7 @@ import_declaration : type_import_on_demand_declaration | single_type_import_decl
 ;
 argument_list : argument_list C_TK expression | expression
 ;
-pre_decrement_expression : DECR_TK unary_expression
+pre_decrement_expression : DECR_TK
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
@@ -134,7 +134,7 @@ modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
-class_type_list : class_type_list C_TK class_type | 
+class_type_list : class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;

@@ -86,7 +86,7 @@ enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;
-cast_expr : '(' type_name ')' cast_expr | SIGNED
+cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
@@ -94,7 +94,7 @@ identifier_list : identifier_list ',' identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
-storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
+storage_class_specifier : equality_expr | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;

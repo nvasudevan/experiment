@@ -180,7 +180,7 @@ interfaces : IMPLEMENTS_TK interface_type_list |
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
-abstract_method_declaration : method_header SC_TK
+abstract_method_declaration : method_header for_init
 ;
 throw_statement : THROW_TK expression SC_TK
 ;
@@ -214,7 +214,7 @@ if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
-if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK TRY_TK
+if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
 block_end : CCB_TK
 ;

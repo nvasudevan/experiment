@@ -104,9 +104,9 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT simple_selector_tail S_multi
+pseudo_tail_2_opt :  | IDENT S_multi
 ;
-declaration : property COLON_TK S_multi expr prio_opt
+declaration : property COLON_TK S_multi id_or_string expr prio_opt
 ;
 prio_opt :  | prio
 ;

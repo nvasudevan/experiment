@@ -110,9 +110,9 @@ abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | poin
 ;
 statement_list : statement_list statement | statement
 ;
-struct_declaration_list : struct_declaration_list struct_declaration | identifier_list struct_declaration
+struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
+parameter_type_list : statement_list parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;

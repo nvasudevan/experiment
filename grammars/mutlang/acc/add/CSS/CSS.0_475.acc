@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | '{' STRING
+id_or_string : IDENT | STRING IDENT
 ;
 pseudo : COLON_TK pseudo_tail
 ;

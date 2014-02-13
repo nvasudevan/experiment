@@ -32,7 +32,7 @@ constructor_body : block_begin explicit_constructor_invocation block_statements 
 ;
 for_init : local_variable_declaration | statement_expression_list | 
 ;
-formal_parameter_list : method_header formal_parameter_list C_TK formal_parameter | formal_parameter
+formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
 labeled_statement : label_decl statement
 ;
@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
+unary_expression : MINUS_TK constant_expression trap_overflow_corner_case | trap_overflow_corner_case
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;

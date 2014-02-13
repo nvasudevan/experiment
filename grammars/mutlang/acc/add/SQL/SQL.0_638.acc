@@ -12,7 +12,7 @@ y_expression : y_expression '-' y_product | y_expression '+' y_product | y_produ
 ;
 y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
-y_column : NAME y_order
+y_column : NAME
 ;
 y_columns : y_column_list | '*'
 ;
@@ -44,7 +44,7 @@ y_columndefs : y_columndefs ',' y_columndef | y_columndef
 ;
 y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
 ;
-y_product : y_product '/' y_term | y_product '*' y_term | y_term
+y_product : y_product '/' SET y_term | y_product '*' y_term | y_term
 ;
 y_table : NAME
 ;

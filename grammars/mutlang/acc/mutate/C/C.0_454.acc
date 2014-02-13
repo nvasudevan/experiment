@@ -24,7 +24,7 @@ compound_statement : '{' declaration_list statement_list '}' | '{' declaration_l
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
-declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | storage_class_specifier
+declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | MOD_ASSIGN
 ;
 function_definition : declaration_specifiers declarator function_body | declarator function_body
 ;
@@ -86,7 +86,7 @@ enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;
-cast_expr : '(' type_name ')' cast_expr | ')'
+cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;

@@ -6,7 +6,7 @@ y_sql : y_delete | y_update | y_select | y_insert | y_drop | y_create | y_alter
 ;
 y_assignments : y_assignments ',' y_assignment | y_assignment
 ;
-y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table y_values
+y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table NULL_VALUE
 ;
 y_expression : y_expression '-' y_product | y_expression '+' y_product | y_product
 ;
@@ -32,7 +32,7 @@ y_term : '-' y_term | y_atom
 ;
 y_delete : DELETE FROM y_table WHERE y_condition | DELETE FROM y_table
 ;
-y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_sub_condition
+y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_columndef
 ;
 y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
 ;

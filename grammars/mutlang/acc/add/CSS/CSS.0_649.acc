@@ -56,7 +56,7 @@ declaration_multi :  | declaration_tail declaration_multi
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;
-operator : '/' S_multi | ',' S_multi HASH
+operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | STRING
+id_or_string : term_types IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;

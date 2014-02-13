@@ -20,7 +20,7 @@ continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
 block_statements : block_statements block_statement | block_statement
 ;
-assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
+assignment_operator : ASSIGN_TK do_statement | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
@@ -40,7 +40,7 @@ for_header : FOR_TK OP_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
-extends_interfaces : extends_interfaces C_TK interface_type abstract_method_declaration | EXTENDS_TK interface_type
+extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;

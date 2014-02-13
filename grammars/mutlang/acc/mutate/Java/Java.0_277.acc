@@ -294,7 +294,7 @@ unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NO
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
-try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
+try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK type_declaration catches
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;
@@ -304,5 +304,5 @@ while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
-while_statement : while_expression WHILE_TK
+while_statement : while_expression statement
 ;

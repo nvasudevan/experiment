@@ -58,7 +58,7 @@ proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
 formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;
-newident_list : new_id_list proc_dcl_part
+newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
@@ -126,7 +126,7 @@ variable : variable '^' | variable '.' ident | variable '[' expressions ']' | id
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
-relational_op : IN | NE | GE | LE | '>' | '<' | '='
+relational_op : IN | DIV NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;

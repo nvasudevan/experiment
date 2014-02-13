@@ -92,9 +92,9 @@ unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;
-parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
+parameter_list : TYPE_NAME ',' parameter_declaration | parameter_declaration
 ;
-storage_class_specifier : REGISTER | CASE | STATIC | EXTERN | TYPEDEF
+storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;

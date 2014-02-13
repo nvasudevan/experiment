@@ -114,7 +114,7 @@ external_files : '(' newident_list ')' |
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
-const_dcl_part : CONST const_defs ';'
+const_dcl_part : CONST const_defs IN
 ;
 type_def : newident '=' type
 ;
@@ -128,7 +128,7 @@ declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | la
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
-case_label_list : const_def | case_label_list ',' case_label
+case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;

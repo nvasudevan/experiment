@@ -56,7 +56,7 @@ record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
-formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
+formal_p_sects : formal_p_sect | ',' ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;
@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : proc_heading | new_id_list ',' newident
+new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;

@@ -96,11 +96,11 @@ parameter_list : parameter_list ',' parameter_declaration | parameter_declaratio
 ;
 storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
-declarator : pointer declarator2 | declarator2
+declarator : pointer PTR_OP | declarator2
 ;
 type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
-exclusive_or_expr : exclusive_or_expr INC_OP and_expr | and_expr
+exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
 constant_expr : conditional_expr
 ;

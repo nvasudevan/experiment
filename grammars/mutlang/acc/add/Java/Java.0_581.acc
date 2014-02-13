@@ -24,7 +24,7 @@ assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
-assignment : left_hand_side assignment_operator assignment_expression
+assignment : left_hand_side expression assignment_operator assignment_expression
 ;
 labeled_statement_nsi : label_decl statement_nsi
 ;
@@ -270,7 +270,7 @@ package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
-for_update : statement_expression_list | OCB_TK
+for_update : statement_expression_list | 
 ;
 empty_statement : SC_TK
 ;

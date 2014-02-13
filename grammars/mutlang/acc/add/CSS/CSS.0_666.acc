@@ -14,7 +14,7 @@ cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
-cdo_cdc_multi : term_types | cdo_cdc cdo_cdc_multi
+cdo_cdc_multi :  | cdo_cdc FUNCTION cdo_cdc_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;

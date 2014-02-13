@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects ')' | 
+formal_params : '(' formal_p_sects ')' | '/'
 ;
 newident : IDENTIFIER
 ;
@@ -118,7 +118,7 @@ const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;
-labels : label | labels ',' NIL label
+labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;

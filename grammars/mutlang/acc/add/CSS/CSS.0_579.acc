@@ -116,9 +116,9 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt DASHMATCH term
+expr_tail : operator_opt term
 ;
-expr_tail_multi :  | expr_tail expr_tail_multi
+expr_tail_multi : addl_selector | expr_tail expr_tail_multi
 ;
 term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;

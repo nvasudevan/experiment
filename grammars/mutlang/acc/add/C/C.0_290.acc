@@ -106,7 +106,7 @@ constant_expr : conditional_expr
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;
-abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
+abstract_declarator : pointer abstract_declarator2 multiplicative_expr | abstract_declarator2 | pointer
 ;
 statement_list : statement_list statement | statement
 ;
@@ -118,7 +118,7 @@ identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;
-assignment_expr : unary_expr assignment_operator abstract_declarator assignment_expr | conditional_expr
+assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;

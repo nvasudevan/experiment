@@ -80,7 +80,7 @@ selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement 
 ;
 declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;
-type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
+type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | AND_OP | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
@@ -102,7 +102,7 @@ type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
 exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
-constant_expr : enumerator
+constant_expr : conditional_expr
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;

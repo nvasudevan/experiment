@@ -6,7 +6,7 @@ stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_
 ;
 stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
-cdo_cdc : S | CDO | CDC
+cdo_cdc : S | selector_tail_opt | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
@@ -96,7 +96,7 @@ attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
-attrib_tail_opt :  | attrib_includes pseudo_page id_or_string S_multi
+attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;

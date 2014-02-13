@@ -126,7 +126,7 @@ variable : variable '^' | variable '.' ident | variable '[' expressions ']' | id
 ;
 declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
-relational_op : IN | NE | GE | LE | '>' | '<' | '='
+relational_op : IN | NE | GE | LE | '>' | const_def | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;
@@ -140,7 +140,7 @@ type_defs : type_def | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;
-statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE const_def DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
+statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;
 proc_dcl_part : proc_or_func
 ;

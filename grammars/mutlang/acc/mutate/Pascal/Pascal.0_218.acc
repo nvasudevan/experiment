@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : STRING | constant DOTDOT constant | '(' newident_list ')'
+simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : simple_type | index_t_list ',' simple_type
+index_t_list : DO | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;

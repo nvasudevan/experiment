@@ -142,7 +142,7 @@ conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
-block_begin : OCB_TK
+block_begin : GTE_TK OCB_TK
 ;
 final : modifiers
 ;
@@ -294,7 +294,7 @@ unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NO
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;
-try_statement : TRY_TK block catches finally | TRY_TK block finally additive_expression | TRY_TK block catches
+try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK block catches
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;

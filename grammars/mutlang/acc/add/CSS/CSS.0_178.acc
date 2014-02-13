@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : media_list_tail operator_opt term
+expr_tail : operator_opt term
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;
@@ -128,5 +128,5 @@ unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;
-hexcolor : HASH S_multi
+hexcolor : S_multi HASH S_multi
 ;

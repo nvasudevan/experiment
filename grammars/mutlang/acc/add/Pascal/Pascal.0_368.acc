@@ -100,7 +100,7 @@ block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
-variable_dcl : newident_list ':' type
+variable_dcl : GE newident_list ':' type
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;
@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : UNSIGNED_INT mult_op
+label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;

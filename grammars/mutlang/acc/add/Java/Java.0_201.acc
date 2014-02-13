@@ -238,7 +238,7 @@ type_declarations : type_declarations type_declaration | type_declaration
 ;
 method_declaration : method_header method_body
 ;
-interface_member_declaration : interface_declaration NEG_TK | class_declaration | abstract_method_declaration | constant_declaration
+interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
 ;
 primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
@@ -264,7 +264,7 @@ synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;
-primary : array_creation_expression | primary_no_new_array
+primary : array_creation_expression for_statement_nsi | primary_no_new_array
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;

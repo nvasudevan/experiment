@@ -18,7 +18,7 @@ cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
-cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
+cdo_cdc_s_multi : IDENT | cdo_cdc_s cdo_cdc_s_multi
 ;
 stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
@@ -48,7 +48,7 @@ page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_
 ;
 pseudo_page_opt :  | pseudo_page
 ;
-declaration_opt : S | declaration
+declaration_opt :  | declaration
 ;
 declaration_tail : SC_TK S_multi declaration_opt
 ;

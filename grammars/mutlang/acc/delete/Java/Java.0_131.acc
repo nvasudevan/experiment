@@ -134,7 +134,7 @@ modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
-class_type_list : class_type_list class_type | class_type
+class_type_list : class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;
@@ -278,7 +278,7 @@ interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
 equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
-array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
+array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | C_TK CCB_TK | OCB_TK CCB_TK
 ;
 simple_name : identifier
 ;

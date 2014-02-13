@@ -62,7 +62,7 @@ declaration_list : declaration_list declaration | declaration
 ;
 struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
-init_declarator : declarator '=' initializer | declarator
+init_declarator : declarator '=' initializer | declarator '?'
 ;
 enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;
@@ -98,7 +98,7 @@ storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;
-type_name : type_specifier_list abstract_declarator | FOR type_specifier_list
+type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
 exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;

@@ -128,7 +128,7 @@ compilation_unit : package_declaration import_declarations type_declarations | i
 ;
 interface_type : class_or_interface_type
 ;
-for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
+for_statement_nsi : for_begin SC_TK SC_TK for_update additive_expression statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
@@ -280,7 +280,7 @@ equality_expression : equality_expression NEQ_TK relational_expression | equalit
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;
-simple_name : for_update
+simple_name : identifier
 ;
 type_declaration : empty_statement | interface_declaration | class_declaration
 ;

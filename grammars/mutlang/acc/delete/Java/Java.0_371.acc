@@ -32,7 +32,7 @@ constructor_body : block_begin explicit_constructor_invocation block_statements 
 ;
 for_init : local_variable_declaration | statement_expression_list | 
 ;
-formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
+formal_parameter_list : formal_parameter_list C_TK | formal_parameter
 ;
 labeled_statement : label_decl statement
 ;
@@ -242,7 +242,7 @@ interface_member_declaration : interface_declaration | class_declaration | abstr
 ;
 primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
-label_decl : REL_CL_TK
+label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;

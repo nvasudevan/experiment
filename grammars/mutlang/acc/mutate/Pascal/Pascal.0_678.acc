@@ -66,9 +66,9 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : ident expression ':' expression | ':' expression
+colon_things : ':' expression ':' expression | ':' expression
 ;
-case_label : constant
+case_label : proc_dcl_part
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;

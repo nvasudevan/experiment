@@ -4,7 +4,7 @@
 
 stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
 ;
-stylesheet_opt_1 : PERCENTAGE STRING SC_TK | 
+stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
 cdo_cdc : S | CDO | CDC
 ;
@@ -58,7 +58,7 @@ pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
-combinator : '+' S_multi | '>' S_multi
+combinator : '+' S_multi | FREQ S_multi
 ;
 unary_operator : '-' | '+'
 ;

@@ -210,7 +210,7 @@ class_declaration : CLASS_TK identifier super interfaces class_body | modifiers 
 ;
 switch_block_statement_group : switch_labels block_statements
 ;
-if_then_statement : IF_TK OP_TK expression CP_TK statement
+if_then_statement : class_type OP_TK expression CP_TK statement
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
@@ -222,7 +222,7 @@ if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK stat
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
-do_statement_begin : INCR_TK
+do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;

@@ -128,7 +128,7 @@ compilation_unit : package_declaration import_declarations type_declarations | i
 ;
 interface_type : class_or_interface_type
 ;
-for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
+for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK synchronized_statement | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
@@ -250,7 +250,7 @@ synchronized : modifiers
 ;
 constant_expression : expression
 ;
-array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs variable_declarator_id | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
+array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;
 single_type_import_declaration : IMPORT_TK name SC_TK
 ;

@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK field_declaration | trap_overflow_corner_case
+unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
@@ -256,7 +256,7 @@ single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
-class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
+class_body : OCB_TK class_body_declarations CCB_TK | relational_expression CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;

@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
+inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | 
 ;
 array_type : name dims | primitive_type dims
 ;
@@ -180,7 +180,7 @@ interfaces : IMPLEMENTS_TK interface_type_list |
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
-abstract_method_declaration : SC_TK
+abstract_method_declaration : method_header SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;

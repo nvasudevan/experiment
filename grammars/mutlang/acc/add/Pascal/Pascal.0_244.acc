@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident | formal_p_sects new_id_list ',' newident
+new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
@@ -112,7 +112,7 @@ rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;
-formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
+formal_p_sect : func_heading | REPEAT proc_heading | VAR param_group | param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;

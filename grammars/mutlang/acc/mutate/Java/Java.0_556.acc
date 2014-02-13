@@ -114,7 +114,7 @@ name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
-expression_statement : statement_expression SC_TK
+expression_statement : formal_parameter_list SC_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;
@@ -166,7 +166,7 @@ statement_expression : class_instance_creation_expression | method_invocation | 
 ;
 variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
-while_expression : WHILE_TK catches expression CP_TK
+while_expression : WHILE_TK OP_TK expression CP_TK
 ;
 inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
 ;

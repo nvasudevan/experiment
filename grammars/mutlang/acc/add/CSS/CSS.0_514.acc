@@ -2,7 +2,7 @@
 
 %nodefault
 
-stylesheet : stylesheet_opt_1 cdo_cdc_multi property stylesheet_imports_multi stylesheet_tail_multi
+stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
 ;
 stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
@@ -114,7 +114,7 @@ prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;
-operator_opt :  | operator
+operator_opt : simple_selector_tail_multi | operator
 ;
 expr_tail : operator_opt term
 ;

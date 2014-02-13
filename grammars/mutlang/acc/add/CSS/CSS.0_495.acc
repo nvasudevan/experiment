@@ -44,7 +44,7 @@ media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
-page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
+page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi operator_opt
 ;
 pseudo_page_opt :  | pseudo_page
 ;
@@ -88,7 +88,7 @@ simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : SC_TK stylesheet_tail IDENT
+class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;

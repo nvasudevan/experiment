@@ -182,7 +182,7 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression SC_TK
+throw_statement : THROW_TK expression SC_TK switch_expression
 ;
 class_or_interface_type : name
 ;
@@ -220,7 +220,7 @@ block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
-switch_label : class_declaration DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
+switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;

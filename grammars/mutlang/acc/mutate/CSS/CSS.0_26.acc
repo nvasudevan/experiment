@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | pseudo_tail
+combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : IDENT | STRING
+id_or_string : MEDIA_SYM | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;

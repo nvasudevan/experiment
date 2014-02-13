@@ -190,7 +190,7 @@ method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_pa
 ;
 qualified_name : name DOT_TK identifier
 ;
-throws : THROWS_TK class_type_list | 
+throws : do_statement_begin THROWS_TK class_type_list | 
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
@@ -228,7 +228,7 @@ constructor_block_end : block_end
 ;
 switch_statement : switch_expression switch_block
 ;
-multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | identifier multiplicative_expression MULT_TK unary_expression | unary_expression
+multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;

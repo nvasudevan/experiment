@@ -120,9 +120,9 @@ function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
-argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
+argument_expr_list : argument_expr_list ',' assignment_expr | FLOAT
 ;
-type_specifier_list : type_specifier_list type_specifier | DOUBLE
+type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
 parameter_declaration : type_name | type_specifier_list declarator
 ;

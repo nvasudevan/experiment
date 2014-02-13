@@ -60,7 +60,7 @@ variable_initializers : variable_initializers C_TK variable_initializer | variab
 ;
 for_begin : for_header for_init
 ;
-type_import_on_demand_declaration : IMPORT_TK OR_TK DOT_TK MULT_TK SC_TK
+type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | expression
+variable_initializer : array_initializer | unary_expression
 ;
 expression : assignment_expression
 ;

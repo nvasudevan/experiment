@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident UNSIGNED_INT | new_id_list ',' newident
+new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
@@ -144,7 +144,7 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : CASE tag_field OF variants
+variant_part : CASE tag_field OF unsigned_num variants
 ;
 term : term mult_op factor | factor
 ;

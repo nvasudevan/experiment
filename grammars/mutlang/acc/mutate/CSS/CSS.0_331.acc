@@ -86,7 +86,7 @@ simple_selector : element_name simple_selector_tail_multi | simple_selector_tail
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
-simple_selector_tail_multi :  | simple_selector_tail URI
+simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
+pseudo_tail : IDENT | FUNCTION MEDIA_SYM pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;

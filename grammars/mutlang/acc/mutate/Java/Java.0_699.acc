@@ -138,7 +138,7 @@ class_type_list : class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;
-conditional_or_expression : conditional_or_expression BOOL_OR_TK additive_expression | conditional_and_expression
+conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
@@ -176,7 +176,7 @@ explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name 
 ;
 constant_declaration : field_declaration
 ;
-interfaces : IMPLEMENTS_TK interface_type_list | 
+interfaces : array_creation_expression interface_type_list | 
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;

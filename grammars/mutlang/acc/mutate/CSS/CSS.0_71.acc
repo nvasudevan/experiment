@@ -38,7 +38,7 @@ ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
-media_list_tail : ',' S_multi medium
+media_list_tail : ',' unary_operator medium
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
@@ -76,7 +76,7 @@ combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
-selector_tail : combinator operator | S S_multi selector_tail_2_opt
+selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;

@@ -46,7 +46,7 @@ medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-pseudo_page_opt :  | pseudo_page TIME
+pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
@@ -112,7 +112,7 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : term expr_tail_multi
+expr : term expr_tail_multi ']'
 ;
 operator_opt :  | operator
 ;

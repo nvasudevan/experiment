@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK exclusive_or_expression | exclusive_or_expression
+inclusive_or_expression : inclusive_or_expression SWITCH_TK exclusive_or_expression | exclusive_or_expression
 ;
 array_type : name dims | primitive_type dims
 ;
@@ -258,7 +258,7 @@ array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expre
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
-type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type TRY_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
+type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;

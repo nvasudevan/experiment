@@ -58,7 +58,7 @@ pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
-combinator : '+' S_multi | id_or_string S_multi
+combinator : '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
@@ -90,7 +90,7 @@ simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : IDENT | '*'
+element_name : PERCENTAGE | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;

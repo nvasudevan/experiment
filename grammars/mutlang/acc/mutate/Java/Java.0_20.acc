@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type variable_declarators
+local_variable_declaration : final ASSERT_TK variable_declarators | type variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;
@@ -194,7 +194,7 @@ throws : THROWS_TK class_type_list |
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;
-assignment_expression : extends_interfaces | conditional_expression
+assignment_expression : assignment | conditional_expression
 ;
 field_access : SUPER_TK DOT_TK identifier | primary DOT_TK identifier
 ;

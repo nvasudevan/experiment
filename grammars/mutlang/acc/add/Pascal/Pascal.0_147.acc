@@ -52,7 +52,7 @@ type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
-record_var : variable
+record_var : compound_stmt variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
@@ -84,7 +84,7 @@ member : expression DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
-members : CASE member | members ',' member
+members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;

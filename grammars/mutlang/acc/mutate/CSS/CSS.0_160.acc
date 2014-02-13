@@ -34,7 +34,7 @@ string_or_uri : STRING | URI
 ;
 media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
-ruleset_multi :  | ruleset ruleset_multi
+ruleset_multi :  | INCLUDES ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
@@ -128,5 +128,5 @@ unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;
-hexcolor : IMPORT_SYM S_multi
+hexcolor : HASH S_multi
 ;

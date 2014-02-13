@@ -16,7 +16,7 @@ S_multi :  | S S_multi
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
-stylesheet_imports_multi : cdo_cdc_multi | stylesheet_imports stylesheet_imports_multi
+stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
@@ -120,7 +120,7 @@ expr_tail : operator_opt term
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;
-term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
+term : property unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;
 term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi | EXS S_multi | ANGLE S_multi | TIME S_multi | FREQ S_multi
 ;

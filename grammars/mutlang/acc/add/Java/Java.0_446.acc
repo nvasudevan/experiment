@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
+variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id statement_expression_list
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
@@ -132,7 +132,7 @@ for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_b
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
-class_member_declaration : identifier empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
+class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;

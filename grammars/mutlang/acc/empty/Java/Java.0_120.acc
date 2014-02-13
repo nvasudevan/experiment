@@ -12,7 +12,7 @@ pre_decrement_expression : DECR_TK unary_expression
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
-conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression | 
+conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
@@ -262,7 +262,7 @@ type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
-post_decrement_expression : postfix_expression DECR_TK
+post_decrement_expression : postfix_expression DECR_TK | 
 ;
 primary : array_creation_expression | primary_no_new_array
 ;

@@ -46,7 +46,7 @@ iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' exp
 ;
 additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
-expression_statement : expr ';' | ';'
+expression_statement : declaration expr ';' | ';'
 ;
 external_definition : declaration | function_definition
 ;
@@ -118,7 +118,7 @@ identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;
-assignment_expr : unary_expr assignment_operator assignment_expr '?' | conditional_expr
+assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;

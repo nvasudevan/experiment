@@ -12,7 +12,7 @@ pre_decrement_expression : DECR_TK unary_expression
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
-conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | for_update
+conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
+variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | if_then_else_statement_nsi
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;

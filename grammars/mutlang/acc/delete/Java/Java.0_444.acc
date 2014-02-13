@@ -60,7 +60,7 @@ variable_initializers : variable_initializers C_TK variable_initializer | variab
 ;
 for_begin : for_header for_init
 ;
-type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
+type_import_on_demand_declaration : IMPORT_TK name MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
@@ -140,7 +140,7 @@ super : EXTENDS_TK class_type |
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
-for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK CP_TK statement
+for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
 block_begin : OCB_TK
 ;

@@ -12,7 +12,7 @@ and_expr : and_expr '&' equality_expr | equality_expr
 ;
 struct_or_union : UNION | STRUCT
 ;
-struct_or_union_specifier : struct_or_union identifier | struct_or_union CHAR '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
+struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
@@ -56,7 +56,7 @@ enumerator : identifier '=' constant_expr | identifier
 ;
 abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
-labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
+labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement REGISTER | identifier ':' statement
 ;
 declaration_list : declaration_list declaration | declaration
 ;

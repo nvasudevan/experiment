@@ -8,7 +8,7 @@ import_declaration : type_import_on_demand_declaration | single_type_import_decl
 ;
 argument_list : argument_list C_TK expression | expression
 ;
-pre_decrement_expression : block_begin unary_expression
+pre_decrement_expression : DECR_TK unary_expression
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
@@ -262,7 +262,7 @@ type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
-post_decrement_expression : postfix_expression DECR_TK
+post_decrement_expression : post_increment_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;

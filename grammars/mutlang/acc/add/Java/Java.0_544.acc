@@ -20,7 +20,7 @@ continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
 ;
 block_statements : block_statements block_statement | block_statement
 ;
-assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK and_expression
+assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
@@ -174,7 +174,7 @@ array_type : name dims | primitive_type dims
 ;
 explicit_constructor_invocation : name DOT_TK SUPER_TK OP_TK CP_TK SC_TK | name DOT_TK SUPER_TK OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK argument_list CP_TK SC_TK | this_or_super OP_TK CP_TK SC_TK
 ;
-constant_declaration : field_declaration
+constant_declaration : INTEGRAL_TK field_declaration
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;

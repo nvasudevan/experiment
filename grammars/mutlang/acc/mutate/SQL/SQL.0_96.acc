@@ -48,9 +48,9 @@ y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
 y_table : NAME
 ;
-y_order : y_expression
+y_order : NAME
 ;
-y_values : VALUES '(' y_value_list ')'
+y_values : VALUES '(' y_value_list y_product
 ;
 y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;

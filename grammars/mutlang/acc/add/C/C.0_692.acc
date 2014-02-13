@@ -78,9 +78,9 @@ pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_lis
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
-declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
+declaration : declaration_specifiers iteration_statement init_declarator_list ';' | declaration_specifiers ';'
 ;
-type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE CHAR | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
+type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;

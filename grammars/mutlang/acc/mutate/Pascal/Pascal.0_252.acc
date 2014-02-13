@@ -106,9 +106,9 @@ index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
-variant :  | case_label_list ':' '(' field_list ')'
+variant :  | case_label_list ':' '(' field_list NOT
 ;
-rec_var_list : record_var | rec_var_list ',' CONST
+rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;

@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | element_name
+combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt term
+expr_tail : operator_opt attrib_includes
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

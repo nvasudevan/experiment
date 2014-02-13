@@ -112,7 +112,7 @@ rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;
-formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
+formal_p_sect : func_heading | proc_heading | VAR param_group | record_var param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;
@@ -156,7 +156,7 @@ struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY
 ;
 statements : statement | statements ';' statement
 ;
-simple_expr : simple_expr add_op term | '-' term | '+' term PROGRAM | term
+simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
 set : '[' member_list ']'
 ;

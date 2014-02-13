@@ -60,7 +60,7 @@ variable_initializers : variable_initializers C_TK variable_initializer | variab
 ;
 for_begin : for_header for_init
 ;
-type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
+type_import_on_demand_declaration : IMPORT_TK switch_block_statement_group DOT_TK MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
@@ -96,7 +96,7 @@ variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
-cast_expression : relational_expression name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
+cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
 constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;

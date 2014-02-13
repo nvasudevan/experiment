@@ -60,11 +60,11 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | IMPORTANT_SYM
+unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
-ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
+ruleset : selector multi_addl_selector '{' '{' declaration_opt declaration_multi '}' S_multi
 ;
 addl_selector : ',' S_multi selector
 ;

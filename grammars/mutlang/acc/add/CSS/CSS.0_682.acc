@@ -88,7 +88,7 @@ simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : SC_TK COLON_TK IDENT
+class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
@@ -96,7 +96,7 @@ attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
-attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
+attrib_tail_opt :  | attrib_includes S_multi LENGTH id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;

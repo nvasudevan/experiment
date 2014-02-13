@@ -76,7 +76,7 @@ combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;
-selector_tail : combinator selector | S S_multi selector_tail_2_opt
+selector_tail : LENGTH combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;
@@ -118,7 +118,7 @@ operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;
-expr_tail_multi :  | expr_tail declaration_tail expr_tail_multi
+expr_tail_multi :  | expr_tail expr_tail_multi
 ;
 term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;

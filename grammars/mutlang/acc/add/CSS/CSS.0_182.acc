@@ -4,7 +4,7 @@
 
 stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
 ;
-stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | '{'
+stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
 cdo_cdc : S | CDO | CDC
 ;
@@ -14,7 +14,7 @@ cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
-cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
+cdo_cdc_multi :  | cdo_cdc COLON_TK cdo_cdc_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;

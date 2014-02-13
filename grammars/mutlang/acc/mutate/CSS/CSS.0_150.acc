@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt STRING
+expr_tail : operator_opt attrib_tail_opt
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

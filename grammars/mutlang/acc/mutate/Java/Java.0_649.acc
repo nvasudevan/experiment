@@ -118,7 +118,7 @@ expression_statement : statement_expression SC_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;
-switch_expression : SWITCH_TK OP_TK expression CP_TK
+switch_expression : SWITCH_TK REL_CL_TK expression CP_TK
 ;
 finally : FINALLY_TK block
 ;
@@ -218,7 +218,7 @@ if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK 
 ;
 block_end : CCB_TK
 ;
-if_then_else_statement : IF_TK statement_without_trailing_substatement expression CP_TK statement_nsi ELSE_TK statement
+if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;

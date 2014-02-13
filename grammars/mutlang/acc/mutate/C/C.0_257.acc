@@ -72,7 +72,7 @@ multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/
 ;
 inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
-init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
+init_declarator_list : init_declarator_list ',' init_declarator | identifier_list
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
@@ -90,7 +90,7 @@ cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
-identifier_list : identifier_list ',' struct_declarator | identifier
+identifier_list : identifier_list ',' identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;

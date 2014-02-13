@@ -32,7 +32,7 @@ function_form : formal_params ':' ident |
 ;
 procedure_call : ident actual_params
 ;
-paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
+paramtype : PACKED variable '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
 opt_declarations : declarations | 
 ;
@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : DO | index_t_list ',' simple_type
+index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;

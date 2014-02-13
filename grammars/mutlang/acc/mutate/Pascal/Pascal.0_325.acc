@@ -18,7 +18,7 @@ newident : IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
-factor : NOT func_heading | set | '(' expression ')' | unsigned_lit | variable
+factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
@@ -90,7 +90,7 @@ expression : simple_expr relational_op simple_expr | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
-tag_field : ident | newident ':' ident
+tag_field : '(' | newident ':' ident
 ;
 label_dcl_part : LABEL labels ';'
 ;

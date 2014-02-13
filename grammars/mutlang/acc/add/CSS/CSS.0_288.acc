@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '+'
+unary_operator : class '-' | '+'
 ;
 property : IDENT S_multi
 ;
@@ -98,7 +98,7 @@ attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
-id_or_string : MEDIA_SYM IDENT | STRING
+id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;

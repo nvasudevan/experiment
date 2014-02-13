@@ -2,7 +2,7 @@
 
 %nodefault
 
-program : PROGRAM newident external_files ';' block '.'
+program : PROGRAM type_defs external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
@@ -16,7 +16,7 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND | MOD | DIV | '/' | relational_op
+mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;

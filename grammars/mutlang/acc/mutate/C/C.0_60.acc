@@ -16,7 +16,7 @@ struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' str
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
-struct_declarator : declarator ':' cast_expr | ':' constant_expr | declarator
+struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
@@ -110,7 +110,7 @@ abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | poin
 ;
 statement_list : statement_list statement | statement
 ;
-struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
+struct_declaration_list : CHAR struct_declaration | struct_declaration
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;

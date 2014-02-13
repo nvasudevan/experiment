@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl if_then_else_statement statement
+labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -190,7 +190,7 @@ method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_pa
 ;
 qualified_name : name DOT_TK identifier
 ;
-throws : THROWS_TK class_type_list | 
+throws : THROWS_TK class_type_list conditional_and_expression | 
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;

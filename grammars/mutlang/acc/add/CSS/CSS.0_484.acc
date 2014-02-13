@@ -26,7 +26,7 @@ stylesheet_parts : ruleset | media | page
 ;
 stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
-import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
+import : attrib_includes IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
 media_list_opt :  | media_list
 ;
@@ -74,7 +74,7 @@ selector : simple_selector selector_tail_opt
 ;
 combinator_opt :  | combinator
 ;
-selector_tail_opt :  | media_list selector_tail
+selector_tail_opt :  | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;

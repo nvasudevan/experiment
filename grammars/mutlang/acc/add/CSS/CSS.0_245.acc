@@ -64,7 +64,7 @@ unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
-ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
+ruleset : selector multi_addl_selector stylesheet_imports_multi '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
 addl_selector : ',' S_multi selector
 ;
@@ -108,7 +108,7 @@ pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;
-prio_opt : class | prio
+prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;

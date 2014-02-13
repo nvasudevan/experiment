@@ -46,7 +46,7 @@ medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-pseudo_page_opt :  | pseudo_page
+pseudo_page_opt : declaration_tail | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
@@ -92,7 +92,7 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt PAGE_SYM ']'
+attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;

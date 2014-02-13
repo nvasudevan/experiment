@@ -52,7 +52,7 @@ assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK e
 ;
 constructor_declaration : constructor_header constructor_body
 ;
-field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators block_end
+field_declaration : modifiers type variable_declarators SC_TK | type variable_declarators SC_TK
 ;
 class_instance_creation_expression : something_dot_new identifier OP_TK argument_list CP_TK class_body | something_dot_new identifier OP_TK argument_list CP_TK | something_dot_new identifier OP_TK CP_TK class_body | something_dot_new identifier OP_TK CP_TK | anonymous_class_creation | NEW_TK class_type OP_TK CP_TK | NEW_TK class_type OP_TK argument_list CP_TK
 ;
@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : PACKAGE_TK name SC_TK
+package_declaration : class_or_interface_type name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;

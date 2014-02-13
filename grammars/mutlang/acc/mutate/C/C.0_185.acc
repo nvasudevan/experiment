@@ -64,7 +64,7 @@ struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_d
 ;
 init_declarator : declarator '=' initializer | declarator
 ;
-enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
+enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM unary_expr enumerator_list '}'
 ;
 postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP identifier | postfix_expr '.' identifier | postfix_expr '(' argument_expr_list ')' | postfix_expr '(' ')' | postfix_expr '[' expr ']' | primary_expr
 ;
@@ -124,7 +124,7 @@ argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
-parameter_declaration : STRUCT | type_specifier_list declarator
+parameter_declaration : type_name | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;

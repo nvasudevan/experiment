@@ -44,7 +44,7 @@ extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interfa
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
-do_statement : do_statement_begin WHILE_TK OP_TK expression CP_TK SC_TK
+do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
 interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
 ;
@@ -98,7 +98,7 @@ expression : assignment_expression
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
-constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
+constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name CP_TK
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;

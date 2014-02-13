@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : try_statement
+synchronized : modifiers
 ;
 constant_expression : expression
 ;
@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : PACKAGE_TK name SC_TK
+package_declaration : exclusive_or_expression name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;

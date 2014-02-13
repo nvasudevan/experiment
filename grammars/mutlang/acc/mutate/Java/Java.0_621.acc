@@ -76,7 +76,7 @@ method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER
 ;
 method_header : modifiers VOID_TK method_declarator throws | modifiers type method_declarator throws | VOID_TK method_declarator throws | type method_declarator throws
 ;
-identifier : GT_TK
+identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | expression
+variable_initializer : compilation_unit | expression
 ;
 expression : assignment_expression
 ;

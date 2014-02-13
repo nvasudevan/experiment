@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' type_def | 
+type_defs : type_def | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;
@@ -146,7 +146,7 @@ proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
-term : term mult_op factor | factor
+term : term mult_op factor | factor | 
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;

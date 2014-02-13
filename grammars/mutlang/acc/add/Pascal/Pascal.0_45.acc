@@ -96,11 +96,11 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations ident statement_part
+block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
-variable_dcl : newident_list ':' type
+variable_dcl : newident_list ':' type case_list_elem
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;

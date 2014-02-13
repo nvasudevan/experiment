@@ -10,7 +10,7 @@ jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO 
 ;
 and_expr : and_expr '&' equality_expr | equality_expr
 ;
-struct_or_union : INC_OP | STRUCT
+struct_or_union : UNION | STRUCT
 ;
 struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
@@ -44,7 +44,7 @@ relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
-additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
+additive_expr : additive_expr '-' multiplicative_expr | declaration_specifiers '+' multiplicative_expr | multiplicative_expr
 ;
 expression_statement : expr ';' | ';'
 ;

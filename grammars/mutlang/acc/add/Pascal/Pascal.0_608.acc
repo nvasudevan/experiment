@@ -32,7 +32,7 @@ function_form : formal_params ':' ident |
 ;
 procedure_call : ident actual_params
 ;
-paramtype : PACKED ARRAY '[' index_spec statements ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
+paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
 opt_declarations : declarations | 
 ;
@@ -116,7 +116,7 @@ formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;
-type_def : newident '=' type
+type_def : formal_p_sect newident '=' type
 ;
 labels : label | labels ',' label
 ;

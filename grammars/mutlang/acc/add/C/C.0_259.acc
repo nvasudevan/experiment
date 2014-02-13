@@ -54,13 +54,13 @@ unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_
 ;
 enumerator : identifier '=' constant_expr | identifier
 ;
-abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' CONSTANT | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
+abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstract_declarator2 '(' ')' | '(' parameter_type_list ')' | '(' ')' | abstract_declarator2 '[' constant_expr ']' | abstract_declarator2 '[' ']' | '[' constant_expr ']' | '[' ']' | '(' abstract_declarator ')'
 ;
 labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
+struct_declarator_list : logical_or_expr struct_declarator_list ',' struct_declarator | struct_declarator
 ;
 init_declarator : declarator '=' initializer | declarator
 ;

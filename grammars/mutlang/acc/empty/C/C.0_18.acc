@@ -20,7 +20,7 @@ struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarato
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
-compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}' | 
+compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
@@ -46,7 +46,7 @@ iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' exp
 ;
 additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
-expression_statement : expr ';' | ';'
+expression_statement : expr ';' | ';' | 
 ;
 external_definition : declaration | function_definition
 ;

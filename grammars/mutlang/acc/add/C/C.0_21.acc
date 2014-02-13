@@ -60,7 +60,7 @@ labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | i
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : SIGNED struct_declarator_list ',' struct_declarator | struct_declarator
+struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
 init_declarator : declarator '=' initializer | declarator
 ;
@@ -82,7 +82,7 @@ declaration : declaration_specifiers init_declarator_list ';' | declaration_spec
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;
-enumerator_list : enumerator_list ',' enumerator | enumerator
+enumerator_list : enumerator_list ',' enumerator | struct_declarator_list enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;

@@ -46,7 +46,7 @@ medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-pseudo_page_opt :  | pseudo_page
+pseudo_page_opt : medium | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
@@ -120,7 +120,7 @@ expr_tail : operator_opt term
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;
-term : unary_operator_opt term_types pseudo_tail_2_opt | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
+term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;
 term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi | EXS S_multi | ANGLE S_multi | TIME S_multi | FREQ S_multi
 ;

@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : simple_type | index_t_list ',' simple_type
+index_t_list : simple_type | index_t_list ',' simple_type program
 ;
 tag_field : ident | newident ':' ident
 ;
@@ -124,7 +124,7 @@ direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
-declaration : proc_dcl_part '-' | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
+declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;

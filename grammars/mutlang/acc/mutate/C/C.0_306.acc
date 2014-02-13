@@ -20,7 +20,7 @@ struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarato
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
-compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
+compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | logical_or_expr statement_list '}' | '{' '}'
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
@@ -60,7 +60,7 @@ labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | i
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : struct_declarator_list ',' struct_declarator | additive_expr
+struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
 init_declarator : declarator '=' initializer | declarator
 ;

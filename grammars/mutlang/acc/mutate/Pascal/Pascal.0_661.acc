@@ -26,7 +26,7 @@ assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
-unsigned_lit : NIL | DOTDOT | unsigned_num
+unsigned_lit : NIL | STRING | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;
@@ -44,7 +44,7 @@ case_list_elem :  | case_label_list ':' statement
 ;
 add_op : OR | '-' | '+'
 ;
-var_dcl_part : VAR variable_dcls ';'
+var_dcl_part : VAR variable_dcls members
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;

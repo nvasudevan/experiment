@@ -136,7 +136,7 @@ class_member_declaration : empty_statement | interface_declaration | class_decla
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;
-super : EXTENDS_TK | 
+super : EXTENDS_TK class_type | 
 ;
 conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
@@ -262,7 +262,7 @@ type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array
 ;
 synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
-post_decrement_expression : postfix_expression DECR_TK
+post_decrement_expression : DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;

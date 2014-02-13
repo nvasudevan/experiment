@@ -60,7 +60,7 @@ labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | i
 ;
 declaration_list : declaration_list declaration | declaration
 ;
-struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
+struct_declarator_list : struct_declarator_list ',' struct_declarator | SIGNED
 ;
 init_declarator : declarator '=' initializer | declarator
 ;
@@ -70,7 +70,7 @@ postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP i
 ;
 multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' cast_expr | cast_expr
 ;
-inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | statement
+inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;

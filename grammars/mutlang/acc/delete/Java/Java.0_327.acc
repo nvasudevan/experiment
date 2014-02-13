@@ -114,13 +114,13 @@ name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
-expression_statement : statement_expression SC_TK
+expression_statement : SC_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;
 switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
-finally : FINALLY_TK
+finally : FINALLY_TK block
 ;
 switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;

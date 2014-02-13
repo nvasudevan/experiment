@@ -44,7 +44,7 @@ relational_expr : relational_expr GE_OP shift_expr | relational_expr LE_OP shift
 ;
 iteration_statement : FOR '(' expr ';' expr ';' expr ')' statement | FOR '(' expr ';' expr ';' ')' statement | FOR '(' expr ';' ';' expr ')' statement | FOR '(' expr ';' ';' ')' statement | FOR '(' ';' expr ';' expr ')' statement | FOR '(' ';' expr ';' ')' statement | FOR '(' ';' ';' expr ')' statement | FOR '(' ';' ';' ')' statement | DO statement WHILE '(' expr ')' ';' | WHILE '(' expr ')' statement
 ;
-additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | init_declarator multiplicative_expr
+additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multiplicative_expr | multiplicative_expr
 ;
 expression_statement : expr ';' | ';'
 ;
@@ -84,7 +84,7 @@ type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID |
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
-expr : expr ',' assignment_expr | assignment_expr
+expr : expr ',' assignment_expr | assignment_expr CONST
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;

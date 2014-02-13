@@ -64,7 +64,7 @@ unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
-ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' pseudo_tail_2_opt S_multi
+ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
 addl_selector : ',' S_multi selector
 ;
@@ -80,7 +80,7 @@ selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;
-selector_tail_2 : combinator_opt selector
+selector_tail_2 : combinator_opt selector pseudo_page_opt
 ;
 simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;

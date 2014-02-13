@@ -116,7 +116,7 @@ local_variable_declaration : final type variable_declarators | type variable_dec
 ;
 expression_statement : statement_expression SC_TK
 ;
-pre_increment_expression : INCR_TK unary_expression
+pre_increment_expression : INCR_TK primary
 ;
 switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
@@ -220,7 +220,7 @@ block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
-switch_label : primary_no_new_array REL_CL_TK | CASE_TK constant_expression REL_CL_TK
+switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;

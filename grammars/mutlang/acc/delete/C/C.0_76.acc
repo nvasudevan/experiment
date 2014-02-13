@@ -86,7 +86,7 @@ enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;
-cast_expr : '(' type_name ')' cast_expr | unary_expr
+cast_expr : '(' type_name ')' cast_expr | 
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
@@ -110,7 +110,7 @@ abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | poin
 ;
 statement_list : statement_list statement | statement
 ;
-struct_declaration_list : struct_declaration_list struct_declaration | 
+struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;

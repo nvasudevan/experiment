@@ -164,7 +164,7 @@ switch_labels : switch_labels switch_label | switch_label
 ;
 statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
-variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | 
+variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
@@ -206,7 +206,7 @@ block_statement : class_declaration | statement | local_variable_declaration_sta
 ;
 type : reference_type | primitive_type
 ;
-class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
+class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super class_body
 ;
 switch_block_statement_group : switch_labels block_statements
 ;

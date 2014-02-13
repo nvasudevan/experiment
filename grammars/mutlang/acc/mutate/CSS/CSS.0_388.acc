@@ -44,7 +44,7 @@ media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
-page : PAGE_SYM DASHMATCH pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
+page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
 pseudo_page_opt :  | pseudo_page
 ;
@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt term
+expr_tail : operator_opt media_list_opt
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

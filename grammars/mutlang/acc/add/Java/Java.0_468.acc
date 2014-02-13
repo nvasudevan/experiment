@@ -240,7 +240,7 @@ method_declaration : method_header method_body
 ;
 interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
 ;
-primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
+primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | switch_labels field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
 ;
 label_decl : identifier REL_CL_TK
 ;
@@ -256,7 +256,7 @@ single_type_import_declaration : IMPORT_TK name SC_TK
 ;
 array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
-class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK statement_expression_list CCB_TK
+class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;

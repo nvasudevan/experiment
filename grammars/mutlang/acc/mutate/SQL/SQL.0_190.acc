@@ -14,13 +14,13 @@ y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
 y_column : NAME
 ;
-y_columns : y_column_list | INSERT
+y_columns : y_column_list | '*'
 ;
 y_atom : '(' y_expression ')' | y_column | y_value
 ;
 y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
-y_drop : DROP TTABLE y_table
+y_drop : y_sub_condition2 TTABLE y_table
 ;
 y_condition : y_sub_condition
 ;

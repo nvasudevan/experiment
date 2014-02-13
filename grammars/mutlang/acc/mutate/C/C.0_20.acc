@@ -16,7 +16,7 @@ struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' str
 ;
 logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
-struct_declarator : declarator ':' constant_expr | ':' equality_expr | declarator
+struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
@@ -78,7 +78,7 @@ pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_lis
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
-declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
+declaration : declaration_specifiers init_declarator_list ';' | ';' ';'
 ;
 type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID | VOLATILE | CONST | DOUBLE | FLOAT | UNSIGNED | SIGNED | LONG | INT | SHORT | CHAR
 ;

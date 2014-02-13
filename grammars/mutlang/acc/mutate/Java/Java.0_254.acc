@@ -218,7 +218,7 @@ if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK 
 ;
 block_end : CCB_TK
 ;
-if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
+if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK LT_TK
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
@@ -232,7 +232,7 @@ multiplicative_expression : multiplicative_expression REM_TK unary_expression | 
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
-variable_declarators : variable_declarators switch_block variable_declarator | variable_declarator
+variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;

@@ -188,9 +188,9 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : name DOT_TK identifier
+qualified_name : name synchronized DOT_TK identifier
 ;
-throws : catches THROWS_TK class_type_list | 
+throws : THROWS_TK class_type_list | 
 ;
 dim_expr : OSB_TK expression CSB_TK
 ;

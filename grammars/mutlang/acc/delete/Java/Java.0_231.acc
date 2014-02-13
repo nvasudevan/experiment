@@ -60,7 +60,7 @@ variable_initializers : variable_initializers C_TK variable_initializer | variab
 ;
 for_begin : for_header for_init
 ;
-type_import_on_demand_declaration : name DOT_TK MULT_TK SC_TK
+type_import_on_demand_declaration : IMPORT_TK name DOT_TK MULT_TK SC_TK
 ;
 static_ : modifiers
 ;
@@ -206,7 +206,7 @@ block_statement : class_declaration | statement | local_variable_declaration_sta
 ;
 type : reference_type | primitive_type
 ;
-class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
+class_declaration : CLASS_TK identifier super class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
 switch_block_statement_group : switch_labels block_statements
 ;

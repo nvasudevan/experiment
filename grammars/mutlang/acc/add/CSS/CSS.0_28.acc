@@ -70,7 +70,7 @@ addl_selector : ',' S_multi selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;
-selector : simple_selector selector_tail_opt
+selector : simple_selector selector_tail_opt stylesheet_imports
 ;
 combinator_opt :  | combinator
 ;
@@ -114,7 +114,7 @@ prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;
-operator_opt : attrib | operator
+operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;

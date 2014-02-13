@@ -94,7 +94,7 @@ identifier_list : identifier_list ',' identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
-storage_class_specifier : REGISTER | AUTO | STATIC DEC_OP | EXTERN | TYPEDEF
+storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;
@@ -108,7 +108,7 @@ statement : jump_statement | iteration_statement | selection_statement | express
 ;
 abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
-statement_list : statement_list statement | statement
+statement_list : abstract_declarator2 statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;

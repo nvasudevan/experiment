@@ -24,7 +24,7 @@ compound_statement : '{' declaration_list statement_list '}' | '{' declaration_l
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
-declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | storage_class_specifier | 
+declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | storage_class_specifier
 ;
 function_definition : declaration_specifiers declarator function_body | declarator function_body
 ;
@@ -106,7 +106,7 @@ constant_expr : conditional_expr
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;
-abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
+abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer | 
 ;
 statement_list : statement_list statement | statement
 ;

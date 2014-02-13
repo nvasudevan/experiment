@@ -26,7 +26,7 @@ variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | va
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
-labeled_statement_nsi : post_decrement_expression label_decl statement_nsi
+labeled_statement_nsi : label_decl statement_nsi
 ;
 constructor_body : block_begin explicit_constructor_invocation block_statements constructor_block_end | block_begin block_statements constructor_block_end | block_begin explicit_constructor_invocation constructor_block_end | block_begin constructor_block_end
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | throws statement_expression
 ;
 synchronized : modifiers
 ;

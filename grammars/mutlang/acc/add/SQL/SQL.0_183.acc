@@ -10,7 +10,7 @@ y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table 
 ;
 y_expression : y_expression '-' y_product | y_expression '+' y_product | y_product
 ;
-y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
+y_sub_condition2 : y_boolean y_sub_condition2 AND y_boolean | y_boolean
 ;
 y_column : NAME
 ;
@@ -48,7 +48,7 @@ y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
 y_table : NAME
 ;
-y_order : NAME y_boolean
+y_order : NAME
 ;
 y_values : VALUES '(' y_value_list ')'
 ;

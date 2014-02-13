@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : MODIFIER_TK | THIS_TK
+this_or_super : SUPER_TK | THIS_TK
 ;
 variable_initializer : array_initializer | expression
 ;
@@ -104,7 +104,7 @@ import_declarations : import_declarations import_declaration | import_declaratio
 ;
 exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
-primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
+primitive_type : BOOLEAN_TK | FP_TK | switch_label
 ;
 static_initializer : static_ block
 ;

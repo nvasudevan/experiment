@@ -66,13 +66,13 @@ property : IDENT S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-addl_selector : ',' S_multi selector
+addl_selector : property S_multi selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | NUMBER
+combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;

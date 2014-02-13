@@ -16,13 +16,13 @@ formal_params : '(' formal_p_sects ')' |
 ;
 newident : IDENTIFIER
 ;
-mult_op : AND | MOD | DIV | proc_dcl_part | '*'
+mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
 param_group : newident_list ':' paramtype
 ;
-assignment : variable BECOMES expression
+assignment : variable BECOMES newident
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;

@@ -202,7 +202,7 @@ class_body_declaration : block | constructor_declaration | static_initializer | 
 ;
 method_body : SC_TK | block
 ;
-block_statement : class_declaration | statement | local_variable_declaration_statement
+block_statement : do_statement_begin class_declaration | statement | local_variable_declaration_statement
 ;
 type : reference_type | primitive_type
 ;
@@ -272,7 +272,7 @@ and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
 for_update : statement_expression_list | 
 ;
-empty_statement : multiplicative_expression SC_TK
+empty_statement : SC_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;

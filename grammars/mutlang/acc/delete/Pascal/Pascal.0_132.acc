@@ -86,7 +86,7 @@ proc_heading : PROCEDURE newident formal_params
 ;
 members : member | members ',' member
 ;
-expression : simple_expr relational_op simple_expr | simple_expr
+expression : simple_expr relational_op | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
@@ -114,7 +114,7 @@ external_files : '(' newident_list ')' |
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
-const_dcl_part : CONST const_defs
+const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;

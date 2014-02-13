@@ -222,7 +222,7 @@ if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK stat
 ;
 switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
-do_statement_begin : variable_initializer DO_TK
+do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;
@@ -278,7 +278,7 @@ interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
 equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
-array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
+array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | equality_expression OCB_TK CCB_TK
 ;
 simple_name : identifier
 ;

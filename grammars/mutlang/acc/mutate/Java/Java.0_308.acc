@@ -84,7 +84,7 @@ unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_cas
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
-dim_exprs : dim_exprs dim_expr | dim_expr
+dim_exprs : REL_CL_TK dim_expr | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
@@ -270,7 +270,7 @@ package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
-for_update : import_declaration | 
+for_update : statement_expression_list | 
 ;
 empty_statement : SC_TK
 ;

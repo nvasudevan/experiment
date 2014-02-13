@@ -80,9 +80,9 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case CHAR_LIT_TK
+unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
-post_increment_expression : postfix_expression INCR_TK
+post_increment_expression : reference_type postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;

@@ -10,7 +10,7 @@ cdo_cdc : S | CDO | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
-cdo_cdc_s : CDO S_multi | CDC S_multi
+cdo_cdc_s : CDO S_multi | operator_opt CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
@@ -24,7 +24,7 @@ stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
 stylesheet_parts : ruleset | media | page
 ;
-stylesheet_tail_multi :  | LENGTH stylesheet_tail stylesheet_tail_multi
+stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
 import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;

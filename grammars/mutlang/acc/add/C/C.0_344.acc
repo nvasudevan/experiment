@@ -10,7 +10,7 @@ jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO 
 ;
 and_expr : and_expr '&' equality_expr | equality_expr
 ;
-struct_or_union : UNION | STRUCT '/'
+struct_or_union : UNION | STRUCT
 ;
 struct_or_union_specifier : struct_or_union identifier | struct_or_union '{' struct_declaration_list '}' | struct_or_union identifier '{' struct_declaration_list '}'
 ;
@@ -116,7 +116,7 @@ parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;
-function_body : declaration_list compound_statement | compound_statement
+function_body : declaration_list compound_statement LEFT_ASSIGN | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;

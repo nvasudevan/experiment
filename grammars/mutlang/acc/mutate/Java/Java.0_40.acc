@@ -32,7 +32,7 @@ constructor_body : block_begin explicit_constructor_invocation block_statements 
 ;
 for_init : local_variable_declaration | statement_expression_list | 
 ;
-formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
+formal_parameter_list : formal_parameter_list C_TK formal_parameter | SWITCH_TK
 ;
 labeled_statement : label_decl statement
 ;
@@ -178,7 +178,7 @@ constant_declaration : field_declaration
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
-formal_parameter : final type left_hand_side | type variable_declarator_id
+formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
 abstract_method_declaration : method_header SC_TK
 ;

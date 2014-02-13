@@ -64,9 +64,9 @@ unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
-ruleset : selector multi_addl_selector S_multi declaration_opt declaration_multi '}' S_multi
+ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-addl_selector : ',' S_multi selector
+addl_selector : ',' selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;

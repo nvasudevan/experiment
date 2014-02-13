@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | combinator
+combinator_opt :  | unary_operator
 ;
 selector_tail_opt :  | selector_tail
 ;
@@ -112,7 +112,7 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : DASHMATCH expr_tail_multi
+expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;

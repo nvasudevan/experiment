@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident | new_id_list ',' newident
+new_id_list : members | new_id_list ',' newident
 ;
 member_list : members | 
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs relational_op type_def
+type_defs : type_def | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;

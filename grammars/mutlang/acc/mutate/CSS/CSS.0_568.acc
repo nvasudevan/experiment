@@ -80,7 +80,7 @@ selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;
-selector_tail_2 : combinator_opt selector
+selector_tail_2 : combinator_opt '/'
 ;
 simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
@@ -126,7 +126,7 @@ term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi 
 ;
 unary_operator_opt :  | unary_operator
 ;
-function : FUNCTION S_multi expr medium S_multi
+function : FUNCTION S_multi expr ')' S_multi
 ;
 hexcolor : HASH S_multi
 ;

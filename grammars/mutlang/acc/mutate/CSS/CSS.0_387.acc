@@ -54,7 +54,7 @@ declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
-pseudo_page : COLON_TK IDENT S_multi
+pseudo_page : COLON_TK IDENT cdo_cdc_s
 ;
 operator : '/' S_multi | ',' S_multi
 ;
@@ -80,7 +80,7 @@ selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;
-selector_tail_2 : combinator_opt '-'
+selector_tail_2 : combinator_opt selector
 ;
 simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;

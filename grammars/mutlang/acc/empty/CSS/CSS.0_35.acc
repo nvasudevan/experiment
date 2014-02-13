@@ -58,7 +58,7 @@ pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
-combinator : '+' S_multi | '>' S_multi | 
+combinator : '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
@@ -94,7 +94,7 @@ element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
-attrib_includes : '=' | INCLUDES | DASHMATCH
+attrib_includes : '=' | INCLUDES | DASHMATCH | 
 ;
 attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;

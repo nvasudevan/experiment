@@ -254,7 +254,7 @@ array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_T
 ;
 single_type_import_declaration : IMPORT_TK name SC_TK
 ;
-array_access : array_initializer OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
+array_access : primary_no_new_array OSB_TK expression CSB_TK | name OSB_TK expression CSB_TK
 ;
 class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
@@ -304,5 +304,5 @@ while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
-while_statement : while_expression statement
+while_statement : while_expression interface_type
 ;

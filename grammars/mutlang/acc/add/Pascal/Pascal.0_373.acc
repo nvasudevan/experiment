@@ -34,7 +34,7 @@ procedure_call : ident actual_params
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
-opt_declarations : declarations | 
+opt_declarations : declarations | TO
 ;
 statement_part : compound_stmt
 ;
@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : IDENTIFIER expression colon_things | expression
+actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;

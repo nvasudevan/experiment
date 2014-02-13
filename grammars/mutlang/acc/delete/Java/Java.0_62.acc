@@ -42,7 +42,7 @@ switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_T
 ;
 extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interface_type
 ;
-local_variable_declaration_statement : local_variable_declaration SC_TK
+local_variable_declaration_statement : SC_TK
 ;
 do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
 ;
@@ -132,7 +132,7 @@ for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_b
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
-class_member_declaration :  | interface_declaration | class_declaration | method_declaration | field_declaration
+class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;

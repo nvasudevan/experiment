@@ -2,7 +2,7 @@
 
 %nodefault
 
-file : file external_definition | external_definition
+file : file external_definition | external_definition DIV_ASSIGN
 ;
 parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
@@ -122,7 +122,7 @@ assignment_expr : unary_expr assignment_operator assignment_expr | conditional_e
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
-type_specifier_list : logical_and_expr type_specifier_list type_specifier | type_specifier
+type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
 parameter_declaration : type_name | type_specifier_list declarator
 ;

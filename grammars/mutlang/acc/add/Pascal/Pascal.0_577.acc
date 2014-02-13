@@ -132,7 +132,7 @@ case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
-record_section :  | newident_list ':' type
+record_section :  | newident_list CONST ':' type
 ;
 label : UNSIGNED_INT
 ;
@@ -144,7 +144,7 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : CASE tag_field OF PROGRAM variants
+variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;

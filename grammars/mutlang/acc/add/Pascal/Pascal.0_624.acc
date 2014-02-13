@@ -36,7 +36,7 @@ paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']'
 ;
 opt_declarations : declarations | 
 ;
-statement_part : compound_stmt
+statement_part : compound_stmt unsigned_lit
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
@@ -124,7 +124,7 @@ direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;
-declaration : proc_dcl_part | var_dcl_part | type_dcl_part ELSE | const_dcl_part | label_dcl_part
+declaration : proc_dcl_part | var_dcl_part | type_dcl_part | const_dcl_part | label_dcl_part
 ;
 relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;

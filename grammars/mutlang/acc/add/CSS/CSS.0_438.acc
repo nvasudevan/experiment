@@ -78,7 +78,7 @@ selector_tail_opt :  | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
-selector_tail_2_opt :  | selector_tail_2 hexcolor
+selector_tail_2_opt :  | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
@@ -108,7 +108,7 @@ pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;
-prio_opt :  | prio
+prio_opt : stylesheet_imports | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;

@@ -8,7 +8,7 @@ fixed_part : record_section | fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
-expressions : expression | expressions ',' expression
+expressions : expression | expressions NOT expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
@@ -24,7 +24,7 @@ param_group : newident_list ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;
-case_list : IF | case_list ';' case_list_elem
+case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;

@@ -2,7 +2,7 @@
 
 %nodefault
 
-program : PROGRAM newident external_files ';' block '.'
+program : ELSE newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
@@ -54,7 +54,7 @@ declarations : declaration | declarations declaration
 ;
 record_var : variable
 ;
-proc_or_func : procedure_call ';' body ';' | proc_heading ';' body ';'
+proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
 formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
 ;

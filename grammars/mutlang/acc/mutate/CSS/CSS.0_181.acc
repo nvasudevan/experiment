@@ -34,7 +34,7 @@ string_or_uri : STRING | URI
 ;
 media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
-ruleset_multi :  | ruleset combinator_opt
+ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
@@ -92,7 +92,7 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
+attrib : '[' S_multi URI S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;

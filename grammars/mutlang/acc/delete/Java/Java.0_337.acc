@@ -122,7 +122,7 @@ switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
 finally : FINALLY_TK block
 ;
-switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | 
+switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
@@ -268,7 +268,7 @@ primary : array_creation_expression | primary_no_new_array
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;
-and_expression : and_expression AND_TK equality_expression | equality_expression
+and_expression : AND_TK equality_expression | equality_expression
 ;
 for_update : statement_expression_list | 
 ;

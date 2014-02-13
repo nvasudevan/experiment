@@ -106,11 +106,11 @@ pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;
-declaration : property COLON_TK S_multi expr prio_opt
+declaration : property property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : term_types IMPORTANT_SYM S_multi
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

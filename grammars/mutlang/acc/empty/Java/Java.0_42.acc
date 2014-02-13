@@ -186,7 +186,7 @@ throw_statement : THROW_TK expression SC_TK
 ;
 class_or_interface_type : name
 ;
-method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
+method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK | 
 ;
 qualified_name : name DOT_TK identifier
 ;
@@ -304,5 +304,5 @@ while_statement_nsi : while_expression statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;
-while_statement : while_expression statement | 
+while_statement : while_expression statement
 ;

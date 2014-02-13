@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | 
+variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
@@ -232,7 +232,7 @@ multiplicative_expression : multiplicative_expression REM_TK unary_expression | 
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
-variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
+variable_declarators : C_TK variable_declarator | variable_declarator
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;

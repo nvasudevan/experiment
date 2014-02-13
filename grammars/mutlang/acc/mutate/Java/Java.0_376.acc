@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : SUPER_TK | THIS_TK
+this_or_super : SUPER_TK | throw_statement
 ;
 variable_initializer : array_initializer | expression
 ;
@@ -290,7 +290,7 @@ trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expr
 ;
 left_hand_side : array_access | field_access | name
 ;
-unary_expression_not_plus_minus : cast_expression | inclusive_or_expression unary_expression | NOT_TK unary_expression | postfix_expression
+unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;

@@ -88,13 +88,13 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : simple_type | index_t_list ',' simple_type NOT
+index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;
 label_dcl_part : LABEL labels ';'
 ;
-variants : variant | variants ';' variant
+variants : variant simple_expr | variants ';' variant
 ;
 block : opt_declarations statement_part
 ;

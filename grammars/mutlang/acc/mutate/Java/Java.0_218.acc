@@ -202,7 +202,7 @@ class_body_declaration : block | constructor_declaration | static_initializer | 
 ;
 method_body : SC_TK | block
 ;
-block_statement : formal_parameter | statement | local_variable_declaration_statement
+block_statement : class_declaration | statement | local_variable_declaration_statement
 ;
 type : reference_type | primitive_type
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | interface_member_declaration
 ;
 synchronized : modifiers
 ;

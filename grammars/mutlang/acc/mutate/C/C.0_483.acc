@@ -58,7 +58,7 @@ abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstra
 ;
 labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
-declaration_list : declaration_list struct_declaration_list | declaration
+declaration_list : declaration_list declaration | declaration
 ;
 struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
@@ -118,7 +118,7 @@ identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;
-assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
+assignment_expr : OR_ASSIGN assignment_operator assignment_expr | conditional_expr
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;

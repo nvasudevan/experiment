@@ -48,7 +48,7 @@ page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_
 ;
 pseudo_page_opt :  | pseudo_page
 ;
-declaration_opt : LENGTH | declaration
+declaration_opt :  | declaration
 ;
 declaration_tail : SC_TK S_multi declaration_opt
 ;
@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
+pseudo_tail : IMPORT_SYM IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;

@@ -34,7 +34,7 @@ procedure_call : ident actual_params
 ;
 paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']' OF paramtype | ident
 ;
-opt_declarations : declarations members | 
+opt_declarations : declarations | 
 ;
 statement_part : compound_stmt
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | 
+external_files : '(' newident_list ')' | variant_part
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

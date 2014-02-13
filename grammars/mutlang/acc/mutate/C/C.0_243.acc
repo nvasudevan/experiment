@@ -18,7 +18,7 @@ logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
 struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
-initializer_list : initializer_list ',' initializer | ':'
+initializer_list : initializer_list ',' initializer | initializer
 ;
 compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
@@ -116,7 +116,7 @@ parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;
-function_body : declaration_list compound_statement | compound_statement
+function_body : declaration_list compound_statement | primary_expr
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;

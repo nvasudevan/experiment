@@ -8,7 +8,7 @@ parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
 jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO identifier ';'
 ;
-and_expr : and_expr equality_expr | equality_expr
+and_expr : and_expr '&' equality_expr | equality_expr
 ;
 struct_or_union : UNION | STRUCT
 ;
@@ -90,7 +90,7 @@ cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
-identifier_list : identifier_list ',' identifier | identifier
+identifier_list : identifier_list ',' identifier | 
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;

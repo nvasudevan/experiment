@@ -96,7 +96,7 @@ variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
-cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
+cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims unary_expression
 ;
 constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;
@@ -290,7 +290,7 @@ trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expr
 ;
 left_hand_side : array_access | field_access | name
 ;
-unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | 
+unary_expression_not_plus_minus : cast_expression | NEG_TK unary_expression | NOT_TK unary_expression | postfix_expression
 ;
 dims : dims OSB_TK CSB_TK | OSB_TK CSB_TK
 ;

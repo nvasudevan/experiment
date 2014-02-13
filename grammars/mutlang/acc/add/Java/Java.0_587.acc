@@ -120,7 +120,7 @@ pre_increment_expression : INCR_TK unary_expression
 ;
 switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
-finally : FINALLY_TK block
+finally : FINALLY_TK CLASS_TK block
 ;
 switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
@@ -260,7 +260,7 @@ class_body : OCB_TK class_body_declarations CCB_TK | OCB_TK CCB_TK
 ;
 type_literals : VOID_TK DOT_TK CLASS_TK | primitive_type DOT_TK CLASS_TK | array_type DOT_TK CLASS_TK | name DOT_TK CLASS_TK
 ;
-synchronized_statement : synchronized OP_TK expression CP_TK block postfix_expression
+synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;

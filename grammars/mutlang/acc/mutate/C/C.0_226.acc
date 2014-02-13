@@ -20,7 +20,7 @@ struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarato
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
-compound_statement : '{' ',' statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
+compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
@@ -100,7 +100,7 @@ declarator : pointer declarator2 | declarator2
 ;
 type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
-exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
+exclusive_or_expr : exclusive_or_expr '^' and_expr | IF
 ;
 constant_expr : conditional_expr
 ;

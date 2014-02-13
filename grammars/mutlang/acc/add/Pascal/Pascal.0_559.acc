@@ -14,13 +14,13 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : IDENTIFIER
+newident : field_list IDENTIFIER
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
-param_group : newident_list GOTO ':' paramtype
+param_group : newident_list ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;

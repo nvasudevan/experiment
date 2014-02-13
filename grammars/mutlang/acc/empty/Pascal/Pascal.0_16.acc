@@ -42,7 +42,7 @@ field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
-add_op : OR | '-' | '+' | 
+add_op : OR | '-' | '+'
 ;
 var_dcl_part : VAR variable_dcls ';'
 ;
@@ -76,7 +76,7 @@ new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
-body : IDENTIFIER | block
+body : IDENTIFIER | block | 
 ;
 actual_param : expression colon_things | expression
 ;

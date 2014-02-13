@@ -12,7 +12,7 @@ pre_decrement_expression : DECR_TK unary_expression
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
-conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | inclusive_or_expression
+conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or_expression | 
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
@@ -212,7 +212,7 @@ switch_block_statement_group : switch_labels block_statements
 ;
 if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
-break_statement : BREAK_TK identifier SC_TK | BREAK_TK
+break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;

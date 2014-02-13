@@ -142,7 +142,7 @@ conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
-block_begin : class_instance_creation_expression OCB_TK
+block_begin : OCB_TK
 ;
 final : modifiers
 ;
@@ -220,7 +220,7 @@ block_end : CCB_TK
 ;
 if_then_else_statement : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement
 ;
-switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
+switch_label : DEFAULT_TK REL_CL_TK | CASE_TK block_statement constant_expression REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;

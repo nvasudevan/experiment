@@ -48,7 +48,7 @@ y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
 y_table : NAME
 ;
-y_order : NOT
+y_order : y_columndef
 ;
 y_values : VALUES '(' y_value_list ')'
 ;

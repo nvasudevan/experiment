@@ -84,7 +84,7 @@ unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_cas
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
-dim_exprs : dim_exprs dim_expr | dim_expr
+dim_exprs : dim_exprs dim_expr | statement_expression_list
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
@@ -206,7 +206,7 @@ block_statement : class_declaration | statement | local_variable_declaration_sta
 ;
 type : reference_type | primitive_type
 ;
-class_declaration : CLASS_TK identifier super interfaces STRING_LIT_TK | modifiers CLASS_TK identifier super interfaces class_body
+class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
 ;
 switch_block_statement_group : switch_labels block_statements
 ;

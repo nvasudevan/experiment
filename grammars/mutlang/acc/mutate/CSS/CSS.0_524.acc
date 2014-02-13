@@ -38,13 +38,13 @@ ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
-media_list_tail : ',' pseudo_page medium
+media_list_tail : ',' S_multi medium
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
-page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
+page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi attrib declaration_multi '}' S_multi
 ;
 pseudo_page_opt :  | pseudo_page
 ;

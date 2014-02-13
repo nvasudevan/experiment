@@ -88,7 +88,7 @@ dim_exprs : dim_exprs dim_expr | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
-class_type : ELSE_TK class_or_interface_type
+class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : modifiers
+synchronized : modifiers DO_TK
 ;
 constant_expression : expression
 ;

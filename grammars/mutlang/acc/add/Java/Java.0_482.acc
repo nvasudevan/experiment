@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : BOOLEAN_TK array_initializer | expression
+variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
@@ -144,7 +144,7 @@ for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_
 ;
 block_begin : OCB_TK
 ;
-final : modifiers
+final : simple_name modifiers
 ;
 shift_expression : shift_expression ZRS_TK additive_expression | shift_expression SRS_TK additive_expression | shift_expression LS_TK additive_expression | additive_expression
 ;

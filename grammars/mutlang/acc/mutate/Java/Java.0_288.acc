@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : type_declarations type_declaration | type_declaration
+type_declarations : type_declarations array_type | type_declaration
 ;
 method_declaration : method_header method_body
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | ELSE_TK
+statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
 synchronized : modifiers
 ;

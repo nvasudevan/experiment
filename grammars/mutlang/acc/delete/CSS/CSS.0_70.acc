@@ -32,7 +32,7 @@ media_list_opt :  | media_list
 ;
 string_or_uri : STRING | URI
 ;
-media : MEDIA_SYM media_list '{' S_multi ruleset_multi '}' S_multi
+media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
 ruleset_multi :  | ruleset ruleset_multi
 ;
@@ -56,7 +56,7 @@ declaration_multi :  | declaration_tail declaration_multi
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;
-operator : '/' S_multi | ',' S_multi
+operator : S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;

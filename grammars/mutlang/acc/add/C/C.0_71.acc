@@ -24,7 +24,7 @@ compound_statement : '{' declaration_list statement_list '}' | '{' declaration_l
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
-declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | storage_class_specifier
+declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier primary_expr declaration_specifiers | storage_class_specifier
 ;
 function_definition : declaration_specifiers declarator function_body | declarator function_body
 ;
@@ -126,7 +126,7 @@ type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
 parameter_declaration : type_name | type_specifier_list declarator
 ;
-initializer : '{' initializer_list ',' '}' PTR_OP | '{' initializer_list '}' | assignment_expr
+initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;
 declarator2 : declarator2 '(' parameter_identifier_list ')' | declarator2 '(' parameter_type_list ')' | declarator2 '(' ')' | declarator2 '[' constant_expr ']' | declarator2 '[' ']' | '(' declarator ')' | identifier
 ;

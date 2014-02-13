@@ -4,7 +4,7 @@
 
 stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
 ;
-stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
+stylesheet_opt_1 : ruleset_multi STRING SC_TK | 
 ;
 cdo_cdc : S | CDO | CDC
 ;
@@ -66,7 +66,7 @@ property : IDENT S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-addl_selector : ',' operator_opt selector
+addl_selector : ',' S_multi selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;

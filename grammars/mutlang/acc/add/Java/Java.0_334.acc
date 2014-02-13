@@ -138,7 +138,7 @@ class_type_list : class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;
-conditional_or_expression : conditional_or_expression assignment BOOL_OR_TK conditional_and_expression | conditional_and_expression
+conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and_expression | conditional_and_expression
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
@@ -234,7 +234,7 @@ return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
-type_declarations : type_declarations type_declaration | type_declaration
+type_declarations : type_declarations type_declaration | type_declaration literal
 ;
 method_declaration : method_header method_body
 ;

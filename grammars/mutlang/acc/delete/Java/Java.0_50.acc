@@ -164,7 +164,7 @@ switch_labels : switch_labels switch_label | switch_label
 ;
 statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
-variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
+variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | 
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
@@ -228,7 +228,7 @@ constructor_block_end : block_end
 ;
 switch_statement : switch_expression switch_block
 ;
-multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | 
+multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
 return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
 ;

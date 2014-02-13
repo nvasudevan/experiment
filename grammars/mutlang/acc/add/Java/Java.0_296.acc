@@ -134,7 +134,7 @@ modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
-class_type_list : class_type_list C_TK class_type | class_type
+class_type_list : INTEGRAL_TK class_type_list C_TK class_type | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;
@@ -226,7 +226,7 @@ do_statement_begin : DO_TK
 ;
 constructor_block_end : block_end
 ;
-switch_statement : switch_expression MINUS_TK switch_block
+switch_statement : switch_expression switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;

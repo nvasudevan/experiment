@@ -12,7 +12,7 @@ stylesheet_imports : import cdo_cdc_s_multi
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
-S_multi :  | S S_multi '>'
+S_multi :  | S S_multi
 ;
 cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
@@ -70,7 +70,7 @@ addl_selector : ',' S_multi selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;
-selector : simple_selector selector_tail_opt
+selector : simple_selector selector_tail_opt COLON_TK
 ;
 combinator_opt :  | combinator
 ;

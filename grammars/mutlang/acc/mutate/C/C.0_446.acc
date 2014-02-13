@@ -114,7 +114,7 @@ struct_declaration_list : struct_declaration_list struct_declaration | struct_de
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
-identifier : AND_ASSIGN
+identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;
@@ -124,7 +124,7 @@ argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
-parameter_declaration : type_name | type_specifier_list declarator
+parameter_declaration : IDENTIFIER | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;

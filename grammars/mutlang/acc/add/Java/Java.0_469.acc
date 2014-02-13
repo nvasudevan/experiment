@@ -212,7 +212,7 @@ switch_block_statement_group : switch_labels block_statements
 ;
 if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
-break_statement : BREAK_TK field_access identifier SC_TK | BREAK_TK SC_TK
+break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;
@@ -300,7 +300,7 @@ additive_expression : additive_expression MINUS_TK multiplicative_expression | a
 ;
 interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
 ;
-while_statement_nsi : while_expression statement_nsi
+while_statement_nsi : while_expression EXTENDS_TK statement_nsi
 ;
 something_dot_new : primary DOT_TK NEW_TK | name DOT_TK NEW_TK
 ;

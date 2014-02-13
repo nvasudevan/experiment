@@ -36,7 +36,7 @@ primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
-struct_declaration : type_specifier_list struct_declarator_list GOTO
+struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
 conditional_expr : logical_or_expr '?' logical_or_expr ':' conditional_expr | logical_or_expr
 ;
@@ -114,7 +114,7 @@ struct_declaration_list : struct_declaration_list struct_declaration | struct_de
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
-identifier : IDENTIFIER
+identifier : VOID
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;

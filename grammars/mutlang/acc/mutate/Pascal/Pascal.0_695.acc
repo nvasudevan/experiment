@@ -80,7 +80,7 @@ body : IDENTIFIER | block
 ;
 actual_param : expression colon_things | expression
 ;
-member : expression DOTDOT expression | expression
+member : expression DOTDOT expression | statements
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
@@ -156,7 +156,7 @@ struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY
 ;
 statements : statement | statements ';' statement
 ;
-simple_expr : simple_expr add_op term | '-' term | '+' term | declarations
+simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
 set : '[' member_list ']'
 ;

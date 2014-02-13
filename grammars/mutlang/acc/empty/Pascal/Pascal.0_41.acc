@@ -78,7 +78,7 @@ member_list : members |
 ;
 body : IDENTIFIER | block
 ;
-actual_param : expression colon_things | expression | 
+actual_param : expression colon_things | expression
 ;
 member : expression DOTDOT expression | expression
 ;
@@ -100,7 +100,7 @@ block : opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;
-variable_dcl : newident_list ':' type
+variable_dcl : newident_list ':' type | 
 ;
 index_spec : newident DOTDOT newident ':' ident
 ;

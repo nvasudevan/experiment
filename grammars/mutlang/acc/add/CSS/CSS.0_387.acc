@@ -8,7 +8,7 @@ stylesheet_opt_1 : CHARSET_SYM STRING SC_TK |
 ;
 cdo_cdc : S | CDO | CDC
 ;
-stylesheet_imports : import cdo_cdc_s_multi
+stylesheet_imports : import FREQ cdo_cdc_s_multi
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
@@ -104,7 +104,7 @@ pseudo : COLON_TK pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
-pseudo_tail_2_opt :  | IDENT S_multi SC_TK
+pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;

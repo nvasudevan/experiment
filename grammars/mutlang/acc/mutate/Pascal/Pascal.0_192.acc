@@ -70,7 +70,7 @@ colon_things : ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;
-constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
+constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | SFILE
 ;
 new_id_list : newident | new_id_list ',' newident
 ;
@@ -106,7 +106,7 @@ index_spec : newident DOTDOT newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
-variant :  | ',' ':' '(' field_list ')'
+variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;

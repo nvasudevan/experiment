@@ -124,7 +124,7 @@ finally : FINALLY_TK block
 ;
 switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
-compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | interface_type_list type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
+compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
 interface_type : class_or_interface_type
 ;
@@ -212,7 +212,7 @@ switch_block_statement_group : switch_labels block_statements
 ;
 if_then_statement : IF_TK OP_TK expression CP_TK statement
 ;
-break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
+break_statement : BREAK_TK identifier SC_TK | BREAK_TK CLASS_TK
 ;
 if_then_else_statement_nsi : IF_TK OP_TK expression CP_TK statement_nsi ELSE_TK statement_nsi
 ;

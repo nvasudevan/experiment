@@ -32,7 +32,7 @@ assignment_operator : OR_ASSIGN | XOR_ASSIGN | AND_ASSIGN | RIGHT_ASSIGN | LEFT_
 ;
 logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
-primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
+primary_expr : '(' expr ')' | STRING_LITERAL primary_expr | CONSTANT | identifier
 ;
 shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
@@ -114,7 +114,7 @@ struct_declaration_list : struct_declaration_list struct_declaration | struct_de
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
-identifier : EXTERN IDENTIFIER
+identifier : IDENTIFIER
 ;
 function_body : declaration_list compound_statement | compound_statement
 ;

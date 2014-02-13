@@ -58,7 +58,7 @@ pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;
-combinator : '+' S_multi | '>' EMS
+combinator : '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
@@ -68,7 +68,7 @@ ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_m
 ;
 addl_selector : ',' S_multi selector
 ;
-multi_addl_selector :  | addl_selector multi_addl_selector
+multi_addl_selector :  | addl_selector attrib_includes
 ;
 selector : simple_selector selector_tail_opt
 ;

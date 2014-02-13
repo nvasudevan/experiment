@@ -16,7 +16,7 @@ conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
-continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
+continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK | 
 ;
 block_statements : block_statements block_statement | block_statement
 ;
@@ -98,7 +98,7 @@ expression : assignment_expression
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
-constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK | 
+constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;

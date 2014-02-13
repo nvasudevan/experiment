@@ -4,7 +4,7 @@
 
 file : file external_definition | external_definition
 ;
-parameter_identifier_list : identifier_list ',' ELIPSIS SWITCH | identifier_list
+parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
 jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO identifier ';'
 ;
@@ -112,7 +112,7 @@ statement_list : statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
+parameter_type_list : parameter_list ',' ELIPSIS | parameter_list LE_OP
 ;
 identifier : IDENTIFIER
 ;

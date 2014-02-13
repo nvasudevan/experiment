@@ -68,7 +68,7 @@ relational_expression : relational_expression INSTANCEOF_TK reference_type | rel
 ;
 literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_LIT_TK
 ;
-class_body_declarations : class_body_declarations class_body_declaration | class_body_declaration
+class_body_declarations : class_body_declarations class_body_declaration | type_declarations class_body_declaration
 ;
 reference_type : array_type | class_or_interface_type
 ;
@@ -156,7 +156,7 @@ catch_clause : catch_clause_parameter block
 ;
 constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
 ;
-statement : for_statement LT_TK | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
+statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;
 statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
 ;

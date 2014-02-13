@@ -20,7 +20,7 @@ mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
-param_group : newident_list ':' paramtype
+param_group : newident_list RECORD ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;
@@ -76,7 +76,7 @@ new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
-body : IDENTIFIER simple_type | block
+body : IDENTIFIER | block
 ;
 actual_param : expression colon_things | expression
 ;

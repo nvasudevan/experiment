@@ -46,13 +46,13 @@ y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | N
 ;
 y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
-y_table : OR NAME
+y_table : NAME
 ;
 y_order : NAME
 ;
 y_values : VALUES '(' y_value_list ')'
 ;
-y_create : CREATE TTABLE y_table '(' y_columndefs ')'
+y_create : CREATE TTABLE y_table '(' y_values y_columndefs ')'
 ;
 y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SELECT y_columns FROM y_table ORDER BY y_order | SELECT y_columns FROM y_table WHERE y_condition | SELECT y_columns FROM y_table
 ;

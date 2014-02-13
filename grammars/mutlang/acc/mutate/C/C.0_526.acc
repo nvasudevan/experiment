@@ -72,7 +72,7 @@ multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/
 ;
 inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
-init_declarator_list : init_declarator_list ',' cast_expr | init_declarator
+init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
@@ -120,7 +120,7 @@ function_body : declaration_list compound_statement | compound_statement
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
-argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
+argument_expr_list : argument_expr_list ',' equality_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;

@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '+'
+unary_operator : '-' | '+' import
 ;
 property : IDENT S_multi
 ;
@@ -82,7 +82,7 @@ selector_tail_2_opt :  | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
-simple_selector : element_name simple_selector_tail_multi | ',' simple_selector_tail simple_selector_tail_multi
+simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;

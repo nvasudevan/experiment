@@ -112,11 +112,11 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : term expr_tail_multi
+expr : INCLUDES expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt DASHMATCH
+expr_tail : operator_opt term
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

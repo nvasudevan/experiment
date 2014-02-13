@@ -6,7 +6,7 @@ goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
-argument_list : INTEGRAL_TK C_TK expression | expression
+argument_list : argument_list C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
@@ -88,7 +88,7 @@ dim_exprs : dim_exprs dim_expr | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
-class_type : class_or_interface_type
+class_type : compilation_unit
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;

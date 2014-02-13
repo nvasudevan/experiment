@@ -32,7 +32,7 @@ y_term : '-' y_term | y_atom
 ;
 y_delete : DELETE FROM y_table WHERE y_condition | DELETE FROM y_table
 ;
-y_alter : ALTER TTABLE y_table ADD BY | ALTER TTABLE y_table ADD COLUMN y_columndef
+y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_columndef
 ;
 y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
 ;
@@ -44,7 +44,7 @@ y_columndefs : y_columndefs ',' y_columndef | y_columndef
 ;
 y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | NAME INT | NAME VARCHAR '(' INTNUM ')'
 ;
-y_product : y_product '/' y_term | y_product '*' y_term | y_term
+y_product : y_product '/' y_term | y_assignment '*' y_term | y_term
 ;
 y_table : NAME
 ;

@@ -20,7 +20,7 @@ struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarato
 ;
 initializer_list : initializer_list ',' initializer | initializer
 ;
-compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' ELIPSIS
+compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
 equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
@@ -84,7 +84,7 @@ type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID |
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
-expr : expr ',' assignment_expr | assignment_expr
+expr : expr ',' assignment_expr | CONSTANT
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;

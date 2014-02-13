@@ -8,7 +8,7 @@ fixed_part : record_section | fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
-expressions : expression case_label | expressions ',' expression
+expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
@@ -96,7 +96,7 @@ label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;
-block : opt_declarations statement_part
+block : DIV opt_declarations statement_part
 ;
 type_dcl_part : TYPE type_defs ';'
 ;

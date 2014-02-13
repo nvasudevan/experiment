@@ -104,7 +104,7 @@ import_declarations : import_declarations import_declaration | import_declaratio
 ;
 exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
-primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK | 
+primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
 static_initializer : static_ block
 ;
@@ -210,7 +210,7 @@ class_declaration : CLASS_TK identifier super interfaces class_body | modifiers 
 ;
 switch_block_statement_group : switch_labels block_statements
 ;
-if_then_statement : IF_TK OP_TK expression CP_TK statement
+if_then_statement : IF_TK OP_TK expression CP_TK statement | 
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;

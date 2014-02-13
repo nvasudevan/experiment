@@ -44,7 +44,7 @@ extends_interfaces : extends_interfaces C_TK interface_type | EXTENDS_TK interfa
 ;
 local_variable_declaration_statement : local_variable_declaration SC_TK
 ;
-do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_TK
+do_statement : do_statement_begin statement WHILE_TK conditional_or_expression expression CP_TK SC_TK
 ;
 interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
 ;
@@ -188,7 +188,7 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : name DOT_TK INTERFACE_TK
+qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;

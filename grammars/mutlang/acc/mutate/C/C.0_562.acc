@@ -70,7 +70,7 @@ postfix_expr : postfix_expr DEC_OP | postfix_expr INC_OP | postfix_expr PTR_OP i
 ;
 multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/' cast_expr | multiplicative_expr '*' cast_expr | cast_expr
 ;
-inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
+inclusive_or_expr : inclusive_or_expr NE_OP exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;
@@ -110,7 +110,7 @@ abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | poin
 ;
 statement_list : statement_list statement | statement
 ;
-struct_declaration_list : struct_declaration_list struct_declaration | TYPE_NAME
+struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
 parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;

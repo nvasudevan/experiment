@@ -132,7 +132,7 @@ case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
-record_section :  | newident_list ':' type
+record_section : colon_things | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
@@ -158,5 +158,5 @@ statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
-set : block '[' member_list ']'
+set : '[' member_list ']'
 ;

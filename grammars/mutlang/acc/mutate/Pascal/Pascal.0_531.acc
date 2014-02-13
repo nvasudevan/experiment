@@ -28,7 +28,7 @@ case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : formal_params ':' ident | 
+function_form : formal_params BECOMES ident | 
 ;
 procedure_call : ident actual_params
 ;
@@ -144,7 +144,7 @@ statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direct
 ;
 proc_dcl_part : proc_or_func
 ;
-variant_part : CASE tag_field record_var variants
+variant_part : CASE tag_field OF variants
 ;
 term : term mult_op factor | factor
 ;

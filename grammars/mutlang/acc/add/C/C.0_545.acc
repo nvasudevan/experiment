@@ -48,7 +48,7 @@ additive_expr : additive_expr '-' multiplicative_expr | additive_expr '+' multip
 ;
 expression_statement : expr ';' | ';'
 ;
-external_definition : declaration | function_definition
+external_definition : declaration STATIC | function_definition
 ;
 unary_expr : SIZEOF '(' type_name ')' | SIZEOF unary_expr | unary_operator cast_expr | DEC_OP unary_expr | INC_OP unary_expr | postfix_expr
 ;
@@ -88,7 +88,7 @@ expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
-unary_operator : '!' | '~' | '-' | '+' | '*' | EXTERN '&'
+unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;

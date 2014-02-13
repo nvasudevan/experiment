@@ -132,7 +132,7 @@ for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_b
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
-class_member_declaration : empty_statement | interface_declaration | conditional_and_expression class_declaration | method_declaration | field_declaration
+class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;
@@ -248,7 +248,7 @@ statement_expression_list : statement_expression_list C_TK statement_expression 
 ;
 synchronized : modifiers
 ;
-constant_expression : expression
+constant_expression : expression statement_without_trailing_substatement
 ;
 array_creation_expression : NEW_TK primitive_type dims array_initializer | NEW_TK class_or_interface_type dims array_initializer | NEW_TK class_or_interface_type dim_exprs dims | NEW_TK primitive_type dim_exprs dims | NEW_TK class_or_interface_type dim_exprs | NEW_TK primitive_type dim_exprs
 ;

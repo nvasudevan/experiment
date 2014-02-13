@@ -14,7 +14,7 @@ cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
-cdo_cdc_multi :  | cdo_cdc selector_tail
+cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
@@ -128,5 +128,5 @@ unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;
-hexcolor : HASH S_multi
+hexcolor : HASH IMPORT_SYM
 ;

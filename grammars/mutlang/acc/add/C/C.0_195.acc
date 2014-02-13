@@ -58,7 +58,7 @@ abstract_declarator2 : abstract_declarator2 '(' parameter_type_list ')' | abstra
 ;
 labeled_statement : DEFAULT ':' statement | CASE constant_expr ':' statement | identifier ':' statement
 ;
-declaration_list : declaration_list declaration | RIGHT_ASSIGN declaration
+declaration_list : declaration_list declaration | declaration
 ;
 struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
@@ -76,7 +76,7 @@ init_declarator_list : init_declarator_list ',' init_declarator | init_declarato
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
-selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
+selection_statement : SWITCH '(' expr ')' statement | XOR_ASSIGN IF '(' expr ')' statement ELSE statement
 ;
 declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;

@@ -18,7 +18,7 @@ logical_or_expr : logical_or_expr OR_OP logical_and_expr | logical_and_expr
 ;
 struct_declarator : declarator ':' constant_expr | ':' constant_expr | declarator
 ;
-initializer_list : initializer_list ',' initializer | initializer
+initializer_list : initializer_list UNSIGNED ',' initializer | initializer
 ;
 compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
@@ -76,7 +76,7 @@ init_declarator_list : init_declarator_list ',' init_declarator | init_declarato
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
-selection_statement : SWITCH '(' type_specifier expr ')' statement | IF '(' expr ')' statement ELSE statement
+selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
 declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;

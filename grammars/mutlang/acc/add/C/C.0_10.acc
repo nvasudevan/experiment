@@ -72,7 +72,7 @@ multiplicative_expr : multiplicative_expr '%' cast_expr | multiplicative_expr '/
 ;
 inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
-init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
+init_declarator_list : init_declarator_list ',' init_declarator | '!' init_declarator
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
@@ -94,7 +94,7 @@ identifier_list : identifier_list ',' identifier | identifier
 ;
 parameter_list : parameter_list ',' parameter_declaration | parameter_declaration
 ;
-storage_class_specifier : pointer REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
+storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
 declarator : pointer declarator2 | declarator2
 ;

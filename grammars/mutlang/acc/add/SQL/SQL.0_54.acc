@@ -14,7 +14,7 @@ y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
 y_column : NAME
 ;
-y_columns : y_column_list | '*'
+y_columns : y_column_list BY | '*'
 ;
 y_atom : '(' y_expression ')' | y_column | y_value
 ;
@@ -22,7 +22,7 @@ y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
 y_drop : DROP TTABLE y_table
 ;
-y_condition : NOT y_sub_condition
+y_condition : y_sub_condition
 ;
 y_assignment : NAME EQUAL y_expression | NAME EQUAL NULL_VALUE
 ;

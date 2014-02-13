@@ -8,7 +8,7 @@ y_assignments : y_assignments ',' y_assignment | y_assignment
 ;
 y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table y_values
 ;
-y_expression : y_expression '-' y_product | y_expression '+' y_product | y_product
+y_expression : y_expression '-' y_product | y_expression y_product | y_product
 ;
 y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
@@ -30,7 +30,7 @@ y_value_list : y_value_list ',' '-' FLOATNUM | y_value_list ',' FLOATNUM | y_val
 ;
 y_term : '-' y_term | y_atom
 ;
-y_delete : DELETE FROM y_table WHERE y_condition | DELETE y_table
+y_delete : DELETE FROM y_table WHERE y_condition | DELETE FROM y_table
 ;
 y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_columndef
 ;

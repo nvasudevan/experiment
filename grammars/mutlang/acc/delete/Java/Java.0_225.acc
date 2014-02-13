@@ -178,7 +178,7 @@ constant_declaration : field_declaration
 ;
 interfaces : IMPLEMENTS_TK interface_type_list | 
 ;
-formal_parameter : final type variable_declarator_id | type variable_declarator_id
+formal_parameter : final type variable_declarator_id | variable_declarator_id
 ;
 abstract_method_declaration : method_header SC_TK
 ;
@@ -192,7 +192,7 @@ qualified_name : name DOT_TK identifier
 ;
 throws : THROWS_TK class_type_list | 
 ;
-dim_expr : expression CSB_TK
+dim_expr : OSB_TK expression CSB_TK
 ;
 assignment_expression : assignment | conditional_expression
 ;

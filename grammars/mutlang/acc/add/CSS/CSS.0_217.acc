@@ -82,7 +82,7 @@ selector_tail_2_opt :  | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
-simple_selector : element_name '/' simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
+simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
@@ -96,7 +96,7 @@ attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
-attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
+attrib_tail_opt :  | attrib_includes S_multi ruleset_multi id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;

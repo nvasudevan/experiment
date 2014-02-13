@@ -2,7 +2,7 @@
 
 %nodefault
 
-goal : compilation_unit BREAK_TK
+goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
@@ -298,7 +298,7 @@ try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK blo
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;
-interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
+interface_body : OCB_TK interface_member_declarations CCB_TK FP_TK | OCB_TK CCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;

@@ -4,7 +4,7 @@
 
 y_sql : y_delete | y_update | y_select | y_insert | y_drop | y_create | y_alter
 ;
-y_assignments : y_assignments ',' y_assignment y_condition | y_assignment
+y_assignments : y_assignments ',' y_assignment | y_assignment
 ;
 y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table y_values
 ;
@@ -36,7 +36,7 @@ y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN
 ;
 y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
 ;
-y_comparison : y_expression NOT NULL_VALUE | y_expression IS NULL_VALUE | y_expression COMPARISON_OPERATOR y_expression | y_expression EQUAL y_expression
+y_comparison : y_expression NOT NULL_VALUE | y_expression IS NULL_VALUE | y_expression COMPARISON_OPERATOR y_expression | y_expression EQUAL y_expression '*'
 ;
 y_value : FLOATNUM | INTNUM | STRING
 ;

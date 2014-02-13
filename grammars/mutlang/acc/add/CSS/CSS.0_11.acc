@@ -86,7 +86,7 @@ simple_selector : element_name simple_selector_tail_multi | simple_selector_tail
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
-simple_selector_tail_multi : media_list_opt | simple_selector_tail simple_selector_tail_multi
+simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
@@ -128,5 +128,5 @@ unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;
-hexcolor : HASH S_multi
+hexcolor : HASH simple_selector S_multi
 ;

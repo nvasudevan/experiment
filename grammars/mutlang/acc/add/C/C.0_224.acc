@@ -34,7 +34,7 @@ logical_and_expr : logical_and_expr AND_OP inclusive_or_expr | inclusive_or_expr
 ;
 primary_expr : '(' expr ')' | STRING_LITERAL | CONSTANT | identifier
 ;
-shift_expr : shift_expr RIGHT_OP RETURN additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
+shift_expr : shift_expr RIGHT_OP additive_expr | shift_expr LEFT_OP additive_expr | additive_expr
 ;
 struct_declaration : type_specifier_list struct_declarator_list ';'
 ;
@@ -76,7 +76,7 @@ init_declarator_list : init_declarator_list ',' init_declarator | init_declarato
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
-selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
+selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE OR_ASSIGN statement
 ;
 declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;

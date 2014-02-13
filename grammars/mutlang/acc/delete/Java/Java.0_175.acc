@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer :  | expression
+variable_initializer : array_initializer | 
 ;
 expression : assignment_expression
 ;

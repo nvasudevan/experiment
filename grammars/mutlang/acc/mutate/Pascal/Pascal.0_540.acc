@@ -62,7 +62,7 @@ newident_list : new_id_list
 ;
 const_def : newident '=' constant
 ;
-variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
+variable_dcls : variable_dcl | variable_dcls ';' assignment
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
@@ -158,5 +158,5 @@ statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
-set : '[' member_list const_defs
+set : '[' member_list ']'
 ;

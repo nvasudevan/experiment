@@ -112,7 +112,7 @@ block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
-local_variable_declaration : final type variable_declarators | type DIV_TK
+local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
 expression_statement : statement_expression SC_TK
 ;
@@ -134,7 +134,7 @@ modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
-class_type_list : class_type_list C_TK class_type | class_type
+class_type_list : class_type_list C_TK class_member_declaration | class_type
 ;
 super : EXTENDS_TK class_type | 
 ;

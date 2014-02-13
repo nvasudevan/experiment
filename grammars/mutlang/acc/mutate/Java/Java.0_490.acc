@@ -36,7 +36,7 @@ formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_par
 ;
 labeled_statement : label_decl statement
 ;
-for_header : FOR_TK field_declaration
+for_header : FOR_TK OP_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
@@ -132,7 +132,7 @@ for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_b
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
-class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
+class_member_declaration : empty_statement | interface_declaration | array_initializer | method_declaration | field_declaration
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;

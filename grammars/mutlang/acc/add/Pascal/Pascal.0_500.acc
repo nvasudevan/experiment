@@ -38,7 +38,7 @@ opt_declarations : declarations |
 ;
 statement_part : compound_stmt
 ;
-field_list : variant_part | formal_p_sect fixed_part ';' variant_part | fixed_part
+field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
@@ -116,7 +116,7 @@ formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;
-type_def : newident '=' type
+type_def : newident '=' type FUNCTION
 ;
 labels : label | labels ',' label
 ;

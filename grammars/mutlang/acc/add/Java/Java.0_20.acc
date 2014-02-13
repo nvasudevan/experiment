@@ -16,7 +16,7 @@ conditional_and_expression : conditional_and_expression BOOL_AND_TK inclusive_or
 ;
 anonymous_class_creation : NEW_TK class_type OP_TK CP_TK class_body | NEW_TK class_type OP_TK argument_list CP_TK class_body
 ;
-continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK
+continue_statement : CONTINUE_TK identifier SC_TK | CONTINUE_TK SC_TK INCR_TK
 ;
 block_statements : block_statements block_statement | block_statement
 ;
@@ -132,7 +132,7 @@ for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_b
 ;
 modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
-class_member_declaration : empty_statement | C_TK interface_declaration | class_declaration | method_declaration | field_declaration
+class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
 class_type_list : class_type_list C_TK class_type | class_type
 ;

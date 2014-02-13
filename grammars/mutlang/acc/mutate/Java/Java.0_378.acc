@@ -98,7 +98,7 @@ expression : assignment_expression
 ;
 cast_expression : OP_TK name dims CP_TK unary_expression_not_plus_minus | OP_TK expression CP_TK unary_expression_not_plus_minus | OP_TK primitive_type CP_TK unary_expression | OP_TK primitive_type dims CP_TK unary_expression
 ;
-constructor_declarator : simple_name OP_TK BOOL_LIT_TK CP_TK | simple_name OP_TK CP_TK
+constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_name OP_TK CP_TK
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;
@@ -134,7 +134,7 @@ modifiers : modifiers MODIFIER_TK | MODIFIER_TK
 ;
 class_member_declaration : empty_statement | interface_declaration | class_declaration | method_declaration | field_declaration
 ;
-class_type_list : class_type_list C_TK class_type | class_type
+class_type_list : class_type_list C_TK class_type | reference_type
 ;
 super : EXTENDS_TK class_type | 
 ;

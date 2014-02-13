@@ -4,9 +4,9 @@
 
 stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
 ;
-stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
+stylesheet_opt_1 : CHARSET_SYM STRING simple_selector_tail_multi SC_TK | 
 ;
-cdo_cdc : S stylesheet_imports_multi | CDO | CDC
+cdo_cdc : S | CDO | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;

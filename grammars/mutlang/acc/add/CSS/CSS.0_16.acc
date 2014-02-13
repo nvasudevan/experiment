@@ -42,7 +42,7 @@ media_list_tail : ',' S_multi medium
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
-medium : IDENT ruleset S_multi
+medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
@@ -108,7 +108,7 @@ pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;
-prio_opt :  | prio
+prio_opt : operator | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;

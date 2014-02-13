@@ -24,11 +24,11 @@ param_group : newident_list ':' paramtype
 ;
 assignment : variable BECOMES expression
 ;
-case_list : case_list_elem | case_list ';' case_list_elem
+case_list : case_list_elem | ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : ':' ident | 
+function_form : formal_params ':' ident | 
 ;
 procedure_call : ident actual_params
 ;

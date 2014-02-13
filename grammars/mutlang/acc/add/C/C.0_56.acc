@@ -100,7 +100,7 @@ declarator : pointer declarator2 | declarator2
 ;
 type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
-exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
+exclusive_or_expr : exclusive_or_expr init_declarator_list '^' and_expr | and_expr
 ;
 constant_expr : conditional_expr
 ;
@@ -124,7 +124,7 @@ argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
-parameter_declaration : type_name | type_specifier_list STRUCT declarator
+parameter_declaration : type_name | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;

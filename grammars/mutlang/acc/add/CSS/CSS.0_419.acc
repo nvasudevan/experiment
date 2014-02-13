@@ -70,7 +70,7 @@ addl_selector : ',' S_multi selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;
-selector : simple_selector selector_tail_opt
+selector : simple_selector selector_tail_opt combinator
 ;
 combinator_opt :  | combinator
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM stylesheet S_multi
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

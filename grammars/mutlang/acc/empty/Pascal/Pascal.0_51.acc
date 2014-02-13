@@ -116,7 +116,7 @@ formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;
-type_def : newident '=' type
+type_def : newident '=' type | 
 ;
 labels : label | labels ',' label
 ;
@@ -158,5 +158,5 @@ statements : statement | statements ';' statement
 ;
 simple_expr : simple_expr add_op term | '-' term | '+' term | term
 ;
-set : '[' member_list ']' | 
+set : '[' member_list ']'
 ;

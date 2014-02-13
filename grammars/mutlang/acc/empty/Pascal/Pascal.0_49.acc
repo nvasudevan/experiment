@@ -26,7 +26,7 @@ assignment : variable BECOMES expression
 ;
 case_list : case_list_elem | case_list ';' case_list_elem
 ;
-unsigned_lit : NIL | STRING | unsigned_num | 
+unsigned_lit : NIL | STRING | unsigned_num
 ;
 function_form : formal_params ':' ident | 
 ;
@@ -36,7 +36,7 @@ paramtype : PACKED ARRAY '[' index_spec ']' OF ident | ARRAY '[' index_specs ']'
 ;
 opt_declarations : declarations | 
 ;
-statement_part : compound_stmt
+statement_part : compound_stmt | 
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;

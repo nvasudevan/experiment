@@ -38,7 +38,7 @@ ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
-media_list_tail : ',' S_multi medium
+media_list_tail : ',' S_multi IDENT
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
@@ -88,7 +88,7 @@ simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : SC_TK '/'
+class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;

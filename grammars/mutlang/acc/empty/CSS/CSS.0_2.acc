@@ -84,11 +84,11 @@ selector_tail_2 : combinator_opt selector
 ;
 simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
-simple_selector_tail : HASH | class | attrib | pseudo | 
+simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : SC_TK IDENT
+class : SC_TK IDENT | 
 ;
 element_name : IDENT | '*'
 ;

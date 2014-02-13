@@ -34,11 +34,11 @@ string_or_uri : STRING | URI
 ;
 media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
-ruleset_multi :  | ruleset LENGTH
+ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;
-media_list_tail : ',' S_multi medium
+media_list_tail : ',' S_multi term
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;

@@ -6,7 +6,7 @@ goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
-argument_list : argument_list THIS_TK expression | expression
+argument_list : argument_list C_TK expression | expression
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
@@ -210,7 +210,7 @@ class_declaration : CLASS_TK identifier super interfaces class_body | modifiers 
 ;
 switch_block_statement_group : switch_labels block_statements
 ;
-if_then_statement : IF_TK OP_TK expression CP_TK statement
+if_then_statement : IF_TK OP_TK expression CP_TK assignment_operator
 ;
 break_statement : BREAK_TK identifier SC_TK | BREAK_TK SC_TK
 ;

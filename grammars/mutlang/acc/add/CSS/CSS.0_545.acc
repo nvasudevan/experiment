@@ -50,7 +50,7 @@ pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
-declaration_tail : SC_TK S_multi declaration_opt
+declaration_tail : SC_TK S_multi selector_tail_opt declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
@@ -84,7 +84,7 @@ selector_tail_2 : combinator_opt selector
 ;
 simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
-simple_selector_tail : HASH | class IMPORT_SYM | attrib | pseudo
+simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;

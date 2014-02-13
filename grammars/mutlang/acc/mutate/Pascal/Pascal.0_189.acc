@@ -14,7 +14,7 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : IDENTIFIER
+newident : case_label_list
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : CASE
+label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;

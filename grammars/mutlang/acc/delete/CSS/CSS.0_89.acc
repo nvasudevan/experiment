@@ -34,7 +34,7 @@ string_or_uri : STRING | URI
 ;
 media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
-ruleset_multi :  | ruleset ruleset_multi
+ruleset_multi :  | ruleset
 ;
 media_list : medium media_list_tail_multi
 ;
@@ -82,7 +82,7 @@ selector_tail_2_opt :  | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
-simple_selector : element_name | simple_selector_tail simple_selector_tail_multi
+simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;

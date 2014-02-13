@@ -78,7 +78,7 @@ selector_tail_opt :  | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
-selector_tail_2_opt : cdo_cdc_s | selector_tail_2
+selector_tail_2_opt :  | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
@@ -100,7 +100,7 @@ attrib_tail_opt :  | attrib_includes S_multi id_or_string S_multi
 ;
 id_or_string : IDENT | STRING
 ;
-pseudo : COLON_TK pseudo_tail
+pseudo : COLON_TK selector_tail_opt pseudo_tail
 ;
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;

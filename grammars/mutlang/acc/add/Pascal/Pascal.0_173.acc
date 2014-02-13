@@ -102,7 +102,7 @@ type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
-index_spec : newident DOTDOT newident ':' ident
+index_spec : newident DOTDOT variant newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;
@@ -132,7 +132,7 @@ case_label_list : case_label | case_label_list ',' case_label
 ;
 actuals_list : actual_param | actuals_list ',' actual_param
 ;
-record_section : statements | newident_list ':' type
+record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;

@@ -14,7 +14,7 @@ actual_params : '(' actuals_list ')' |
 ;
 formal_params : '(' formal_p_sects ')' | 
 ;
-newident : IDENTIFIER
+newident : IDENTIFIER AND
 ;
 mult_op : AND | MOD | DIV | '/' | '*'
 ;
@@ -118,7 +118,7 @@ const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;
-labels : label | labels ',' assignment label
+labels : label | labels ',' label
 ;
 direction : DOWNTO | TO
 ;

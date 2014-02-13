@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident | new_id_list ',' newident
+new_id_list : newident TYPE | new_id_list ',' newident
 ;
 member_list : members | 
 ;
@@ -84,7 +84,7 @@ member : expression DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
-members : member | members ',' member IF
+members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;

@@ -40,7 +40,7 @@ statement_part : compound_stmt
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
-case_list_elem :  | case_label_list ':' statement
+case_list_elem :  | ':' statement
 ;
 add_op : OR | '-' | '+'
 ;
@@ -112,7 +112,7 @@ rec_var_list : record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;
-formal_p_sect : func_heading | proc_heading | VAR | param_group
+formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
 const_dcl_part : CONST const_defs ';'
 ;

@@ -78,7 +78,7 @@ selector_tail_opt :  | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
-selector_tail_2_opt :  | selector_tail_2
+selector_tail_2_opt :  | declaration selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;
@@ -112,7 +112,7 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : CDO term expr_tail_multi
+expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;

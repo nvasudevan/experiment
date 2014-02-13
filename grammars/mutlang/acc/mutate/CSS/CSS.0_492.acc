@@ -8,7 +8,7 @@ stylesheet_opt_1 : CHARSET_SYM STRING SC_TK |
 ;
 cdo_cdc : S | CDO | CDC
 ;
-stylesheet_imports : import cdo_cdc_s_multi
+stylesheet_imports : import URI
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
@@ -116,7 +116,7 @@ expr : term expr_tail_multi
 ;
 operator_opt :  | operator
 ;
-expr_tail : operator_opt simple_selector_tail
+expr_tail : operator_opt term
 ;
 expr_tail_multi :  | expr_tail expr_tail_multi
 ;

@@ -8,7 +8,7 @@ import_declaration : type_import_on_demand_declaration | single_type_import_decl
 ;
 argument_list : argument_list C_TK expression | expression
 ;
-pre_decrement_expression : DECR_TK unary_expression
+pre_decrement_expression : DECR_TK constructor_block_end
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
@@ -124,7 +124,7 @@ finally : FINALLY_TK block
 ;
 switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
-compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | do_statement | import_declarations | package_declaration | 
+compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
 interface_type : class_or_interface_type
 ;

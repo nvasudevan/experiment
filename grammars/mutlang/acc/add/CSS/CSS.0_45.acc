@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
+pseudo_tail : IDENT pseudo_page | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;
@@ -118,7 +118,7 @@ operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;
-expr_tail_multi :  | expr_tail stylesheet_opt_1 expr_tail_multi
+expr_tail_multi :  | expr_tail expr_tail_multi
 ;
 term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;

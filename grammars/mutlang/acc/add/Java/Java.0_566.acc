@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
+unary_expression : MINUS_TK trap_overflow_corner_case ASSIGN_ANY_TK | trap_overflow_corner_case
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
@@ -224,7 +224,7 @@ switch_label : DEFAULT_TK REL_CL_TK | CASE_TK constant_expression REL_CL_TK
 ;
 do_statement_begin : DO_TK
 ;
-constructor_block_end : extends_interfaces block_end
+constructor_block_end : block_end
 ;
 switch_statement : switch_expression switch_block
 ;

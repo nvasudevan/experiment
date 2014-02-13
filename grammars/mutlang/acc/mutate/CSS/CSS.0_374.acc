@@ -8,7 +8,7 @@ stylesheet_opt_1 : CHARSET_SYM STRING SC_TK |
 ;
 cdo_cdc : S | CDO | CDC
 ;
-stylesheet_imports : import cdo_cdc_s_multi
+stylesheet_imports : import INCLUDES
 ;
 cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
@@ -34,7 +34,7 @@ string_or_uri : STRING | URI
 ;
 media : MEDIA_SYM S_multi media_list '{' S_multi ruleset_multi '}' S_multi
 ;
-ruleset_multi :  | ruleset '='
+ruleset_multi :  | ruleset ruleset_multi
 ;
 media_list : medium media_list_tail_multi
 ;

@@ -116,13 +116,13 @@ parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
 ;
 identifier : IDENTIFIER
 ;
-function_body : declaration_list compound_statement | compound_statement
+function_body : declaration_list compound_statement | function_definition
 ;
 assignment_expr : unary_expr assignment_operator assignment_expr | conditional_expr
 ;
 argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
-type_specifier_list : type_specifier_list type_specifier | file
+type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
 parameter_declaration : type_name | type_specifier_list declarator
 ;

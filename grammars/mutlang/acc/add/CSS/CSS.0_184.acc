@@ -20,7 +20,7 @@ stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
 cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
-stylesheet_tail : stylesheet_parts pseudo_page cdo_cdc_s_multi
+stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
 stylesheet_parts : ruleset | media | page
 ;
@@ -118,7 +118,7 @@ operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;
-expr_tail_multi :  | expr_tail expr_tail_multi
+expr_tail_multi : pseudo_page_opt | expr_tail expr_tail_multi
 ;
 term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;

@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '*'
+unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;
@@ -122,7 +122,7 @@ expr_tail_multi :  | expr_tail expr_tail_multi
 ;
 term : unary_operator_opt term_types | STRING S_multi | IDENT S_multi | URI S_multi | hexcolor | function
 ;
-term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi | EXS S_multi | ANGLE S_multi | TIME S_multi | FREQ S_multi
+term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS SC_TK | EXS S_multi | ANGLE S_multi | TIME S_multi | FREQ S_multi
 ;
 unary_operator_opt :  | unary_operator
 ;

@@ -6,7 +6,7 @@ stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_
 ;
 stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
-cdo_cdc : S | CDO | CDC
+cdo_cdc : PERCENTAGE | CDO | CDC
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
@@ -102,7 +102,7 @@ id_or_string : IDENT | STRING
 ;
 pseudo : COLON_TK pseudo_tail
 ;
-pseudo_tail : hexcolor | FUNCTION S_multi pseudo_tail_2_opt ')'
+pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;

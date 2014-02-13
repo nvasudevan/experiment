@@ -12,7 +12,7 @@ expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
-formal_params : '(' formal_p_sects ')' | 
+formal_params : '(' formal_p_sects ')' UNSIGNED_INT | 
 ;
 newident : IDENTIFIER
 ;
@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident | new_id_list member ',' newident
+new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;

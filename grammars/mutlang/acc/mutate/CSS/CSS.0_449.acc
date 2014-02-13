@@ -28,7 +28,7 @@ stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
 import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
-media_list_opt :  | media_list
+media_list_opt :  | element_name
 ;
 string_or_uri : STRING | URI
 ;
@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | property
+unary_operator : '-' | '+'
 ;
 property : IDENT S_multi
 ;

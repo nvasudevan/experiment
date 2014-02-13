@@ -2,7 +2,7 @@
 
 %nodefault
 
-file : SHORT external_definition | external_definition
+file : file external_definition | external_definition
 ;
 parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
@@ -112,7 +112,7 @@ statement_list : statement_list statement | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
-parameter_type_list : parameter_list ',' ELIPSIS | parameter_list
+parameter_type_list : parameter_list ',' ELIPSIS | CASE
 ;
 identifier : IDENTIFIER
 ;

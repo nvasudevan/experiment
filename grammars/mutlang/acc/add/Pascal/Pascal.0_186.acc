@@ -20,7 +20,7 @@ mult_op : AND | MOD | DIV | '/' | '*'
 ;
 factor : NOT factor | set | '(' expression ')' | unsigned_lit | variable
 ;
-param_group : newident_list ':' paramtype
+param_group : newident_list ':' paramtype body
 ;
 assignment : variable BECOMES expression
 ;
@@ -74,7 +74,7 @@ constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsig
 ;
 new_id_list : newident | new_id_list ',' newident
 ;
-member_list : members | '*'
+member_list : members | 
 ;
 body : IDENTIFIER | block
 ;

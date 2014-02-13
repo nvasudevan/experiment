@@ -42,7 +42,7 @@ media_list_tail : ',' S_multi medium
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
-medium : IDENT S_multi
+medium : IDENT stylesheet_tail_multi S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
@@ -62,7 +62,7 @@ combinator : '+' S_multi | '>' S_multi
 ;
 unary_operator : '-' | '+'
 ;
-property : IDENT S_multi HASH
+property : IDENT S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;

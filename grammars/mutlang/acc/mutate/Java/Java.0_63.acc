@@ -168,7 +168,7 @@ variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;
-inclusive_or_expression : inclusive_or_expression OR_TK pre_decrement_expression | exclusive_or_expression
+inclusive_or_expression : inclusive_or_expression OR_TK class_body_declaration | exclusive_or_expression
 ;
 array_type : name dims | primitive_type dims
 ;

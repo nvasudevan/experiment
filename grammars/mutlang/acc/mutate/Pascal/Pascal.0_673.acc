@@ -40,7 +40,7 @@ statement_part : compound_stmt
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
-case_list_elem :  | case_label_list ':' statement
+case_list_elem :  | case_label_list ':' direction
 ;
 add_op : OR | '-' | '+'
 ;
@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : ','
+label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;

@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident | PROGRAM new_id_list ',' newident
+new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;
@@ -108,7 +108,7 @@ func_heading : FUNCTION newident function_form
 ;
 variant :  | case_label_list ':' '(' field_list ')'
 ;
-rec_var_list : record_var | rec_var_list ',' record_var
+rec_var_list : TYPE record_var | rec_var_list ',' record_var
 ;
 external_files : '(' newident_list ')' | 
 ;

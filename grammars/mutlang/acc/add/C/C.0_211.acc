@@ -86,7 +86,7 @@ enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
 expr : expr ',' assignment_expr | assignment_expr
 ;
-cast_expr : '(' type_name ')' ']' cast_expr | unary_expr
+cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
 unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
 ;
@@ -96,7 +96,7 @@ parameter_list : parameter_list ',' parameter_declaration | parameter_declaratio
 ;
 storage_class_specifier : REGISTER | AUTO | STATIC | EXTERN | TYPEDEF
 ;
-declarator : pointer declarator2 | declarator2
+declarator : pointer declarator2 | declarator2 primary_expr
 ;
 type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;

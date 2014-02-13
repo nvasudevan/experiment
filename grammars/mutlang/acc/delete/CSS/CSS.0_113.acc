@@ -26,7 +26,7 @@ stylesheet_parts : ruleset | media | page
 ;
 stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
-import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
+import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK
 ;
 media_list_opt :  | media_list
 ;
@@ -54,7 +54,7 @@ declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
-pseudo_page : IDENT S_multi
+pseudo_page : COLON_TK IDENT S_multi
 ;
 operator : '/' S_multi | ',' S_multi
 ;

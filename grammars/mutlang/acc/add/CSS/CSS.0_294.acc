@@ -18,7 +18,7 @@ cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
-cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
+cdo_cdc_s_multi : COLON_TK | cdo_cdc_s cdo_cdc_s_multi
 ;
 stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
@@ -52,7 +52,7 @@ declaration_opt :  | declaration
 ;
 declaration_tail : SC_TK S_multi declaration_opt
 ;
-declaration_multi : HASH | declaration_tail declaration_multi
+declaration_multi :  | declaration_tail declaration_multi
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;

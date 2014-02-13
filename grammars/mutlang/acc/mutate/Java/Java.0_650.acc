@@ -84,7 +84,7 @@ unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_cas
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
-dim_exprs : dim_exprs additive_expression | dim_expr
+dim_exprs : dim_exprs dim_expr | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | expression
+variable_initializer : GTE_TK | expression
 ;
 expression : assignment_expression
 ;

@@ -70,7 +70,7 @@ colon_things : ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;
-constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
+constant : STRING | '-' REPEAT | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
 new_id_list : newident | new_id_list ',' newident
 ;
@@ -140,7 +140,7 @@ type_defs : type_def | type_defs ';' type_def
 ;
 ident : IDENTIFIER
 ;
-statement : WITH rec_var_list DO statement | DIV ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
+statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;
 proc_dcl_part : proc_or_func
 ;

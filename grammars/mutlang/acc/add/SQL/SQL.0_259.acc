@@ -16,7 +16,7 @@ y_column : NAME
 ;
 y_columns : y_column_list | '*'
 ;
-y_atom : '(' y_expression ')' | y_column | CREATE y_value
+y_atom : '(' y_expression ')' | y_column | y_value
 ;
 y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
@@ -56,7 +56,7 @@ y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;
 y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SELECT y_columns FROM y_table ORDER BY y_order | SELECT y_columns FROM y_table WHERE y_condition | SELECT y_columns FROM y_table
 ;
-y_boolean : NOT y_boolean | '(' y_sub_condition ')' | y_comparison
+y_boolean : NOT y_boolean | '(' y_sub_condition ')' TTABLE | y_comparison
 ;
 y_column_list : y_column_list ',' NAME | NAME
 ;

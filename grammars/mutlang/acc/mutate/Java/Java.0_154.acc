@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
+variable_declarator : static_ ASSIGN_TK variable_initializer | variable_declarator_id
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : post_decrement_expression
+synchronized : modifiers
 ;
 constant_expression : expression
 ;

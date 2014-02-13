@@ -154,7 +154,7 @@ statement_nsi : for_statement_nsi | while_statement_nsi | if_then_else_statement
 ;
 catch_clause : catch_clause_parameter block
 ;
-constructor_header : modifiers constructor_declarator throws | constructor_declarator throws | 
+constructor_header : modifiers constructor_declarator throws | constructor_declarator throws
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;
@@ -164,7 +164,7 @@ switch_labels : switch_labels switch_label | switch_label
 ;
 statement_expression : class_instance_creation_expression | method_invocation | post_decrement_expression | post_increment_expression | pre_decrement_expression | pre_increment_expression | assignment
 ;
-variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier
+variable_declarator_id : variable_declarator_id OSB_TK CSB_TK | identifier | 
 ;
 while_expression : WHILE_TK OP_TK expression CP_TK
 ;

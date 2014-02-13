@@ -28,7 +28,7 @@ stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
 import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
 ;
-media_list_opt :  | media_list
+media_list_opt :  | cdo_cdc_multi
 ;
 string_or_uri : STRING | URI
 ;
@@ -42,7 +42,7 @@ media_list_tail : ',' S_multi medium
 ;
 media_list_tail_multi :  | media_list_tail media_list_tail_multi
 ;
-medium : stylesheet_tail_multi S_multi
+medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;

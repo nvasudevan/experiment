@@ -32,7 +32,7 @@ constructor_body : block_begin explicit_constructor_invocation block_statements 
 ;
 for_init : local_variable_declaration | statement_expression_list | 
 ;
-formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter | 
+formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
 labeled_statement : label_decl statement
 ;
@@ -88,7 +88,7 @@ dim_exprs : dim_exprs dim_expr | dim_expr
 ;
 postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
-class_type : class_or_interface_type
+class_type : class_or_interface_type | 
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;

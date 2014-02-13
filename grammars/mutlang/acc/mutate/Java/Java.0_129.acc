@@ -80,7 +80,7 @@ identifier : ID_TK
 ;
 catches : catches catch_clause | catch_clause
 ;
-unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
+unary_expression : MINUS_TK trap_overflow_corner_case | variable_declarator_id
 ;
 post_increment_expression : postfix_expression INCR_TK
 ;
@@ -246,7 +246,7 @@ label_decl : identifier REL_CL_TK
 ;
 statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
-synchronized : EQ_TK
+synchronized : modifiers
 ;
 constant_expression : expression
 ;

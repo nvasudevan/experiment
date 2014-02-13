@@ -84,7 +84,7 @@ type_specifier : TYPE_NAME | enum_specifier | struct_or_union_specifier | VOID |
 ;
 enumerator_list : enumerator_list ',' enumerator | enumerator
 ;
-expr : expr ',' assignment_expr | assignment_expr
+expr : expr ',' '*' | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
@@ -102,7 +102,7 @@ type_name : type_specifier_list abstract_declarator | type_specifier_list
 ;
 exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
-constant_expr : relational_expr
+constant_expr : conditional_expr
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;

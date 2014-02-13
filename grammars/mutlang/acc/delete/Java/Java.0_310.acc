@@ -48,7 +48,7 @@ do_statement : do_statement_begin statement WHILE_TK OP_TK expression CP_TK SC_T
 ;
 interface_member_declarations : interface_member_declarations interface_member_declaration | interface_member_declaration
 ;
-assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression SC_TK
+assert_statement : ASSERT_TK expression SC_TK | ASSERT_TK expression REL_CL_TK expression
 ;
 constructor_declaration : constructor_header constructor_body
 ;
@@ -182,7 +182,7 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression
+throw_statement : THROW_TK expression SC_TK
 ;
 class_or_interface_type : name
 ;

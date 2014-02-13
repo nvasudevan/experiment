@@ -88,7 +88,7 @@ expr : expr ',' assignment_expr | assignment_expr
 ;
 cast_expr : '(' type_name ')' cast_expr | unary_expr
 ;
-unary_operator : '!' | '~' | '-' | '+' | '*' | '&'
+unary_operator : '!' | '~' | '-' |  | '*' | '&'
 ;
 identifier_list : identifier_list ',' identifier | identifier
 ;
@@ -106,7 +106,7 @@ constant_expr : conditional_expr
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;
-abstract_declarator : pointer abstract_declarator2 |  | pointer
+abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
 statement_list : statement_list statement | statement
 ;

@@ -48,7 +48,7 @@ page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_
 ;
 pseudo_page_opt :  | pseudo_page
 ;
-declaration_opt :  | declaration
+declaration_opt :  | declaration ']'
 ;
 declaration_tail : SC_TK S_multi declaration_opt
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM EXS S_multi
+prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;

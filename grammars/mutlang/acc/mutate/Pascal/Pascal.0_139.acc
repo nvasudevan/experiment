@@ -66,7 +66,7 @@ variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
 simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
-colon_things : ':' add_op ':' expression | ':' expression
+colon_things : ':' expression ':' expression | ':' expression
 ;
 case_label : constant
 ;
@@ -88,7 +88,7 @@ members : member | members ',' member
 ;
 expression : simple_expr relational_op simple_expr | simple_expr
 ;
-index_t_list : simple_type | index_t_list ',' simple_type
+index_t_list : case_list | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;

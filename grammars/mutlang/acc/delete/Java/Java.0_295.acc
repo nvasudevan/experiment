@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
+variable_declarator : variable_declarator_id ASSIGN_TK | variable_declarator_id
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
@@ -102,7 +102,7 @@ constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;
-exclusive_or_expression : XOR_TK and_expression | and_expression
+exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;

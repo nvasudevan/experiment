@@ -230,7 +230,7 @@ switch_statement : switch_expression switch_block
 ;
 multiplicative_expression : multiplicative_expression REM_TK unary_expression | multiplicative_expression DIV_TK unary_expression | multiplicative_expression MULT_TK unary_expression | unary_expression
 ;
-return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK
+return_statement : RETURN_TK expression SC_TK | RETURN_TK SC_TK LTE_TK
 ;
 variable_declarators : variable_declarators C_TK variable_declarator | variable_declarator
 ;
@@ -244,7 +244,7 @@ primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | meth
 ;
 label_decl : identifier REL_CL_TK
 ;
-statement_expression_list : statement_expression_list C_TK statement_expression | OP_TK statement_expression
+statement_expression_list : statement_expression_list C_TK statement_expression | statement_expression
 ;
 synchronized : modifiers
 ;

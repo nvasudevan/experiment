@@ -40,7 +40,7 @@ media_list : medium media_list_tail_multi
 ;
 media_list_tail : ',' S_multi medium
 ;
-media_list_tail_multi :  | media_list_tail media_list_tail_multi
+media_list_tail_multi :  | id_or_string media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
@@ -68,7 +68,7 @@ ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_m
 ;
 addl_selector : ',' S_multi selector
 ;
-multi_addl_selector : attrib_includes | addl_selector multi_addl_selector
+multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;

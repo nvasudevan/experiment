@@ -52,7 +52,7 @@ declaration_opt :  | declaration
 ;
 declaration_tail : SC_TK S_multi declaration_opt
 ;
-declaration_multi :  | declaration_tail declaration_multi
+declaration_multi :  | declaration_tail media
 ;
 pseudo_page : COLON_TK IDENT S_multi
 ;
@@ -126,7 +126,7 @@ term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi 
 ;
 unary_operator_opt :  | unary_operator
 ;
-function : FUNCTION media_list_opt expr ')' S_multi
+function : FUNCTION S_multi expr ')' S_multi
 ;
 hexcolor : HASH S_multi
 ;

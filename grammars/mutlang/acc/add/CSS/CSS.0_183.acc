@@ -14,7 +14,7 @@ cdo_cdc_s : CDO S_multi | CDC S_multi
 ;
 S_multi :  | S S_multi
 ;
-cdo_cdc_multi :  | cdo_cdc pseudo_tail_2_opt cdo_cdc_multi
+cdo_cdc_multi :  | cdo_cdc cdo_cdc_multi
 ;
 stylesheet_imports_multi :  | stylesheet_imports stylesheet_imports_multi
 ;
@@ -74,7 +74,7 @@ selector : simple_selector selector_tail_opt
 ;
 combinator_opt :  | combinator
 ;
-selector_tail_opt :  | selector_tail
+selector_tail_opt : page | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;

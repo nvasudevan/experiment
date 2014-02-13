@@ -74,11 +74,11 @@ selector : simple_selector selector_tail_opt
 ;
 combinator_opt :  | combinator
 ;
-selector_tail_opt :  | MEDIA_SYM selector_tail
+selector_tail_opt :  | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
-selector_tail_2_opt :  | selector_tail_2
+selector_tail_2_opt : term | selector_tail_2
 ;
 selector_tail_2 : combinator_opt selector
 ;

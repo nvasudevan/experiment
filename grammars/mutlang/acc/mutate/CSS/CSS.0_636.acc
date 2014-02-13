@@ -112,7 +112,7 @@ prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;
-expr : term expr_tail_multi
+expr : EMS expr_tail_multi
 ;
 operator_opt :  | operator
 ;
@@ -126,7 +126,7 @@ term_types : NUMBER S_multi | PERCENTAGE S_multi | LENGTH S_multi | EMS S_multi 
 ;
 unary_operator_opt :  | unary_operator
 ;
-function : FUNCTION S_multi expr ')' '='
+function : FUNCTION S_multi expr ')' S_multi
 ;
 hexcolor : HASH S_multi
 ;

@@ -52,11 +52,11 @@ type : '^' IDENTIFIER | struct_type | PACKED struct_type | simple_type
 ;
 declarations : declaration | declarations declaration
 ;
-record_var : const_dcl_part
+record_var : variable
 ;
 proc_or_func : func_heading ';' body ';' | proc_heading ';' body ';'
 ;
-formal_p_sects : formal_p_sect | formal_p_sects ';' formal_p_sect
+formal_p_sects : formal_p_sect | labels ';' formal_p_sect
 ;
 newident_list : new_id_list
 ;

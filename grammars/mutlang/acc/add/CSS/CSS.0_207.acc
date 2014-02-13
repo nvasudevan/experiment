@@ -74,9 +74,9 @@ selector : simple_selector selector_tail_opt
 ;
 combinator_opt :  | combinator
 ;
-selector_tail_opt :  | selector_tail
+selector_tail_opt :  | selector_tail element_name
 ;
-selector_tail : combinator selector '[' | S S_multi selector_tail_2_opt
+selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
 selector_tail_2_opt :  | selector_tail_2
 ;

@@ -146,9 +146,9 @@ proc_dcl_part : proc_or_func
 ;
 variant_part : CASE tag_field OF variants
 ;
-term : term mult_op factor | factor MOD
+term : term mult_op factor | factor
 ;
-index_specs : index_spec | index_specs ';' index_spec
+index_specs : newident_list index_spec | index_specs ';' index_spec
 ;
 const_defs : const_def | const_defs ';' const_def
 ;

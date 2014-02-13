@@ -110,7 +110,7 @@ static_initializer : static_ block
 ;
 block : block_begin block_statements block_end | block_begin block_end
 ;
-name : qualified_name | simple_name
+name : qualified_name | simple_name PACKAGE_TK
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
@@ -280,7 +280,7 @@ equality_expression : equality_expression NEQ_TK relational_expression | equalit
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;
-simple_name : identifier dim_expr
+simple_name : identifier
 ;
 type_declaration : empty_statement | interface_declaration | class_declaration
 ;

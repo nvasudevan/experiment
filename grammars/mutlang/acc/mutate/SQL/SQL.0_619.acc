@@ -14,7 +14,7 @@ y_sub_condition2 : y_sub_condition2 AND y_boolean | y_boolean
 ;
 y_column : NAME
 ;
-y_columns : y_column_list | EQUAL
+y_columns : y_column_list | '*'
 ;
 y_atom : '(' y_expression ')' | y_column | y_value
 ;
@@ -34,7 +34,7 @@ y_delete : DELETE FROM y_table WHERE y_condition | DELETE FROM y_table
 ;
 y_alter : ALTER TTABLE y_table ADD y_columndef | ALTER TTABLE y_table ADD COLUMN y_columndef
 ;
-y_update : UPDATE y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
+y_update : STRING y_table SET y_assignments WHERE y_condition | UPDATE y_table SET y_assignments
 ;
 y_comparison : y_expression NOT NULL_VALUE | y_expression IS NULL_VALUE | y_expression COMPARISON_OPERATOR y_expression | y_expression EQUAL y_expression
 ;

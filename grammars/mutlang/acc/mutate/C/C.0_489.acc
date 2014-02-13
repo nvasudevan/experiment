@@ -62,7 +62,7 @@ declaration_list : declaration_list declaration | declaration
 ;
 struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
-init_declarator : declarator ',' initializer | declarator
+init_declarator : declarator '=' initializer | '.'
 ;
 enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;

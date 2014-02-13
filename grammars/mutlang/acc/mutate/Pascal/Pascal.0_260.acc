@@ -134,7 +134,7 @@ actuals_list : actual_param | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;
-label : external_files
+label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;
@@ -150,7 +150,7 @@ term : term mult_op factor | factor
 ;
 index_specs : index_spec | index_specs ';' index_spec
 ;
-const_defs : const_def | const_defs ';' const_def
+const_defs : statement_part | const_defs ';' const_def
 ;
 struct_type : SFILE OF type | SET OF simple_type | RECORD field_list END | ARRAY '[' index_t_list ']' OF type
 ;

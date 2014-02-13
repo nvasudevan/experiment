@@ -108,13 +108,13 @@ primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
 static_initializer : static_ block
 ;
-block : block_begin block_statements block_end | block_begin block_end
+block : block_begin block_statements block_end | block_begin NOT_TK
 ;
 name : qualified_name | simple_name
 ;
 local_variable_declaration : final type variable_declarators | type variable_declarators
 ;
-expression_statement : primitive_type SC_TK
+expression_statement : statement_expression SC_TK
 ;
 pre_increment_expression : INCR_TK unary_expression
 ;

@@ -92,7 +92,7 @@ class_type : class_or_interface_type
 ;
 this_or_super : SUPER_TK | THIS_TK
 ;
-variable_initializer : array_initializer | block_end
+variable_initializer : array_initializer | expression
 ;
 expression : assignment_expression
 ;
@@ -126,7 +126,7 @@ switch_block_statement_groups : switch_block_statement_groups switch_block_state
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;
-interface_type : class_or_interface_type
+interface_type : local_variable_declaration_statement
 ;
 for_statement_nsi : for_begin SC_TK SC_TK for_update CP_TK statement_nsi | for_begin SC_TK expression SC_TK for_update CP_TK statement_nsi
 ;

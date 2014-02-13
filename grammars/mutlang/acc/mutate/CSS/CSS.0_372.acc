@@ -4,7 +4,7 @@
 
 stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
 ;
-stylesheet_opt_1 : DASHMATCH STRING SC_TK | 
+stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
 cdo_cdc : S | CDO | CDC
 ;
@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | combinator
+combinator_opt :  | CDC
 ;
 selector_tail_opt :  | selector_tail
 ;

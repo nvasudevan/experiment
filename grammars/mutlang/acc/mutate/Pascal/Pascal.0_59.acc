@@ -94,7 +94,7 @@ tag_field : ident | newident ':' ident
 ;
 label_dcl_part : LABEL labels ';'
 ;
-variants : variant | variants ';' variant
+variants : variant | DIV ';' variant
 ;
 block : opt_declarations statement_part
 ;
@@ -120,7 +120,7 @@ type_def : newident '=' type
 ;
 labels : label | labels ',' label
 ;
-direction : DOWNTO | FUNCTION
+direction : DOWNTO | TO
 ;
 variable : variable '^' | variable '.' ident | variable '[' expressions ']' | ident actual_params
 ;

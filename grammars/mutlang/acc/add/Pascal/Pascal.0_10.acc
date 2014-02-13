@@ -38,7 +38,7 @@ opt_declarations : declarations |
 ;
 statement_part : compound_stmt
 ;
-field_list : assignment variant_part | fixed_part ';' variant_part | fixed_part
+field_list : variant_part | fixed_part ';' variant_part | BECOMES fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;

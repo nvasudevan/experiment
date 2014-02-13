@@ -92,7 +92,7 @@ class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
+attrib : '[' S_multi IDENT S_multi attrib_tail_opt prio
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;
@@ -128,5 +128,5 @@ unary_operator_opt :  | unary_operator
 ;
 function : FUNCTION S_multi expr ')' S_multi
 ;
-hexcolor : HASH selector_tail_2_opt
+hexcolor : HASH S_multi
 ;

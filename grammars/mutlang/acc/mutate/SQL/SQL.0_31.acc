@@ -56,7 +56,7 @@ y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;
 y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SELECT y_columns FROM y_table ORDER BY y_order | SELECT y_columns FROM y_table WHERE y_condition | SELECT y_columns FROM y_table
 ;
-y_boolean : y_value_list y_boolean | '(' y_sub_condition ')' | y_comparison
+y_boolean : NOT y_boolean | y_delete y_sub_condition ')' | y_comparison
 ;
 y_column_list : y_column_list ',' NAME | NAME
 ;

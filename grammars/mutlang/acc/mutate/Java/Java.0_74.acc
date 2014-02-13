@@ -274,7 +274,7 @@ for_update : statement_expression_list |
 ;
 empty_statement : SC_TK
 ;
-interface_type_list : interface_type_list C_TK interface_type | REL_CL_TK
+interface_type_list : interface_type_list C_TK interface_type | method_declarator
 ;
 equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;

@@ -90,7 +90,7 @@ expression : simple_expr relational_op simple_expr | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
-tag_field :  | newident ':' ident
+tag_field : ident | newident ':' ident
 ;
 label_dcl_part : LABEL labels ';'
 ;
@@ -136,7 +136,7 @@ record_section :  | newident_list ':' type
 ;
 label : UNSIGNED_INT
 ;
-type_defs : type_def | type_defs ';' type_def
+type_defs : type_def | type_defs type_def
 ;
 ident : IDENTIFIER
 ;

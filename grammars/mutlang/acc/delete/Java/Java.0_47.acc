@@ -108,7 +108,7 @@ primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
 static_initializer : static_ block
 ;
-block : block_begin block_statements block_end | block_end
+block : block_begin block_statements block_end | block_begin block_end
 ;
 name : qualified_name | simple_name
 ;
@@ -180,7 +180,7 @@ interfaces : IMPLEMENTS_TK interface_type_list |
 ;
 formal_parameter : final type variable_declarator_id | type variable_declarator_id
 ;
-abstract_method_declaration : method_header SC_TK
+abstract_method_declaration : SC_TK
 ;
 throw_statement : THROW_TK expression SC_TK
 ;

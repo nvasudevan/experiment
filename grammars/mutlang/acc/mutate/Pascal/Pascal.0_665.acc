@@ -42,7 +42,7 @@ field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
 case_list_elem :  | case_label_list ':' statement
 ;
-add_op : OR | '-' | '+'
+add_op : OR | declaration | '+'
 ;
 var_dcl_part : VAR variable_dcls ';'
 ;
@@ -92,7 +92,7 @@ index_t_list : simple_type | index_t_list ',' simple_type
 ;
 tag_field : ident | newident ':' ident
 ;
-label_dcl_part : type_dcl_part labels ';'
+label_dcl_part : LABEL labels ';'
 ;
 variants : variant | variants ';' variant
 ;

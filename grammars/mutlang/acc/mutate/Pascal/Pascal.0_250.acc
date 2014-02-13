@@ -40,7 +40,7 @@ statement_part : compound_stmt
 ;
 field_list : variant_part | fixed_part ';' variant_part | fixed_part
 ;
-case_list_elem :  | case_label_list ':' statement
+case_list_elem :  | case_label_list CASE statement
 ;
 add_op : OR | '-' | '+'
 ;
@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : formal_p_sect | new_id_list ',' newident
+new_id_list : newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;

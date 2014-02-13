@@ -8,7 +8,7 @@ fixed_part : record_section | fixed_part ';' record_section
 ;
 compound_stmt : SBEGIN statements END
 ;
-expressions : expression | expressions ',' statements expression
+expressions : expression | expressions ',' expression
 ;
 actual_params : '(' actuals_list ')' | 
 ;
@@ -72,7 +72,7 @@ case_label : constant
 ;
 constant : STRING | '-' ident | '+' ident | ident | '-' unsigned_num | '+' unsigned_num | unsigned_num
 ;
-new_id_list : newident | new_id_list ',' newident
+new_id_list : rec_var_list newident | new_id_list ',' newident
 ;
 member_list : members | 
 ;

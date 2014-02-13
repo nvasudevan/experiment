@@ -264,7 +264,7 @@ synchronized_statement : synchronized OP_TK expression CP_TK block
 ;
 post_decrement_expression : postfix_expression DECR_TK
 ;
-primary : array_creation_expression assert_statement | primary_no_new_array
+primary : array_creation_expression | primary_no_new_array
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;
@@ -280,7 +280,7 @@ equality_expression : equality_expression NEQ_TK relational_expression | equalit
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;
-simple_name : identifier
+simple_name : identifier switch_block
 ;
 type_declaration : empty_statement | interface_declaration | class_declaration
 ;

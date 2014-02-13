@@ -86,13 +86,13 @@ simple_selector : element_name simple_selector_tail_multi | simple_selector_tail
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
-simple_selector_tail_multi :  | FUNCTION simple_selector_tail_multi
+simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
-attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
+attrib : '[' EXS IDENT S_multi attrib_tail_opt ']'
 ;
 attrib_includes : '=' | INCLUDES | DASHMATCH
 ;

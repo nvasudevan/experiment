@@ -6,7 +6,7 @@ stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_
 ;
 stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
-cdo_cdc : S | CDO | CDC
+cdo_cdc : S | CDO | CDC FUNCTION
 ;
 stylesheet_imports : import cdo_cdc_s_multi
 ;
@@ -108,7 +108,7 @@ pseudo_tail_2_opt :  | IDENT S_multi
 ;
 declaration : property COLON_TK S_multi expr prio_opt
 ;
-prio_opt :  | prio NUMBER
+prio_opt :  | prio
 ;
 prio : IMPORTANT_SYM S_multi
 ;

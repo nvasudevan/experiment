@@ -22,7 +22,7 @@ initializer_list : initializer_list ',' initializer | initializer
 ;
 compound_statement : '{' declaration_list statement_list '}' | '{' declaration_list '}' | '{' statement_list '}' | '{' '}'
 ;
-equality_expr : equality_expr NE_OP relational_expr LONG | equality_expr EQ_OP relational_expr | relational_expr
+equality_expr : equality_expr NE_OP relational_expr | equality_expr EQ_OP relational_expr | relational_expr
 ;
 declaration_specifiers : type_specifier declaration_specifiers | type_specifier | storage_class_specifier declaration_specifiers | storage_class_specifier
 ;
@@ -76,7 +76,7 @@ init_declarator_list : init_declarator_list ',' init_declarator | init_declarato
 ;
 pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
-selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
+selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' CONSTANT statement ELSE statement
 ;
 declaration : declaration_specifiers init_declarator_list ';' | declaration_specifiers ';'
 ;

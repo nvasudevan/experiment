@@ -22,7 +22,7 @@ block_statements : block_statements block_statement | block_statement
 ;
 assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
-variable_declarator : variable_declarator_id ASSIGN_TK simple_name | variable_declarator_id
+variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
@@ -142,7 +142,7 @@ conditional_or_expression : conditional_or_expression BOOL_OR_TK conditional_and
 ;
 for_statement : for_begin SC_TK SC_TK for_update CP_TK statement | for_begin SC_TK expression SC_TK for_update CP_TK statement
 ;
-block_begin : OCB_TK
+block_begin : EQ_TK
 ;
 final : modifiers
 ;

@@ -34,7 +34,7 @@ for_init : local_variable_declaration | statement_expression_list |
 ;
 formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_parameter
 ;
-labeled_statement : label_decl statement class_body_declarations
+labeled_statement : label_decl statement
 ;
 for_header : FOR_TK OP_TK
 ;
@@ -268,7 +268,7 @@ primary : array_creation_expression | primary_no_new_array
 ;
 package_declaration : PACKAGE_TK name SC_TK
 ;
-and_expression : and_expression AND_TK equality_expression | equality_expression
+and_expression : C_TK and_expression AND_TK equality_expression | equality_expression
 ;
 for_update : statement_expression_list | 
 ;

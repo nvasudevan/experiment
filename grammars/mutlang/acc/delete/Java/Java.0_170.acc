@@ -102,7 +102,7 @@ constructor_declarator : simple_name OP_TK formal_parameter_list CP_TK | simple_
 ;
 import_declarations : import_declarations import_declaration | import_declaration
 ;
-exclusive_or_expression : exclusive_or_expression XOR_TK and_expression | and_expression
+exclusive_or_expression : XOR_TK and_expression | and_expression
 ;
 primitive_type : BOOLEAN_TK | FP_TK | INTEGRAL_TK
 ;
@@ -122,7 +122,7 @@ switch_expression : SWITCH_TK OP_TK expression CP_TK
 ;
 finally : FINALLY_TK block
 ;
-switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | 
+switch_block_statement_groups : switch_block_statement_groups switch_block_statement_group | switch_block_statement_group
 ;
 compilation_unit : package_declaration import_declarations type_declarations | import_declarations type_declarations | package_declaration type_declarations | package_declaration import_declarations | type_declarations | import_declarations | package_declaration | 
 ;

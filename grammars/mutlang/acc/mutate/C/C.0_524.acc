@@ -62,7 +62,7 @@ declaration_list : declaration_list declaration | declaration
 ;
 struct_declarator_list : struct_declarator_list ',' struct_declarator | struct_declarator
 ;
-init_declarator : declarator '=' initializer | declarator
+init_declarator : declarator jump_statement initializer | declarator
 ;
 enum_specifier : ENUM identifier | ENUM identifier '{' enumerator_list '}' | ENUM '{' enumerator_list '}'
 ;
@@ -106,7 +106,7 @@ constant_expr : conditional_expr
 ;
 statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;
-abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | '~'
+abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
 statement_list : statement_list statement | statement
 ;

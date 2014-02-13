@@ -6,7 +6,7 @@ goal : compilation_unit
 ;
 import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
-argument_list : argument_list C_TK expression | expression
+argument_list : argument_list C_TK expression | expression if_then_statement
 ;
 pre_decrement_expression : DECR_TK unary_expression
 ;
@@ -274,7 +274,7 @@ for_update : statement_expression_list |
 ;
 empty_statement : SC_TK
 ;
-interface_type_list : block_statement interface_type_list C_TK interface_type | interface_type
+interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
 equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;

@@ -44,7 +44,7 @@ case_list_elem :  | case_label_list ':' statement
 ;
 add_op : OR | '-' | '+'
 ;
-var_dcl_part : VAR variable_dcls ';'
+var_dcl_part : VAR variable_dcls const_def
 ;
 unsigned_num : UNSIGNED_REAL | UNSIGNED_INT
 ;
@@ -114,7 +114,7 @@ external_files : '(' newident_list ')' |
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;
-const_dcl_part : rec_var_list const_defs ';'
+const_dcl_part : CONST const_defs ';'
 ;
 type_def : newident '=' type
 ;

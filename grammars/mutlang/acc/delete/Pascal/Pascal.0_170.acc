@@ -80,7 +80,7 @@ body : IDENTIFIER | block
 ;
 actual_param : expression colon_things | expression
 ;
-member : expression DOTDOT expression | expression
+member : expression DOTDOT | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;
@@ -90,7 +90,7 @@ expression : simple_expr relational_op simple_expr | simple_expr
 ;
 index_t_list : simple_type | index_t_list ',' simple_type
 ;
-tag_field :  | newident ':' ident
+tag_field : ident | newident ':' ident
 ;
 label_dcl_part : LABEL labels ';'
 ;

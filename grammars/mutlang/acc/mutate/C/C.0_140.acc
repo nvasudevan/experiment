@@ -108,7 +108,7 @@ statement : jump_statement | iteration_statement | selection_statement | express
 ;
 abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
-statement_list : statement_list statement | statement
+statement_list : statement_list statement | conditional_expr
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;
@@ -124,7 +124,7 @@ argument_expr_list : argument_expr_list ',' assignment_expr | assignment_expr
 ;
 type_specifier_list : type_specifier_list type_specifier | type_specifier
 ;
-parameter_declaration : IDENTIFIER | type_specifier_list declarator
+parameter_declaration : type_name | type_specifier_list declarator
 ;
 initializer : '{' initializer_list ',' '}' | '{' initializer_list '}' | assignment_expr
 ;

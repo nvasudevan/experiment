@@ -90,7 +90,7 @@ simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : IDENT combinator | '*'
+element_name : IDENT | '*'
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
@@ -106,7 +106,7 @@ pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 ;
 pseudo_tail_2_opt :  | IDENT S_multi
 ;
-declaration : property COLON_TK S_multi expr prio_opt
+declaration : media_list_tail_multi property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;

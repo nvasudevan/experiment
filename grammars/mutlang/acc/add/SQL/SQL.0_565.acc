@@ -18,7 +18,7 @@ y_columns : y_column_list | '*'
 ;
 y_atom : '(' y_expression ')' | y_column | y_value
 ;
-y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2 ALTER
+y_sub_condition : y_sub_condition OR y_sub_condition2 | y_sub_condition2
 ;
 y_drop : DROP TTABLE y_table
 ;
@@ -48,7 +48,7 @@ y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
 y_table : NAME
 ;
-y_order : NAME
+y_order : NAME y_alter
 ;
 y_values : VALUES '(' y_value_list ')'
 ;

@@ -90,7 +90,7 @@ postfix_expression : post_decrement_expression | post_increment_expression | nam
 ;
 class_type : class_or_interface_type
 ;
-this_or_super : SUPER_TK | THIS_TK
+this_or_super : SUPER_TK | THIS_TK and_expression
 ;
 variable_initializer : array_initializer | expression
 ;
@@ -276,7 +276,7 @@ empty_statement : SC_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
-equality_expression : equality_expression NEQ_TK DEFAULT_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
+equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;

@@ -104,9 +104,9 @@ exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
 constant_expr : conditional_expr
 ;
-statement : jump_statement | iteration_statement | selection_statement | PTR_OP expression_statement | compound_statement | labeled_statement
+statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
 ;
-abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
+abstract_declarator : GE_OP pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
 statement_list : statement_list statement | statement
 ;

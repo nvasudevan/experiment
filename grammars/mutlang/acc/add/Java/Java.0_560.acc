@@ -240,7 +240,7 @@ method_declaration : method_header method_body
 ;
 interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
 ;
-primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression CP_TK | THIS_TK | literal
+primary_no_new_array : name DOT_TK THIS_TK | type_literals | array_access | method_invocation | field_access | class_instance_creation_expression | OP_TK expression MODIFIER_TK CP_TK | THIS_TK | literal
 ;
 label_decl : identifier REL_CL_TK
 ;
@@ -284,7 +284,7 @@ simple_name : identifier
 ;
 type_declaration : empty_statement | interface_declaration | class_declaration
 ;
-conditional_expression : while_expression conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
+conditional_expression : conditional_or_expression REL_QM_TK expression REL_CL_TK conditional_expression | conditional_or_expression
 ;
 trap_overflow_corner_case : unary_expression_not_plus_minus | PLUS_TK unary_expression | pre_decrement_expression | pre_increment_expression
 ;

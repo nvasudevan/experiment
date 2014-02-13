@@ -22,7 +22,7 @@ cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
 stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
-stylesheet_parts : ruleset | media | page
+stylesheet_parts : simple_selector ruleset | media | page
 ;
 stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
@@ -46,7 +46,7 @@ medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-pseudo_page_opt :  | pseudo_page FUNCTION
+pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;

@@ -36,7 +36,7 @@ formal_parameter_list : formal_parameter_list C_TK formal_parameter | formal_par
 ;
 labeled_statement : label_decl statement
 ;
-for_header : simple_name OP_TK
+for_header : FOR_TK OP_TK
 ;
 switch_block : OCB_TK switch_block_statement_groups switch_labels CCB_TK | OCB_TK switch_block_statement_groups CCB_TK | OCB_TK switch_labels CCB_TK | OCB_TK CCB_TK
 ;
@@ -270,7 +270,7 @@ package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
-for_update : statement_expression_list | 
+for_update : block_end | 
 ;
 empty_statement : SC_TK
 ;

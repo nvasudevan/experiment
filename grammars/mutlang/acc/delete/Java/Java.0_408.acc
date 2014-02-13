@@ -182,7 +182,7 @@ formal_parameter : final type variable_declarator_id | type variable_declarator_
 ;
 abstract_method_declaration : method_header SC_TK
 ;
-throw_statement : THROW_TK expression
+throw_statement : THROW_TK expression SC_TK
 ;
 class_or_interface_type : name
 ;
@@ -298,7 +298,7 @@ try_statement : TRY_TK block catches finally | TRY_TK block finally | TRY_TK blo
 ;
 additive_expression : additive_expression MINUS_TK multiplicative_expression | additive_expression PLUS_TK multiplicative_expression | multiplicative_expression
 ;
-interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK CCB_TK
+interface_body : OCB_TK interface_member_declarations CCB_TK | OCB_TK
 ;
 while_statement_nsi : while_expression statement_nsi
 ;

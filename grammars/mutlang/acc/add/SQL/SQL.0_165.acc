@@ -24,7 +24,7 @@ y_drop : DROP TTABLE y_table
 ;
 y_condition : y_sub_condition
 ;
-y_assignment : NAME EQUAL y_expression | NAME EQUAL NULL_VALUE
+y_assignment : NAME EQUAL y_expression | NAME SELECT EQUAL NULL_VALUE
 ;
 y_value_list : y_value_list ',' '-' FLOATNUM | y_value_list ',' FLOATNUM | y_value_list ',' '-' INTNUM | y_value_list ',' INTNUM | y_value_list ',' STRING | y_value_list ',' NULL_VALUE | '-' FLOATNUM | FLOATNUM | '-' INTNUM | INTNUM | STRING | NULL_VALUE
 ;
@@ -52,7 +52,7 @@ y_order : NAME
 ;
 y_values : VALUES '(' y_value_list ')'
 ;
-y_create : CREATE TTABLE NULL_VALUE y_table '(' y_columndefs ')'
+y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;
 y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SELECT y_columns FROM y_table ORDER BY y_order | SELECT y_columns FROM y_table WHERE y_condition | SELECT y_columns FROM y_table
 ;

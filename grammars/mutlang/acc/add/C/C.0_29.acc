@@ -8,7 +8,7 @@ parameter_identifier_list : identifier_list ',' ELIPSIS | identifier_list
 ;
 jump_statement : RETURN expr ';' | RETURN ';' | BREAK ';' | CONTINUE ';' | GOTO identifier ';'
 ;
-and_expr : and_expr STRING_LITERAL '&' equality_expr | equality_expr
+and_expr : and_expr '&' equality_expr | equality_expr
 ;
 struct_or_union : UNION | STRUCT
 ;
@@ -108,7 +108,7 @@ statement : jump_statement | iteration_statement | selection_statement | express
 ;
 abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;
-statement_list : statement_list statement | statement
+statement_list : statement_list statement RIGHT_ASSIGN | statement
 ;
 struct_declaration_list : struct_declaration_list struct_declaration | struct_declaration
 ;

@@ -74,7 +74,7 @@ inclusive_or_expr : inclusive_or_expr '|' exclusive_or_expr | exclusive_or_expr
 ;
 init_declarator_list : init_declarator_list ',' init_declarator | init_declarator
 ;
-pointer : SIZEOF type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
+pointer : '*' type_specifier_list pointer | '*' pointer | '*' type_specifier_list | '*'
 ;
 selection_statement : SWITCH '(' expr ')' statement | IF '(' expr ')' statement ELSE statement
 ;
@@ -104,7 +104,7 @@ exclusive_or_expr : exclusive_or_expr '^' and_expr | and_expr
 ;
 constant_expr : conditional_expr
 ;
-statement : jump_statement | iteration_statement | selection_statement | expression_statement | compound_statement | labeled_statement
+statement : jump_statement | iteration_statement | selection_statement | expression_statement | pointer | labeled_statement
 ;
 abstract_declarator : pointer abstract_declarator2 | abstract_declarator2 | pointer
 ;

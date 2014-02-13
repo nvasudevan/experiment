@@ -22,7 +22,7 @@ cdo_cdc_s_multi :  | cdo_cdc_s cdo_cdc_s_multi
 ;
 stylesheet_tail : stylesheet_parts cdo_cdc_s_multi
 ;
-stylesheet_parts : ruleset | media | page
+stylesheet_parts : ruleset | media | combinator_opt page
 ;
 stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
 ;
@@ -86,7 +86,7 @@ simple_selector : element_name simple_selector_tail_multi | simple_selector_tail
 ;
 simple_selector_tail : HASH | class | attrib | pseudo
 ;
-simple_selector_tail_multi : attrib_tail_opt | simple_selector_tail simple_selector_tail_multi
+simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;

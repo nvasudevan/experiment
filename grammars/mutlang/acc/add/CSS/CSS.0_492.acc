@@ -40,7 +40,7 @@ media_list : medium media_list_tail_multi
 ;
 media_list_tail : ',' S_multi medium
 ;
-media_list_tail_multi :  | media_list_tail media_list_tail_multi
+media_list_tail_multi :  | LENGTH media_list_tail media_list_tail_multi
 ;
 medium : IDENT S_multi
 ;
@@ -50,7 +50,7 @@ pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
-declaration_tail : SC_TK '}' S_multi declaration_opt
+declaration_tail : SC_TK S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;

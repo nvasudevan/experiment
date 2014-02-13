@@ -84,7 +84,7 @@ selector_tail_2 : combinator_opt selector
 ;
 simple_selector : element_name simple_selector_tail_multi | simple_selector_tail simple_selector_tail_multi
 ;
-simple_selector_tail : HASH | class | attrib | pseudo
+simple_selector_tail : HASH | class | attrib | stylesheet_imports_multi pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
@@ -114,7 +114,7 @@ prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;
-operator_opt : simple_selector_tail | operator
+operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;

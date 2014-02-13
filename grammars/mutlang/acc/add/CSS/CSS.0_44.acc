@@ -48,7 +48,7 @@ page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_
 ;
 pseudo_page_opt :  | pseudo_page
 ;
-declaration_opt :  | pseudo_page_opt declaration
+declaration_opt :  | declaration
 ;
 declaration_tail : SC_TK S_multi declaration_opt
 ;
@@ -60,7 +60,7 @@ operator : '/' S_multi | ',' S_multi
 ;
 combinator : '+' S_multi | '>' S_multi
 ;
-unary_operator : '-' | '+'
+unary_operator : '-' | '+' '{'
 ;
 property : IDENT S_multi
 ;

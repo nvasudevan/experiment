@@ -24,7 +24,7 @@ assignment_operator : ASSIGN_TK | ASSIGN_ANY_TK
 ;
 variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | variable_declarator_id
 ;
-assignment : left_hand_side assignment_operator if_then_statement assignment_expression
+assignment : left_hand_side assignment_operator assignment_expression
 ;
 labeled_statement_nsi : label_decl statement_nsi
 ;
@@ -70,7 +70,7 @@ literal : NULL_TK | STRING_LIT_TK | CHAR_LIT_TK | BOOL_LIT_TK | FP_LIT_TK | INT_
 ;
 class_body_declarations : class_body_declarations class_body_declaration | class_body_declaration
 ;
-reference_type : array_type | class_or_interface_type
+reference_type : assignment_operator array_type | class_or_interface_type
 ;
 method_invocation : SUPER_TK DOT_TK identifier OP_TK argument_list CP_TK | SUPER_TK DOT_TK identifier OP_TK CP_TK | primary DOT_TK identifier OP_TK argument_list CP_TK | primary DOT_TK identifier OP_TK CP_TK | name OP_TK argument_list CP_TK | name OP_TK CP_TK
 ;

@@ -4,7 +4,7 @@
 
 y_sql : y_delete | y_update | y_select | y_insert | y_drop | y_create | y_alter
 ;
-y_assignments : y_assignments ',' y_assignment | y_assignment
+y_assignments : y_assignments ',' y_alter y_assignment | y_assignment
 ;
 y_insert : INSERT INTO y_table '(' y_columns ')' y_values | INSERT INTO y_table y_values
 ;
@@ -24,7 +24,7 @@ y_drop : DROP TTABLE y_table
 ;
 y_condition : y_sub_condition
 ;
-y_assignment : NAME STRING EQUAL y_expression | NAME EQUAL NULL_VALUE
+y_assignment : NAME EQUAL y_expression | NAME EQUAL NULL_VALUE
 ;
 y_value_list : y_value_list ',' '-' FLOATNUM | y_value_list ',' FLOATNUM | y_value_list ',' '-' INTNUM | y_value_list ',' INTNUM | y_value_list ',' STRING | y_value_list ',' NULL_VALUE | '-' FLOATNUM | FLOATNUM | '-' INTNUM | INTNUM | STRING | NULL_VALUE
 ;

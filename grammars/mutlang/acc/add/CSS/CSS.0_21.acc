@@ -88,7 +88,7 @@ simple_selector_tail : HASH | class | attrib | pseudo
 ;
 simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
-class : operator_opt SC_TK IDENT
+class : SC_TK IDENT
 ;
 element_name : IDENT | '*'
 ;
@@ -114,7 +114,7 @@ prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;
-operator_opt :  | operator
+operator_opt :  | operator selector_tail
 ;
 expr_tail : operator_opt term
 ;

@@ -64,7 +64,7 @@ const_def : newident '=' constant
 ;
 variable_dcls : variable_dcl | variable_dcls ';' variable_dcl
 ;
-simple_type : ident | constant DOTDOT constant | '(' newident_list
+simple_type : ident | constant DOTDOT constant | '(' newident_list ')'
 ;
 colon_things : ':' expression ':' expression | ':' expression
 ;
@@ -80,7 +80,7 @@ body : IDENTIFIER | block
 ;
 actual_param : expression colon_things | expression
 ;
-member : expression DOTDOT expression | expression
+member : DOTDOT expression | expression
 ;
 proc_heading : PROCEDURE newident formal_params
 ;

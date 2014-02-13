@@ -4,7 +4,7 @@
 
 goal : compilation_unit
 ;
-import_declaration : VOID_TK type_import_on_demand_declaration | single_type_import_declaration
+import_declaration : type_import_on_demand_declaration | single_type_import_declaration
 ;
 argument_list : argument_list C_TK expression | expression
 ;
@@ -206,7 +206,7 @@ block_statement : class_declaration | statement | local_variable_declaration_sta
 ;
 type : reference_type | primitive_type
 ;
-class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier super interfaces class_body
+class_declaration : CLASS_TK identifier super interfaces class_body | modifiers CLASS_TK identifier interface_member_declarations super interfaces class_body
 ;
 switch_block_statement_group : switch_labels block_statements
 ;

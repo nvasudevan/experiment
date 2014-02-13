@@ -8,7 +8,7 @@ import_declaration : type_import_on_demand_declaration | single_type_import_decl
 ;
 argument_list : argument_list C_TK expression | expression
 ;
-pre_decrement_expression : DECR_TK unary_expression
+pre_decrement_expression : static_initializer unary_expression
 ;
 catch_clause_parameter : CATCH_TK OP_TK formal_parameter CP_TK
 ;
@@ -276,7 +276,7 @@ empty_statement : SC_TK
 ;
 interface_type_list : interface_type_list C_TK interface_type | interface_type
 ;
-equality_expression : statement_nsi NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
+equality_expression : equality_expression NEQ_TK relational_expression | equality_expression EQ_TK relational_expression | relational_expression
 ;
 array_initializer : OCB_TK variable_initializers C_TK CCB_TK | OCB_TK variable_initializers CCB_TK | OCB_TK C_TK CCB_TK | OCB_TK CCB_TK
 ;

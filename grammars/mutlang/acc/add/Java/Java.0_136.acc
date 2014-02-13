@@ -26,7 +26,7 @@ variable_declarator : variable_declarator_id ASSIGN_TK variable_initializer | va
 ;
 assignment : left_hand_side assignment_operator assignment_expression
 ;
-labeled_statement_nsi : label_decl statement_nsi
+labeled_statement_nsi : for_statement_nsi label_decl statement_nsi
 ;
 constructor_body : block_begin explicit_constructor_invocation block_statements constructor_block_end | block_begin block_statements constructor_block_end | block_begin explicit_constructor_invocation constructor_block_end | block_begin constructor_block_end
 ;
@@ -158,7 +158,7 @@ constructor_header : modifiers constructor_declarator throws | constructor_decla
 ;
 statement : for_statement | while_statement | if_then_else_statement | if_then_statement | labeled_statement | statement_without_trailing_substatement
 ;
-statement_without_trailing_substatement : CP_TK assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
+statement_without_trailing_substatement : assert_statement | try_statement | throw_statement | synchronized_statement | return_statement | continue_statement | break_statement | do_statement | switch_statement | expression_statement | empty_statement | block
 ;
 switch_labels : switch_labels switch_label | switch_label
 ;

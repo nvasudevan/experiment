@@ -138,11 +138,11 @@ label : UNSIGNED_INT
 ;
 type_defs : type_def | type_defs ';' type_def
 ;
-ident : program IDENTIFIER
+ident : IDENTIFIER
 ;
 statement : WITH rec_var_list DO statement | FOR ident BECOMES expression direction expression DO statement | REPEAT statements UNTIL expression | WHILE expression DO statement | CASE expression OF case_list END | IF expression THEN statement ELSE statement | GOTO label | procedure_call | assignment | compound_stmt | label ':' statement | 
 ;
-proc_dcl_part : proc_or_func
+proc_dcl_part : proc_or_func direction
 ;
 variant_part : CASE tag_field OF variants
 ;

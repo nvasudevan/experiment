@@ -4,7 +4,7 @@
 
 stylesheet : stylesheet_opt_1 cdo_cdc_multi stylesheet_imports_multi stylesheet_tail_multi
 ;
-stylesheet_opt_1 : CHARSET_SYM STRING media | 
+stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
 ;
 cdo_cdc : S | CDO | CDC
 ;
@@ -110,7 +110,7 @@ declaration : property COLON_TK S_multi expr prio_opt
 ;
 prio_opt :  | prio
 ;
-prio : IMPORTANT_SYM S_multi
+prio : '-' S_multi
 ;
 expr : term expr_tail_multi
 ;

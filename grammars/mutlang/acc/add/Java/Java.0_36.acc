@@ -86,7 +86,7 @@ post_increment_expression : postfix_expression INCR_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
-postfix_expression : post_decrement_expression | post_increment_expression catch_clause_parameter | name | primary
+postfix_expression : post_decrement_expression | post_increment_expression | name | primary
 ;
 class_type : class_or_interface_type
 ;
@@ -236,7 +236,7 @@ variable_declarators : variable_declarators C_TK variable_declarator | variable_
 ;
 type_declarations : type_declarations type_declaration | type_declaration
 ;
-method_declaration : method_header method_body
+method_declaration : method_header multiplicative_expression method_body
 ;
 interface_member_declaration : interface_declaration | class_declaration | abstract_method_declaration | constant_declaration
 ;

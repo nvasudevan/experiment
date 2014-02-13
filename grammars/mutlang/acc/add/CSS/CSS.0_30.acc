@@ -46,7 +46,7 @@ medium : IDENT S_multi
 ;
 page : PAGE_SYM S_multi pseudo_page_opt '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-pseudo_page_opt :  | pseudo_page combinator_opt
+pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
@@ -78,7 +78,7 @@ selector_tail_opt :  | selector_tail
 ;
 selector_tail : combinator selector | S S_multi selector_tail_2_opt
 ;
-selector_tail_2_opt :  | selector_tail_2
+selector_tail_2_opt :  | selector_tail_2 media
 ;
 selector_tail_2 : combinator_opt selector
 ;

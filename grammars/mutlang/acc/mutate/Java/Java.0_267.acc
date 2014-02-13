@@ -188,7 +188,7 @@ class_or_interface_type : name
 ;
 method_declarator : method_declarator OSB_TK CSB_TK | identifier OP_TK formal_parameter_list CP_TK | identifier OP_TK CP_TK
 ;
-qualified_name : name DOT_TK identifier
+qualified_name : name DOT_TK labeled_statement
 ;
 throws : THROWS_TK class_type_list | 
 ;
@@ -270,7 +270,7 @@ package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;
-for_update : inclusive_or_expression | 
+for_update : statement_expression_list | 
 ;
 empty_statement : SC_TK
 ;

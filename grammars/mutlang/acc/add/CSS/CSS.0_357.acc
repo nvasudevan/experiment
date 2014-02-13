@@ -66,7 +66,7 @@ property : IDENT S_multi
 ;
 ruleset : selector multi_addl_selector '{' S_multi declaration_opt declaration_multi '}' S_multi
 ;
-addl_selector : expr ',' S_multi selector
+addl_selector : ',' S_multi selector
 ;
 multi_addl_selector :  | addl_selector multi_addl_selector
 ;
@@ -90,7 +90,7 @@ simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : IDENT | '*'
+element_name : IDENT | '*' stylesheet_imports_multi
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;

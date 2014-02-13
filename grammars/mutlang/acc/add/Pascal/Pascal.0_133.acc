@@ -130,7 +130,7 @@ relational_op : IN | NE | GE | LE | '>' | '<' | '='
 ;
 case_label_list : case_label | case_label_list ',' case_label
 ;
-actuals_list : actual_param | actuals_list ',' actual_param proc_dcl_part
+actuals_list : actual_param member_list | actuals_list ',' actual_param
 ;
 record_section :  | newident_list ':' type
 ;

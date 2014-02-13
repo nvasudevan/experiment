@@ -46,7 +46,7 @@ y_columndef : NAME DATE | NAME DOUBLE PRECISION | NAME DOUBLE | NAME INTEGER | N
 ;
 y_product : y_product '/' y_term | y_product '*' y_term | y_term
 ;
-y_table : NAME ','
+y_table : y_condition NAME
 ;
 y_order : NAME
 ;

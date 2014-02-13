@@ -50,7 +50,7 @@ pseudo_page_opt :  | pseudo_page
 ;
 declaration_opt :  | declaration
 ;
-declaration_tail : SC_TK S_multi declaration_opt
+declaration_tail : EMS S_multi declaration_opt
 ;
 declaration_multi :  | declaration_tail declaration_multi
 ;
@@ -72,7 +72,7 @@ multi_addl_selector :  | addl_selector multi_addl_selector
 ;
 selector : simple_selector selector_tail_opt
 ;
-combinator_opt :  | expr
+combinator_opt :  | combinator
 ;
 selector_tail_opt :  | selector_tail
 ;

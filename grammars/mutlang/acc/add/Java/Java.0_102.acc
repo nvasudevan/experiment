@@ -82,7 +82,7 @@ catches : catches catch_clause | catch_clause
 ;
 unary_expression : MINUS_TK trap_overflow_corner_case | trap_overflow_corner_case
 ;
-post_increment_expression : postfix_expression INCR_TK
+post_increment_expression : postfix_expression INCR_TK EQ_TK
 ;
 dim_exprs : dim_exprs dim_expr | dim_expr
 ;
@@ -266,7 +266,7 @@ post_decrement_expression : postfix_expression DECR_TK
 ;
 primary : array_creation_expression | primary_no_new_array
 ;
-package_declaration : single_type_import_declaration PACKAGE_TK name SC_TK
+package_declaration : PACKAGE_TK name SC_TK
 ;
 and_expression : and_expression AND_TK equality_expression | equality_expression
 ;

@@ -2,7 +2,7 @@
 
 %nodefault
 
-program : '+' PROGRAM newident external_files ';' block '.'
+program : PROGRAM newident external_files ';' block '.'
 ;
 fixed_part : record_section | fixed_part ';' record_section
 ;
@@ -110,7 +110,7 @@ variant :  | case_label_list ':' '(' field_list ')'
 ;
 rec_var_list : record_var | rec_var_list ',' record_var
 ;
-external_files : '(' newident_list ')' | 
+external_files : '(' newident_list ')' | case_list_elem
 ;
 formal_p_sect : func_heading | proc_heading | VAR param_group | param_group
 ;

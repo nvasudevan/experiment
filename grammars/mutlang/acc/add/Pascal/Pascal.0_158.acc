@@ -28,7 +28,7 @@ case_list : case_list_elem | case_list ';' case_list_elem
 ;
 unsigned_lit : NIL | STRING | unsigned_num
 ;
-function_form : formal_params ':' ident type | 
+function_form : formal_params ':' ident | 
 ;
 procedure_call : ident actual_params
 ;
@@ -102,7 +102,7 @@ type_dcl_part : TYPE type_defs ';'
 ;
 variable_dcl : newident_list ':' type
 ;
-index_spec : newident DOTDOT newident ':' ident
+index_spec : newident DOTDOT rec_var_list newident ':' ident
 ;
 func_heading : FUNCTION newident function_form
 ;

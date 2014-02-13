@@ -50,7 +50,7 @@ y_table : NAME
 ;
 y_order : NAME
 ;
-y_values : y_delete '(' y_value_list ')'
+y_values : VALUES '(' y_value_list ')'
 ;
 y_create : CREATE TTABLE y_table '(' y_columndefs ')'
 ;
@@ -58,5 +58,5 @@ y_select : SELECT y_columns FROM y_table WHERE y_condition ORDER BY y_order | SE
 ;
 y_boolean : NOT y_boolean | '(' y_sub_condition ')' | y_comparison
 ;
-y_column_list : y_column_list ',' NAME | NAME
+y_column_list : y_column_list ',' y_alter | NAME
 ;

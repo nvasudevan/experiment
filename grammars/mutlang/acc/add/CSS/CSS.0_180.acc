@@ -90,7 +90,7 @@ simple_selector_tail_multi :  | simple_selector_tail simple_selector_tail_multi
 ;
 class : SC_TK IDENT
 ;
-element_name : IDENT | '*'
+element_name : IDENT | '*' EMS
 ;
 attrib : '[' S_multi IDENT S_multi attrib_tail_opt ']'
 ;
@@ -114,7 +114,7 @@ prio : IMPORTANT_SYM S_multi
 ;
 expr : term expr_tail_multi
 ;
-operator_opt : COLON_TK | operator
+operator_opt :  | operator
 ;
 expr_tail : operator_opt term
 ;
