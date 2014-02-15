@@ -1,0 +1,64 @@
+%{
+#include "yygrammar.h"
+%}
+%%
+"W"     { return 'W'; }
+"B"     { return 'B'; }
+"J"     { return 'J'; }
+"V"     { return 'V'; }
+"A"     { return 'A'; }
+"M"     { return 'M'; }
+"Q"     { return 'Q'; }
+"U"     { return 'U'; }
+"Y"     { return 'Y'; }
+"ZJF"     { return TK_ZJF; }
+"MXYEA"     { return TK_MXYEA; }
+"YY"     { return TK_YY; }
+"HMAB"     { return TK_HMAB; }
+"VM"     { return TK_VM; }
+"JPV"     { return TK_JPV; }
+"XC"     { return TK_XC; }
+"HBHGC"     { return TK_HBHGC; }
+"LBSGA"     { return TK_LBSGA; }
+"VD"     { return TK_VD; }
+"ZCPNY"     { return TK_ZCPNY; }
+"VQPZ"     { return TK_VQPZ; }
+"MXBD"     { return TK_MXBD; }
+"RWGBX"     { return TK_RWGBX; }
+"IF"     { return TK_IF; }
+"MTSUT"     { return TK_MTSUT; }
+"CIS"     { return TK_CIS; }
+"AUN"     { return TK_AUN; }
+"UGUGN"     { return TK_UGUGN; }
+"REWC"     { return TK_REWC; }
+"XKCFI"     { return TK_XKCFI; }
+"IEYR"     { return TK_IEYR; }
+"QQNV"     { return TK_QQNV; }
+"EAFWT"     { return TK_EAFWT; }
+"UDL"     { return TK_UDL; }
+"BSOGT"     { return TK_BSOGT; }
+"KN"     { return TK_KN; }
+"CQZ"     { return TK_CQZ; }
+"XVMWD"     { return TK_XVMWD; }
+"TVL"     { return TK_TVL; }
+"IGYQ"     { return TK_IGYQ; }
+"YDDV"     { return TK_YDDV; }
+"ST"     { return TK_ST; }
+"LNX"     { return TK_LNX; }
+"NCRQ"     { return TK_NCRQ; }
+"FQ"     { return TK_FQ; }
+"ASQV"     { return TK_ASQV; }
+"DH"     { return TK_DH; }
+"NQ"     { return TK_NQ; }
+"DE"     { return TK_DE; }
+"UB"     { return TK_UB; }
+"UC"     { return TK_UC; }
+"DB"     { return TK_DB; }
+"PEGS"     { return TK_PEGS; }
+"RYMST"     { return TK_RYMST; }
+"SO"     { return TK_SO; }
+"QEVC"     { return TK_QEVC; }
+" "    { /* skip blank */ }
+\n     { yypos++; /* adjust linenumber and skip newline */ }
+\r     { yypos++; /* adjust linenumber and skip newline */ }
+.      { yyerror("illegal token"); }

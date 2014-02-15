@@ -49,11 +49,13 @@ usage() {
     echo -e "\nUsage: \n\n$0 [options]\n" \
          "options include: \n\n" \
          " -d <directory where grammars will be generated>\n" \
+         " -D <directory containing lex related files for symbols>\n" \
+         "     (option OVERRIDES values of -n and -t, if provided)\n" \
+         " -p <precision value>\n" \
+         " -v <precision value>\n" \
          " -N <no of samples to generate>\n" \
          " -n <no of non-terminal symbols>\n" \
          " -t <no of terminal symbols>\n" \
-         " -D <directory containing lex related files for symbols>\n" \
-         "     (option OVERRIDES values of -n and -t, if provided)\n" \
          " -i <no of parallel generators>\n"
     exit 1
 }
