@@ -22,8 +22,8 @@ nlang="5"
 export glang lgrammars nlang 
 
 gmutlang="$grammardir/mutlang"
-mugrammars="Pascal SQL Java C"
-mutypes="type1 type2 type3 type4"
+mugrammars="Pascal SQL Java C CSS Python Csharp"
+mutypes="empty add mutate delete switchadj switchany"
 nmutations="10"
 export gmutlang mugrammars mutypes nmutations 
 
@@ -51,8 +51,11 @@ ambidexter_n_length="50 100"
 export ambidexter_n_length 
 
 #SinBAD
+backends="dynamic1 dynamic3"
+wgtbackends="dynamic4 dynamic5"
+weights="0.025 0.05"
 Tdepths="10 15 20"
-export Tdepths
+export backends wgtbackends weights Tdepths 
 
 resultsdir="$cwd/results"
 ppresults="$cwd/ppresults.txt"

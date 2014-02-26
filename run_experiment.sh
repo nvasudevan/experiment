@@ -106,13 +106,24 @@ for g in $gset
 do
     for timelimit in $timelimits
     do
-        echo "$cwd/run_SinBAD.sh $g purerandom $timelimit || exit \$?" >> $scriptlist
-        
-        for backend in dynamic1
+        echo "$cwd/run_SinBAD.sh -g $g -b purerandom -t $timelimit || exit \$?" >> $scriptlist
+
+        for backend in $backends
         do
             for d in $Tdepths
             do
-                echo "$cwd/run_SinBAD.sh $g $backend $timelimit $d || exit \$?" >> $scriptlist
+                echo "$cwd/run_SinBAD.sh -g $g -b $backend -t $timelimit -d $d || exit \$?" >> $scriptlist
+            done
+        done
+
+        for backend in $wgtbackends
+        do
+            for d in $Tdepths
+            do
+                for wgt in $weights
+                do
+                    echo "$cwd/run_SinBAD.sh -g $g -b $backend -t $timelimit -d $d -w $wgt || exit \$?" >> $scriptlist
+                done
             done
         done
     done
