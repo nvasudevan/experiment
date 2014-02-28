@@ -19,10 +19,7 @@ print_summary() {
 }
 
 run_randomcfg() {
-    rsltdir="$resultsdir/sinbad/$gset/$backend/${depth}d_${timelimit}s"
-    if [ "$wgt" != "" ]; then
-        rsltdir="${rsltdir}_${wgt}w"
-    fi
+    rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
     echo "result ==> $rsltdir"
     gsetlog="$rsltdir/log"
@@ -40,14 +37,14 @@ run_randomcfg() {
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             ((cnt+=1))
+            out="$randomsize/$g,"
             if [ "$amb" != "" ]
             then 
                 ((ambcnt+=1))
-                echo "$randomsize/$g,yes" | tee -a $gsetlog
-                cp $glog $rsltdir/
-                continue
+                out="$randomsize/$g,yes"
+                mv $glog $rsltdir/
             fi
-            echo "$randomsize/$g," | tee -a $gsetlog
+            echo $out | tee -a $gsetlog
         done
         rm -Rf $tmp
     done
@@ -59,32 +56,30 @@ run_mutlang(){
     do
        for g in $mugrammars
        do
-         rsltdir="$resultsdir/sinbad/$gset/$type/$g/$backend/${depth}d_${timelimit}s"
-         if [ "$wgt" != "" ]; then
-             rsltdir="${rsltdir}_${wgt}w"
-         fi
+         rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
          mkdir -p $rsltdir
          echo "result ==> $rsltdir"
          tmp=$(mktemp -d)
          ambcnt=0
          cnt=0
          gsetlog="$rsltdir/log"
+         cp /dev/null $gsetlog
          _lex="$lexdir/$g.lex"
          for n in $(seq 1 $nmutations)
          do
             _acc="$gmutlang/acc/$type/$g/${g}.0_${n}.acc"
-            glog="$tmp/${g}_${n}.log"
+            glog="$tmp/${g}.0_${n}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             ((cnt+=1))
+            out="${g}.0_${n},"
             if [ "$amb" != "" ]
             then
                 ((ambcnt+=1))
-                echo "${g}.0_${n},yes" | tee -a $gsetlog
-                cp $glog $rsltdir/
-                continue
+                out="${g}.0_${n},yes"
+                mv $glog $rsltdir/
             fi
-            echo "${g}.0_${n}," | tee -a $gsetlog
+            echo $out | tee -a $gsetlog
          done
          rm -Rf $tmp
          print_summary $ambcnt $cnt        
@@ -93,10 +88,7 @@ run_mutlang(){
 }
 
 run_boltzcfg(){
-    rsltdir="$resultsdir/sinbad/$gset/$backend/${depth}d_${timelimit}s"
-    if [ "$wgt" != "" ]; then
-        rsltdir="${rsltdir}_${wgt}w"
-    fi
+    rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
     echo "result ==> $rsltdir"
     gsetlog="$rsltdir/log"
@@ -114,14 +106,14 @@ run_boltzcfg(){
             $sinbadcmd ${_acc} ${_lex}  > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             ((cnt+=1))
+            out="$boltzsize/$g,"
             if [ "$amb" != "" ]
             then 
                 ((ambcnt+=1))
-                echo "$boltzsize/$g,yes" | tee -a $gsetlog
-                cp $glog $rsltdir/
-                continue
+                out="$boltzsize/$g,yes"
+                mv $glog $rsltdir/
             fi
-            echo "$boltzsize/$g," | tee -a $gsetlog
+            echo $out | tee -a $gsetlog
         done
         rm -Rf $tmp        
     done
@@ -129,10 +121,7 @@ run_boltzcfg(){
 }
 
 run_lang() {
-    rsltdir="$resultsdir/sinbad/$gset/$backend/${depth}d_${timelimit}s"
-    if [ "$wgt" != "" ]; then
-        rsltdir="${rsltdir}_${wgt}w"
-    fi
+    rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
     echo "result ==> $rsltdir"
     gsetlog="$rsltdir/log"
@@ -150,14 +139,14 @@ run_lang() {
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             ((cnt+=1))
+            out="$g.$i,"
             if [ "$amb" != "" ]
             then
                 ((ambcnt+=1))
-                echo "$g.$i,yes" | tee -a $gsetlog
-                cp $glog $rsltdir/
-                continue
+                out="$g.$i,yes"
+                mv $glog $rsltdir/
             fi
-            echo "$g.$i," | tee -a $gsetlog
+            echo $out | tee -a $gsetlog
         done
     done
     rm -Rf $tmp
@@ -165,10 +154,7 @@ run_lang() {
 }
 
 run_test() {
-    rsltdir="$resultsdir/sinbad/$gset/$backend/${depth}d_${timelimit}s"
-    if [ "$wgt" != "" ]; then
-        rsltdir="${rsltdir}_${wgt}w"
-    fi
+    rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
     echo "result ==> $rsltdir"
     gsetlog="$rsltdir/log"
@@ -184,14 +170,14 @@ run_test() {
         $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
         amb=$(grep -o 'Grammar ambiguity detected' $glog)
         ((cnt+=1))
+        out="$g,"
         if [ "$amb" != "" ]
         then
             ((ambcnt+=1))
-            echo "$g,yes" | tee -a $gsetlog
-            cp $glog $rsltdir/
-            continue
+            out="$g,yes"
+            mv $glog $rsltdir/
         fi
-        echo "$g," | tee -a $gsetlog
+        echo $out | tee -a $gsetlog
     done
     rm -Rf $tmp
     print_summary $ambcnt $cnt   
@@ -213,7 +199,6 @@ do
     esac
     shift
 done
-echo "==> [$gset] $backend,t=$timelimit,d=$depth,w=$wgt"
 
 options="-b $backend -d $depth"
 if [ "$wgt" != "" ]; then
@@ -221,5 +206,7 @@ if [ "$wgt" != "" ]; then
 fi
 
 sinbadcmd="timeout ${timelimit}s $PYTHON $sinbaddir/sinbad $options"
+
+echo "==> [$gset] t=$timelimit,options=$options"
 run_$gset
 

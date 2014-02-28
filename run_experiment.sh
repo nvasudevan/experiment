@@ -65,14 +65,14 @@ do
     do
         for amberex in $amber_n_examples
         do
-            echo "$cwd/run_Amber.sh $g $timelimit examples $amberex || exit \$?" >> $scriptlist
-            echo "$cwd/run_Amber.sh $g $timelimit ellipsis examples $amberex || exit \$?" >> $scriptlist
+            echo "$cwd/run_Amber.sh -g $g -t $timelimit -n $amberex || exit \$?" >> $scriptlist
+            echo "$cwd/run_Amber.sh -g $g -t $timelimit -n $amberex -e || exit \$?" >> $scriptlist
         done
 
         for amberlen in $amber_n_length
         do
-            echo "$cwd/run_Amber.sh $g $timelimit length $amberlen || exit $?" >> $scriptlist
-            echo "$cwd/run_Amber.sh $g $timelimit ellipsis length $amberlen || exit $?" >> $scriptlist
+            echo "$cwd/run_Amber.sh -g $g -t $timelimit -l $amberlen || exit $?" >> $scriptlist
+            echo "$cwd/run_Amber.sh -g $g -t $timelimit -l $amberlen -e || exit $?" >> $scriptlist
         done
     done
 done
