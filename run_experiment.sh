@@ -47,8 +47,6 @@ cd $cwd
 scriptlist="./scriptlist"
 cp /dev/null $scriptlist
 
-cd $cwd
-
 for g in $gset
 do  
     for timelimit in $timelimits

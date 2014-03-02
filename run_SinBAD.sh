@@ -200,10 +200,11 @@ do
     shift
 done
 
-options="-b $backend -d $depth"
-if [ "$wgt" != "" ]; then
-   options="${options} -w $wgt"
-fi
+options="-b $backend"
+[ "$depth" != "" ] && options="$options -d $depth"
+[ "$wgt" != "" ] && options="${options} -w $wgt"
+
+echo $options
 
 sinbadcmd="timeout ${timelimit}s $PYTHON $sinbaddir/sinbad $options"
 
