@@ -25,6 +25,7 @@ print_summary() {
 run_randomcfg() {
     rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
+    echo "result ==> $rsltdir"
     gsetlog="$rsltdir/log"
     cp /dev/null $gsetlog
     ambcnt=0
@@ -61,6 +62,7 @@ run_randomcfg() {
 run_lang() {
     rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
+    echo "result ==> $rsltdir"
     gsetlog="$rsltdir/log"
     cp /dev/null $gsetlog
     ambcnt=0
@@ -135,6 +137,7 @@ run_mutlang() {
 run_boltzcfg() {
     rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
+    echo "result ==> $rsltdir"
     gsetlog="$rsltdir/log"
     cp /dev/null $gsetlog
     ambcnt=0
@@ -170,6 +173,7 @@ run_boltzcfg() {
 run_test() {
     rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
+    echo "result ==> $rsltdir"
     gsetlog="$rsltdir/log"
     cp /dev/null $gsetlog
     ambcnt=0
