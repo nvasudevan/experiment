@@ -83,18 +83,18 @@ do
     do
         for ambilen in $ambidexter_n_length
         do
-            echo "$cwd/run_AmbiDexter.sh $g $timelimit -q -pg -k $ambilen || exit $?" >> $scriptlist
-            echo "$cwd/run_AmbiDexter.sh $g $timelimit slr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
-            echo "$cwd/run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
-            echo "$cwd/run_AmbiDexter.sh $g $timelimit lr0 -q -pg -k $ambilen || exit $?" >> $scriptlist
-            echo "$cwd/run_AmbiDexter.sh $g $timelimit lr1 -q -pg -k $ambilen || exit $?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -k $ambilen || exit $?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit slr1 -k $ambilen || exit $?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lalr1 -k $ambilen || exit $?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lr0 -k $ambilen || exit $?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lr1 -k $ambilen || exit $?" >> $scriptlist
         done
             
-        echo "$cwd/run_AmbiDexter.sh $g $timelimit -q -pg -ik 0 || exit \$?" >> $scriptlist
-        echo "$cwd/run_AmbiDexter.sh $g $timelimit slr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
-        echo "$cwd/run_AmbiDexter.sh $g $timelimit lalr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
-        echo "$cwd/run_AmbiDexter.sh $g $timelimit lr0 -q -pg -ik 0 || exit \$?" >> $scriptlist
-        echo "$cwd/run_AmbiDexter.sh $g $timelimit lr1 -q -pg -ik 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -i 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit slr1 -i 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lalr1 -i 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lr0 -i 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lr1 -i 0 || exit \$?" >> $scriptlist
     done
 done
 

@@ -63,3 +63,8 @@ export resultsdir ppresults
 
 export accentdir="$wrkdir/accent"
 export ACCENT_DIR=$accentdir
+
+print_summary() {
+    summary="Ambiguous count=$1[of $2]"
+    echo -e "\nSummary: $summary \n--"
+}

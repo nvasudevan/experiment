@@ -1,35 +1,46 @@
 #!/bin/bash
 
-timelimit="$1"
-shift
-g="$1"
-shift
 filter=""
-if [ "$1" == "slr1" ] || [ "$1" == "lr0" ] || [ "$1" == "lr1" ] || [ "$1" == "lalr1" ]
-then
-    filter="$1"
-    shift
-    ambidexteroptions="$*"
-else
-    ambidexteroptions="$*"
-fi
-result=""
+length=""
+inclength=""
+log=""
 
-if [ "$filter" == "" ]
+set -- $(getopt t:g:f:k:l:i: "$@")
+
+while [ $# -gt 0 ]
+do
+    case "$1" in 
+     -g) g=$2 ; shift;;
+     -t) timelimit=$2 ; shift;;
+     -f) filter=$2 ; shift;;
+     -k) length=$2 ; shift;;
+     -l) log=$2 ; shift;;
+     -i) inclength=$2 ; shift;;
+    (--) shift; break;;
+    (-*) echo "$0: error - unrecognized option $1" 1>&2; exit 1;;
+     (*) break;;  
+    esac
+    shift
+done
+
+options=""
+
+[ "$length" != "" ] && options="$options -k $length"
+[ "$inclength" != "" ] && options="$options -ik $inclength"
+
+if [ -z "$filter" ]
 then
-    sentence=$(timeout $timelimit $cmd $ambidexteroptions $g 2>/dev/null | grep 'Ambiguous string found') || exit $?
+    $ambdxtcmd -q -pg $options $g > $log 2>&1 || exit $?
 else
-    _egrep_cmd="egrep '^Harmless productions|^Exporting'"
-    _sed_cmd="sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/'" 
-    exported_harmless=$(timeout $timelimit $cmd -h -$filter -oy $g 2> /dev/null | egrep '^Harmless productions|^Exporting' | sed -e 's/Harmless productions://' -e 's/Exporting grammar to/,/' | tr -d ' ')
-    harmless="`echo $exported_harmless | awk -F, '{print $1}'`"
-    exported="`echo $exported_harmless | awk -F, '{print $2}'`"
-    echo $harmless, $exported
-    if [ ! -z "$exported" ]
+    sfilter=$(date +%s%N | cut -b1-13)
+    $ambdxtcmd -h -$filter -oy $g > $log 2>&1 || exit $?
+    efilter=$(date +%s%N | cut -b1-13)
+    echo "filter time: $(($efilter-$sfilter)) millisecs" >> $log
+    exportstr="Exporting grammar to"
+    exported=$(cat $log | grep "$exportstr" | sed -e "s/${exportstr} //")
+    if [ "$exported" != "" ]
     then
-        sentence=$(timeout $timelimit $cmd $ambidexteroptions $exported 2> /dev/null | grep 'Ambiguous string found') || exit $?
+        $ambdxtcmd -q -pg $options $exported >> $log 2>&1 || exit $?
     fi
 fi
 
-[ "$sentence" != "" ] && result="yes"
-printf "$result"
