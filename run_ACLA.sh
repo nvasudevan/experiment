@@ -10,11 +10,6 @@ torun="$1"
 timelimit="${2}s"
 cmd="`which java` -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar"
 
-print_summary() {
-    summary="Ambiguous count=$1[of $2]"
-    echo -e "\nSummary: $summary \n--"
-}
-
 printrec() {
     result="$1"
     _out="$2"

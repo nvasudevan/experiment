@@ -13,11 +13,6 @@ depth=""
 wgt=""
 sinbaddir="$wrkdir/sinbad/src"
 
-print_summary() {
-    summary="Ambiguous count=$1[of $2]"
-    echo -e "\nSummary: $summary \n--"
-}
-
 run_randomcfg() {
     rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir
