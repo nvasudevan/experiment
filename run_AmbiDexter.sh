@@ -103,7 +103,6 @@ run_randomcfg() {
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
-            echo $tmp
             mv $glog $rsltdir/
             rm -Rf $tmp
         done
@@ -157,7 +156,6 @@ run_lang() {
                 out="$g.$i,yes"
             fi
             echo $out | tee -a $gsetlog
-            echo $tmp
             mv $glog $rsltdir/
             rm -Rf $tmp
         done
@@ -182,7 +180,6 @@ run_mutlang() {
             for n in $(seq 1 $nmutations)
             do
                 tmp=$(mktemp -d)
-                echo $tmp
                 glog="$tmp/${g}.0_${n}.log"
                 gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
                 gy="$tmp/$g.0_$n.y"
@@ -269,7 +266,6 @@ run_boltzcfg() {
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
-            echo $tmp
             mv $glog $rsltdir/
             rm -Rf $tmp
         done
