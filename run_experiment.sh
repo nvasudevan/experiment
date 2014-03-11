@@ -51,7 +51,7 @@ for g in $gset
 do  
     for timelimit in $timelimits
     do
-        echo "$cwd/run_ACLA.sh $g $timelimit || exit \$?" >> $scriptlist
+        echo "$cwd/run_ACLA.sh -g $g -t $timelimit || exit \$?" >> $scriptlist
     done
 done
 
@@ -69,8 +69,8 @@ do
 
         for amberlen in $amber_n_length
         do
-            echo "$cwd/run_Amber.sh -g $g -t $timelimit -l $amberlen || exit $?" >> $scriptlist
-            echo "$cwd/run_Amber.sh -g $g -t $timelimit -l $amberlen -e || exit $?" >> $scriptlist
+            echo "$cwd/run_Amber.sh -g $g -t $timelimit -l $amberlen || exit \$?" >> $scriptlist
+            echo "$cwd/run_Amber.sh -g $g -t $timelimit -l $amberlen -e || exit \$?" >> $scriptlist
         done
     done
 done
@@ -83,18 +83,18 @@ do
     do
         for ambilen in $ambidexter_n_length
         do
-            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -k $ambilen || exit $?" >> $scriptlist
-            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit slr1 -k $ambilen || exit $?" >> $scriptlist
-            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lalr1 -k $ambilen || exit $?" >> $scriptlist
-            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lr0 -k $ambilen || exit $?" >> $scriptlist
-            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lr1 -k $ambilen || exit $?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -k $ambilen || exit \$?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -f slr1 -k $ambilen || exit \$?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -f lalr1 -k $ambilen || exit \$?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -f lr0 -k $ambilen || exit \$?" >> $scriptlist
+            echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -f lr1 -k $ambilen || exit \$?" >> $scriptlist
         done
             
         echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -i 0 || exit \$?" >> $scriptlist
-        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit slr1 -i 0 || exit \$?" >> $scriptlist
-        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lalr1 -i 0 || exit \$?" >> $scriptlist
-        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lr0 -i 0 || exit \$?" >> $scriptlist
-        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit lr1 -i 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -f slr1 -i 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -f lalr1 -i 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -f lr0 -i 0 || exit \$?" >> $scriptlist
+        echo "$cwd/run_AmbiDexter.sh -g $g -t $timelimit -f lr1 -i 0 || exit \$?" >> $scriptlist
     done
 done
 
