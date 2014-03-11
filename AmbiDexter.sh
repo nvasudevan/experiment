@@ -35,7 +35,7 @@ else
     sfilter=$(date +%s%N | cut -b1-13)
     $ambdxtcmd -h -$filter -oy $g > $log 2>&1 || exit $?
     efilter=$(date +%s%N | cut -b1-13)
-    echo "filter time: $(($efilter-$sfilter)) millisecs" >> $log
+    echo "filter time (millisecs): $(($efilter-$sfilter))" >> $log
     exportstr="Exporting grammar to"
     exported=$(cat $log | grep "$exportstr" | sed -e "s/${exportstr} //")
     if [ "$exported" != "" ]

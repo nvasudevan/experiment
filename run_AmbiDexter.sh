@@ -17,19 +17,36 @@ print_filter_summary() {
     tot=0.0
     cnt=0
     fltcnt=0
+    unambcnt=0
+    totflttime=0
     for log in $(ls $logdir/*.log)
     do
-        ratio=$(grep "^Harmless productions" $log | cut -d: -f2)
-        if [ ! -z "$ratio" ]
-        then 
-            tot=$(echo $tot+$ratio | bc -l)
+        flttime=$(grep "^filter time" $log | cut -d: -f2)
+        if [ ! -z "$flttime" ]
+        then
+            totflttime=$(echo $totflttime+$flttime | bc)
             ((fltcnt+=1))
+            ratio=$(grep "^Harmless productions" $log | cut -d: -f2)
+            if [ ! -z "$ratio" ]
+            then 
+                hfrac=$(echo $ratio | bc -l)
+                tot=$(echo $tot+$hfrac | bc -l)
+                unamb=$(echo $ratio | bc)
+                [ $unamb == 1 ] && ((unambcnt+=1))
+            fi
         fi
         ((cnt+=1))
     done
     avgratio="n/a"
-    [ $fltcnt != 0 ] && avgratio=$(echo $tot/$fltcnt | bc -l)
-    summary="no of filtered grammars=$fltcnt[of $cnt]\nAvg filter ratio=$avgratio"
+    avgflttime="n/a"
+    if [ $fltcnt != 0 ]; then
+        avgratio=$(echo "scale=4;($tot/$fltcnt)*100" | bc -l)
+        avgflttime=$(echo "scale=4;$totflttime/$fltcnt" | bc -l)
+    fi
+    summary="no of filtered grammars=$fltcnt [of $cnt]\
+    \navg harmless [%]=${avgratio}\
+    \nno of unambiguous grammars=$unambcnt [of $cnt]\
+    \navg filter time [millisecs]=$avgflttime"
     echo -e "$summary \n--"
 }
 
@@ -80,9 +97,7 @@ run_randomcfg() {
             out="$randomsize/$g,"
             timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
-            # all productions harmless
-            ratio=$(grep '^Harmless productions' $glog | cut -d: -f2| bc)
-            if [ "$amb" != "" ] || [ "$ratio" == "1" ]
+            if [ "$amb" != "" ]
             then
                 ((ambcnt+=1))
                 out="$randomsize/$g,yes"
@@ -136,9 +151,7 @@ run_lang() {
             out="$g.$i,"
             timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
-            # all productions harmless
-            ratio=$(grep '^Harmless productions' $glog | cut -d: -f2| bc)
-            if [ "$amb" != "" ] || [ "$ratio" == "1" ]
+            if [ "$amb" != "" ]
             then
                 ((ambcnt+=1))
                 out="$g.$i,yes"
@@ -157,8 +170,8 @@ run_lang() {
 run_mutlang() {
     for type in $mutypes
     do
-        for g in $lgrammars
-        do
+       for g in $mugrammars
+       do
             rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
             mkdir -p $rsltdir
             echo "result ==> $rsltdir"
@@ -196,9 +209,7 @@ run_mutlang() {
                 out="$g.0_$n,"
                 timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
                 amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
-                # all productions harmless
-                ratio=$(grep '^Harmless productions' $glog | cut -d: -f2| bc)
-                if [ "$amb" != "" ] || [ "$ratio" == "1" ]
+                if [ "$amb" != "" ]
                 then
                     ((ambcnt+=1))
                     out="$g.0_$n,yes"
@@ -252,9 +263,7 @@ run_boltzcfg() {
             out="$boltzsize/$g,"
             timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
-            # all productions harmless
-            ratio=$(grep '^Harmless productions' $glog | cut -d: -f2| bc)
-            if [ "$amb" != "" ] || [ "$ratio" == "1" ]
+            if [ "$amb" != "" ]
             then
                 ((ambcnt+=1))
                 out="$boltzsize/$g,yes"
