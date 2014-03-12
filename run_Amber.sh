@@ -4,8 +4,6 @@ bdir=$(dirname $0)
 echo $bdir
 . $bdir/toolparams.sh
 
-echo "$(hostname)::($basename $0) $cwd $wrkdir"
-
 gset=""
 timelimit=""
 examples=""
@@ -31,8 +29,8 @@ run_randomcfg() {
         for g in $(seq 1 $nrandom)
         do
             tmp=$(mktemp -d)
+            glog="$rsltdir/${randomsize}_${g}.log"
             cd $tmp
-            glog="${randomsize}_${g}.log"
             $accent $grandom/$randomsize/$g.acc || exit $?
             $lex $grandom/$randomsize/lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
@@ -44,14 +42,13 @@ run_randomcfg() {
             then
                 ((ambcnt+=1))
                 out="$randomsize/$g,yes"
-                mv $glog $rsltdir/
             fi
             echo $out | tee -a $gsetlog
             cd $cwd
             rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt
+    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 run_lang() {
@@ -67,8 +64,8 @@ run_lang() {
         for i in $(seq 1 $nlang)
         do
             tmp=$(mktemp -d)
+            glog="$rsltdir/${g}_${i}.log"
             cd $tmp
-            glog="${g}_${i}.log"
             $accent $glang/acc/$g.$i.acc || exit $?
             $lex $lexdir/$g.lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
@@ -80,14 +77,13 @@ run_lang() {
             then
                 ((ambcnt+=1))
                 out="$g.$i,yes"
-                mv $glog $rsltdir/
             fi
             echo $out| tee -a $gsetlog
             cd $cwd
             rm -Rf $tmp
         done
     done 
-    print_summary $ambcnt $cnt 
+    print_summary $ambcnt $cnt > $rsltdir/summary 
 }
 
 run_mutlang() {
@@ -105,8 +101,8 @@ run_mutlang() {
          for n in $(seq 1 $nmutations)
          do
              tmp=$(mktemp -d)
+             glog="$rsltdir/${g}.0_${n}.log"
              cd $tmp
-             glog="${g}.0_${n}.log"
              $accent $gmutlang/acc/${type}/$g/$g.0_${n}.acc || exit $?
              $lex $lexdir/$g.lex || exit $?
              $cc -w -o amber -O3 yygrammar.c $ambersrc
@@ -118,13 +114,12 @@ run_mutlang() {
              then
                  ((ambcnt+=1))
                  out="${g}.0_${n},yes"
-                 mv $glog $rsltdir/
              fi
              echo $out | tee -a $gsetlog
              cd $cwd
              rm -Rf $tmp
          done
-         print_summary $ambcnt $cnt        
+         print_summary $ambcnt $cnt > $rsltdir/summary        
        done
     done
 }
@@ -142,8 +137,8 @@ run_boltzcfg() {
         for g in $(seq 1 $nboltz)
         do
             tmp=$(mktemp -d)
+            glog="$rsltdir/${boltzsize}_${g}.log"
             cd $tmp
-            glog="${boltzsize}_${g}.log"
             $accent $gboltz/$boltzsize/$g.acc || exit $?
             $lex $gboltz/$boltzsize/lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
@@ -155,14 +150,13 @@ run_boltzcfg() {
             then
                 ((ambcnt+=1))
                 out="$boltzsize/$g,yes"
-                mv $glog $rsltdir/
             fi
             echo $out | tee -a $gsetlog
             cd $cwd
             rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt
+    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 run_test() {
@@ -176,8 +170,8 @@ run_test() {
     for g in $testgrammars
     do
         tmp=$(mktemp -d)
+        glog="$rsltdir/${g}_${g}.log"
         cd $tmp
-        glog="${g}_${g}.log"
         $accent $grammardir/test/$g/$g.acc || exit $?
         $lex $lexdir/general.lex || exit $?
         $cc -w -o amber -O3 yygrammar.c $ambersrc
@@ -189,13 +183,12 @@ run_test() {
         then
             ((ambcnt+=1))
             out="$g,yes"
-            mv $glog $rsltdir/
         fi
         echo "$out" | tee -a $gsetlog
         cd $cwd
         rm -Rf $tmp  
     done
-    print_summary $ambcnt $cnt
+    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 set -- $(getopt g:t:n:l:e "$@")
@@ -234,7 +227,7 @@ if [ -z "$options" ]; then
 fi
 
 ambercmd="timeout ${timelimit}s ./amber $options"
-echo "==> [$gset] t=$timelimit,options=$options"
+echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit,options=$options"
 cwd=$(pwd)
 run_$gset
 

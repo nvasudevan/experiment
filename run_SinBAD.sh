@@ -4,8 +4,6 @@ bdir=$(dirname $0)
 echo $bdir
 . $bdir/toolparams.sh
 
-echo "$(hostname)::($basename $0) $cwd $wrkdir"
-
 gset=""
 backend=""
 timelimit=""
@@ -198,6 +196,6 @@ echo $options
 
 sinbadcmd="timeout ${timelimit}s $PYTHON $sinbaddir/sinbad $options"
 
-echo "==> [$gset] t=$timelimit,options=$options"
+echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit,options=$options"
 run_$gset
 
