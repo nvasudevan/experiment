@@ -50,14 +50,6 @@ print_filter_summary() {
     echo -e "$summary \n--"
 }
 
-acc_to_yacc(){
-    gacc="$1"
-    gy="$2"
-    cat $gacc | grep  "%token" | sed -e 's/,//g' -e 's/;$//' > $gy
-    echo "" >> $gy
-    cat $gacc | grep -v '%token' | sed -e 's/%nodefault/\n%%/' >> $gy
-}
-
 run_randomcfg() {
     rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
     mkdir -p $rsltdir

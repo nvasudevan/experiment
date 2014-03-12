@@ -7,17 +7,6 @@ echo $bdir
 gset=""
 timelimit=""
 
-acc_to_cfg(){
-    gacc="$1"
-    gcfg="$2"
-    cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " | sed -e 's/;$//g' -e "s/'/\"/g" > $gcfg
-    tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
-    for token in $tokenlist
-    do
-       sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" $gcfg
-    done    
-}
-
 run_randomcfg() {
     rsltdir="$resultsdir/acla/$gset/${timelimit}s"
     mkdir -p $rsltdir
