@@ -28,7 +28,7 @@ run_randomcfg() {
         for g in $(seq 1 $nrandom)
         do
             _acc="$grandom/$randomsize/$g.acc"
-            glog="$tmp/${randomsize}_${g}.log"
+            glog="$rsltdir/${randomsize}_${g}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             ((cnt+=1))
@@ -37,7 +37,6 @@ run_randomcfg() {
             then 
                 ((ambcnt+=1))
                 out="$randomsize/$g,yes"
-                mv $glog $rsltdir/
             fi
             echo $out | tee -a $gsetlog
         done
@@ -63,7 +62,7 @@ run_mutlang(){
          for n in $(seq 1 $nmutations)
          do
             _acc="$gmutlang/acc/$type/$g/${g}.0_${n}.acc"
-            glog="$tmp/${g}.0_${n}.log"
+            glog="$rsltdir/${g}.0_${n}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             ((cnt+=1))
@@ -72,7 +71,6 @@ run_mutlang(){
             then
                 ((ambcnt+=1))
                 out="${g}.0_${n},yes"
-                mv $glog $rsltdir/
             fi
             echo $out | tee -a $gsetlog
          done
@@ -97,7 +95,7 @@ run_boltzcfg(){
         for g in $(seq 1 $nboltz)
         do
             _acc="$gboltz/$boltzsize/$g.acc"
-            glog="$tmp/${boltzsize}_${g}.log"
+            glog="$rsltdir/${boltzsize}_${g}.log"
             $sinbadcmd ${_acc} ${_lex}  > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             ((cnt+=1))
@@ -106,7 +104,6 @@ run_boltzcfg(){
             then 
                 ((ambcnt+=1))
                 out="$boltzsize/$g,yes"
-                mv $glog $rsltdir/
             fi
             echo $out | tee -a $gsetlog
         done
@@ -130,7 +127,7 @@ run_lang() {
         for i in $(seq 1 $nlang)
         do
             _acc="$glang/acc/$g.$i.acc"
-            glog="$tmp/${g}_${i}.log"
+            glog="$rsltdir/${g}_${i}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             ((cnt+=1))
@@ -139,7 +136,6 @@ run_lang() {
             then
                 ((ambcnt+=1))
                 out="$g.$i,yes"
-                mv $glog $rsltdir/
             fi
             echo $out | tee -a $gsetlog
         done
@@ -161,7 +157,7 @@ run_test() {
     for g in $testgrammars
     do
         _acc="$grammardir/test/$g/$g.acc"
-        glog="$tmp/${g}_${g}.log"
+        glog="$rsltdir/${g}_${g}.log"
         $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
         amb=$(grep -o 'Grammar ambiguity detected' $glog)
         ((cnt+=1))
@@ -170,7 +166,6 @@ run_test() {
         then
             ((ambcnt+=1))
             out="$g,yes"
-            mv $glog $rsltdir/
         fi
         echo $out | tee -a $gsetlog
     done
