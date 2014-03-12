@@ -4,158 +4,201 @@ bdir=$(dirname $0)
 echo $bdir
 . $bdir/toolparams.sh
 
-echo "$(hostname)::($basename $0) $cwd $wrkdir"
+gset=""
+timelimit=""
 
-torun="$1"
-timelimit="${2}s"
-cmd="`which java` -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar"
-
-printrec() {
-    result="$1"
-    _out="$2"
-    _g="$3"
-    amb=$(echo $_out | grep -o 'ambiguous string' | uniq)
-    if [ "$amb" == "ambiguous string" ]
-    then 
-        ambstr=$(echo $out | awk -F': ' '{print $2}')
-        echo "$_g,yes,-,$ambstr,$(echo $ambstr | wc -c)" | tee -a $result
-    else
-        amb=$(echo $_out | grep -o 'unambiguous\!')
-        if [ "$amb" == "unambiguous!" ]
-        then
-            echo "$_g,unambiguous,,," | tee -a $result
-        else
-            echo "$_g,,,," | tee -a $result
-        fi    
-    fi
+acc_to_cfg(){
+    gacc="$1"
+    gcfg="$2"
+    cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " | sed -e 's/;$//g' -e "s/'/\"/g" > $gcfg
+    tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
+    for token in $tokenlist
+    do
+       sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" $gcfg
+    done    
 }
 
 run_randomcfg() {
-    result="$resultsdir/acla/$torun/$timelimit"
-    cp /dev/null $result
+    rsltdir="$resultsdir/acla/$gset/${timelimit}s"
+    mkdir -p $rsltdir
+    echo "result ==> $rsltdir"
+    gsetlog="$rsltdir/log"
+    cp /dev/null $gsetlog
+    ambcnt=0
+    cnt=0    
     for randomsize in $randomcfgsizes
     do
         for g in  $(seq 1 $nrandom)
         do
-            # first convert accent format to cfg format
+            tmp=$(mktemp -d)
             gacc="$grandom/$randomsize/$g.acc"
-            _gcfg="$grandom/$randomsize/$g.cfg"    
-	        gcfg=$(mktemp ${_gcfg}.XXXXXX)
-            cat $gacc | egrep -v "^%nodefault|^%token" | sed -e "s/'/\"/g" -e 's/;$//' > $gcfg
-            tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
-            for token in $tokenlist
-            do
-                sed -i -e "s/\b$token\b/\"$token\"/g" -e "s/'/\"/g" $gcfg
-            done
-            out=$(timeout $timelimit $cmd -a $gcfg| egrep 'unambiguous\!|ambiguous string')
-            rm $gcfg
-            printrec "$result" "$out" "$randomsize - $g"
+            gcfg="$tmp/${randomsize}_${g}.cfg"    
+            glog="$rsltdir/${randomsize}_${g}.log"
+            acc_to_cfg $gacc $gcfg
+            $aclacmd -a $gcfg > $glog 2>&1
+            ((cnt+=1))
+            out="${randomsize}/$g,"
+            amb=$(grep -o 'ambiguous string' $glog)
+            if [ "$amb" != "" ]
+            then
+                ((ambcnt+=1))
+                out="${randomsize}/$g,yes"
+            fi
+            echo $out | tee -a $gsetlog        
+            rm -Rf $tmp            
         done
     done
+    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 run_lang() {
-    result="$resultsdir/acla/$torun/$timelimit"
-    cp /dev/null $result
+    rsltdir="$resultsdir/acla/$gset/${timelimit}s"
+    mkdir -p $rsltdir
+    echo "result ==> $rsltdir"
+    gsetlog="$rsltdir/log"
+    cp /dev/null $gsetlog
+    ambcnt=0
+    cnt=0 
     for g in $lgrammars
     do
         for i in $(seq 1 $nlang)
         do
-            # convert yacc grammars from AmbiDexter to ACLA format
+            tmp=$(mktemp -d)
             gacc="$glang/acc/$g.$i.acc"
-            _gcfg="$grammardir/cfg/$g.$i.cfg"
-            [ ! -d $grammardir/cfg ] && mkdir -p $grammardir/cfg    
-	        gcfg=$(mktemp ${_gcfg}.XXXXXX)
-            cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
-            tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
-            for token in $tokenlist
-            do
-                sed -i -e "s/\b$token\b/\"$token\"/g" -e "s/'/\"/g" $gcfg
-            done            
-            out=$(timeout $timelimit $cmd -a $gcfg | egrep 'unambiguous\!|ambiguous string')
-	        rm $gcfg
-            printrec "$result" "$out" "$g.$i" 
+            gcfg="$tmp/$g.$i.cfg"
+            glog="$rsltdir/${g}_${i}.log"
+            acc_to_cfg $gacc $gcfg
+            $aclacmd -a $gcfg > $glog 2>&1
+            ((cnt+=1))
+            out="$g.$i,"
+            amb=$(grep -o 'ambiguous string' $glog)
+            if [ "$amb" != "" ]
+            then
+                ((ambcnt+=1))
+                out="$g.$i,yes"
+            fi
+            echo $out | tee -a $gsetlog        
+            rm -Rf $tmp 
         done
     done
+    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 run_mutlang() {
     for type in $mutypes
     do
-        result="$resultsdir/acla/$torun/${type}_${timelimit}"
-        cp /dev/null $result
-        echo "===> $type, result - $result"
         for g in $mugrammars
         do
+            rsltdir="$resultsdir/acla/$gset/${timelimit}s/$type/$g"
+            mkdir -p $rsltdir
+            echo "result ==> $rsltdir"
+            gsetlog="$rsltdir/log"
+            cp /dev/null $gsetlog
+            cnt=0
+            ambcnt=0         
             for n in $(seq 1 $nmutations)
             do
-                # convert grammar to cfg format
-                gacc="$gmutlang/acc/$type/$g.0_$n.acc"
-                _gcfg="$gmutlang/cfg/$type/$g.0_$n.cfg"
-                [ ! -d $gmutlang/cfg/$type ] && mkdir -p $gmutlang/cfg/$type
-	            gcfg=$(mktemp ${_gcfg}.XXXXXX)
-                cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " > $gcfg
-                tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
-                for token in $tokenlist
-                do
-                    sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" $gcfg
-                done
-                out=$(timeout $timelimit $cmd -a $gcfg | egrep 'unambiguous\!|ambiguous string')
-	            rm $gcfg
-	            printrec "$result" "$out" "$g.0_$n"
+                tmp=$(mktemp -d)
+                gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
+                gcfg="$tmp/$g.0_$n.cfg"
+                glog="$rsltdir/${g}.0_${n}.log"
+                acc_to_cfg $gacc $gcfg
+                $aclacmd -a $gcfg > $glog 2>&1
+                ((cnt+=1))
+                out="$g.0_$n,"
+                amb=$(grep -o 'ambiguous string' $glog)
+                if [ "$amb" != "" ]
+                then
+                    ((ambcnt+=1))
+                    out="$g.0_$n,yes"
+                fi
+                echo $out | tee -a $gsetlog        
+                rm -Rf $tmp 
             done
+            print_summary $ambcnt $cnt > $rsltdir/summary
         done
     done    
 }
 
 run_boltzcfg() {
-    result="$resultsdir/acla/$torun/$timelimit"
-    cp /dev/null $result
+    rsltdir="$resultsdir/acla/$gset/${timelimit}s"
+    mkdir -p $rsltdir
+    echo "result ==> $rsltdir"
+    gsetlog="$rsltdir/log"
+    cp /dev/null $gsetlog
+    ambcnt=0
+    cnt=0
     for boltzsize in $boltzcfgsizes
     do    
         for g in  $(seq 1 $nboltz)
         do
-            # first convert accent format to cfg format
+            tmp=$(mktemp -d)
             gacc="$gboltz/$boltzsize/$g.acc"
-            _gcfg="$gboltz/$boltzsize/$g.cfg"    
-	        gcfg=$(mktemp ${_gcfg}.XXXXXX)
-            cat $gacc | egrep -v "^\s*;|^%nodefault|^%token " | sed -e 's/;$//g' > $gcfg
-            tokenlist=$(grep '%token' $gacc | sed -e 's/%token //' | tr -d ';,')
-            for token in $tokenlist
-            do
-               sed -i -e "s/\b${token}\b/\"${token}\"/g" -e "s/'/\"/g" $gcfg
-            done        
-            out=$(timeout $timelimit $cmd -a $gcfg | egrep 'unambiguous\!|ambiguous string')
-	        rm $gcfg
-            printrec "$result" "$out" "$boltzsize - $g"
+            gcfg="$tmp/${boltzsize}_${g}.cfg"    
+            glog="$rsltdir/${boltzsize}_${g}.log"
+            acc_to_cfg $gacc $gcfg
+            $aclacmd -a $gcfg > $glog 2>&1
+            ((cnt+=1))
+            out="${boltzsize}/$g,"
+            amb=$(grep -o 'ambiguous string' $glog)
+            if [ "$amb" != "" ]
+            then
+                ((ambcnt+=1))
+                out="${boltzsize}/$g,yes"
+            fi
+            echo $out | tee -a $gsetlog        
+            rm -Rf $tmp
         done
     done
+    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 run_test() {
-    result="$resultsdir/acla/$torun/$timelimit"
-    cp /dev/null $result
-    ambcnt=0
+    rsltdir="$resultsdir/acla/$gset/${timelimit}s"
+    mkdir -p $rsltdir
+    echo "result ==> $rsltdir"
+    gsetlog="$rsltdir/log"
+    cp /dev/null $gsetlog
     cnt=0
+    ambcnt=0
     for g in $testgrammars
     do
+        tmp=$(mktemp -d)
         gacc="$grammardir/test/$g/$g.acc"
-        gcfg="$grammardir/test/$g/$g.cfg"    
-        cat $gacc | egrep -v "^%nodefault|^;" | sed -e "s/'/\"/g" > $gcfg
-        out=$(timeout $timelimit $cmd -a $gcfg | egrep 'unambiguous\!|ambiguous string')
-        rm $gcfg
-        printrec "$result" "$out" "$g"
+        gcfg="$tmp/$g.cfg"
+        glog="$rsltdir/${g}.log"
+        acc_to_cfg $gacc $gcfg
+        $aclacmd -a $gcfg > $glog 2>&1
+        ((cnt+=1))
+        out="$g,"
+        amb=$(grep -o 'ambiguous string' $glog)
+        if [ "$amb" != "" ]
+        then
+            ((ambcnt+=1))
+            out="$g,yes"
+        fi
+        echo $out | tee -a $gsetlog        
+        rm -Rf $tmp
     done
+    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
-main() {
-    for i in $*
-    do
-        [ ! -d $resultsdir/acla/$torun ] && mkdir -p $resultsdir/acla/$torun && echo "$resultsdir/acla/$torun created!"
-        echo "[$torun time=$timelimit, memory max=$memlimit]"
-        run_$i
-    done  
-}
+set -- $(getopt g:t: "$@")
 
-main $torun
+while [ $# -gt 0 ]
+do
+    case "$1" in 
+     -g) gset=$2 ; shift;;
+     -t) timelimit="$2" ; shift;;
+    (--) shift; break;;
+    (-*) echo "$0: error - unrecognized option $1" 1>&2; exit 1;;
+     (*)  break;;  
+    esac
+    shift
+done
+
+aclacmd="timeout ${timelimit}s java -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar"
+export aclacmd 
+echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit"
+run_$gset
 
