@@ -107,8 +107,8 @@ run_randomcfg() {
             rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt
-    print_filter_summary $rsltdir
+    print_summary $ambcnt $cnt > $rsltdir/summary
+    print_filter_summary $rsltdir >> $rsltdir/summary
 }
 
 run_lang() {
@@ -160,8 +160,8 @@ run_lang() {
             rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt
-    print_filter_summary $rsltdir
+    print_summary $ambcnt $cnt > $rsltdir/summary
+    print_filter_summary $rsltdir >> $rsltdir/summary
 }
 
 
@@ -215,8 +215,8 @@ run_mutlang() {
                 mv $glog $rsltdir/
                 rm -Rf $tmp            
           done
-          print_summary $ambcnt $cnt
-          print_filter_summary $rsltdir
+          print_summary $ambcnt $cnt > $rsltdir/summary
+          print_filter_summary $rsltdir >> $rsltdir/summary
        done
     done
 }
@@ -270,8 +270,8 @@ run_boltzcfg() {
             rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt
-    print_filter_summary $rsltdir
+    print_summary $ambcnt $cnt > $rsltdir/summary
+    print_filter_summary $rsltdir >> $rsltdir/summary
 }
 
 
@@ -303,7 +303,8 @@ run_test() {
         echo $out | tee -a $gsetlog
     done
     rm -Rf $tmp
-    print_summary $ambcnt $cnt
+    print_summary $ambcnt $cnt > $rsltdir/summary
+    print_filter_summary $rsltdir >> $rsltdir/summary
 }
 
 set -- $(getopt g:t:f:k:i: "$@")
