@@ -71,7 +71,7 @@ run_randomcfg() {
         for g in $(seq 1 $nrandom)
         do
             tmp=$(mktemp -d)
-            glog="$tmp/${randomsize}_${g}.log"
+            glog="$rsltdir/${randomsize}_${g}.log"
             gacc="$grandom/$randomsize/$g.acc"
             gy="$tmp/$g.y"
             ((cnt+=1))
@@ -81,7 +81,6 @@ run_randomcfg() {
             if [ "$msg" != "" ]
             then
                 echo "$randomsize/$g,yes" | tee -a $gsetlog
-                mv $glog $rsltdir/
                 ((ambcnt+=1))
                 rm -Rf $tmp
                 continue
@@ -90,7 +89,6 @@ run_randomcfg() {
             if [ "$msg" != "" ]
             then 
                 echo "$randomsize/$g," | tee -a $gsetlog
-                mv $glog $rsltdir/
                 rm -Rf $tmp
                 continue
             fi
@@ -103,7 +101,6 @@ run_randomcfg() {
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
-            mv $glog $rsltdir/
             rm -Rf $tmp
         done
     done
@@ -124,7 +121,7 @@ run_lang() {
         for i in $(seq 1 $nlang)
         do
             tmp=$(mktemp -d)
-            glog="$tmp/${g}_${i}.log"
+            glog="$rsltdir/${g}_${i}.log"
             gacc="$glang/acc/$g.$i.acc"
             gy="$tmp/$g.$i.y"
             ((cnt+=1))
@@ -134,7 +131,6 @@ run_lang() {
             if [ "$msg" != "" ]
             then
                 echo "$g.$i,yes" | tee -a $gsetlog
-                mv $glog $rsltdir/
                 ((ambcnt+=1))
                 rm -Rf $tmp
                 continue
@@ -143,7 +139,6 @@ run_lang() {
             if [ "$msg" != "" ]
             then 
                 echo "$g.$i," | tee -a $gsetlog
-                mv $glog $rsltdir/
                 rm -Rf $tmp
                 continue
             fi
@@ -156,7 +151,6 @@ run_lang() {
                 out="$g.$i,yes"
             fi
             echo $out | tee -a $gsetlog
-            mv $glog $rsltdir/
             rm -Rf $tmp
         done
     done
@@ -180,7 +174,7 @@ run_mutlang() {
             for n in $(seq 1 $nmutations)
             do
                 tmp=$(mktemp -d)
-                glog="$tmp/${g}.0_${n}.log"
+                glog="$rsltdir/${g}.0_${n}.log"
                 gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
                 gy="$tmp/$g.0_$n.y"
                 ((cnt+=1))
@@ -190,7 +184,6 @@ run_mutlang() {
                 if [ "$msg" != "" ]
                 then
                     echo "$g.0_$n,yes" | tee -a $gsetlog
-                    mv $glog $rsltdir/
                     ((ambcnt+=1))
                     rm -Rf $tmp
                     continue
@@ -199,7 +192,6 @@ run_mutlang() {
                 if [ "$msg" != "" ]
                 then 
                     echo "$g.0_$n," | tee -a $gsetlog
-                    mv $glog $rsltdir/
                     rm -Rf $tmp
                     continue
                 fi            
@@ -212,7 +204,6 @@ run_mutlang() {
                     out="$g.0_$n,yes"
                 fi
                 echo $out | tee -a $gsetlog
-                mv $glog $rsltdir/
                 rm -Rf $tmp            
           done
           print_summary $ambcnt $cnt > $rsltdir/summary
@@ -234,7 +225,7 @@ run_boltzcfg() {
         for g in $(seq 1 $nboltz)
         do
             tmp=$(mktemp -d)
-            glog="$tmp/${boltzsize}_${g}.log"
+            glog="$rsltdir/${boltzsize}_${g}.log"
             gacc="$gboltz/$boltzsize/$g.acc"
             gy="$tmp/$g.y"
             ((cnt+=1))
@@ -244,7 +235,6 @@ run_boltzcfg() {
             if [ "$msg" != "" ]
             then
                 echo "$boltzsize/$g,yes" | tee -a $gsetlog
-                mv $glog $rsltdir/
                 ((ambcnt+=1))
                 rm -Rf $tmp
                 continue
@@ -253,7 +243,6 @@ run_boltzcfg() {
             if [ "$msg" != "" ]
             then 
                 echo "$boltzsize/$g," | tee -a $gsetlog
-                mv $glog $rsltdir/
                 rm -Rf $tmp
                 continue
             fi
@@ -266,7 +255,6 @@ run_boltzcfg() {
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
-            mv $glog $rsltdir/
             rm -Rf $tmp
         done
     done
@@ -287,10 +275,10 @@ run_test() {
     for g in $testgrammars
     do
         gacc="$grammardir/test/$g/$g.acc"
-        gy="$grammardir/test/$g/$g.y"
-        glog="$tmp/${g}_${g}.log"
+        gy="$tmp/$g.y"
+        glog="$rsltdir/${g}_${g}.log"
         acc_to_yacc $gacc $gy
-        timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options || exit $?
+        timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
         amb=$(grep -o 'Ambiguous string found' $glog)
         ((cnt+=1))
         out="$g,"
@@ -298,7 +286,6 @@ run_test() {
         then
             ((ambcnt+=1))
             out="$g,yes"
-            mv $glog $rsltdir/
         fi
         echo $out | tee -a $gsetlog
     done
