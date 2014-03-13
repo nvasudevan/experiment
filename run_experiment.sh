@@ -1,27 +1,40 @@
 #!/bin/bash
 
-cwd=$(pwd)
+wrkdir=""
+exp=""
 
-if [ $# -eq 0 ]; then
-    wrkdir=$(pwd)
-elif [ $# -eq 1 ]; then
-    wrkdir=$1
-    if [ "`dirname $wrkdir`" == "." ]; then 
-        _wrkdir="`pwd`/`basename $wrkdir`"
-        wrkdir = "$_wrkdir"
-    fi
-    echo "full path - $wrkdir"
-    mkdir -p $wrkdir
-else
-    echo "$0 [<full path to working directory>]"
+set -- $(getopt d:x: "$@")
+
+while [ $# -gt 0 ]
+do
+    case "$1" in 
+     -d) wrkdir=$2 ; shift;;
+     -x) exp=$2 ; shift;;
+    (--) shift; break;;
+    (-*) echo "$0: error - unrecognized option $1" 1>&2; exit 1;;
+     (*) break;;  
+    esac
+    shift
+done
+
+usage(){
+    echo "$0 -d <work dir> -x <mini|main|validation>"
     exit 1
-fi
-echo -e "===> Working in $wrkdir"
+}
+
+[ -z "$wrkdir" ] && usage
+[ -z "$exp" ] && usage
+
+cwd=$(pwd)
+echo -e "===> Running $exp experiment from $wrkdir"
+mkdir -p $wrkdir
 export cwd wrkdir
 
+ln -s $cwd/${exp}_toolparams.sh $cwd/toolparams.sh
 cp /dev/null $cwd/env.sh
 echo "export cwd=$cwd" >> $cwd/env.sh
 echo "export wrkdir=$wrkdir" >> $cwd/env.sh
+exit 0
 
 # now run build.sh to build your tools
 ./build.sh $wrkdir || exit $?
