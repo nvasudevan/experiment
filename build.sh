@@ -144,7 +144,6 @@ echo -e "\\n===> Fetching AmbiDexter tool\\n"
 cd $wrkdir
 git clone http://github.com/cwi-swat/ambidexter.git
 cd ambidexter
-git checkout db64485ad4
 mkdir -p build/META-INF
 echo "Main-Class: nl.cwi.sen1.AmbiDexter.Main" > build/META-INF/MANIFEST.MF
 patch -b -R -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $cwd/patches/AmbiDexter.patch || exit $?
