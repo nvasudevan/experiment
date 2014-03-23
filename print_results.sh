@@ -44,33 +44,7 @@ print(){
     echo "$ambcnt [/$total]"
 }
 
-print_acla(){
-    echo "==> ACLA "
-    for g in boltzcfg lang; do
-        out=""
-        for t in $timelimits 120; do
-            tout=$(print "$resultdir/acla/$g/${t}s/log")
-            out="$out,$tout"
-        done
-        echo "acla/$g,$out"
-    done
-    for type in $mutypes; do
-        out=""
-        for t in $timelimits 120; do
-            alllangs="$resultdir/acla/mutlang/${t}s_${type}.log"
-            > $alllangs
-            for lang in $mugrammars; do
-                cat $resultdir/acla/mutlang/${t}s/$type/$lang/log >> $alllangs
-            done
-            tout=$(print $alllangs)
-            out="$out,$tout"
-            rm $alllangs
-        done
-        echo "acla/mutlang/$type,$out"
-    done
-}
-
-ambidexter_mutlang(){
+print_mutlang(){
     logdir=$1
     alllangstypes=$(mktemp)
     out=""
@@ -90,6 +64,26 @@ ambidexter_mutlang(){
     out="$out,$tout"
     rm $alllangstypes
     echo "$out"
+}
+
+print_acla(){
+    for g in boltzcfg lang; do
+        echo "ACLA [$g]"
+        out=""
+        for t in $timelimits 120; do
+            tout=$(print "$resultdir/acla/$g/${t}s/log")
+            out="$out,$tout"
+        done
+        echo "$g,$out"
+    done
+
+    echo "ACLA [mutlang]"
+    out=""
+    for t in $timelimits 120; do 
+        tout=$(print_mutlang "$resultdir/acla/mutlang/${t}s")
+        out="$out,$tout"
+    done
+    echo "mutlang,$out"
 }
 
 print_ambidexter(){
@@ -134,14 +128,14 @@ print_ambidexter(){
     for ambilen in $ambidexter_n_length; do
         outall=""
         for t in ${timelimits}; do
-            outall="$outall,$(ambidexter_mutlang $resultdir/ambidexter/mutlang/${t}s_-k_${ambilen})"
+            outall="$outall,$(print_mutlang $resultdir/ambidexter/mutlang/${t}s_-k_${ambilen})"
         done
         echo "k_${ambilen},$outall"
                 
         for filter in lr0 slr1 lalr1 lr1; do
             outall=""
             for t in ${timelimits}; do
-                outall="$outall,$(ambidexter_mutlang $resultdir/ambidexter/mutlang/${t}s_-f_${filter}_-k_${ambilen})"
+                outall="$outall,$(print_mutlang $resultdir/ambidexter/mutlang/${t}s_-f_${filter}_-k_${ambilen})"
             done
             echo "k_${ambilen}_${filter},$outall"
         done
@@ -149,94 +143,142 @@ print_ambidexter(){
 
     outall=""
     for t in ${timelimits}; do
-        outall="$outall,$(ambidexter_mutlang $resultdir/ambidexter/mutlang/${t}s_-i_0)"
+        outall="$outall,$(print_mutlang $resultdir/ambidexter/mutlang/${t}s_-i_0)"
     done
     echo "ik_0,$outall"
 
     for filter in lr0 slr1 lalr1 lr1; do
         outall=""
         for t in ${timelimits}; do
-            outall="$outall,$(ambidexter_mutlang $resultdir/ambidexter/mutlang/${t}s_-f_${filter}_-i_0)"
+            outall="$outall,$(print_mutlang $resultdir/ambidexter/mutlang/${t}s_-f_${filter}_-i_0)"
         done
         echo "ik_0_${filter},$outall"
     done
 }
 
 print_amber(){
-  for g in boltzcfg lang
-  do
-      for amberex in $amber_n_examples; do
-          out=""
-          ellout=""
-          for t in $timelimits; do
-             tout=$(print "$resultdir/amber/boltzcfg/${t}s_examples_${amberex}/log")
-             out="$out,$tout"
-             tout=$(print "$resultdir/amber/boltzcfg/${t}s_examples_${amberex}_ellipsis/log")
-             ellout="$ellout,$tout"
-          done
-          echo "amber/$g/examples_${amberex},$out"
-          echo "amber/$g/examples_${amberex}_ellipsis,$ellout"
-      done
+    for g in boltzcfg lang
+    do
+        echo "AMBER [$g]"
+        for amberex in $amber_n_examples; do
+            out=""
+            ellout=""
+            for t in $timelimits; do
+                tout=$(print "$resultdir/amber/$g/${t}s_examples_${amberex}/log")
+                out="$out,$tout"
+                tout=$(print "$resultdir/amber/$g/${t}s_examples_${amberex}_ellipsis/log")
+                ellout="$ellout,$tout"
+            done
+            echo "examples_${amberex},$out"
+            echo "examples_${amberex}_ellipsis,$ellout"
+        done
 
-      for amberlen in $amber_n_length; do
-          out=""
-          ellout=""
-          for t in $timelimits;do
-             tout=$(print "$resultdir/amber/boltzcfg/${t}s_length_${amberlen}/log")
-             out="$out,$tout"
-             tout=$(print "$resultdir/amber/boltzcfg/${t}s_length_${amberlen}_ellipsis/log")
-             ellout="$ellout,$tout"
-          done
-          echo "amber/$g/length_${amberlen},$out"
-          echo "amber/$g/length_${amberlen}_ellipsis,$ellout"
-      done
-  done
-    
-  for type in $mutypes; do 
-      for amberex in $amber_n_examples; do
-          alllangs="$resultdir/amber/mutlang/examples_${amberex}_${type}.log"
-          alllangsell="$resultdir/amber/mutlang/examples_${amberex}_${type}_ell.log"
-          cp /dev/null $alllangs
-          cp /dev/null $alllangsell
-          out=""
-          ellout=""
-          for t in $timelimits; do 
-              for lang in $mugrammars; do 
-                  cat "$resultdir/amber/mutlang/${t}s_examples_${amberex}/$type/$lang/log" >> $alllangs
-                  cat "$resultdir/amber/mutlang/${t}s_examples_${amberex}_ellipsis/$type/$lang/log" >> $alllangsell
-              done
-              tout=$(print $alllangs)
-              out="$out,$tout"
-              tout=$(print $alllangsell)
-              ellout="$ellout,$tout"
-          done
-          echo "amber/mutlang/examples_${amberex}_${type},$out"
-          echo "amber/mutlang/examples_${amberex}_${type}_ellipsis,$ellout"
-      done
+        for amberlen in $amber_n_length; do
+            out=""
+            ellout=""
+            for t in $timelimits;do
+                tout=$(print "$resultdir/amber/$g/${t}s_length_${amberlen}/log")
+                out="$out,$tout"
+                tout=$(print "$resultdir/amber/$g/${t}s_length_${amberlen}_ellipsis/log")
+                ellout="$ellout,$tout"
+            done
+            echo "length_${amberlen},$out"
+            echo "length_${amberlen}_ellipsis,$ellout"
+        done
+    done
+   
+    echo "AMBER [mutlang]"
+    for amberex in $amber_n_examples; do
+        outall=""
+        outallell=""
+        for t in ${timelimits}; do
+            outall="$outall,$(print_mutlang $resultdir/amber/mutlang/${t}s_examples_${amberex})"
+            outallell="$outallell,$(print_mutlang $resultdir/amber/mutlang/${t}s_examples_${amberex}_ellipsis)"
+        done
+        echo "examples_${amberex},$outall"
+        echo "examples_${amberex}_ellipsis,$outallell"
+    done
+       
+    for amberlen in $amber_n_length; do
+        outall=""
+        outallell=""
+        for t in ${timelimits}; do
+            outall="$outall,$(print_mutlang $resultdir/amber/mutlang/${t}s_length_${amberlen})"
+            outallell="$outallell,$(print_mutlang $resultdir/amber/mutlang/${t}s_length_${amberlen}_ellipsis)"
+        done
+        echo "length_${amberlen},$outall"
+        echo "length_${amberlen}_ellipsis,$outallell"    
+    done
 
-      for amberlen in $amber_n_length; do
-          alllangs="$resultdir/amber/mutlang/length_${amberlen}_${type}.log"
-          alllangsell="$resultdir/amber/mutlang/length_${amberlen}_${type}_ell.log"
-          cp /dev/null $alllangs
-          cp /dev/null $alllangsell
-          out=""
-          ellout=""
-          for t in $timelimits; do 
-              for lang in $mugrammars; do 
-                  cat "$resultdir/amber/mutlang/${t}s_length_${amberlen}/$type/$lang/log" >> $alllangs
-                  cat "$resultdir/amber/mutlang/${t}s_length_${amberlen}_ellipsis/$type/$lang/log" >> $alllangsell
-              done
-              tout=$(print $alllangs)
-              out="$out,$tout"
-              tout=$(print $alllangsell)
-              ellout="$ellout,$tout"
-          done
-          echo "amber/mutlang/length_${amberlen}_${type},$out"
-          echo "amber/mutlang/length_${amberlen}_${type}_ellipsis,$ellout"
-      done             
-  done
 }
 
-# print_acla
- print_ambidexter
-#print_amber
+print_sinbad(){
+    for g in boltzcfg lang; do 
+        echo "SinBAD [$g]"    
+        out=""
+        for t in $timelimits; do
+            tout=$(print "$resultdir/sinbad/$g/${t}s_-b_purerandom/log")
+            out="$out,$tout"
+        done
+        echo "purerandom, $out"
+        for b in $backends; do 
+            for d in $Tdepths; do 
+                out=""
+                for t in $timelimits; do 
+                    tout=$(print "$resultdir/sinbad/$g/${t}s_-b_${b}_-d_${d}/log")
+                    out="$out,$tout"
+                done
+                echo "${b}_-d_${d},$out"
+            done
+        done
+        for b in $wgtbackends; do 
+            for d in $Tdepths; do 
+                for w in $weights; do 
+                    out=""
+                    for t in $timelimits; do 
+                        tout=$(print "$resultdir/sinbad/$g/${t}s_-b_${b}_-d_${d}_-w_$w/log")
+                        out="$out,$tout"
+                    done
+                    echo "${b}_-d_${d}_-w_${w},$out"
+                done
+            done
+        done
+    done
+
+    echo "SinBAD [mutlang]"
+    out=""
+    for t in $timelimits; do 
+        tout=$(print_mutlang "$resultdir/sinbad/mutlang/${t}s_-b_purerandom")
+        out="$out,$tout"
+    done
+    echo "purerandom,$out"
+   
+    for b in $backends; do
+        for d in 10; do 
+            out=""
+            for t in $timelimits; do 
+                tout=$(print_mutlang "$resultdir/sinbad/mutlang/${t}s_-b_${b}_-d_$d")
+                out="$out,$tout"
+            done
+            echo "${b}_-d_${d},$out"
+        done
+    done
+    
+    for b in $wgtbackends; do
+        for d in $Tdepths; do 
+            for w in $weights; do  
+                out=""
+                for t in $timelimits; do 
+                    tout=$(print_mutlang "$resultdir/sinbad/mutlang/${t}s_-b_${b}_-d_${d}_-w_$w")
+                    out="$out,$tout"
+                done
+                echo "${b}_-d_${d}_-w_$w,$out"
+            done
+        done
+    done    
+}
+
+print_acla
+print_ambidexter
+print_amber
+print_sinbad
