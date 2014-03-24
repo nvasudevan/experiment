@@ -174,6 +174,7 @@
 "DOC_SEE"          { return DOC_SEE;}
 "GENERATE_COMPLETION"          { return GENERATE_COMPLETION;}
 "COMPLETE_COMPLETION"          { return COMPLETE_COMPLETION;}
+" "         { /* skip blank */ }
 \r               { yypos++; /* adjust linenumber and skip newline */ }
 \n               { yypos++; /* adjust linenumber and skip newline */ }
 .                { printf("\n++ illegal token : %s ++", yytext); yyerror("illegal xyz token"); }

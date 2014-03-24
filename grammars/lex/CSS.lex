@@ -38,6 +38,7 @@
 "_function("	 { return FUNCTION;}
 "~="			 { return INCLUDES;}
 "|="		     { return DASHMATCH;}
+" "         { /* skip blank */ }
 \r               { yypos++; /* adjust linenumber and skip newline */ }
 \n               { yypos++; /* adjust linenumber and skip newline */ }
 .                { printf("\n++ illegal token : %s ++", yytext); yyerror("illegal xyz token"); }

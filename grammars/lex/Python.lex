@@ -88,6 +88,7 @@
 "DIV2_ASSIGN_TK"              { return DIV2_ASSIGN_TK; }
 "DOT_TK"              { return DOT_TK; }
 "COLON_TK"              { return COLON_TK; }
+" "         { /* skip blank */ }
 \r               { yypos++; /* adjust linenumber and skip newline */ }
 \n               { yypos++; /* adjust linenumber and skip newline */ }
 .                { printf("\n++ illegal token : %s ++", yytext); yyerror("illegal xyz token"); }
