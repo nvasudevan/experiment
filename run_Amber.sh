@@ -44,6 +44,7 @@ run_randomcfg() {
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
+            gzip -f $glog
             cd $cwd
             rm -Rf $tmp
         done
@@ -79,6 +80,7 @@ run_lang() {
                 out="$g.$i,yes"
             fi
             echo $out| tee -a $gsetlog
+            gzip -f $gslog
             cd $cwd
             rm -Rf $tmp
         done
@@ -116,6 +118,7 @@ run_mutlang() {
                  out="${g}.0_${n},yes"
              fi
              echo $out | tee -a $gsetlog
+             gzip -f $glog
              cd $cwd
              rm -Rf $tmp
          done
@@ -152,6 +155,7 @@ run_boltzcfg() {
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
+            gzip -f $glog
             cd $cwd
             rm -Rf $tmp
         done
@@ -185,6 +189,7 @@ run_test() {
             out="$g,yes"
         fi
         echo "$out" | tee -a $gsetlog
+        gzip -f $glog
         cd $cwd
         rm -Rf $tmp  
     done

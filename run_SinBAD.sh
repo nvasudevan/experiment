@@ -37,6 +37,7 @@ run_randomcfg() {
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
+            gzip $gsetlog
         done
         rm -Rf $tmp
     done
@@ -44,6 +45,9 @@ run_randomcfg() {
 }
 
 run_mutlang(){
+    clog="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/log"
+    mkdir -p $resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
+    > $clog
     for type in $mutypes
     do
        for g in $mugrammars
@@ -71,7 +75,9 @@ run_mutlang(){
                 out="${g}.0_${n},yes"
             fi
             echo $out | tee -a $gsetlog
+            gzip -f $glog
          done
+         cat $gsetlog >> $clog
          rm -Rf $tmp
          print_summary $ambcnt $cnt        
        done
@@ -104,6 +110,7 @@ run_boltzcfg(){
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
+            gzip -f $glog
         done
         rm -Rf $tmp        
     done
@@ -136,6 +143,7 @@ run_lang() {
                 out="$g.$i,yes"
             fi
             echo $out | tee -a $gsetlog
+            gzip -f $glog
         done
     done
     rm -Rf $tmp
@@ -166,6 +174,7 @@ run_test() {
             out="$g,yes"
         fi
         echo $out | tee -a $gsetlog
+        gzip -f $glog
     done
     rm -Rf $tmp
     print_summary $ambcnt $cnt   
