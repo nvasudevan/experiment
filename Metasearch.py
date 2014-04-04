@@ -44,7 +44,7 @@ class Hillclimb:
         while True:
             print "current depth: %s, fitness: %s" % (str(currd),str(currfit))
             neighd = currd + 1
-            log = self.sinbad(neighd)
+            self.sinbad(neighd)
             newfit,lines = self.fitness(neighd)
             print "newfit: " , str(newfit)
             newfittol = newfit + math.ceil(TOLERANCE * lines)
