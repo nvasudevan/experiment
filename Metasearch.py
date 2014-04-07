@@ -56,6 +56,7 @@ class Hillclimb:
             self.sinbad(neighd)
             newfit,lines = self.fitness(neighd)
             print "newfit: " , str(newfit)
+            # add tolerance as a percentage of number of grammars
             newfittol = newfit + math.ceil(TOLERANCE * lines)
             print "newfit: %s, newfittol: %s" % (str(newfit),str(newfittol))
             if newfittol >= currfit:
@@ -63,7 +64,7 @@ class Hillclimb:
                 currfit = newfit
             else:
                 print "==> LOCAL MAXIMA!. depth: (%s), and fitness: %s" % (str(currd),str(currfit))
-                break
+                sys.exit(0)
             
 
 def usage(msg=None):
