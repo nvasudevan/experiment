@@ -21,7 +21,7 @@ class Hillclimb:
 
     def fitness(self, currd):
         """ fitness -> number of ambiguities found """
-        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, "%ss_-b_%s_-d_%s" % (timelimit,backend,currd)) 
+        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, "%ss_-b_%s_-d_%s" % (self.timelimit,backend,currd)) 
         f = open(log)
         results = f.read()
         totallines = sum(1 for line in open(log))
@@ -32,7 +32,7 @@ class Hillclimb:
     def sinbad(self, currd):
         """ Run the ambiguity checker tool from the experimental suite """
         sinbadx =  "%s/run_SinBAD.sh" % (self.expdir)
-        cmd = [sinbadx,"-g",gset,"-t",str(timelimit),"-b",backend,"-d",str(currd)]
+        cmd = [sinbadx,"-g",gset,"-t",str(self.timelimit),"-b",backend,"-d",str(currd)]
         print "cmd: %s" % " ".join(cmd)
         r = subprocess.call(cmd)
         if r != 0:
