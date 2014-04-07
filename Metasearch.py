@@ -4,13 +4,11 @@ import os, subprocess, sys, tempfile
 import getopt
 import math
 
-TOLERANCE = 0.01
-RESULTSDIR="/home/nvasudev/codespace/experiment/results"
 
 class Hillclimb:
 
-    def __init__(self, sinbadx, gset, backend, depth, timelimit):
-        self.sinbadx = sinbadx
+    def __init__(self, expdir, gset, backend, depth, timelimit):
+        self.expdir = expdir
         self.gset = gset
         self.backend = backend
         self.depth = depth
@@ -19,7 +17,8 @@ class Hillclimb:
         
 
     def fitness(self, currd):
-        log =  "%s/%s/%s/%s/log" % (RESULTSDIR, "sinbad", self.gset, "%ss_-b_%s_-d_%s" % (timelimit,backend,currd)) 
+        """ fitness -> number of ambiguities found """
+        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, "%ss_-b_%s_-d_%s" % (timelimit,backend,currd)) 
         f = open(log)
         results = f.read()
         totallines = sum(1 for line in open(log))
@@ -28,6 +27,8 @@ class Hillclimb:
 
 
     def sinbad(self, currd):
+        """ Run the ambiguity checker tool from the experimental suite """
+        sinbadx =  "%s/run_SinBAD.sh" % (self.expdir)
         cmd = [sinbadx,"-g",gset,"-t",str(timelimit),"-b",backend,"-d",str(currd)]
         print "cmd: %s" % " ".join(cmd)
         r = subprocess.call(cmd)
@@ -37,6 +38,11 @@ class Hillclimb:
         
 
     def run(self):
+        """Perform hill climb. Since SinBAD is nondeterministic, there is bound
+	    to be minor variations in the results from run to run. So to be sure 
+        we are not terminating our hill climb prematurely, we add tolarance (small value) 
+        to the neighbour's fitness. This will allow the hill climb to progress until we 
+        start hitting less fit individuals consistenly. """
         currd = self.depth
         self.sinbad(currd)
         currfit,_ = self.fitness(currd)
@@ -48,7 +54,7 @@ class Hillclimb:
             newfit,lines = self.fitness(neighd)
             print "newfit: " , str(newfit)
             newfittol = newfit + math.ceil(TOLERANCE * lines)
-            print "*newfittol: " , str(newfittol)        
+            print "newfit: %s, newfittol: %s" % (str(newfit),str(newfittol))
             if newfittol >= currfit:
                 currd = neighd
                 currfit = newfit
@@ -61,17 +67,20 @@ def usage(msg=None):
     if msg is not None:
         sys.stderr.write(msg)
         
-    sys.stderr.write("Metasearch.py -x <SinBAD script> " \
+    sys.stderr.write("Metasearch.py -x <experiment directory> " \
     "-g <grammar set> -b <backend to run> -d <initial depth>")
     sys.exit(1)
     
+
+TOLERANCE = 0.01
+TIMELIMIT = 30
 
 if __name__ == "__main__": 
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:")   
     print opts, args
     for opt in opts:
         if opt[0] == "-x":
-            sinbadx = opt[1]
+            expdir = opt[1]
         elif opt[0] == "-g":
             gset = opt[1]
         elif opt[0] == "-b":
@@ -81,6 +90,5 @@ if __name__ == "__main__":
         else: 
             usage("Unknown argument '%s'" % opt[0])   
             
-    timelimit = 30 
-    Hillclimb(sinbadx, gset, backend, depth, timelimit)
+    Hillclimb(expdir, gset, backend, depth, TIMELIMIT)
     
