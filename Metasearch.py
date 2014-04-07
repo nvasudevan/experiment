@@ -5,6 +5,9 @@ import getopt
 import math
 
 
+TOLERANCE = 0.01
+TIMELIMIT = 30
+
 class Hillclimb:
 
     def __init__(self, expdir, gset, backend, depth, timelimit):
@@ -39,10 +42,10 @@ class Hillclimb:
 
     def run(self):
         """Perform hill climb. Since SinBAD is nondeterministic, there is bound
-	    to be minor variations in the results from run to run. So to be sure 
-        we are not terminating our hill climb prematurely, we add tolarance (small value) 
-        to the neighbour's fitness. This will allow the hill climb to progress until we 
-        start hitting less fit individuals consistenly. """
+           to be minor variations in the results from run to run. So to be sure 
+           we are not terminating our hill climb prematurely, we add tolarance (small value) 
+           to the neighbour's fitness. This will allow the hill climb to progress until we 
+           start hitting less fit individuals consistenly. """
         currd = self.depth
         self.sinbad(currd)
         currfit,_ = self.fitness(currd)
@@ -72,8 +75,6 @@ def usage(msg=None):
     sys.exit(1)
     
 
-TOLERANCE = 0.01
-TIMELIMIT = 30
 
 if __name__ == "__main__": 
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:")   
