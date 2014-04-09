@@ -10,18 +10,23 @@ TIMELIMIT = 30
 
 class Hillclimb:
 
-    def __init__(self, expdir, gset, backend, depth, timelimit):
+    def __init__(self, expdir, gset, backend, depth, weight, timelimit):
         self.expdir = expdir
         self.gset = gset
         self.backend = backend
         self.depth = depth
+        self.weight = weight
         self.timelimit = timelimit
         self.run()
         
 
     def fitness(self, currd):
         """ fitness -> number of ambiguities found """
-        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, "%ss_-b_%s_-d_%s" % (self.timelimit,backend,currd)) 
+        sinbadlogdir = "%ss_-b_%s_-d_%s" % (self.timelimit,backend,currd)
+        if self.weight is not None:
+            sinbadlogdir = "%s_-w_%s" % (sinbadlogdir,self.weight)
+
+        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, sinbadlogdir ) 
         f = open(log)
         results = f.read()
         totallines = sum(1 for line in open(log))
@@ -32,7 +37,11 @@ class Hillclimb:
     def sinbad(self, currd):
         """ Run the ambiguity checker tool from the experimental suite """
         sinbadx =  "%s/run_SinBAD.sh" % (self.expdir)
-        cmd = [sinbadx,"-g",gset,"-t",str(self.timelimit),"-b",backend,"-d",str(currd)]
+        cmd = [sinbadx,"-g",self.gset,"-t",str(self.timelimit),"-b",self.backend,"-d",str(currd)]
+        if self.weight != None:
+            cmd.append("-w")
+            cmd.append(self.weight)
+
         print "cmd: %s" % " ".join(cmd)
         r = subprocess.call(cmd)
         if r != 0:
@@ -45,7 +54,7 @@ class Hillclimb:
            to be minor variations in the results from run to run. So to be sure 
            we are not terminating our hill climb prematurely, we add tolarance (small value) 
            to the neighbour's fitness. This will allow the hill climb to progress until we 
-           start hitting less fit individuals consistenly. """
+           start hitting less fit individuals consistently. """
         currd = self.depth
         self.sinbad(currd)
         currfit,_ = self.fitness(currd)
@@ -78,8 +87,9 @@ def usage(msg=None):
 
 
 if __name__ == "__main__": 
-    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:")   
+    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:w:")   
     print opts, args
+    weight = None
     for opt in opts:
         if opt[0] == "-x":
             expdir = opt[1]
@@ -89,8 +99,10 @@ if __name__ == "__main__":
             backend = opt[1]
         elif opt[0] == "-d":
             depth = int(opt[1])
+        elif opt[0] == "-w":
+            weight = opt[1]
         else: 
             usage("Unknown argument '%s'" % opt[0])   
-            
-    Hillclimb(expdir, gset, backend, depth, TIMELIMIT)
+
+    Hillclimb(expdir, gset, backend, depth, weight, TIMELIMIT)
     
