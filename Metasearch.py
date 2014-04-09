@@ -20,24 +20,28 @@ class Hillclimb:
         self.run()
         
 
-    def fitness(self, currd):
+    def fitness(self, depth):
         """ fitness -> number of ambiguities found """
-        sinbadlogdir = "%ss_-b_%s_-d_%s" % (self.timelimit,backend,currd)
+        sinbadlogdir = "%ss_-b_%s_-d_%s" % (self.timelimit,backend,depth)
         if self.weight is not None:
             sinbadlogdir = "%s_-w_%s" % (sinbadlogdir,self.weight)
 
-        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, sinbadlogdir ) 
+        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, sinbadlogdir) 
         f = open(log)
         results = f.read()
-        totallines = sum(1 for line in open(log))
+        gtot = sum(1 for line in open(log))
         f.close()
-        return results.count('yes'),totallines
+        fit = results.count('yes')
+        if fit == gtot:
+            self.maxima(depth,fit)
+
+        return fit
 
 
-    def sinbad(self, currd):
+    def sinbad(self, depth):
         """ Run the ambiguity checker tool from the experimental suite """
         sinbadx =  "%s/run_SinBAD.sh" % (self.expdir)
-        cmd = [sinbadx,"-g",self.gset,"-t",str(self.timelimit),"-b",self.backend,"-d",str(currd)]
+        cmd = [sinbadx,"-g",self.gset,"-t",str(self.timelimit),"-b",self.backend,"-d",str(depth)]
         if self.weight != None:
             cmd.append("-w")
             cmd.append(self.weight)
@@ -45,9 +49,14 @@ class Hillclimb:
         print "cmd: %s" % " ".join(cmd)
         r = subprocess.call(cmd)
         if r != 0:
-            sys.stderr.write("SinBAD failed for backend %s [depth=%s]" % (backend,str(currd)))
+            sys.stderr.write("SinBAD failed for backend %s [depth=%s]" % (backend,str(depth)))
             sys.exit(1)
         
+
+    def maxima(self, depth, fit):
+        print "==> LOCAL MAXIMA!. depth: (%s), and fitness: %s" % (str(depth),str(fit))
+        sys.exit(0)
+
 
     def run(self):
         """Perform hill climb. Since SinBAD is nondeterministic, there is bound
@@ -57,24 +66,31 @@ class Hillclimb:
            start hitting less fit individuals consistently. """
         currd = self.depth
         self.sinbad(currd)
-        currfit,_ = self.fitness(currd)
+        currfit = self.fitness(currd)
     
         while True:
             print "current depth: %s, fitness: %s" % (str(currd),str(currfit))
             neighd = currd + 1
             self.sinbad(neighd)
-            newfit,lines = self.fitness(neighd)
-            print "newfit: " , str(newfit)
-            # add tolerance as a percentage of number of grammars
-            newfittol = newfit + math.ceil(TOLERANCE * lines)
-            print "newfit: %s, newfittol: %s" % (str(newfit),str(newfittol))
-            if newfittol >= currfit:
+            newfit = self.fitness(neighd)
+
+            print "currfit: %s, newfit: %s" % (currfit,str(newfit))
+            if newfit > currfit:
                 currd = neighd
                 currfit = newfit
             else:
-                print "==> LOCAL MAXIMA!. depth: (%s), and fitness: %s" % (str(currd),str(currfit))
-                sys.exit(0)
-            
+                # we try one more depth and see if there is a better fit individual
+                neighd2 = neighd + 1
+                print "LAST TIME: trying depth: " , str(neighd2)
+                self.sinbad(neighd2)
+                newfit2 = self.fitness(neighd2)
+
+                if newfit2 > currfit:
+                    currd = neighd2
+                    currfit = newfit2
+                else:
+                    self.maxima(currd,currfit) 
+
 
 def usage(msg=None):
     if msg is not None:
