@@ -44,7 +44,7 @@ run_randomcfg() {
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
-            gzip -f $glog
+            [ -f $glog ] && gzip -f $glog
             cd $cwd
             rm -Rf $tmp
         done
@@ -80,7 +80,7 @@ run_lang() {
                 out="$g.$i,yes"
             fi
             echo $out| tee -a $gsetlog
-            gzip -f $gslog
+            [ -f $glog ] && gzip -f $glog
             cd $cwd
             rm -Rf $tmp
         done
@@ -118,7 +118,7 @@ run_mutlang() {
                  out="${g}.0_${n},yes"
              fi
              echo $out | tee -a $gsetlog
-             gzip -f $glog
+             [ -f $glog ] && gzip -f $glog
              cd $cwd
              rm -Rf $tmp
          done
@@ -155,7 +155,7 @@ run_boltzcfg() {
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
-            gzip -f $glog
+            [ -f $glog ] && gzip -f $glog
             cd $cwd
             rm -Rf $tmp
         done
@@ -189,7 +189,7 @@ run_test() {
             out="$g,yes"
         fi
         echo "$out" | tee -a $gsetlog
-        gzip -f $glog
+        [ -f $glog ] && gzip -f $glog
         cd $cwd
         rm -Rf $tmp  
     done
@@ -205,7 +205,7 @@ do
      -t) timelimit=$2 ; shift;;
      -n) examples=$2 ; shift;;
      -l) length="$2" ; shift;;
-     -e) ellipsis=yes ; shift;;
+     -e) ellipsis="yes" ;;
     (--) shift; break;;
     (-*) echo "$0: error - unrecognized option $1" 1>&2; exit 1;;
      (*) break;;  
@@ -222,7 +222,7 @@ if [ "$length" != "" ]; then
     options="${options} length $length"
 fi
 
-if [ "$ellipsis" == "yes" ]; then
+if [ "$ellipsis" = "yes" ]; then
     options="${options} ellipsis"
 fi
 
