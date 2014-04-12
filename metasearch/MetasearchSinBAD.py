@@ -1,11 +1,9 @@
 #! /usr/bin/env python
 
-import os, subprocess, sys, tempfile
+import os, subprocess, sys
 import getopt
-import math
 import MetaUtils
 
-TOLERANCE = 0.01
 TIMELIMIT = 30
 
 class Hillclimb:
@@ -27,18 +25,7 @@ class Hillclimb:
             sinbadlogdir = "%s_-w_%s" % (sinbadlogdir,self.weight)
 
         log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, sinbadlogdir) 
-        fit = MetaUtils.fitness(log)
-        gtot = sum(1 for line in open(log))
-
-        if fit == gtot:
-            self.maxima(depth,fit)
-
-        return fit
-
-
-    def maxima(self, depth, fit):
-        print "==> LOCAL MAXIMA!. depth: (%s), and fitness: %s" % (str(depth),str(fit))
-        sys.exit(0)
+        return MetaUtils.ambtotal(log)
 
 
     def sinbad(self, depth):
@@ -49,12 +36,8 @@ class Hillclimb:
             cmd.append("-w")
             cmd.append(self.weight)
 
-        print "cmd: %s" % " ".join(cmd)
-        r = subprocess.call(cmd)
-        if r != 0:
-            sys.stderr.write("SinBAD failed for backend %s [depth=%s]" % (backend,str(depth)))
-            sys.exit(1)
-        
+        MetaUtils.runtool(cmd)
+
 
     def run(self):
         """Perform hill climb. Since SinBAD is nondeterministic, there is bound
@@ -87,7 +70,8 @@ class Hillclimb:
                     currd = neighd2
                     currfit = newfit2
                 else:
-                    self.maxima(currd,currfit) 
+                    print "==> LOCAL MAXIMA!. depth: (%s), and fitness: %s" % (str(depth),str(currfit))
+                    sys.exit(0)
 
 
 def usage(msg=None):
@@ -98,7 +82,6 @@ def usage(msg=None):
     "-g <grammar set> -b <backend to run> -d <initial depth>")
     sys.exit(1)
     
-
 
 if __name__ == "__main__": 
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:w:")   
