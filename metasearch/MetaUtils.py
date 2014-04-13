@@ -10,7 +10,7 @@ def ambtotal(log):
 
     gtot = sum(1 for line in open(log))
     if fit == gtot:
-        print "Found all ambiguities! Quitting..."
+        sys.stderr.write("Found all ambiguities! Quitting...")
         sys.exit(0)
 
     return fit
@@ -18,7 +18,7 @@ def ambtotal(log):
 
 def runtool(cmd):
     cmdstr = " ".join(cmd)
-    print "cmd : " , cmdstr
+    sys.stderr.write("cmd : %s" % cmdstr)
     r = subprocess.call(cmd)
 
     if r != 0:

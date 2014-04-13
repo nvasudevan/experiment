@@ -49,19 +49,19 @@ class Hillclimb:
         currfit = self.fitness(currex)
 
         while True:
-            print "current examples count: %s, fitness: %s" % (str(currex),str(currfit))
-            neighex = currex * 10
+            sys.stderr.write("\n==> current examples count: %s, fitness: %s\n" % (str(currex),str(currfit)))
+            neighex = int(math.ceil(currex * 1.1))
             amberoptcmd = ["-n",str(neighex)]
             MetaUtils.runtool(self.cmd + amberoptcmd)
             newfit = self.fitness(neighex)
             
-            print "new fitness: %s " % str(newfit)
+            sys.stderr.write("new fitness: %s " % str(newfit))
 
-            if newfit > currfit:
+            if newfit >= currfit:
                 currex = neighex
                 currfit = newfit
             else:
-                print "Reached maxima! Exiting..."
+                sys.stderr.write("\n** Reached maxima! examples: %s ambiguities found: %s *\n*" % (str(currex), str(currfit)))
                 sys.exit(0) 
 
 
@@ -72,19 +72,19 @@ class Hillclimb:
         currfit = self.fitness(currlen)
 
         while True:
-            print "current length: %s, fitness: %s" % (str(currlen),str(currfit))
+            sys.stderr.write("\n==> current length: %s, fitness: %s\n" % (str(currlen),str(currfit)))
             neighlen = currlen + 1
             amberoptcmd = ["-l",str(neighlen)]
             MetaUtils.runtool(self.cmd + amberoptcmd)
             newfit = self.fitness(neighlen)
             
-            print "new fitness: %s " % str(newfit)
+            sys.stderr.write("new fitness: %s " % str(newfit))
 
-            if newfit > currfit:
+            if newfit >= currfit:
                 currlen = neighlen
                 currfit = newfit
             else:
-                print "Reached maxima! Exiting..."
+                sys.stderr.write("\n** Reached maxima! length: %s ambiguities found: %s **\n" % (str(currlen), str(currfit)))
                 sys.exit(0) 
 
 
