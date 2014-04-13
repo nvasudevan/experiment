@@ -6,6 +6,8 @@ import math
 import MetaUtils
 
 TIMELIMIT = 30
+# we keep incrementing number of examples to search for by 10%
+EXAMPLES_INCREMENT = 1.1
 
 class Hillclimb:
 
@@ -50,7 +52,7 @@ class Hillclimb:
 
         while True:
             sys.stderr.write("\n==> current examples count: %s, fitness: %s\n" % (str(currex),str(currfit)))
-            neighex = int(math.ceil(currex * 1.1))
+            neighex = int(math.ceil(currex * EXAMPLES_INCREMENT))
             amberoptcmd = ["-n",str(neighex)]
             MetaUtils.runtool(self.cmd + amberoptcmd)
             newfit = self.fitness(neighex)
