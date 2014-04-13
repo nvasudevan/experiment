@@ -50,19 +50,19 @@ class Hillclimb:
         currfit = self.fitness(currd)
     
         while True:
-            print "current depth: %s, fitness: %s" % (str(currd),str(currfit))
+            sys.stderr.write("\n==> current depth: %s, fitness: %s\n" % (str(currd),str(currfit)))
             neighd = currd + 1
             self.sinbad(neighd)
             newfit = self.fitness(neighd)
 
-            print "currfit: %s, newfit: %s" % (currfit,str(newfit))
+            sys.stderr.write("\ncurrfit: %s, newfit: %s\n" % (currfit,str(newfit)))
             if newfit > currfit:
                 currd = neighd
                 currfit = newfit
             else:
                 # we try one more depth and see if there is a better fit individual
                 neighd2 = neighd + 1
-                print "LAST TIME: trying depth: " , str(neighd2)
+                sys.stderr.write("\nLAST TIME: trying depth: \n" , str(neighd2))
                 self.sinbad(neighd2)
                 newfit2 = self.fitness(neighd2)
 
@@ -70,7 +70,7 @@ class Hillclimb:
                     currd = neighd2
                     currfit = newfit2
                 else:
-                    print "==> LOCAL MAXIMA!. depth: (%s), and fitness: %s" % (str(depth),str(currfit))
+                    sys.stderr.write("\n==> LOCAL MAXIMA!. depth: (%s), and fitness: %s\n" % (str(depth),str(currfit)))
                     sys.exit(0)
 
 
