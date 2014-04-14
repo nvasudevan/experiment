@@ -89,6 +89,9 @@ run_lang() {
 }
 
 run_mutlang() {
+    clog="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/log"
+    mkdir -p $resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
+    > $clog
     for type in $mutypes
     do
        for g in $mugrammars
@@ -122,6 +125,7 @@ run_mutlang() {
              cd $cwd
              rm -Rf $tmp
          done
+         echo $gsetlog >> $clog
          print_summary $ambcnt $cnt > $rsltdir/summary        
        done
     done
