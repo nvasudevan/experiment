@@ -154,6 +154,9 @@ run_lang() {
 
 
 run_mutlang() {
+    clog=""$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
+    mkdir -p $resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
+    > $clog
     for type in $mutypes
     do
        for g in $mugrammars
@@ -201,6 +204,7 @@ run_mutlang() {
                 gzip -f $glog
                 rm -Rf $tmp            
           done
+          echo $gsetlog >> $clog
           print_summary $ambcnt $cnt > $rsltdir/summary
           print_filter_summary $rsltdir >> $rsltdir/summary
        done
