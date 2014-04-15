@@ -18,7 +18,7 @@ def ambtotal(log):
 
 def runtool(cmd):
     cmdstr = " ".join(cmd)
-    sys.stderr.write("cmd : %s" % cmdstr)
+    sys.stderr.write("\ncmd : %s\n" % cmdstr)
     r = subprocess.call(cmd)
 
     if r != 0:
