@@ -19,14 +19,14 @@ print_filter_summary() {
     fltcnt=0
     unambcnt=0
     totflttime=0
-    for log in $(ls $logdir/*.log)
+    for log in $(ls $logdir/*.log.gz)
     do
-        flttime=$(grep "^filter time" $log | cut -d: -f2)
+        flttime=$(zgrep "^filter time" $log | cut -d: -f2)
         if [ ! -z "$flttime" ]
         then
             totflttime=$(echo $totflttime+$flttime | bc)
             ((fltcnt+=1))
-            ratio=$(grep "^Harmless productions" $log | cut -d: -f2)
+            ratio=$(zgrep "^Harmless productions" $log | cut -d: -f2)
             if [ ! -z "$ratio" ]
             then 
                 hfrac=$(echo $ratio | bc -l)
@@ -93,7 +93,7 @@ run_randomcfg() {
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
-            gzip -f $glog
+            [ -f $glog ] && gzip -f $glog
             rm -Rf $tmp
         done
     done
@@ -144,7 +144,7 @@ run_lang() {
                 out="$g.$i,yes"
             fi
             echo $out | tee -a $gsetlog
-            gzip -f $glog
+            [ -f $glog ] && gzip -f $glog
             rm -Rf $tmp
         done
     done
@@ -201,7 +201,7 @@ run_mutlang() {
                     out="$g.0_$n,yes"
                 fi
                 echo $out | tee -a $gsetlog
-                gzip -f $glog
+                [ -f $glog ] && gzip -f $glog
                 rm -Rf $tmp            
           done
           echo $gsetlog >> $clog
@@ -254,7 +254,7 @@ run_boltzcfg() {
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
-            gzip -f $glog
+            [ -f $glog ] && gzip -f $glog
             rm -Rf $tmp
         done
     done
@@ -289,7 +289,7 @@ run_test() {
         fi
         echo $out | tee -a $gsetlog
     done
-    gzip -f $glog
+    [ -f $glog ] && gzip -f $glog
     rm -Rf $tmp
     print_summary $ambcnt $cnt > $rsltdir/summary
     print_filter_summary $rsltdir >> $rsltdir/summary
