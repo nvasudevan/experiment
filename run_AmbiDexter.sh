@@ -154,7 +154,7 @@ run_lang() {
 
 
 run_mutlang() {
-    clog=""$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
+    clog="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/log"
     mkdir -p $resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
     > $clog
     for type in $mutypes
