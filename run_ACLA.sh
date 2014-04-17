@@ -76,6 +76,8 @@ run_lang() {
 }
 
 run_mutlang() {
+    clog="$resultsdir/acla/$gset/${timelimit}s/log"
+    mkdir -p $resultsdir/acla/$gset/${timelimit}s
     for type in $mutypes
     do
         for g in $mugrammars
@@ -107,6 +109,7 @@ run_mutlang() {
                 gzip -f $glog
                 rm -Rf $tmp 
             done
+	    cat $gsetlog >> $clog
             print_summary $ambcnt $cnt > $rsltdir/summary
         done
     done    

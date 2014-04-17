@@ -125,7 +125,7 @@ run_mutlang() {
              cd $cwd
              rm -Rf $tmp
          done
-         echo $gsetlog >> $clog
+         cat $gsetlog >> $clog
          print_summary $ambcnt $cnt > $rsltdir/summary        
        done
     done
