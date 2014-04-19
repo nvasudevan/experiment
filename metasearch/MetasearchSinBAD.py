@@ -70,7 +70,7 @@ class Hillclimb:
                     currd = neighd2
                     currfit = newfit2
                 else:
-                    sys.stderr.write("\n==> LOCAL MAXIMA!. depth: (%s), and fitness: %s\n" % (str(depth),str(currfit)))
+                    sys.stderr.write("\n==> LOCAL MAXIMA!. depth: (%s), and fitness: %s\n" % (str(currd),str(currfit)))
                     sys.exit(0)
 
 
