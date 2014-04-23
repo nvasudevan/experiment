@@ -2,6 +2,11 @@
 
 import  os, subprocess, sys
 
+def write(msg):
+    sys.stdout.write(msg)
+    sys.stdout.flush()
+
+
 def ambtotal(log):  
     f = open(log)
     results = f.read()
