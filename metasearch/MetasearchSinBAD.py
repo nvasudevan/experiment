@@ -5,6 +5,7 @@ import getopt
 import MetaUtils
 
 TIMELIMIT = 30
+WGTSTEP = 0.01
 
 class Hillclimb:
 
@@ -18,25 +19,44 @@ class Hillclimb:
         self.run()
         
 
-    def fitness(self, depth):
+    def fitness(self, depth, weight):
         """ fitness -> number of ambiguities found """
         sinbadlogdir = "%ss_-b_%s_-d_%s" % (self.timelimit,backend,depth)
-        if self.weight is not None:
-            sinbadlogdir = "%s_-w_%s" % (sinbadlogdir,self.weight)
+        if weight is not None:
+            sinbadlogdir = "%s_-w_%s" % (sinbadlogdir,weight)
 
         log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, sinbadlogdir) 
         return MetaUtils.ambtotal(log)
 
 
-    def sinbad(self, depth):
+    def sinbad(self, depth, weight):
         """ Run the ambiguity checker tool from the experimental suite """
         sinbadx =  "%s/run_SinBAD.sh" % (self.expdir)
         cmd = [sinbadx,"-g",self.gset,"-t",str(self.timelimit),"-b",self.backend,"-d",str(depth)]
-        if self.weight != None:
+        if weight is not None:
             cmd.append("-w")
-            cmd.append(self.weight)
+            cmd.append(str(weight))
 
         MetaUtils.runtool(cmd)
+
+    
+    def neighbours(self, depth, weight):
+         _neighs = [(depth+1,weight)]
+         if weight is not None:
+             _wgt = weight + (weight * WGTSTEP)
+             _neighs.append((depth,_wgt))
+
+         return _neighs
+
+    
+    def run_neighs(self, neighs):
+        fits = []
+        for (d,w) in neighs:
+            self.sinbad(d,w)
+            fit = self.fitness(d,w)
+            fits.append(fit)
+
+        return fits
 
 
     def run(self):
@@ -46,46 +66,48 @@ class Hillclimb:
            to the neighbour's fitness. This will allow the hill climb to progress until we 
            start hitting less fit individuals consistently. """
         currd = self.depth
-        self.sinbad(currd)
-        currfit = self.fitness(currd)
+        currwgt = self.weight
+        self.sinbad(currd,currwgt)
+        currfit = self.fitness(currd,currwgt)
     
         while True:
-            sys.stderr.write("\n==> current depth: %s, fitness: %s\n" % (str(currd),str(currfit)))
-            neighd = currd + 1
-            self.sinbad(neighd)
-            newfit = self.fitness(neighd)
-
-            sys.stderr.write("\ncurrfit: %s, newfit: %s\n" % (currfit,str(newfit)))
-            if newfit > currfit:
-                currd = neighd
+            MetaUtils.write("\n===> current depth,wgt: %s,%s, fitness: %s\n" % (str(currd),str(currwgt),str(currfit)))
+            neighs = self.neighbours(currd,currwgt)
+            MetaUtils.write("neighs ==> %s" % (neighs))
+            fits = self.run_neighs(neighs)
+            newfit = max(fits)
+            if newfit >= currfit:
+                d_w = neighs[fits.index(newfit)]
+                MetaUtils.write("\n** depth,wgt (%s,%s) ==>  (%s) **\n" % (currd,currwgt,d_w))
+                currd,currwgt = d_w 
                 currfit = newfit
             else:
-                # we try one more depth and see if there is a better fit individual
-                neighd2 = neighd + 1
-                sys.stderr.write("\nLAST TIME: trying depth: \n" , str(neighd2))
-                self.sinbad(neighd2)
-                newfit2 = self.fitness(neighd2)
-
-                if newfit2 > currfit:
-                    currd = neighd2
-                    currfit = newfit2
+                MetaUtils.write("** trying d+1 **")
+                neighs = self.neighbours(currd+1,currwgt)
+                MetaUtils.write("neighs: %s" % (neighs))
+                fits = self.run_neighs(neighs)
+                newfit = max(fits)
+                if newfit > currfit:
+                    d_w = neighs[fits.index(newfit)]
+                    MetaUtils.write("\ndepth,wgt: %s, currfit: %s, newfit: %s\n" % (d_w,currfit,str(newfit)))
+                    currd,currwgt = d_w 
+                    currfit = newfit
                 else:
-                    sys.stderr.write("\n==> LOCAL MAXIMA!. depth: (%s), and fitness: %s\n" % (str(currd),str(currfit)))
+                    MetaUtils.write("\n==> LOCAL MAXIMA!. depth,wgt: (%s,%s), and fitness: %s\n" % (str(currd),str(currwgt),str(currfit)))
                     sys.exit(0)
 
 
 def usage(msg=None):
     if msg is not None:
-        sys.stderr.write(msg)
+        MetaUtils.write(msg)
         
-    sys.stderr.write("Metasearch.py -x <experiment directory> " \
+    MetaUtils.write("Metasearch.py -x <experiment directory> " \
     "-g <grammar set> -b <backend to run> -d <initial depth>")
     sys.exit(1)
     
 
 if __name__ == "__main__": 
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:w:")   
-    print opts, args
     weight = None
     for opt in opts:
         if opt[0] == "-x":
@@ -97,7 +119,7 @@ if __name__ == "__main__":
         elif opt[0] == "-d":
             depth = int(opt[1])
         elif opt[0] == "-w":
-            weight = opt[1]
+            weight = float(opt[1])
         else: 
             usage("Unknown argument '%s'" % opt[0])   
 
