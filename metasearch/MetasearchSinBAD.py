@@ -98,16 +98,16 @@ class Hillclimb:
 
 def usage(msg=None):
     if msg is not None:
-        MetaUtils.write(msg)
+        MetaUtils.write("\n%s\n" % msg)
         
     MetaUtils.write("Metasearch.py -x <experiment directory> " \
-    "-g <grammar set> -b <backend to run> -d <initial depth>")
+    "-g <grammar set> -b <backend to run> -d <initial depth> -w <initial wgt>\n")
     sys.exit(1)
     
 
 if __name__ == "__main__": 
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:w:")   
-    weight = None
+    expdir, gset, backend, depth, weight = None, None, None, None, None
     for opt in opts:
         if opt[0] == "-x":
             expdir = opt[1]
@@ -121,6 +121,9 @@ if __name__ == "__main__":
             weight = float(opt[1])
         else: 
             usage("Unknown argument '%s'" % opt[0])   
+
+    if (expdir == None) or (gset == None) or (backend == None) or (depth == None):
+        usage("Missing arguments!")
 
     Hillclimb(expdir, gset, backend, depth, weight, TIMELIMIT)
     
