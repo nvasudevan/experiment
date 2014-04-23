@@ -62,9 +62,8 @@ class Hillclimb:
     def run(self):
         """Perform hill climb. Since SinBAD is nondeterministic, there is bound
            to be minor variations in the results from run to run. So to be sure 
-           we are not terminating our hill climb prematurely, we add tolarance (small value) 
-           to the neighbour's fitness. This will allow the hill climb to progress until we 
-           start hitting less fit individuals consistently. """
+           we are not terminating our hill climb prematurely, we increment the
+           depth and try one more time.""" 
         currd = self.depth
         currwgt = self.weight
         self.sinbad(currd,currwgt)
