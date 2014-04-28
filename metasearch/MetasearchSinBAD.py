@@ -3,6 +3,7 @@
 import os, subprocess, sys
 import getopt
 import MetaUtils
+from sets import Set
 
 TIMELIMIT = 30
 WGTSTEP = 0.01
@@ -16,7 +17,8 @@ class Hillclimb:
         self.depth = depth
         self.weight = weight
         self.timelimit = timelimit
-        self.run()
+        self.traversed = Set()
+        self.hillclimb()
         
 
     def fitness(self, depth, weight):
@@ -41,12 +43,22 @@ class Hillclimb:
 
     
     def neighbours(self, depth, weight):
-         _neighs = [(depth+1,weight)]
+         # [(d-1,w),(d,w-1),(d,w+1),(d+1,w)]
          if weight is not None:
-             _wgt = weight + (weight * WGTSTEP)
-             _neighs.append((depth,_wgt))
+             neighs = []
+             _neighs = [(depth-1,weight), (depth,(weight - (weight * WGTSTEP))), 
+                        (depth,(weight + (weight * WGTSTEP))),(depth+1,weight),]
+             for _neigh in _neighs:
+                 if _neigh not in self.traversed:
+                     neighs.append(_neigh)
+                 else:
+                     print "traversed: " , self.traversed
+                     print "_neigh: " , _neigh
 
-         return _neighs
+         else:
+             neighs = [(depth+1,None)]
+
+         return neighs
 
     
     def run_neighs(self, neighs):
@@ -55,11 +67,34 @@ class Hillclimb:
             self.sinbad(d,w)
             fit = self.fitness(d,w)
             fits.append(fit)
+            self.traversed.add((d,w))
 
         return fits
 
 
-    def run(self):
+    def run(self, _depth, _wgt):
+        MetaUtils.write("\n===> depth,wgt: %s,%s\n" % (str(_depth),str(_wgt)))
+        neighs = self.neighbours(_depth,_wgt)
+        MetaUtils.write("neighs ==> %s" % (neighs))
+        fits = self.run_neighs(neighs)
+        maxfit = max(fits)
+
+        fitinds = [] 
+        for (i,fit) in enumerate(fits):
+            if fit == maxfit:
+                fitinds.append(i)
+
+        _neighd,_neighwgt = neighs[max(fitinds)] 
+
+        print "neighs: %s" % neighs
+        print "fits: %s" % fits
+        print "neigh d,w : %s,%s" % (_neighd,_neighwgt) 
+
+        return _neighd,_neighwgt,maxfit
+
+
+
+    def hillclimb(self):
         """Perform hill climb. Since SinBAD is nondeterministic, there is bound
            to be minor variations in the results from run to run. So to be sure 
            we are not terminating our hill climb prematurely, we increment the
@@ -67,41 +102,38 @@ class Hillclimb:
         currd = self.depth
         currwgt = self.weight
         self.sinbad(currd,currwgt)
+        self.traversed.add((currd,currwgt))
         currfit = self.fitness(currd,currwgt)
-    
+         
         while True:
-            MetaUtils.write("\n===> current depth,wgt: %s,%s, fitness: %s\n" % (str(currd),str(currwgt),str(currfit)))
-            neighs = self.neighbours(currd,currwgt)
-            MetaUtils.write("neighs ==> %s" % (neighs))
-            fits = self.run_neighs(neighs)
-            newfit = max(fits)
-            if newfit >= currfit:
-                d_w = neighs[fits.index(newfit)]
-                MetaUtils.write("\n** depth,wgt (%s,%s) ==>  (%s) **\n" % (currd,currwgt,d_w))
-                currd,currwgt = d_w 
-                currfit = newfit
+            neighd,neighwgt,neighfit = self.run(currd,currwgt) 
+            if neighfit >= currfit:
+                MetaUtils.write("\n** depth,wgt[fitness] (%s,%s)[%s] ==>  (%s,%s)[%s] **\n" % \
+                               (currd,currwgt,currfit,neighd,neighwgt,neighfit))
+                currd = neighd
+                currwgt = neighwgt
+                currfit = neighfit
             else:
                 MetaUtils.write("** trying d+1 **")
-                neighs = self.neighbours(currd+1,currwgt)
-                MetaUtils.write("neighs: %s" % (neighs))
-                fits = self.run_neighs(neighs)
-                newfit = max(fits)
-                if newfit > currfit:
-                    d_w = neighs[fits.index(newfit)]
-                    MetaUtils.write("\ndepth,wgt: %s, currfit: %s, newfit: %s\n" % (d_w,currfit,str(newfit)))
-                    currd,currwgt = d_w 
-                    currfit = newfit
+                neighd,neighwgt,neighfit = self.run(currd+1,currwgt)
+                if neighfit > currfit:
+                    MetaUtils.write("\n** depth,wgt[fitness] (%s,%s)[%s] ==>  (%s,%s)[%s] **\n" % \
+                                   (currd,currwgt,currfit,neighd,neighwgt,neighfit))
+                    currd = neighd
+                    currwgt = neighwgt
+                    currfit = neighfit
                 else:
-                    MetaUtils.write("\n==> LOCAL MAXIMA!. depth,wgt: (%s,%s), and fitness: %s\n" % (str(currd),str(currwgt),str(currfit)))
+                    MetaUtils.write("\n==> LOCAL MAXIMA!. depth,wgt,fitness: %s,%s,%s\n" % \
+                                   (str(currd),str(currwgt),str(currfit)))
                     sys.exit(0)
 
 
 def usage(msg=None):
     if msg is not None:
-        MetaUtils.write("\n%s\n" % msg)
+        MetaUtils.write(msg)
         
     MetaUtils.write("Metasearch.py -x <experiment directory> " \
-    "-g <grammar set> -b <backend to run> -d <initial depth> -w <initial wgt>\n")
+    "-g <grammar set> -b <backend to run> -d <initial depth>")
     sys.exit(1)
     
 
