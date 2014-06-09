@@ -92,7 +92,7 @@ class Hillclimb:
 
         while True:
             sys.stderr.write("\n==> current examples count: %s, fitness: %s\n" % (str(currex),str(currfit)))
-            neighex = self.neighbour(currex)
+            neighex = self.neighbourex(currex)
             sys.stderr.write("neighex: %s" % (str(neighex)))
             amberoptcmd = ["-n",str(neighex)]
             MetaUtils.runtool(self.cmd + amberoptcmd)
