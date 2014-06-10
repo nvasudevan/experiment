@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import  os, subprocess, sys
+import math
 
 def write(msg):
     sys.stdout.write(msg)
@@ -29,3 +30,13 @@ def runtool(cmd):
     if r != 0:
         sys.stderr.write("cmd: %s failed!" % (cmdstr))
         sys.exit(1)
+
+def mean(val):
+    return (sum(val) * 1.0)/len(val)
+
+
+def stddev(val):
+    m = mean(val)
+    variance = [((v - m)**2) for v in val]
+    return math.sqrt(mean(variance))
+
