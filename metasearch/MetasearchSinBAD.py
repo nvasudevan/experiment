@@ -4,30 +4,36 @@ import os, subprocess, sys
 import getopt
 import MetaUtils
 from sets import Set
+import random
 
 TIMELIMIT = 30
 WGTSTEP = 0.01
 
 class Hillclimb:
 
-    def __init__(self, expdir, gset, backend, depth, weight, timelimit):
+    def __init__(self, expdir, gset, backend, depth, timelimit):
         self.expdir = expdir
         self.gset = gset
         self.backend = backend
         self.depth = depth
-        self.weight = weight
         self.timelimit = timelimit
-        self.traversed = Set()
-        self.hillclimb()
+
+        sinbadx =  "%s/run_SinBAD.sh" % (self.expdir)
+        self.cmd = [sinbadx,"-g",self.gset,"-t",str(self.timelimit),"-b",self.backend,"-d",str(depth)]
+        self.logdirprefix = "%ss_-b_%s" % (self.timelimit,backend)
         
+        self.hillclimb()
+
 
     def fitness(self, depth, weight):
         """ fitness -> number of ambiguities found """
-        sinbadlogdir = "%ss_-b_%s_-d_%s" % (self.timelimit,backend,depth)
+   
+        logdir = "%s_-d_%s" % (self.logdirprefix,depth)
         if weight is not None:
-            sinbadlogdir = "%s_-w_%s" % (sinbadlogdir,weight)
+            logdir = "%s_-w_%s" % (logdir,weight)
 
-        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, sinbadlogdir) 
+        log =  "%s/results/%s/%s/%s/log" % (self.expdir, "sinbad", self.gset, logdir) 
+
         return MetaUtils.ambtotal(log)
 
 
@@ -40,92 +46,94 @@ class Hillclimb:
             cmd.append(str(weight))
 
         MetaUtils.runtool(cmd)
-
-    
-    def neighbours(self, depth, weight):
-         # [(d-1,w),(d,w-1),(d,w+1),(d+1,w)]
-         if weight is not None:
-             neighs = []
-             _neighs = [(depth-1,weight), (depth,(weight - (weight * WGTSTEP))), 
-                        (depth,(weight + (weight * WGTSTEP))),(depth+1,weight),]
-             for _neigh in _neighs:
-                 if _neigh not in self.traversed:
-                     neighs.append(_neigh)
-                 else:
-                     print "traversed: " , self.traversed
-                     print "_neigh: " , _neigh
-
-         else:
-             neighs = [(depth+1,None)]
-
-         return neighs
-
-    
-    def run_neighs(self, neighs):
-        fits = []
-        for (d,w) in neighs:
-            self.sinbad(d,w)
-            fit = self.fitness(d,w)
-            fits.append(fit)
-            self.traversed.add((d,w))
-
-        return fits
+        return self.fitness(depth, weight)
 
 
-    def run(self, _depth, _wgt):
-        MetaUtils.write("\n===> depth,wgt: %s,%s\n" % (str(_depth),str(_wgt)))
-        neighs = self.neighbours(_depth,_wgt)
-        MetaUtils.write("neighs ==> %s" % (neighs))
-        fits = self.run_neighs(neighs)
-        maxfit = max(fits)
+    def neighwgt(self, w, values):
+        if len(values) < 3:
+            return w + WGTSTEP 
 
-        fitinds = [] 
-        for (i,fit) in enumerate(fits):
-            if fit == maxfit:
-                fitinds.append(i)
+        if len(values) >= 10:
+            recent10 = values[-10:]
+            sdev10 = MetaUtils.stddev(recent10)
+            MetaUtils.write("[wgt]recent10: %s, sdev10: %s \n" % (recent10,sdev10))
+            if sdev10 < 3:
+                return w + (10 * WGTSTEP)
+            
+        recent3 = values[-3:]
+        MetaUtils.write("[wgt]recent3: %s  \n" % (recent3))
+        sdev3 = MetaUtils.stddev(recent3)
+        MetaUtils.write("[wgt]recent3: %s, sdev3: %s \n" % (recent3,sdev3))
 
-        _neighd,_neighwgt = neighs[max(fitinds)] 
+        if sdev3 < 3:
+                return w + (3 * WGTSTEP)
+        else:
+            return w + WGTSTEP
 
-        print "neighs: %s" % neighs
-        print "fits: %s" % fits
-        print "neigh d,w : %s,%s" % (_neighd,_neighwgt) 
 
-        return _neighd,_neighwgt,maxfit
 
+    def run_weights(self, d):
+        w_values = []
+        # start from w=0.0
+        currw = 0.0
+        currfit = self.sinbad(d, currw)
+        w_values.append(currfit)
+        while True:
+            neighw = self.neighwgt(currw, w_values)           
+            neighfit = self.sinbad(d, neighw)
+            if len(w_values) >= 2:
+                if (neighfit < w_values[-1]) and (neighfit < w_values[-2]):
+                    MetaUtils.write("neighfit[%s] < currfit[%s]" % (str(neighfit),str(currfit)))
+                    return currfit 
+
+            currfit = neighfit
+            currw = neighw
+            w_values.append(currfit)
+
+
+
+    def neighbour(self, d, values):
+        if len(values) < 3:
+            return d + 1
+
+        if len(values) >= 10:
+            recent10 = values[-10:]
+            sdev10 = MetaUtils.stddev(recent10)
+            MetaUtils.write("[d]recent10: %s, sdev10: %s \n" % (recent10,sdev10))
+            if sdev10 < 3:
+                return d + 10
+            
+        recent3 = values[-3:]
+        MetaUtils.write("[d]recent3: %s  \n" % (recent3))
+        sdev3 = MetaUtils.stddev(recent3)
+        MetaUtils.write("[d]recent3: %s, sdev3: %s \n" % (recent3,sdev3))
+
+        if sdev3 < 3:
+                return  d + 3
+        else:
+            return d + 1
+            
 
 
     def hillclimb(self):
-        """Perform hill climb. Since SinBAD is nondeterministic, there is bound
-           to be minor variations in the results from run to run. So to be sure 
-           we are not terminating our hill climb prematurely, we increment the
-           depth and try one more time.""" 
+        d_values = []
         currd = self.depth
-        currwgt = self.weight
-        self.sinbad(currd,currwgt)
-        self.traversed.add((currd,currwgt))
-        currfit = self.fitness(currd,currwgt)
+        currfit = self.run_weights(currd)
+        d_values.append(currfit)
          
         while True:
-            neighd,neighwgt,neighfit = self.run(currd,currwgt) 
-            if neighfit >= currfit:
-                MetaUtils.write("\n** depth,wgt[fitness] (%s,%s)[%s] ==>  (%s,%s)[%s] **\n" % \
-                               (currd,currwgt,currfit,neighd,neighwgt,neighfit))
+            neighd = self.neighbour(currd, d_values)
+            neighfit = self.run_weights(neighd)
+            d_values.append(neighfit)
+            MetaUtils.write("\nneighd: %s, neighfit: %s \n" % (str(neighd),str(neighfit)))
+
+            if newfit >= currfit:
                 currd = neighd
-                currwgt = neighwgt
                 currfit = neighfit
             else:
-                MetaUtils.write("** trying d+1 **")
-                neighd,neighwgt,neighfit = self.run(currd+1,currwgt)
-                if neighfit > currfit:
-                    MetaUtils.write("\n** depth,wgt[fitness] (%s,%s)[%s] ==>  (%s,%s)[%s] **\n" % \
-                                   (currd,currwgt,currfit,neighd,neighwgt,neighfit))
-                    currd = neighd
-                    currwgt = neighwgt
-                    currfit = neighfit
-                else:
-                    MetaUtils.write("\n==> LOCAL MAXIMA!. depth,wgt,fitness: %s,%s,%s\n" % \
-                                   (str(currd),str(currwgt),str(currfit)))
-                    sys.exit(0)
+                MetaUtils.write("\n==> LOCAL MAXIMA!. depth,fitness: %s,%s\n" % \
+                                   (str(currd),str(currfit)))
+                sys.exit(0)
 
 
 def usage(msg=None):
@@ -138,8 +146,8 @@ def usage(msg=None):
     
 
 if __name__ == "__main__": 
-    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:w:")   
-    expdir, gset, backend, depth, weight = None, None, None, None, None
+    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:")   
+    expdir, gset, backend, depth = None, None, None, None
     for opt in opts:
         if opt[0] == "-x":
             expdir = opt[1]
@@ -149,13 +157,11 @@ if __name__ == "__main__":
             backend = opt[1]
         elif opt[0] == "-d":
             depth = int(opt[1])
-        elif opt[0] == "-w":
-            weight = float(opt[1])
         else: 
             usage("Unknown argument '%s'" % opt[0])   
 
     if (expdir == None) or (gset == None) or (backend == None) or (depth == None):
         usage("Missing arguments!")
 
-    Hillclimb(expdir, gset, backend, depth, weight, TIMELIMIT)
+    Hillclimb(expdir, gset, backend, depth, TIMELIMIT)
     
