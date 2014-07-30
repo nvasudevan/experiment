@@ -118,11 +118,15 @@ cd $wrkdir
 mkdir ACLA
 cd ACLA
 wget http://www.brics.dk/grammar/dist/grammar-all.jar
+wget http://www.brics.dk/~amoeller/automaton/automaton-1.11-8.tar.gz
+tar -zxf automaton-1.11-8.tar.gz
 wget http://www.brics.dk/grammar/grammar-2.0-4.tar.gz
 tar -zxf grammar-2.0-4.tar.gz
+mv automaton-1.11/src/dk/brics/automaton grammar-2.0/src/dk/brics/
 cd grammar-2.0
 patch -b -p0 build.xml < $cwd/patches/acla.build.xml.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/acla.patch || exit $?
+# patch automaton src too
 ant
 [ ! -f dist/grammar.jar ] && echo "ACLA didn't compile. Check in $wrkdir/ACLA" && exit 1
 # repackage acla
