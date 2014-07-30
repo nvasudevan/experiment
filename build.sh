@@ -121,8 +121,8 @@ wget http://www.brics.dk/grammar/dist/grammar-all.jar
 wget http://www.brics.dk/grammar/grammar-2.0-4.tar.gz
 tar -zxf grammar-2.0-4.tar.gz
 cd grammar-2.0
-patch -b -R -p0 build.xml < $cwd/patches/acla.build.xml.patch || exit $?
-patch -b -R -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/acla.patch || exit $?
+patch -b -p0 build.xml < $cwd/patches/acla.build.xml.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/acla.patch || exit $?
 ant
 [ ! -f dist/grammar.jar ] && echo "ACLA didn't compile. Check in $wrkdir/ACLA" && exit 1
 # repackage acla
