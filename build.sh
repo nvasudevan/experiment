@@ -126,6 +126,9 @@ mv automaton-1.11/src/dk/brics/automaton grammar-2.0/src/dk/brics/
 cd grammar-2.0
 patch -b -p0 build.xml < $cwd/patches/acla.build.xml.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/acla.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/ambiguity/ApproximationStrategy.java < $cwd/patches/ApproximationStrategy.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/ambiguity/RegularApproximation.java < $cwd/RegularApproximation.java.patch || exit $?
+
 # patch automaton src too
 ant
 [ ! -f dist/grammar.jar ] && echo "ACLA didn't compile. Check in $wrkdir/ACLA" && exit 1
