@@ -128,6 +128,7 @@ patch -b -p0 build.xml < $cwd/patches/acla.build.xml.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/acla.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/ApproximationStrategy.java < $cwd/patches/ApproximationStrategy.java.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/RegularApproximation.java < $cwd/RegularApproximation.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/operations/AutomataOperations.java < $cwd/AutomataOperations.java.patch || exit $?
 
 # patch automaton src too
 ant
