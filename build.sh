@@ -129,6 +129,7 @@ patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patche
 patch -b -p0 src/dk/brics/grammar/ambiguity/ApproximationStrategy.java < $cwd/patches/ApproximationStrategy.java.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/RegularApproximation.java < $cwd/RegularApproximation.java.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/operations/AutomataOperations.java < $cwd/AutomataOperations.java.patch || exit $?
+patch -b -p0 src/dk/brics/automaton/BasicOperations.java < $cwd/BasicOperations.java.patch || exit $?
 
 # patch automaton src too
 ant
