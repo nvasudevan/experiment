@@ -1,0 +1,51 @@
+--- grammar-2.0/src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java	2014-08-02 00:24:24.484004649 +0100
++++ grammar-2.0/src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java.modified	2014-08-02 00:24:16.188004801 +0100
+@@ -36,6 +36,11 @@
+ 	 */
+ 	private PrintWriter out;
+ 	
++    /**
++     * Parse every string that is generated from the overlap/intersection automata
++     */
++    private boolean parse_every_string;
++
+ 	/**
+ 	 * If set to true, verbose output is generated.
+ 	 */
+@@ -109,8 +114,9 @@
+ 	 * @throws IllegalAccessException if an approximation strategy class or its nullary constructor is not accessible
+ 	 * @throws InstantiationException if an approximation strategy class cannot be instantiated
+ 	 */
+-	public AmbiguityAnalyzer(PrintWriter out, boolean verbose) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
++	public AmbiguityAnalyzer(PrintWriter out, boolean verbose, boolean parse_every_string) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+ 		this.verbose = verbose;
++        this.parse_every_string = parse_every_string;
+ 		List<ApproximationStrategy> a = new ArrayList<ApproximationStrategy>();
+ 		String[] strategies = Properties.getStrings("dk.brics.grammar.ambiguity.strategies");
+ 		if (strategies != null) {
+@@ -234,7 +240,11 @@
+ 						boolean first = true;
+ 						boolean checked = false;
+ 						for (ApproximationStrategy a : approx) {
+-							HorizontalOverlapString a_overlap = a.horizontalCheck(p, index);
++                            if this.parse_every_string {
++							    HorizontalOverlapString a_overlap = a.horizontalCheck(p, index, parser);
++                            } else {
++							    HorizontalOverlapString a_overlap = a.horizontalCheck(p, index);
++                            }
+ 							if (a_overlap == ApproximationStrategy.HORIZONTAL_NOT_APPLICABLE)
+ 								continue;
+ 							if (debug)
+@@ -312,7 +322,11 @@
+ 						boolean first = true;
+ 						boolean checked = false;
+ 						for (ApproximationStrategy a : approx) {
+-							VerticalOverlapString a_overlap = a.verticalCheck(p1, p2);
++                            if this.parse_every_string {
++							    VerticalOverlapString a_overlap = a.verticalCheck(p1, p2, parser);
++                            } else {
++							    VerticalOverlapString a_overlap = a.verticalCheck(p1, p2);
++                            }
+ 							if (a_overlap == ApproximationStrategy.VERTICAL_NOT_APPLICABLE)
+ 								continue;
+ 							if (debug)

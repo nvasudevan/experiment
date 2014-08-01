@@ -130,6 +130,9 @@ patch -b -p0 src/dk/brics/grammar/ambiguity/ApproximationStrategy.java < $cwd/pa
 patch -b -p0 src/dk/brics/grammar/ambiguity/RegularApproximation.java < $cwd/RegularApproximation.java.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/operations/AutomataOperations.java < $cwd/AutomataOperations.java.patch || exit $?
 patch -b -p0 src/dk/brics/automaton/BasicOperations.java < $cwd/BasicOperations.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/main/Main.java < $cwd/Main.java.patch || exit $? 
+patch -b -p0 src/dk/brics/grammar/main/MainCommandLine.java < $cwd/MainCommandLine.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/AmbiguityAnalyzer.java.patch || exit $?
 
 # patch automaton src too
 ant
