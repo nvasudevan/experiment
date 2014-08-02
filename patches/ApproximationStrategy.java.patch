@@ -1,5 +1,5 @@
---- grammar-2.0/src/dk/brics/grammar/ambiguity/ApproximationStrategy.java	2008-03-05 08:37:29.000000000 +0000
-+++ grammar-2.0/src/dk/brics/grammar/ambiguity/ApproximationStrategy.java.modified	2014-07-31 23:08:01.408678153 +0100
+--- src/dk/brics/grammar/ambiguity/ApproximationStrategy.java	2008-03-05 08:37:29.000000000 +0000
++++ src/dk/brics/grammar/ambiguity/ApproximationStrategy.java.modified	2014-07-31 23:08:01.408678153 +0100
 @@ -4,6 +4,8 @@
  
  import dk.brics.grammar.Grammar;

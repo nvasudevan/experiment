@@ -1,5 +1,5 @@
---- grammar-2.0/src/dk/brics/grammar/operations/AutomataOperations.java	2008-03-05 08:37:30.000000000 +0000
-+++ grammar-2.0/src/dk/brics/grammar/operations/AutomataOperations.java.modified	2014-07-31 23:39:35.652643469 +0100
+--- src/dk/brics/grammar/operations/AutomataOperations.java	2008-03-05 08:37:30.000000000 +0000
++++ src/dk/brics/grammar/operations/AutomataOperations.java.modified	2014-07-31 23:39:35.652643469 +0100
 @@ -7,6 +7,10 @@
  import dk.brics.grammar.ambiguity.HorizontalOverlapString;
  import dk.brics.grammar.ambiguity.RegularApproximation;

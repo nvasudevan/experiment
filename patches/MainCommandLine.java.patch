@@ -1,5 +1,5 @@
---- grammar-2.0/src/dk/brics/grammar/main/MainCommandLine.java	2014-08-02 00:21:58.116007329 +0100
-+++ grammar-2.0/src/dk/brics/grammar/main/MainCommandLine.java.modified	2014-08-02 00:21:42.272007619 +0100
+--- src/dk/brics/grammar/main/MainCommandLine.java	2014-08-02 00:21:58.116007329 +0100
++++ src/dk/brics/grammar/main/MainCommandLine.java.modified	2014-08-02 00:21:42.272007619 +0100
 @@ -27,6 +27,7 @@
  		String unfold_right = "";
  		boolean bad = false;
