@@ -34,7 +34,6 @@ ln -s $cwd/${exp}_toolparams.sh $cwd/toolparams.sh
 cp /dev/null $cwd/env.sh
 echo "export cwd=$cwd" >> $cwd/env.sh
 echo "export wrkdir=$wrkdir" >> $cwd/env.sh
-exit 0
 
 # now run build.sh to build your tools
 ./build.sh $wrkdir || exit $?
