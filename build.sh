@@ -127,15 +127,17 @@ cd grammar-2.0
 patch -b -p0 build.xml < $cwd/patches/acla.build.xml.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/acla.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/ApproximationStrategy.java < $cwd/patches/ApproximationStrategy.java.patch || exit $?
-patch -b -p0 src/dk/brics/grammar/ambiguity/RegularApproximation.java < $cwd/RegularApproximation.java.patch || exit $?
-patch -b -p0 src/dk/brics/grammar/operations/AutomataOperations.java < $cwd/AutomataOperations.java.patch || exit $?
-patch -b -p0 src/dk/brics/automaton/BasicOperations.java < $cwd/BasicOperations.java.patch || exit $?
-patch -b -p0 src/dk/brics/grammar/main/Main.java < $cwd/Main.java.patch || exit $? 
-patch -b -p0 src/dk/brics/grammar/main/MainCommandLine.java < $cwd/MainCommandLine.java.patch || exit $?
-patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/AmbiguityAnalyzer.java.patch || exit $?
-patch -b -p0 src/dk/brics/automaton/Automaton.java < $cwd/Automaton.java.patch || exit $?
-patch -b -p0 src/dk/brics/grammar/main/MainServlet.java < $cwd/MainServlet.java.patch || exit $?
-patch -b -p0 src/dk/brics/grammar/main/MainGUI.java < $cwd/MainGUI.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/ambiguity/RegularApproximation.java < $cwd/patches/RegularApproximation.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/operations/AutomataOperations.java < $cwd/patches/AutomataOperations.java.patch || exit $?
+patch -b -p0 src/dk/brics/automaton/BasicOperations.java < $cwd/patches/BasicOperations.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/main/Main.java < $cwd/patches/Main.java.patch || exit $? 
+patch -b -p0 src/dk/brics/grammar/main/MainCommandLine.java < $cwd/patches/MainCommandLine.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/patches/AmbiguityAnalyzer.java.patch || exit $?
+patch -b -p0 src/dk/brics/automaton/Automaton.java < $cwd/patches/Automaton.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/main/MainServlet.java < $cwd/patches/MainServlet.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/main/MainGUI.java < $cwd/patches/MainGUI.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/ambiguity/RegularApproximation2.java < $cwd/patches/RegularApproximation2.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/ambiguity/TerminalApproximation.java < $cwd/patches/TerminalApproximation.java.patch || exit $?
 
 # patch automaton src too
 ant
