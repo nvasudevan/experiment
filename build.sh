@@ -134,6 +134,8 @@ patch -b -p0 src/dk/brics/grammar/main/Main.java < $cwd/Main.java.patch || exit 
 patch -b -p0 src/dk/brics/grammar/main/MainCommandLine.java < $cwd/MainCommandLine.java.patch || exit $?
 patch -b -p0 src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java < $cwd/AmbiguityAnalyzer.java.patch || exit $?
 patch -b -p0 src/dk/brics/automaton/Automaton.java < $cwd/Automaton.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/main/MainServlet.java < $cwd/MainServlet.java.patch || exit $?
+patch -b -p0 src/dk/brics/grammar/main/MainGUI.java < $cwd/MainGUI.java.patch || exit $?
 
 # patch automaton src too
 ant
