@@ -1,5 +1,5 @@
---- src/dk/brics/automaton/BasicOperations.java	2011-09-07 11:08:00.000000000 +0100
-+++ src/dk/brics/automaton/BasicOperations.java.modified	2014-08-01 00:04:14.692616387 +0100
+--- src/dk/brics/automaton/BasicOperations.java	2014-08-02 23:58:13.140437351 +0100
++++ src/dk/brics/automaton/BasicOperations.java.modified	2014-08-02 23:57:42.756437908 +0100
 @@ -39,6 +39,11 @@
  import java.util.Map;
  import java.util.Set;
@@ -12,7 +12,7 @@
  /**
   * Basic automata operations.
   */
-@@ -627,6 +632,117 @@
+@@ -627,6 +632,119 @@
  				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
  					best = p;
  			} else 
@@ -123,7 +123,9 @@
 +                    && parser.check(h.getY(), p2) 
 +                    && parser.check(h.getAY(), p2);
 +                System.out.println(h.getString() + "  parse check: " + (a_certain ? "passed" : "failed"));
-+
++                if (a_certain) {
++                    System.out.println("ambiguous string: " + h.getString());
++                }
 +				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
 +					best = p;
 +			} else 
