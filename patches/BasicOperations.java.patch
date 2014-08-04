@@ -1,5 +1,5 @@
---- src/dk/brics/automaton/BasicOperations.java	2014-08-02 23:58:13.140437351 +0100
-+++ src/dk/brics/automaton/BasicOperations.java.modified	2014-08-02 23:57:42.756437908 +0100
+--- src/dk/brics/automaton/BasicOperations.java	2014-08-04 23:00:03.828551164 +0100
++++ src/dk/brics/automaton/BasicOperations.java.modified	2014-08-04 22:59:54.952991326 +0100
 @@ -39,6 +39,11 @@
  import java.util.Map;
  import java.util.Set;
@@ -12,10 +12,14 @@
  /**
   * Basic automata operations.
   */
-@@ -627,6 +632,119 @@
- 				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
- 					best = p;
- 			} else 
+@@ -624,11 +629,126 @@
+ 			State q = queue.removeFirst();
+ 			String p = path.get(q);
+ 			if (q.accept == accepted) {
++                System.out.println("p.length: " + p.length());
++				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
++					best = p;
++			} else 
 +				for (Transition t : q.getTransitions()) {
 +					String tp = path.get(t.to);
 +					String np = p + t.min;
@@ -52,14 +56,16 @@
 +			State q = queue.removeFirst();
 +			String p = path.get(q);
 +			if (q.accept == accepted) {
-+                System.out.println("\n==> accepted: p[" + p.length() + "]: " + p + "|");
 +                boolean a_certain = parser.check(p, p1) && parser.check(p, p2);
-+                System.out.println("certain: " + a_certain);
-+				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
-+					best = p;
-+			} else 
-+				for (Transition t : q.getTransitions()) {
-+					String tp = path.get(t.to);
++                System.out.println("\n==> accepted+" + a_certain  + "," + p + ",length: " + p.length());
++                if (a_certain) {
++                    System.out.println("ambiguous string: " + p);
++                }
+ 				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
+ 					best = p;
+ 			} else 
+ 				for (Transition t : q.getTransitions()) {
+ 					String tp = path.get(t.to);
 +					String np = p + t.min;
 +					if (tp == null || (tp.length() == np.length() && np.compareTo(tp) < 0)) {
 +						if (tp == null)
@@ -94,7 +100,6 @@
 +			State q = queue.removeFirst();
 +			String p = path.get(q);
 +			if (q.accept == accepted) {  
-+                System.out.println("\n==> accepted: p[" + p.length() + "]: " + p + "|");
 +                Production p1 = new Production("$", prod.getEntities().subList(0, index), false, prod.getID(), 0);
 +                Production p2 = new Production("$", prod.getEntities().subList(index, prod.getEntities().size()), false, prod.getID(), 0);
 +                HorizontalOverlapString h = null;
@@ -117,18 +122,20 @@
 +                    }
 +                    h = new HorizontalOverlapString(b.toString(), i1, i2);
 +                }
-+                System.out.println("h: " + h.getString());
 +                boolean a_certain = parser.check(h.getX(), p1) 
 +                    && parser.check(h.getXA(), p1) 
 +                    && parser.check(h.getY(), p2) 
 +                    && parser.check(h.getAY(), p2);
-+                System.out.println(h.getString() + "  parse check: " + (a_certain ? "passed" : "failed"));
++                System.out.println("\n==> accepted+" + a_certain  + "," + h.getString() + ",length: " + h.getString().length());
 +                if (a_certain) {
 +                    System.out.println("ambiguous string: " + h.getString());
 +                }
 +				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
 +					best = p;
++
 +			} else 
- 				for (Transition t : q.getTransitions()) {
- 					String tp = path.get(t.to);
++				for (Transition t : q.getTransitions()) {
++					String tp = path.get(t.to);
  					String np = p + t.min;
+ 					if (tp == null || (tp.length() == np.length() && np.compareTo(tp) < 0)) {
+ 						if (tp == null)
