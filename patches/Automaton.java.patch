@@ -1,5 +1,5 @@
---- src/dk/brics/automaton/Automaton.java.orig	2014-08-02 01:08:24.963956300 +0100
-+++ src/dk/brics/automaton/Automaton.java.modified	2014-08-02 01:26:15.731936694 +0100
+--- src/dk/brics/automaton/Automaton.java	2014-08-05 23:45:45.982304557 +0100
++++ src/dk/brics/automaton/Automaton.java.modified	2014-08-05 23:45:40.878304650 +0100
 @@ -48,6 +48,11 @@
  import java.util.Map;
  import java.util.Set;
@@ -16,12 +16,12 @@
  		return BasicOperations.getShortestExample(this, accepted);
  	}
  	
-+    public String getVerticalShortestExample(boolean accepted, Production p1, Production p2, Parser parser) {
-+        return BasicOperations.getVerticalShortestExample(this, accepted, p1, p2, parser);
++    public String getVerticalShortestExample(boolean accepted, Production p1, Production p2, Parser parser, boolean parse_every_string) {
++        return BasicOperations.getVerticalShortestExample(this, accepted, p1, p2, parser, parse_every_string);
 +    }    
 +                            
-+    public String getHorizontalShortestExample(boolean accepted, Production p, int index, Parser parser) {
-+        return BasicOperations.getHorizontalShortestExample(this, accepted, p, index, parser);
++    public String getHorizontalShortestExample(boolean accepted, Production p, int index, Parser parser, boolean parse_every_string) {
++        return BasicOperations.getHorizontalShortestExample(this, accepted, p, index, parser, parse_every_string);
 +    } 
 +	
  	/**
