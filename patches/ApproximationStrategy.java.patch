@@ -1,5 +1,5 @@
---- src/dk/brics/grammar/ambiguity/ApproximationStrategy.java	2008-03-05 08:37:29.000000000 +0000
-+++ src/dk/brics/grammar/ambiguity/ApproximationStrategy.java.modified	2014-07-31 23:08:01.408678153 +0100
+--- src/dk/brics/grammar/ambiguity/ApproximationStrategy.java	2014-08-05 23:31:59.614319688 +0100
++++ src/dk/brics/grammar/ambiguity/ApproximationStrategy.java.modified	2014-08-05 23:31:45.898319939 +0100
 @@ -4,6 +4,8 @@
  
  import dk.brics.grammar.Grammar;
@@ -14,8 +14,8 @@
  	}
  
 +    // Krish: pass Parser so we can parse each string generated and check for ambiguity
-+	public final VerticalOverlapString verticalCheck(Production p1, Production p2, Parser parser) {
-+		VerticalOverlapString overlap = checkVerticalOverlap(p1, p2, parser);
++	public final VerticalOverlapString verticalCheck(Production p1, Production p2, Parser parser, boolean parse_every_string) {
++		VerticalOverlapString overlap = checkVerticalOverlap(p1, p2, parser, parse_every_string);
 +		if (overlap != ApproximationStrategy.VERTICAL_NOT_APPLICABLE)
 +			if (overlap == null)
 +				passed_vertical_checks++;
@@ -34,8 +34,8 @@
  	}
  
 +    // Krish: Pass Parser to check for ambiguity on each string
-+	public final HorizontalOverlapString horizontalCheck(Production p, int index, Parser parser) {
-+		HorizontalOverlapString overlap = checkHorizontalOverlap(p, index, parser);
++	public final HorizontalOverlapString horizontalCheck(Production p, int index, Parser parser, boolean parse_every_string) {
++		HorizontalOverlapString overlap = checkHorizontalOverlap(p, index, parser, parse_every_string);
 +		if (overlap != ApproximationStrategy.HORIZONTAL_NOT_APPLICABLE)
 +			if (overlap == null)
 +				passed_horizontal_checks++;
@@ -53,7 +53,7 @@
  		return ApproximationStrategy.VERTICAL_NOT_APPLICABLE;
  	}
  	
-+	protected VerticalOverlapString checkVerticalOverlap(Production p1, Production p2, Parser parser) {
++	protected VerticalOverlapString checkVerticalOverlap(Production p1, Production p2, Parser parser, boolean parse_every_string) {
 +		return ApproximationStrategy.VERTICAL_NOT_APPLICABLE;
 +	}
 +	
@@ -64,7 +64,7 @@
  		return ApproximationStrategy.HORIZONTAL_NOT_APPLICABLE;
  	}
  	
-+	protected HorizontalOverlapString checkHorizontalOverlap(Production p, int index, Parser parser) {
++	protected HorizontalOverlapString checkHorizontalOverlap(Production p, int index, Parser parser, boolean parse_every_string) {
 +		return ApproximationStrategy.HORIZONTAL_NOT_APPLICABLE;
 +	}
 +	
