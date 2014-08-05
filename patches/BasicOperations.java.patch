@@ -1,5 +1,5 @@
---- src/dk/brics/automaton/BasicOperations.java	2014-08-04 23:00:03.828551164 +0100
-+++ src/dk/brics/automaton/BasicOperations.java.modified	2014-08-04 22:59:54.952991326 +0100
+--- src/dk/brics/automaton/BasicOperations.java	2014-08-05 23:22:37.386329983 +0100
++++ src/dk/brics/automaton/BasicOperations.java.modified	2014-08-05 23:19:49.506333057 +0100
 @@ -39,6 +39,11 @@
  import java.util.Map;
  import java.util.Set;
@@ -12,7 +12,7 @@
  /**
   * Basic automata operations.
   */
-@@ -624,11 +629,126 @@
+@@ -624,11 +629,141 @@
  			State q = queue.removeFirst();
  			String p = path.get(q);
  			if (q.accept == accepted) {
@@ -33,7 +33,7 @@
 +		return best;
 +	}
 +
-+	public static String getVerticalShortestExample(Automaton a, boolean accepted, Production p1, Production p2, Parser parser) {
++	public static String getVerticalShortestExample(Automaton a, boolean accepted, Production p1, Production p2, Parser parser, boolean parse_every_string) {
 +		if (a.isSingleton()) {
 +			if (accepted)
 +				return a.singleton;
@@ -43,10 +43,10 @@
 +				return "\u0000";
 +
 +		}
-+		return getVerticalShortestExample(a.getInitialState(), accepted, p1, p2, parser);
++		return getVerticalShortestExample(a.getInitialState(), accepted, p1, p2, parser, parse_every_string);
 +	}
 +
-+	static String getVerticalShortestExample(State s, boolean accepted, Production p1, Production p2, Parser parser) {
++	static String getVerticalShortestExample(State s, boolean accepted, Production p1, Production p2, Parser parser, boolean parse_every_string) {
 +		Map<State,String> path = new HashMap<State,String>();
 +		LinkedList<State> queue = new LinkedList<State>();
 +		path.put(s, "");
@@ -56,11 +56,19 @@
 +			State q = queue.removeFirst();
 +			String p = path.get(q);
 +			if (q.accept == accepted) {
-+                boolean a_certain = parser.check(p, p1) && parser.check(p, p2);
-+                System.out.println("\n==> accepted+" + a_certain  + "," + p + ",length: " + p.length());
-+                if (a_certain) {
-+                    System.out.println("ambiguous string: " + p);
++                String msg = "accepted," + p + ",length: " + p.length();
++                if (parse_every_string) {
++                    boolean a_certain = parser.check(p, p1) && parser.check(p, p2);
++                    msg = msg + ", certain: " + a_certain;
++                    System.out.println("\n==> " + msg);
++                    if (a_certain) {
++                        System.out.println("ambiguous string: " + p);
++                        System.exit(0);
++                    }
++                } else {
++                    System.out.println("\n==> " +  msg);
 +                }
++
  				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
  					best = p;
  			} else 
@@ -77,7 +85,7 @@
 +		return best;
 +	}
 +	
-+	public static String getHorizontalShortestExample(Automaton a, boolean accepted, Production prod, int index, Parser parser) {
++	public static String getHorizontalShortestExample(Automaton a, boolean accepted, Production prod, int index, Parser parser, boolean parse_every_string) {
 +		if (a.isSingleton()) {
 +			if (accepted)
 +				return a.singleton;
@@ -87,10 +95,10 @@
 +				return "\u0000";
 +
 +		}
-+		return getHorizontalShortestExample(a.getInitialState(), accepted, prod, index, parser);
++		return getHorizontalShortestExample(a.getInitialState(), accepted, prod, index, parser, parse_every_string);
 +	}
 +
-+	static String getHorizontalShortestExample(State s, boolean accepted, Production prod, int index, Parser parser) {
++	static String getHorizontalShortestExample(State s, boolean accepted, Production prod, int index, Parser parser, boolean parse_every_string) {
 +		Map<State,String> path = new HashMap<State,String>();
 +		LinkedList<State> queue = new LinkedList<State>();
 +		path.put(s, "");
@@ -122,13 +130,20 @@
 +                    }
 +                    h = new HorizontalOverlapString(b.toString(), i1, i2);
 +                }
-+                boolean a_certain = parser.check(h.getX(), p1) 
-+                    && parser.check(h.getXA(), p1) 
-+                    && parser.check(h.getY(), p2) 
-+                    && parser.check(h.getAY(), p2);
-+                System.out.println("\n==> accepted+" + a_certain  + "," + h.getString() + ",length: " + h.getString().length());
-+                if (a_certain) {
-+                    System.out.println("ambiguous string: " + h.getString());
++                String msg = "accepted," + h.getString() + ",length: " + h.getString().length();
++                if (parse_every_string) {
++                    boolean a_certain = parser.check(h.getX(), p1) 
++                        && parser.check(h.getXA(), p1) 
++                        && parser.check(h.getY(), p2) 
++                        && parser.check(h.getAY(), p2);
++                    msg = msg + ", certain: " + a_certain;
++                    System.out.println("\n==> " + msg);
++                    if (a_certain) {
++                        System.out.println("ambiguous string: " + h.getString());
++                        System.exit(0);
++                    }
++                } else {
++                    System.out.println("\n==> " +  msg);
 +                }
 +				if (best == null || p.length() < best.length() || (p.length() == best.length() && p.compareTo(best) < 0))
 +					best = p;
