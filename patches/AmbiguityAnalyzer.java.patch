@@ -1,5 +1,5 @@
---- src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java	2014-08-02 01:12:00.395952356 +0100
-+++ src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java.modified	2014-08-02 01:11:09.239953293 +0100
+--- src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java	2014-08-05 23:25:52.590326409 +0100
++++ src/dk/brics/grammar/ambiguity/AmbiguityAnalyzer.java.modified	2014-08-05 23:25:46.734326516 +0100
 @@ -36,6 +36,11 @@
  	 */
  	private PrintWriter out;
@@ -31,9 +31,9 @@
  						for (ApproximationStrategy a : approx) {
 -							HorizontalOverlapString a_overlap = a.horizontalCheck(p, index);
 +                            if (this.parse_every_string) {
-+							    a_overlap = a.horizontalCheck(p, index, parser);
++							    a_overlap = a.horizontalCheck(p, index, parser, true);
 +                            } else {
-+							    a_overlap = a.horizontalCheck(p, index);
++							    a_overlap = a.horizontalCheck(p, index, parser, false);
 +                            }
  							if (a_overlap == ApproximationStrategy.HORIZONTAL_NOT_APPLICABLE)
  								continue;
@@ -45,9 +45,9 @@
 -							VerticalOverlapString a_overlap = a.verticalCheck(p1, p2);
 +                            VerticalOverlapString a_overlap;
 +                            if (this.parse_every_string) {
-+							    a_overlap = a.verticalCheck(p1, p2, parser);
++							    a_overlap = a.verticalCheck(p1, p2, parser, true);
 +                            } else {
-+							    a_overlap = a.verticalCheck(p1, p2);
++							    a_overlap = a.verticalCheck(p1, p2, parser, false);
 +                            }
  							if (a_overlap == ApproximationStrategy.VERTICAL_NOT_APPLICABLE)
  								continue;
