@@ -1,5 +1,5 @@
---- src/dk/brics/grammar/operations/AutomataOperations.java	2008-03-05 08:37:30.000000000 +0000
-+++ src/dk/brics/grammar/operations/AutomataOperations.java.modified	2014-07-31 23:39:35.652643469 +0100
+--- src/dk/brics/grammar/operations/AutomataOperations.java	2014-08-05 23:55:33.610293797 +0100
++++ src/dk/brics/grammar/operations/AutomataOperations.java.modified	2014-08-05 23:55:26.858293921 +0100
 @@ -7,6 +7,10 @@
  import dk.brics.grammar.ambiguity.HorizontalOverlapString;
  import dk.brics.grammar.ambiguity.RegularApproximation;
@@ -35,8 +35,8 @@
 +		return h;
 +	}
 +
-+	public static HorizontalOverlapString getHorizontalOverlapString(Automaton overlap, Production p, int index, Parser parser) {
-+		String s = overlap.getHorizontalShortestExample(true, p, index, parser);
++	public static HorizontalOverlapString getHorizontalOverlapString(Automaton overlap, Production p, int index, Parser parser, boolean parse_every_string) {
++		String s = overlap.getHorizontalShortestExample(true, p, index, parser, parse_every_string);
 +		HorizontalOverlapString h = null;
 +		StringBuilder b = new StringBuilder();
 +		if (s != null) {
