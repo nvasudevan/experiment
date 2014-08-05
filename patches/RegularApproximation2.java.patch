@@ -1,5 +1,5 @@
---- src/dk/brics/grammar/ambiguity/RegularApproximation2.java	2014-08-02 23:21:14.664477973 +0100
-+++ src/dk/brics/grammar/ambiguity/RegularApproximation2.java.modified	2014-08-02 23:21:06.840478116 +0100
+--- src/dk/brics/grammar/ambiguity/RegularApproximation2.java	2014-08-05 23:41:51.270308855 +0100
++++ src/dk/brics/grammar/ambiguity/RegularApproximation2.java.modified	2014-08-05 23:40:05.034310800 +0100
 @@ -13,6 +13,10 @@
  import dk.brics.grammar.RegexpTerminalEntity;
  import dk.brics.grammar.StringTerminalEntity;
@@ -15,9 +15,9 @@
  		return HORIZONTAL_NOT_APPLICABLE;
  	}
  
-+	public HorizontalOverlapString checkHorizontalOverlap(Production p, int index, Parser parser) {
++	public HorizontalOverlapString checkHorizontalOverlap(Production p, int index, Parser parser, boolean parse_every_string) {
 +		if (enabled)
-+			return super.checkHorizontalOverlap(p, index, parser);
++			return super.checkHorizontalOverlap(p, index, parser, parse_every_string);
 +		return HORIZONTAL_NOT_APPLICABLE;
 +	}
 +
@@ -28,9 +28,9 @@
  		return VERTICAL_NOT_APPLICABLE;
  	}
 +
-+	public VerticalOverlapString checkVerticalOverlap(Production p1, Production p2, Parser parser) {
++	public VerticalOverlapString checkVerticalOverlap(Production p1, Production p2, Parser parser, boolean parse_every_string) {
 +		if (enabled)
-+			return super.checkVerticalOverlap(p1, p2, parser);
++			return super.checkVerticalOverlap(p1, p2, parser, parse_every_string);
 +		return VERTICAL_NOT_APPLICABLE;
 +	}
  }
