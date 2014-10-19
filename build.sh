@@ -97,7 +97,8 @@ cd accent/accent
 [ ! -f accent ] && echo "ACCENT build has failed. Check in $wrkdir/accent" && exit 1
 # patch amber
 patch -b -p0 $wrkdir/accent/amber/amber.c < $cwd/patches/amber.patch || exit $?
-
+# patch entire
+patch -b -p0 $wrkdir/accent/entire/entire.c < $cwd/patches/entire.c.patch || exit $?
 
 # Download SinBAD
 # git@github.com:nvasudevan/sinbad.git
