@@ -164,7 +164,7 @@ git clone http://github.com/cwi-swat/ambidexter.git
 cd ambidexter
 mkdir -p build/META-INF
 echo "Main-Class: nl.cwi.sen1.AmbiDexter.Main" > build/META-INF/MANIFEST.MF
-patch -b -R -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $cwd/patches/AmbiDexter.patch || exit $?
+patch -b -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $cwd/patches/AmbiDexter.patch || exit $?
 cd src
 javac nl/cwi/sen1/AmbiDexter/*.java || exit $?
 find . -type f -name "*.class" | cpio -pdm ../build/
