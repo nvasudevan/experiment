@@ -1,0 +1,42 @@
+--- entire.c	2014-10-19 15:04:27.222220750 +0100
++++ entire.c.modified	2014-10-19 12:43:07.129250249 +0100
+@@ -712,17 +712,17 @@
+ 
+ 	 printf("\n");
+ 	 printf("PARSE 1\n");
+-	 printf("-------\n");
++	 printf("\n");
+ 	 printf("\n");
+ 	 print_tree(i);
+ 
+ 	 printf("\n");
+ 	 printf("PARSE 2\n");
+-	 printf("-------\n");
++	 printf("\n");
+ 	 printf("\n");
+ 	 print_tree(last_item+1);
+ 
+-	 printf("\n");
++	 printf("\n------\n");
+ 	 printf("For ``%s'' at ", yyprintname(yygrammar[d-1]));
+ 	 print_coordinate(d-1);
+ 	 printf(",\n");
+@@ -863,15 +863,15 @@
+ 
+       printf("\n");
+       printf("TREE 1\n");
+-      printf("------\n");
++      printf("\n");
+       printf("\n");
+       print_tree(sub[i]);
+       printf("\n");
+       printf("TREE 2\n");
+-      printf("------\n");
+       printf("\n");
+-      print_tree(s);
+       printf("\n");
++      print_tree(s);
++      printf("\n------\n");
+ 
+       if (test_for_cycle(s, sub[i])) {
+ 	 /* not possible */
