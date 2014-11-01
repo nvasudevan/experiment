@@ -39,7 +39,7 @@ echo "export wrkdir=$wrkdir" >> $cwd/env.sh
 ./build.sh $wrkdir || exit $?
 
 echo "Build complete"
-
+exit 0
 # Download AmbiDexter grammars
 
 echo -e "\\n===> Fetching AmbiDexter grammars\\n"
