@@ -1,16 +1,17 @@
-/*
- * CSS grammar in BNF
- * For original grammar, refer to http://www.w3.org/TR/CSS21/grammar.html
- */
+%{
+#include <stdio.h>
+%}
 
-%token CHARSET_SYM STRING S CDO CDC URI MEDIA_SYM IMPORT_SYM IDENT PAGE_SYM HASH INCLUDES DASHMATCH FUNCTION IMPORTANT_SYM NUMBER PERCENTAGE LENGTH EMS EXS ANGLE TIME FREQ SC_TK COLON_TK
+%token CHARSET_SYM STRING S CDO CDC URI MEDIA_SYM IMPORT_SYM IDENT PAGE_SYM HASH INCLUDES DASHMATCH FUNCTION IMPORTANT_SYM NUMBER PERCENTAGE LENGTH EMS EXS ANGLE TIME FREQ
+
+%locations
 
 %%
 
 stylesheet : stylesheet_opt_1 cdo_cdc_multi  stylesheet_imports_multi stylesheet_tail_multi
   ;
 
-stylesheet_opt_1 : CHARSET_SYM STRING SC_TK | 
+stylesheet_opt_1 : CHARSET_SYM STRING ';' |
   ;
 
 cdo_cdc : S | CDO | CDC
@@ -43,7 +44,7 @@ stylesheet_parts : ruleset | media | page
 stylesheet_tail_multi :  | stylesheet_tail stylesheet_tail_multi
   ;
   
-import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt SC_TK S_multi
+import : IMPORT_SYM S_multi string_or_uri S_multi media_list_opt ';' S_multi
   ;
   
 media_list_opt : | media_list
@@ -79,13 +80,13 @@ pseudo_page_opt : | pseudo_page
 declaration_opt : | declaration
   ;
 
-declaration_tail : SC_TK S_multi declaration_opt
+declaration_tail : ';' S_multi declaration_opt
   ;
   
 declaration_multi : | declaration_tail declaration_multi
   ;
   
-pseudo_page : COLON_TK IDENT S_multi
+pseudo_page : ':' IDENT S_multi
   ;
   
 operator : '/' S_multi | ',' S_multi
@@ -137,7 +138,7 @@ simple_selector_tail :  HASH | class | attrib | pseudo
 simple_selector_tail_multi : | simple_selector_tail simple_selector_tail_multi
   ;
 
-class  : SC_TK IDENT
+class  : '.' IDENT
   ;
   
 element_name : IDENT | '*'
@@ -155,7 +156,7 @@ attrib_tail_opt : | attrib_includes S_multi id_or_string S_multi
 id_or_string :  IDENT | STRING
   ;
    
-pseudo : COLON_TK pseudo_tail
+pseudo : ':' pseudo_tail
   ;
   
 pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
@@ -164,7 +165,7 @@ pseudo_tail : IDENT | FUNCTION S_multi pseudo_tail_2_opt ')'
 pseudo_tail_2_opt : | IDENT S_multi 
   ;
 
-declaration : property COLON_TK S_multi expr prio_opt
+declaration : property ':' S_multi expr prio_opt
   ;
   
 prio_opt : | prio
@@ -200,3 +201,17 @@ function  : FUNCTION S_multi expr ')' S_multi
 
 hexcolor : HASH S_multi
   ;
+
+%%
+
+extern char* yytext;
+extern int yylineno;
+extern int yycolumn;
+int yyerror(char *s) {
+    fprintf(stderr, "%s on line %d (column: %d), text: %s\n",s, yylineno, yycolumn, yytext);
+}
+
+int main(void) {
+    yyparse();
+}
+

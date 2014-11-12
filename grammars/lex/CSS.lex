@@ -14,10 +14,11 @@
 "]"              { return ']'; }
 ")"              { return ')'; }
 "="              { return '='; }
-":"              { return COLON_TK; }
+":"              { return ':'; }
+";"              { return ';'; }
+"."              { return '.'; }
 "@charset"       { return CHARSET_SYM; }
 "a_string"       { return STRING; }
-";"              { return SC_TK; }
 "<!--"		     { return CDO;}
 "-->"			 { return CDC;}
 "_s"			 { return S;}
