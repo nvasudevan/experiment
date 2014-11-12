@@ -12,6 +12,7 @@
 ">"              { return '>'; }
 "["              { return '['; }
 "]"              { return ']'; }
+")"              { return ')'; }
 "="              { return '='; }
 ":"              { return COLON_TK; }
 "@charset"       { return CHARSET_SYM; }
