@@ -2,45 +2,44 @@
 #include "yygrammar.h"
 %}
 %%
-","              { return ','; }
-"+"              { return '+'; }
-"-"              { return '-'; }
-"*"              { return '*'; }
-"/"              { return '/'; }
-"{"              { return '{'; }
-"}"              { return '}'; }
-">"              { return '>'; }
-"["              { return '['; }
-"]"              { return ']'; }
-")"              { return ')'; }
-"="              { return '='; }
-":"              { return ':'; }
-";"              { return ';'; }
-"."              { return '.'; }
-"@charset"       { return CHARSET_SYM; }
-"a_string"       { return STRING; }
-"<!--"		     { return CDO;}
-"-->"			 { return CDC;}
-"_s"			 { return S;}
-"@import"        { return IMPORT_SYM; }
-"@media"         { return MEDIA_SYM; }
-"url(a_string)"  { return URI; }
-"@page"          { return PAGE_SYM; }
-"abcd"           { return IDENT; }
-"#hashstring"    { return HASH; }
-"!important"     { return IMPORTANT_SYM; }
-"100.01em"		 { return EMS;}
-"100.01ex" 	     { return EXS;}
-"100.01px"		 { return LENGTH;}
-"100.01deg"		 { return ANGLE;}
-"100.01ms"		 { return TIME;}
-"100.01khz"		 { return FREQ;}
-"100.01%"	     { return PERCENTAGE;}
-"100.01"		 { return NUMBER;}
-"_function("	 { return FUNCTION;}
-"~="			 { return INCLUDES;}
-"|="		     { return DASHMATCH;}
-" "         { /* skip blank */ }
-\r               { yypos++; /* adjust linenumber and skip newline */ }
-\n               { yypos++; /* adjust linenumber and skip newline */ }
-.                { printf("\n++ illegal token : %s ++", yytext); yyerror("illegal xyz token"); }
+","                   { return ','; }
+"+"                   { return '+'; }
+"-"                   { return '-'; }
+"*"                   { return '*'; }
+"/"                   { return '/'; }
+"{"                   { return '{'; }
+"}"                   { return '}'; }
+">"                   { return '>'; }
+"["                   { return '['; }
+"]"                   { return ']'; }
+")"                   { return ')'; }
+"="                   { return '='; }
+":"                   { return ':'; }
+";"                   { return ';'; }
+"."                   { return '.'; }
+" "			          { return S;}
+"<!--"		          { return CDO;}
+"-->"			      { return CDC;}
+"~="			      { return INCLUDES;}
+"|="			      { return DASHMATCH;}
+"string_tk"		      { return STRING;}
+"id_tk"			      { return IDENT;}
+"hash_tk"		      { return HASH;}
+"import_tk"             { return IMPORT_SYM;}
+"page_tk"     		  { return PAGE_SYM;}
+"media_tk"        	  { return MEDIA_SYM;}
+"charset_tk"		      { return CHARSET_SYM;}
+"imp_tk"          { return IMPORTANT_SYM;}
+"ems_tk"		      { return EMS;}
+"exs_tk" 	          { return EXS;}
+"len_tk"		      { return LENGTH;}
+"angle_tk"		      { return ANGLE;}
+"time_tk"		      { return TIME;}
+"freq_tk"		      { return FREQ;}
+"prct_tk"	          { return PERCENTAGE;}
+"num_tk"		      { return NUMBER;}
+"uri_tk"     { return URI; }
+"func_tk"	              { return FUNCTION;}
+\r                    { yypos++; /* adjust linenumber and skip newline */ }
+\n                    { yypos++; /* adjust linenumber and skip newline */ }
+.                     { printf("\nillegal token: %s", yytext);yyerror("\n");}
