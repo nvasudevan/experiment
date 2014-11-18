@@ -28,6 +28,6 @@
 "x"    { return 'x'; }
 "y"    { return 'y'; }
 "z"    { return 'z'; }
-" "    { /* skip blank */ }
-\n     { yypos++; /* adjust linenumber and skip newline */ }
-.      { yyerror("illegal token"); }
+\r                    { yypos++; /* adjust linenumber and skip newline */ }
+\n                    { yypos++; /* adjust linenumber and skip newline */ }
+.                     { printf("\nillegal token: %s", yytext);yyerror("\n");}
