@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# This script 
+# 1) downloads the W3C's CSS test suite, 
+# 2) for each css file in 'html4' directory, extract css blocks
+# 3) run the parser against the css block
+# 4) css.log - contains the parse success (0)/ fail (1) output
+# 5) failed_parse - description of why certain valid css blocks failed to parse
 
 wrkdir=$1
 
@@ -28,10 +35,10 @@ setup_tests() {
   echo "=> Downloading ${w3c_url} ..."
   wget $w3c_url -O $wrkdir/${css_test_version}.zip
   unzip -q $wrkdir/${css_test_version}.zip -d $wrkdir
-  echo "=> css tests are located here: $wrkdir/${css_test_version}"
+  echo "=> css test suite downloaded to: $wrkdir/${css_test_version}"
 }
 
-# extract the css style blocks
+# extract css style blocks from each file
 extract_css_blocks() 
 {
    f="$1"
@@ -72,7 +79,7 @@ extract_css_blocks()
        printf "."
      fi
    done < $f
-  [ -f $tf ] && rm $tf
+  rm -f $tf
 }
 
 # find invalid css from the test suite
@@ -128,6 +135,8 @@ done > $tmpf
 
 out_csv="failed_parse.csv"
 cat $tmpf | sort -t, -k1 -V | grep -v invalid > $out_csv
-[ -f $tmpf ] && rm $tmpf
-echo "=> css files with failed parse: $out_csv"
+rm -f $tmpf
+
+echo "=> log of parse success/fail: " $logf
+echo "=> [valid] css files with failed parse: $out_csv"
 
