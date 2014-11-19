@@ -1,4 +1,4 @@
-%token CHARSET_SYM, STRING, S, CDO, CDC, URI, MEDIA_SYM, IMPORT_SYM, IDENT, PAGE_SYM, HASH, INCLUDES, DASHMATCH, FUNCTION, IMPORTANT_SYM, NUMBER, PERCENTAGE, LENGTH, EMS, EXS, ANGLE, TIME, FREQ;
+%token CHARSET_SYM, STRING, WS, CDO, CDC, URI, MEDIA_SYM, IMPORT_SYM, IDENT, PAGE_SYM, HASH, INCLUDES, DASHMATCH, FUNCTION, IMPORTANT_SYM, NUMBER, PERCENTAGE, LENGTH, EMS, EXS, ANGLE, TIME, FREQ;
 
 %nodefault
 
@@ -8,7 +8,7 @@ stylesheet : stylesheet_opt_1 cdo_cdc_multi  stylesheet_imports_multi stylesheet
 stylesheet_opt_1 : CHARSET_SYM STRING ';' |
   ;
 
-cdo_cdc : S | CDO | CDC
+cdo_cdc : WS | CDO | CDC
   ;
 
 stylesheet_imports : import cdo_cdc_s_multi
@@ -17,7 +17,7 @@ stylesheet_imports : import cdo_cdc_s_multi
 cdo_cdc_s : CDO S_multi | CDC S_multi
   ;
 
-S_multi : | S S_multi
+S_multi : | WS S_multi
   ;
 
 cdo_cdc_multi : | cdo_cdc cdo_cdc_multi
@@ -113,7 +113,7 @@ combinator_opt : | combinator
 selector_tail_opt :  | selector_tail
   ;
 
-selector_tail : combinator selector | S S_multi selector_tail_2_opt
+selector_tail : combinator selector | WS S_multi selector_tail_2_opt
   ;
 
 selector_tail_2_opt : | selector_tail_2
