@@ -17,7 +17,7 @@
 ":"                   { return ':'; }
 ";"                   { return ';'; }
 "."                   { return '.'; }
-" "                   { return S;}
+" "                   { return WS;}
 "<!--"                { return CDO;}
 "-->"                 { return CDC;}
 "~="                  { return INCLUDES;}
