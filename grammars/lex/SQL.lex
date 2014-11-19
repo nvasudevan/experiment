@@ -43,6 +43,7 @@
 "is_tk"          { return IS; }
 "or_tk"          { return OR; }
 "values_tk"      { return VALUES; }
+" "              { /* blank */ }
 \r         { yypos++; /* adjust linenumber and skip newline */ }
 \n         { yypos++; /* adjust linenumber and skip newline */ }
 .          { printf("\n++ illegal token : %s ++", yytext); yyerror(""); }
