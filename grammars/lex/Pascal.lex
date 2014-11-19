@@ -62,6 +62,7 @@
 "or_tk"             { return OR; }
 "goto_tk"           { return GOTO; }
 "mod_tk"            { return MOD; }
+" "                 { /* blank */ }
 \r          { yypos++; /* adjust linenumber and skip newline */ }
 \n          { yypos++; /* adjust linenumber and skip newline */ }
 .           { printf("\n++ illegal token : %s ++", yytext); yyerror("illegal xyz token"); }

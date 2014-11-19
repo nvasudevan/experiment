@@ -77,6 +77,7 @@
 "case_tk"                 { return CASE_TK; }
 "while_tk"                { return WHILE_TK; }
 "switch_tk"               { return SWITCH_TK; }
+" "                       { /* blank */ }
 \r          { yypos++; /* adjust linenumber and skip newline */ }
 \n          { yypos++; /* adjust linenumber and skip newline */ }
 .           { printf("\n++ illegal token : %s ++", yytext); yyerror(""); }
