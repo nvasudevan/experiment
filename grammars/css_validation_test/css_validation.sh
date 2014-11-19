@@ -27,7 +27,6 @@ basedir=$(dirname $abspath)
 setup_tests() {
   echo "=> Downloading ${w3c_url} ..."
   wget $w3c_url -O $wrkdir/${css_test_version}.zip
-  #cp /var/tmp/${css_test_version}.zip $wrkdir
   unzip -q $wrkdir/${css_test_version}.zip -d $wrkdir
   echo "=> css tests are located here: $wrkdir/${css_test_version}"
 }
@@ -48,10 +47,11 @@ extract_css_blocks()
      bstyle=$(echo "$line" | egrep '<style>|<style.*type="text/css">')
      if [ ! -z "$bstyle" ];then 
        bstyle_line_no=$i
+       estyle_line_no=""
        #echo "bstyle found: $bstyle_line_no"
      fi
-     estyle=$(echo "$line" | grep '</style>')
-     if [ ! -z "$estyle" ];then
+     estyle=$(echo "$line" | grep -o '</style>')
+     if [ ! -z "$estyle" ] && [ ! -z "$bstyle_line_no" ];then
        estyle_line_no=$i
        cssf=${cssf_prefix}_$estyle_line_no
        #echo "estyle found: $estyle_line_no"
@@ -66,6 +66,7 @@ extract_css_blocks()
          echo "ERROR: possibly $estyle_line_no < $bstyle_line_no"
          exit 1
        fi
+       bstyle_line_no=""
        cat $cssf | sed -e 's/Ahem/monospace/g' | $parser 2>/dev/null
        echo "$cssf => $?" >> $logf
        printf "."
@@ -113,7 +114,7 @@ invalid_css_file="invalid.css"
 invalid_css $invalid_css_file
 
 parse_fail="${logf}.parse_fail"
-grep  '=> 1' $logf | awk -F/ '{print $NF}' | awk '{print $1}'
+grep  '=> 1' $logf | awk -F/ '{print $NF}' | awk '{print $1}' > $parse_fail
 
 tmpf=$(mktemp)
 echo "tmpf: $tmpf"
@@ -125,8 +126,8 @@ for j in $(cat $parse_fail); do
     echo "$chapter,$f,$inv"; 
 done > $tmpf
 
-out_csv="css_parse_fail_invalid.csv"
-cat $tmpf | sort -t, -k1 -V > $out_csv
+out_csv="failed_parse.csv"
+cat $tmpf | sort -t, -k1 -V | grep -v invalid > $out_csv
 [ -f $tmpf ] && rm $tmpf
 echo "=> css files with failed parse: $out_csv"
 
