@@ -22,7 +22,7 @@ nlang="5"
 export glang lgrammars nlang 
 
 gmutlang="$grammardir/mutlang"
-mugrammars="Pascal SQL Java C CSS Python Csharp"
+mugrammars="Pascal SQL Java C CSS"
 mutypes="empty add mutate delete switchadj switchany"
 nmutations="10"
 export gmutlang mugrammars mutypes nmutations 
