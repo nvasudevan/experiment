@@ -24,302 +24,72 @@ import sys
 from sets import Set
 import Lexer, CFG
 
+
+
 def genSymbols(cfggen, minsize, maxsize):
     # we need one less nonterminal as we have start symbol - root
     n_syms = (cfggen.no_nonterms-1) + cfggen.no_terms
     symbols =  Set()
     while (len(symbols) < (n_syms)):
-        sym = ''.join(random.choice(string.uppercase) for x in range(random.randint(minsize,maxsize)))
+	size = random.randint(minsize,maxsize)
+        sym = ''.join(random.choice(string.uppercase) for x in range(size))
         symbols.add(sym)
             
     symlist = list(symbols)  
-    nonterms,terms = symlist[0:cfggen.no_nonterms-1],symlist[cfggen.no_nonterms-1:]
+    nonterms = symlist[0:cfggen.no_nonterms-1]
+    terms = symlist[cfggen.no_nonterms-1:]
         
     return nonterms,terms
 
+
 def splitLex(terms):
     lexterms, lexterms_multi = [],{}
-    for _term in terms:
-        if len(_term) == 1:
-            lexterms.append(_term)
+    for t in terms:
+        if len(t) == 1:
+            lexterms.append(t)
         else:
-            lexterms_multi['TK_' + _term] = _term
+            lexterms_multi['TK_' + t] = t
             
     return lexterms, lexterms_multi
-    
-def genLex(cfggen):
-    lex_file = cfggen.grammardir + "/lex"
-    f_lex = open(lex_file,"w")
-    f_lex.write("%{" + "\n")
-    f_lex.write('#include "yygrammar.h"' + "\n")
-    f_lex.write("%}" + "\n")
-    f_lex.write("%%" + "\n")
 
-    for _key in cfggen.lexterms:
-        __key = "'" + _key + "'"
-        f_lex.write('"' + _key + '"     { return ' + __key + "; }\n")
+
+def genLex(cfggen):
+    lp = cfggen.grammardir + "/lex"
+    lf = open(lp,"w")
+    lf.write("%{" + "\n")
+    lf.write('#include "yygrammar.h"' + "\n")
+    lf.write("%}" + "\n")
+    lf.write("%%" + "\n")
+
+    for t in cfggen.lexterms:
+        quoted_t = "'" + t + "'"
+        lf.write('"' + t + '"     { return ' + quoted_t + "; }\n")
         
-    for _key in cfggen.lexterms_multi.keys():
-        f_lex.write('"' + cfggen.lexterms_multi[_key] + '"     { return ' + _key + "; }\n")
+    for t in cfggen.lexterms_multi.keys():
+        lf.write('"' + cfggen.lexterms_multi[t] + '"     { return ' + t + "; }\n")
 
     ## these entries should come last in a lex file
-    f_lex.write('" "    { /* skip blank */ }\n')
-    f_lex.write('\\n     { yypos++; /* adjust linenumber and skip newline */ }' + "\n")
-    f_lex.write('\\r     { yypos++; /* adjust linenumber and skip newline */ }' + "\n")
-    f_lex.write('.      { yyerror("illegal token"); }' + "\n")
-    f_lex.close()
+    lf.write('" "     { /* skip blank */ }\n')
+    lf.write('\\n     { yypos++; /* adjust linenumber and skip newline */ }' + "\n")
+    lf.write('\\r     { yypos++; /* adjust linenumber and skip newline */ }' + "\n")
+    lf.write('.       { yyerror("illegal token"); }' + "\n")
+
+    lf.close()
     
-    return lex_file
-    
-    
-def write(cfg, tokenlist, gf):
-    f_cfg = open(gf,"w")
-    root_rule = cfg.pop('root')
-    f_cfg.write("%token " + ", ".join(tokenlist) + ";\n\n")
-    f_cfg.write("%nodefault\n\n")
-    f_cfg.write("root: " + root_rule + ";\n\n")
-    _keys = cfg.keys()
-    for key in _keys:
-        f_cfg.write(key + ": " + cfg.pop(key) + ";\n\n")
-    f_cfg.close()        
-
-
-def verticalamb(cfg):
-    """ Check for vertical ambiguity """
-    for rule in cfg.rules:
-        seqs_set = Set()
-        for seq in rule.seqs:
-            seqs_set.add(" ".join(str(x) for x in seq))
-                
-        if len(rule.seqs) != len(list(seqs_set)):
-            return True     
-    
-    return False
-
-
-def prune_rules(cfg):
-    _cfg = {}
-    to_remove = []
-    for key in cfg.keys():
-        seqs = []
-        for seq in cfg[key]:
-            if (str(seq[0]) in cfg.keys()):
-                if (str(seq[0]) not in to_remove):
-                    seqs.append(seq)
-            
-        if len(seqs) > 0:
-            _cfg[key] = seqs
-        else:
-            to_remove.append(key)
-            
-    return _cfg
-
-def printcfg(cfg):
-    for key in cfg.keys():
-        print "-> %s: %s" % (key,cfg[key])
-
-def cyclicamb(cfg):
-    """ Check for cyclic ambiguity"""
-    # we can remove the root rule for this.
-    # A: A
-    _cfg = {}
-    for rule in cfg.rules:
-        if rule.name != 'root':
-            single_sym_alts = []
-            for seq in rule.seqs:
-                if len(seq) == 1:
-                    if isinstance(seq[0],CFG.Non_Term_Ref):
-                        single_sym_alts.append(seq)
-
-            if len(single_sym_alts) > 0:
-                _cfg[rule.name] = single_sym_alts
-
-    _found = True
-    while _found:
-        pruned_cfg = prune_rules(_cfg)
-        if pruned_cfg != _cfg:
-            _cfg = pruned_cfg
-            _found = True
-        else:
-            _found = False
-                    
-    if len(_cfg) > 0:
-        return True
-
-    return False
-    
-
-def ambiguous(cfg):
-    """ Checks if the rule is ambiguous:
-        a) X : A | A | Z
-        b) A: A """
-    
-    # (a)
-    if verticalamb(cfg):
-        return True
-    
-    # (b)
-    if cyclicamb(cfg):
-        return True
-    
-    return False
-
-def removeTerms(cfg):
-    _rules, _indices, _r_remove = {}, {}, []
-    for rule in cfg.rules:
-        rule_seqs = []
-        for ind,seq in enumerate(rule.seqs):
-            _seq = []
-            for e in seq:
-                if isinstance(e, CFG.Non_Term_Ref):
-                    _seq.append(e.name)
-
-            if len(_seq) == 0:
-                if not _indices.__contains__(rule.name):
-                    _indices[rule.name] = ind
-                    _r_remove.append(rule.name)
-            rule_seqs.append(_seq)
-        if not _indices.__contains__(rule.name):
-            _rules[rule.name] = rule_seqs
-            
-    return _rules, _indices, _r_remove
+    return lf
     
     
+def write(cfg, tokenlist, gp):
+    gf = open(gf,"w")
+    gf.write("%token " + ", ".join(tokenlist) + ";\n\n")
+    gf.write("%nodefault\n\n")
 
-def removeMatchedRuleRefs(rules, indices):
-    _r_remove = []
-    for key in rules.keys():
-        rule_seqs = []
-        for ind,seq in enumerate(rules[key]):
-            _seq = []
-            for e in seq:
-                if e not in indices.keys():
-                    _seq.append(e)
-            if len(_seq)== 0:
-                indices[key] = ind
-                _r_remove.append(key)
-                break
-            rule_seqs.append(_seq)
-                
-        rules[key] = rule_seqs
-        
-    return _r_remove
+    rule = cfg.pop('root')
+    gf.write("root: " + rule + ";\n\n")
 
-       
-def cyclicInfo(cfg,lex):
-    rules, indices, r_remove = removeTerms(cfg)
-    
-    if len(r_remove) > 0:
-        while True:
-            r_remove = removeMatchedRuleRefs(rules,indices)
-            if len(r_remove) == 0:
-                break
-                
-            for _key in r_remove:
-                del rules[_key]
-        
-    cyclic_rules = []
-    for key in rules.keys():
-        if key not in indices.keys():
-            cyclic_rules.append("%s : %s" % (key, rules[key]))
+    for k in cfg.keys():
+        gf.write(k + ": " + cfg[k] + ";\n\n")
 
-    return cyclic_rules
+    gf.close()        
 
-    
-def unproductive(cfg, lex):
-    """ Checks if the grammar contains rules that don't consume any input'.
-        Rules of this type don't consume any input:
-        A: B; B: C; C: A """
-    unproductive_rules = cyclicInfo(cfg,lex)
-    if len(unproductive_rules) > 0:
-        return True
 
-def unreachable(cfg):
-    """ Checks if all non-terminals are reachable from start symbol"""
-    reachable = True
-    root_rule = cfg.rules[0]
-    nonterms = [(rule.name) for rule in cfg.rules if rule.name != root_rule.name]
-    reach_nonterms = []
-    for seq in root_rule.seqs:
-        for e in seq:
-            if isinstance(e, CFG.Non_Term_Ref):
-                if e.name not in reach_nonterms:
-                    reach_nonterms.append(e.name)
-
-    for name in reach_nonterms:
-        rule = cfg.get_rule(name)
-        for seq in rule.seqs:
-            for e in seq:
-                if isinstance(e, CFG.Non_Term_Ref):
-                    if e.name not in reach_nonterms:
-                         reach_nonterms.append(e.name)
-
-    unreach_nonterms = list(set(nonterms)-set(reach_nonterms))
-
-    return unreach_nonterms  
-
-        
-def valid(gf, lf, maxalts_allowed, emptyalts_ratio):
-    """ Checks if the generated grammar is valid. That is:
-        a) number of alternatives for a rule < maxalts_allowed
-        b) contains no empty rules (so A: ;)
-        c) %age of empty alternatives < Y 
-        d) contains no unreachable rules 
-        e) doesn't contain a subset which taken no input """
-       
-    lex = Lexer.parse(open(lf, "r").read())
-    cfg = CFG.parse(lex, open(gf, "r").read())
-
-    totalrules = len(cfg.rules)
-    totalalts = 0
-    emptyalts = 0
-    for rule in cfg.rules:
-        n_alts = len(rule.seqs)
-        totalalts += n_alts
-
-        if n_alts > maxalts_allowed:
-            sys.stdout.write("n>")
-            sys.stdout.flush()
-            return False            
-        
-        if n_alts == 1 and len(rule.seqs[0]) == 0:
-            sys.stdout.write("e")
-            sys.stdout.flush()
-            return False
-            
-        for seq in rule.seqs:
-            if len(seq) == 0:
-                emptyalts += 1          
-
-    if (emptyalts * 1.0)/totalalts > emptyalts_ratio:
-        sys.stdout.write(">%s" % str(emptyalts_ratio))
-        sys.stdout.flush()
-        return False
-
-    # Check if all the rules are reachable from the start rule.
-    if (len(unreachable(cfg)) > 0):
-        print "unreachable: " , unreachable(cfg)
-        sys.stdout.write("r")
-        sys.stdout.flush()
-        return False       
-
-    # Check if the grammar is unproductive        
-    if unproductive(cfg,lex):
-        sys.stdout.write("u")
-        sys.stdout.flush()    
-        return False
-                        
-    # Check the grammar for trivial ambiguities
-    if ambiguous(cfg):
-        sys.stdout.write("a")
-        sys.stdout.flush()
-        return False
-
-    return True        
-    
-if __name__ == "__main__":
-    import sys
-    gf = sys.argv[1]
-    lf = sys.argv[2]
-    print gf, lf     
-    print valid(gf,lf,5,0.05)
