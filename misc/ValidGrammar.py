@@ -251,8 +251,8 @@ def valid(gf, lf, max_alts_allowed=None, empty_alts_ratio=None):
 	return False
 
     # check if any of the rule has > N alts
-    if maxalts_allowed is not None:
-	if has_too_many_alts(cfg, maxalts_allowed):
+    if max_alts_allowed is not None:
+	if has_too_many_alts(cfg, max_alts_allowed):
 	    return False
 
     # check if we have too many empty alts
