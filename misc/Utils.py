@@ -80,7 +80,7 @@ def genLex(cfggen):
     
     
 def write(cfg, tokenlist, gp):
-    gf = open(gf,"w")
+    gf = open(gp,"w")
     gf.write("%token " + ", ".join(tokenlist) + ";\n\n")
     gf.write("%nodefault\n\n")
 
