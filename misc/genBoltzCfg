@@ -3,7 +3,7 @@
 import random, string, StringIO, random, getopt
 import os, subprocess, sys, tempfile
 from sets import Set
-import ParseCfg, Utils
+import ParseCfg, Utils, ValidGrammar
 
 
 TK_MINSIZE = 1
@@ -132,7 +132,7 @@ class BoltzGrammarGenerator:
             sys.stdout.write(".");sys.stdout.flush()
             cfg = self.genCfg()
             Utils.write(cfg, self.lexterms_multi, tf)
-            if Utils.valid(tf, lf, MAXALTS_ALLOWED, EMPTYALTS_ALLOWED_RATIO):
+            if ValidGrammar.valid(tf, lf, MAXALTS_ALLOWED, EMPTYALTS_ALLOWED_RATIO):
                 gf = os.path.join(gdir, str(i) + ".acc")
                 r = subprocess.call(["cp",tf,gf])
                 if r != 0:
