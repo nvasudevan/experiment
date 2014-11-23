@@ -22,9 +22,10 @@
 # IN THE SOFTWARE.
 
 
-import getopt, sys, os, random, math, tempfile, subprocess
+import getopt, random, math 
+import os, sys, tempfile, subprocess
 import CFG, Lexer
-import Utils
+import Utils, ValidGrammar
 
 class MutateGrammar:
 
@@ -66,7 +67,7 @@ class MutateGrammar:
             tf.write("%s\n" % str(cfg))
             tf.close()
             
-            if Utils.valid(tp, lp, 10, 0.25):
+            if ValidGrammar.valid(tp, lp, 10, 0.25):
                 _gp = '%s/%s_%s.acc' % (mu_dir, os.path.splitext(gf)[0], i)
                 r = subprocess.call(["cp", tp, _gp])
                 if r != 0:
