@@ -28,7 +28,7 @@ import Lexer, CFG
 def prune_rules(cfg):
     """ Builds cfg by leaving out non-terminal symbols which have no 
         corresponding rules. While pruning, if a rule has no alts, then
-	the subsequent reference to that rule can be excluded """
+        the subsequent reference to that rule can be excluded """
     _cfg = {}
     to_remove = []
     for key in cfg.keys():
@@ -261,19 +261,6 @@ def valid(gf, lf, max_alts_allowed=None, empty_alts_ratio=None):
     lex = Lexer.parse(open(lf, "r").read())
     cfg = CFG.parse(lex, open(gf, "r").read())
 
-    # Check if all the rules are reachable from the start rule.
-    if (len(unreachable(cfg)) > 0):
-        print "unreachable: " , unreachable(cfg)
-        sys.stdout.write("r")
-        sys.stdout.flush()
-        return False       
-
-    # Check the grammar for trivial ambiguities
-    if ambiguous(cfg):
-        sys.stdout.write("a")
-        sys.stdout.flush()
-        return False
-
     # check for empty rules
     if empty_rule(cfg):
 	return False
@@ -288,12 +275,25 @@ def valid(gf, lf, max_alts_allowed=None, empty_alts_ratio=None):
 	if has_too_many_empty_alts(cfg, empty_alts_ratio):
 	    return False
 
+    # Check if all the rules are reachable from the start rule.
+    if (len(unreachable(cfg)) > 0):
+        print "unreachable: " , unreachable(cfg)
+        sys.stdout.write("r")
+        sys.stdout.flush()
+        return False       
+
     # Check if the grammar is unproductive        
     if unproductive(cfg,lex):
         sys.stdout.write("u")
         sys.stdout.flush()    
         return False
                         
+    # Check the grammar for trivial ambiguities
+    if ambiguous(cfg):
+        sys.stdout.write("a")
+        sys.stdout.flush()
+        return False
+
     return True        
     
 
