@@ -22,7 +22,7 @@
 # IN THE SOFTWARE.
 
 
-import getopt, random, math 
+import getopt, random, math, hashlib 
 import os, sys, tempfile, subprocess
 import CFG, Lexer
 import Utils, ValidGrammar
@@ -56,7 +56,9 @@ class MutateGrammar:
         if not os.path.exists(mu_dir):
             os.makedirs(mu_dir)
         
-        i = 1
+	base_md5 = hashlib.md5(open(gp,'r').read()).hexdigest()
+	print "base_md5: " , base_md5
+	i = 1
         while i <= cnt:
             cfg = self.modify_grammar()
             print "cfg: " , cfg
@@ -68,12 +70,33 @@ class MutateGrammar:
             tf.close()
             
             if ValidGrammar.valid(tp, lp, 10, 0.25):
-                _gp = '%s/%s_%s.acc' % (mu_dir, os.path.splitext(gf)[0], i)
-                r = subprocess.call(["cp", tp, _gp])
-                if r != 0:
-                    Utils.error("Copy failed.\n", r)
-                    
-                i += 1
+                _md5 = hashlib.md5(open(tp,'r').read()).hexdigest()
+                _match = False
+                # now run a md5sum on all the files for this mutation
+                for p,q,r in os.walk(gdir):
+                    for f in r:
+                        __gp = os.path.join(p,f)
+                        __gp_md5 = hashlib.md5(open(__gp,'r').read()).hexdigest()
+                        # if md5 matches with the base grammar
+			# or with one of the mutated grammars, then throw away this file
+			if (_md5 == base_md5) or (_md5 == __gp_md5):
+                             print "md5:%s:curr,base,other=%s,%s,%s" % \
+			     (str(_md5),tp,gp,__gp)
+			     _match = True
+			     break
+
+                    if _match:
+                        break
+
+
+                if not _match:
+                    _gp = '%s/%s_%s.acc' % (mu_dir, os.path.splitext(gf)[0], i)
+                    print "_gp: " , _gp
+                    r = subprocess.call(["cp", tp, _gp])
+                    if r != 0:
+                        Utils.error("Copy failed.\n", r)
+
+                    i += 1
             
 
     def randomTok(self):
