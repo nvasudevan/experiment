@@ -86,12 +86,14 @@ class MutateGrammar:
 
                 if not _match:
                     _gp = '%s/%s_%s.acc' % (mu_dir, os.path.splitext(gf)[0], i)
-                    print "_gp: " , _gp
                     r = subprocess.call(["cp", tp, _gp])
                     if r != 0:
                         Utils.error("Copy failed.\n", r)
 
                     i += 1
+
+		if os.path.exists(tp):
+                    os.remove(tp)
             
 
     def randomTok(self):
