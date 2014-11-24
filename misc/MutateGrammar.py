@@ -49,21 +49,16 @@ class MutateGrammar:
                 break
         
 
-        print "tokens: " , self.tokens
-        print "sym tokens: " , self.symbolic_tokens
         gf = os.path.basename(gp)
         mu_dir = gdir + "/" + self.mutype
         if not os.path.exists(mu_dir):
             os.makedirs(mu_dir)
         
 	base_md5 = hashlib.md5(open(gp,'r').read()).hexdigest()
-	print "base_md5: " , base_md5
 	i = 1
         while i <= cnt:
             cfg = self.modify_grammar()
-            print "cfg: " , cfg
             tp = tempfile.mktemp()
-            print "tp: " , tp
             tf = open(tp,"w")
             tf.write(header)
             tf.write("%s\n" % str(cfg))
