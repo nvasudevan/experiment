@@ -19,13 +19,16 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 # IN THE SOFTWARE.
 
-import random, string
+import random, string, copy
 import sys
 from sets import Set
 import Lexer, CFG
 
 
 def prune_rules(cfg):
+    """ Builds cfg by leaving out non-terminal symbols which have no 
+        corresponding rules. While pruning, if a rule has no alts, then
+	the subsequent reference to that rule can be excluded """
     _cfg = {}
     to_remove = []
     for key in cfg.keys():
@@ -43,10 +46,23 @@ def prune_rules(cfg):
     return _cfg
 
 
-def cyclicamb(cfg):
-    """ Check for cyclic ambiguity"""
-    # we can remove the root rule for this.
-    # A: A
+def vertical_ambiguity(cfg):
+    """ We build a string equivalent of each alternative and if the string
+        equivalent is identical, then the rule is vertically ambiguous"""
+    for rule in cfg.rules:
+        seqs = Set()
+        for seq in rule.seqs:
+            seqs.add(" ".join(str(x) for x in seq))
+                
+        if len(rule.seqs) != len(list(seqs)):
+            return True     
+    
+    return False
+
+
+def cyclic_ambiguity(cfg):
+    """ Check for cyclic ambiguity (A: A or A: B; B: A) """
+    # First, exclude root rule, only include single sym alts with non-terms
     _cfg = {}
     for rule in cfg.rules:
         if rule.name != 'root':
@@ -59,11 +75,14 @@ def cyclicamb(cfg):
             if len(single_sym_alts) > 0:
                 _cfg[rule.name] = single_sym_alts
 
+
+    # keep pruning rules until there is no change.
+    # if the final cfg is not empty, we have a cycle (direct/indirect)
     found = True
     while found:
-        cfgp = prune_rules(_cfg)
-        if cfgp != _cfg:
-            _cfg = cfgp
+        cfg_pruned = prune_rules(_cfg)
+        if cfg_pruned != _cfg:
+            _cfg = cfg_pruned
             found = True
         else:
             found = False
@@ -80,35 +99,37 @@ def ambiguous(cfg):
         b) A: A """
     
     # (a)
-    if verticalamb(cfg):
+    if vertical_ambiguity(cfg):
         return True
     
     # (b)
-    if cyclicamb(cfg):
+    if cyclic_ambiguity(cfg):
         return True
     
     return False
 
 
-def removeTerms(cfg):
-    _rules, _indices, _r_remove = {}, {}, []
+def remove_terminals(cfg):
+    rules, indices, rules_to_remove = {}, {}, []
     for rule in cfg.rules:
         rule_seqs = []
-        for ind,seq in enumerate(rule.seqs):
+        for i,seq in enumerate(rule.seqs):
             _seq = []
             for e in seq:
                 if isinstance(e, CFG.Non_Term_Ref):
                     _seq.append(e.name)
 
             if len(_seq) == 0:
-                if not _indices.__contains__(rule.name):
-                    _indices[rule.name] = ind
-                    _r_remove.append(rule.name)
+                if rule.name not in indices.keys():
+                    indices[rule.name] = i
+                    rules_to_remove.append(rule.name)
+
             rule_seqs.append(_seq)
-        if not _indices.__contains__(rule.name):
-            _rules[rule.name] = rule_seqs
+
+        if rule.name not in indices.keys():
+            rules[rule.name] = rule_seqs
             
-    return _rules, _indices, _r_remove
+    return rules, indices, rules_to_remove
     
     
 
@@ -133,7 +154,7 @@ def remove_matched_rule_refs(rules, indices):
 
        
 def cyclicInfo(cfg, lex):
-    rules, indices, removed = removeTerms(cfg)
+    rules, indices, removed = remove_terminals(cfg)
     
     if len(removed) > 0:
         while True:
@@ -152,19 +173,6 @@ def cyclicInfo(cfg, lex):
     return cyclic_rules
 
 
-def verticalamb(cfg):
-    """ Check for vertical ambiguity """
-    for rule in cfg.rules:
-        seqs_set = Set()
-        for seq in rule.seqs:
-            seqs_set.add(" ".join(str(x) for x in seq))
-                
-        if len(rule.seqs) != len(list(seqs_set)):
-            return True     
-    
-    return False
-
-
 def unproductive(cfg, lex):
     """ Checks if the grammar contains rules that don't consume any input'.
         Rules of this type don't consume any input:
@@ -175,28 +183,35 @@ def unproductive(cfg, lex):
 
 
 def unreachable(cfg):
-    """ Checks if all non-terminals are reachable from start symbol"""
-    reachable = True
+    """ Checks if every non-terminal is reachable from start symbol
+        we build this reachable non-terms in two phases: 
+        1) build the initial list from root rule; 
+        2) now iterate through the list, and add reachable non-terms"""
     root_rule = cfg.rules[0]
     nonterms = [(rule.name) for rule in cfg.rules if rule.name != root_rule.name]
-    reach_nonterms = []
+
+    reach_nonterms = Set()
     for seq in root_rule.seqs:
         for e in seq:
             if isinstance(e, CFG.Non_Term_Ref):
-                if e.name not in reach_nonterms:
-                    reach_nonterms.append(e.name)
+                reach_nonterms.add(e.name)
 
-    for name in reach_nonterms:
+    # we use the initial set to start of searching for reachability
+    exploring = copy.copy(reach_nonterms)
+    # keep track of symbols for which we have explored reachability
+    explored = Set()
+    while len(exploring) > 0:
+	name = exploring.pop()
+	explored.add(name)
         rule = cfg.get_rule(name)
         for seq in rule.seqs:
             for e in seq:
                 if isinstance(e, CFG.Non_Term_Ref):
-                    if e.name not in reach_nonterms:
-                         reach_nonterms.append(e.name)
+                    reach_nonterms.add(e.name)
+                    if e.name not in explored:
+                        exploring.add(e.name)
 
-    unreach_nonterms = list(set(nonterms)-set(reach_nonterms))
-
-    return unreach_nonterms  
+    return set(nonterms) - set(reach_nonterms)
 
         
 def has_too_many_alts(cfg, maxalts):
@@ -246,6 +261,19 @@ def valid(gf, lf, max_alts_allowed=None, empty_alts_ratio=None):
     lex = Lexer.parse(open(lf, "r").read())
     cfg = CFG.parse(lex, open(gf, "r").read())
 
+    # Check if all the rules are reachable from the start rule.
+    if (len(unreachable(cfg)) > 0):
+        print "unreachable: " , unreachable(cfg)
+        sys.stdout.write("r")
+        sys.stdout.flush()
+        return False       
+
+    # Check the grammar for trivial ambiguities
+    if ambiguous(cfg):
+        sys.stdout.write("a")
+        sys.stdout.flush()
+        return False
+
     # check for empty rules
     if empty_rule(cfg):
 	return False
@@ -260,25 +288,12 @@ def valid(gf, lf, max_alts_allowed=None, empty_alts_ratio=None):
 	if has_too_many_empty_alts(cfg, empty_alts_ratio):
 	    return False
 
-    # Check if all the rules are reachable from the start rule.
-    if (len(unreachable(cfg)) > 0):
-        print "unreachable: " , unreachable(cfg)
-        sys.stdout.write("r")
-        sys.stdout.flush()
-        return False       
-
     # Check if the grammar is unproductive        
     if unproductive(cfg,lex):
         sys.stdout.write("u")
         sys.stdout.flush()    
         return False
                         
-    # Check the grammar for trivial ambiguities
-    if ambiguous(cfg):
-        sys.stdout.write("a")
-        sys.stdout.flush()
-        return False
-
     return True        
     
 
