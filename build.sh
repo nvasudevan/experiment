@@ -162,8 +162,8 @@ echo -e "\\n===> Fetching AmbiDexter tool\\n"
 cd $wrkdir
 git clone http://github.com/cwi-swat/ambidexter.git
 # latest commits are related to jdk 8 and that leads to compilation issues
-git reset --hard 241fbf5d3e928ec032607f850a8d00223f54ec31
 cd ambidexter
+git reset --hard 241fbf5d3e928ec032607f850a8d00223f54ec31
 mkdir -p build/META-INF
 echo "Main-Class: nl.cwi.sen1.AmbiDexter.Main" > build/META-INF/MANIFEST.MF
 patch -b -p0 src/nl/cwi/sen1/AmbiDexter/derivgen/ParallelDerivationGenerator.java < $cwd/patches/AmbiDexter.patch || exit $?
