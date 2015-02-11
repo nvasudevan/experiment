@@ -93,25 +93,3 @@ def write(cfg, tokenlist, gp):
     gf.close()        
 
 
-def sorted_cfg(cfg):
-    """ Sort the string equivalent of alternatives for a rule """
-    _cfg = {}
-    for rule in cfg.rules:
-        pp_seqs = []
-        for seq in rule.seqs:
-            pp_seqs.append(" ".join([str(x) for x in seq]))
-            
-        pp_seqs.sort()
-        _cfg[rule.name] = pp_seqs 
-
-    return _cfg
-
-
-def is_cfg_equiv(g1, g2):
-    _g1 = sorted_cfg(g1)
-    _g2 = sorted_cfg(g2)
-    if _g1 != _g2:
-        return False 
-
-    return True
-

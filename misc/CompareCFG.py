@@ -2,7 +2,7 @@
 
 import CFG, Lexer
 import sys
-import CombiList, Utils
+import CombiList, EquivChecks
 
 
 class CompareCFG:
@@ -61,36 +61,23 @@ class CompareCFG:
                     symst.append(e)
     
         return CombiList.combine_lists(symsb,symst)
-     
 
-    def start_rule_check(self):
-        # initial check, if the no of alts for root is different, then 
-        # the cfg's can't be equivalent
-        r1 = self.bcfg.get_rule('root').seqs
-        r2 = self.tcfg.get_rule('root').seqs
-     
-        if len(r1) != len(r2):
-            print "root has different seqs's: \n%s -- %s" % (r1,r2)
+
+    def alpha_cmp(self):
+        if not EquivChecks.start_rule_check(self.bcfg, self.tcfg): 
             return False
 
-        # also compare the number of alts of different sizes
-
-        return True
-        
-    
-    def alpha_cmp(self):
-        if self.start_rule_check(): 
-            c = self.initial_list()
-            for l in c.combs:
-                b,t = l
-                _cfg = self.bcfg
-                print "%s -> %s" % (b,t)
-                for i,_ in enumerate(b):
-                    print "%s -> %s" % (b[i],t[i])
-                    _cfg = self.replace_sym_in_cfg(_cfg, b[i], t[i])
-                    if Utils.is_cfg_equiv(_cfg,self.tcfg):
-                        print "Cfg's %s and %s are equivalent" % (self.bg, self.tg)
-                        return True
+        c = initial_list()
+        for l in c.combs:
+            b,t = l
+            _cfg = self.bcfg
+            print "%s -> %s" % (b,t)
+            for i,_ in enumerate(b):
+                print "%s -> %s" % (b[i],t[i])
+                _cfg = self.replace_sym_in_cfg(_cfg, b[i], t[i])
+                if EquivChecks.is_cfg_equiv(_cfg,self.tcfg):
+                    print "Cfg's %s and %s are equivalent" % (self.bg, self.tg)
+                    return True
      
         return False
     
