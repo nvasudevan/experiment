@@ -119,7 +119,6 @@ pp_ambidexter_inclen() {
         result="$resultsdir/ambidexter/$g/${timelimit}s_${ioptions}/log"
         [ ! -z "$2" ] && result="$resultsdir/ambidexter/$g/${timelimit}s_${ioptions}/$2/*/log"
         n_amb_ambidexter_i=$(cat $result | grep -c "yes")
-        echo ""
 
         result_slr1="$resultsdir/ambidexter/$g/${timelimit}s_-f_slr1_${ioptions}/log"
         [ ! -z "$2" ] && result_slr1="$resultsdir/ambidexter/$g/${timelimit}s_-f_slr1_${ioptions}/$2/*/log"
@@ -257,14 +256,14 @@ do
 
    ##### INCREMENTAL LENGTH #####
     if [ "$g" == "mutlang" ]
-   then
-       for type in $mutypes
-       do
-           pp_ambidexter_inclen $g $type
-       done
-   else
-       pp_ambidexter_inclen $g
-   fi
+    then
+        for type in $mutypes
+        do
+            pp_ambidexter_inclen $g $type
+        done
+    else
+        pp_ambidexter_inclen $g
+    fi
                 
 
     ##########  SINBAD ########### 
