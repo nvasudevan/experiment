@@ -25,9 +25,9 @@ def compare(lp, gf1, gf2):
     _cfg2 = _cfg(cfg2)
     
     if _cfg1 == _cfg2:
-        print "CFGs:: %s == %s" % (gf1,gf2)
+        print "True"
     else:
-        print "CFGs:: %s != %s" % (gf1,gf2)
+        print "False"
 
 
 if __name__ == "__main__":
