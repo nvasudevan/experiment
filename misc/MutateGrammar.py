@@ -54,8 +54,8 @@ class MutateGrammar:
         if not os.path.exists(mu_dir):
             os.makedirs(mu_dir)
         
-	base_md5 = hashlib.md5(open(gp,'r').read()).hexdigest()
-	i = 1
+        base_md5 = hashlib.md5(open(gp,'r').read()).hexdigest()
+        i = 1
         while i <= cnt:
             cfg = self.modify_grammar()
             tp = tempfile.mktemp()
