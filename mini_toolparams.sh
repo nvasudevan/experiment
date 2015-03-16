@@ -3,7 +3,7 @@
 bdir=$(dirname $0)
 . $bdir/env.sh
 
-gset="randomcfg lang mutlang boltzcfg"
+gset="lang mutlang boltzcfg"
 grammardir="$cwd/grammars"
 lexdir="$grammardir/lex"
 export gset grammardir lexdir
@@ -34,27 +34,29 @@ nboltz="10"
 export gboltz boltzcfgsizes nboltz 
 
 memlimit="1024m"
-timelimits="10 30 60"
-export memlimit timelimits
+timelimits="10 30 60 120"
+cores_per_host="6"
+export memlimit timelimits cores_per_host
+
 
 ### SETTING VALUES FOR EACH TOOL ###
 
 #ACLA
 
 #Amber
-amber_n_examples="10000000000 100000000000000000000 1000000000000000000000000000000"
-amber_n_length="10 25 50 100"
+amber_n_examples="10000000000 1000000000000000 100000000000000000000 1000000000000000000000000000000"
+amber_n_length="5 10 15 20 25 50 100"
 export amber_n_examples amber_n_length
 
 #AmbiDexter
-ambidexter_n_length="10 25 50 100"
+ambidexter_n_length="5 10 15 20 25 50 100"
 export ambidexter_n_length 
 
 #SinBAD
 backends="dynamic1 dynamic2 dynamic3"
 wgtbackends="dynamic4 dynamic5 dynamic10"
-weights="0.025 0.05 0.1 0.15 0.2"
-Tdepths="10 15 20"
+weights="0.0125 0.025 0.05 0.1 0.15 0.2"
+Tdepths="5 10 15 20 25"
 export backends wgtbackends weights Tdepths 
 
 resultsdir="$cwd/results"
