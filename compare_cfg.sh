@@ -23,7 +23,7 @@ usage(){
 [ -z "$gset" ] && usage
 
 boltzcfg() {
-  for i in $(seq 10 65); do 
+  for i in $(seq 39 39); do 
     for j in $(find $i -name "*.acc" | cut -d/ -f 2 | sort -h); do 
       for k in $(find $i -name "*.acc" | cut -d/ -f 2 | sort -h); do 
         if [ $j != $k ]; then

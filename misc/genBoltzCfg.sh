@@ -61,7 +61,8 @@ usage() {
 }
 
 genBoltzSpec() {
-    if [ "$1" == "-D" ]
+    _dir="$1"
+    if [ "$_dir" == "D" ]
     then
         # use existing boltz stuff
         nt_str=$(cat $boltzlexdir/nonterms)
@@ -102,27 +103,27 @@ launch(){
     times="$1"
     samples="$2"
     boltz="$3"
+    _gdir=""
+    xtraoptions=""
+    if [ "$boltz" = "D" ]
+    then
+	_gdir="${boltzlexdir}"
+    else
+	_gdir="${boltzlexdir}"
+	xtraoptions="-n $n_nt -t $n_t"
+    fi
+	
     for i in $(seq 1 $times)
     do
-        subdir="${grammardir}/$i"
-        mkdir -p $subdir
-        cp $BOLTZ_DIR/test/prog $subdir
-        xtraoptions="-n $n_nt -t $n_t"
-        if [ "$boltz" == "-D" ]
-        then
-            xtraoptions=""
-            cp $boltzlexdir/nonterms $grammardir/
-            cp $boltzlexdir/terms $grammardir/
-            cp $boltzlexdir/lexterms $grammardir/
-            cp $boltzlexdir/lexterms_multi $grammardir/
-            cp $boltzlexdir/lex $grammardir/
-        fi
-        (export BOLTZ_PROG="$subdir/prog";$boltzprog -d $grammardir -N $samples -p $sprec -v $vprec $xtraoptions -i $i -L) &
+	subdir="${_gdir}/$i"
+	mkdir -p $subdir
+	cp $BOLTZ_DIR/test/prog $subdir
+        (export BOLTZ_PROG="$subdir/prog";$boltzprog -d $_gdir -N $samples -p $sprec -v $vprec $xtraoptions -i $i -L) &
         sleep 2
     done    
 }
 
-([ -z "$grammardir" ] || [ -z "$n_samples" ] || [ -z "$sprec" ] || [ -z "$vprec" ]) && usage
+([ -z "$n_samples" ] || [ -z "$sprec" ] || [ -z "$vprec" ]) && usage
 
 if ([ -z "$boltzlexdir" ]) && ([ -z "$n_nt" ] || [ -z "$n_t" ])
 then
@@ -151,8 +152,9 @@ then
   launch $n_inst $i_samples
 else
   echo "boltzlexdir: $boltzlexdir"
-  genBoltzSpec -D
-  launch $n_inst $i_samples -D
+  genBoltzSpec D
+  echo "launching...." 
+  launch $n_inst $i_samples D
 fi
 
 wait
