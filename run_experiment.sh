@@ -47,6 +47,7 @@ echo -e "\\n===> Fetching AmbiDexter grammars\\n"
 cd $cwd/grammars
 wget -O grammars.zip http://sites.google.com/site/basbasten/files/grammars.zip
 unzip -q grammars.zip
+[ -d lang ] && rm -rf lang
 mv grammars lang
 
 cd $cwd
@@ -141,10 +142,12 @@ done
 
 echo "Generated list of scripts ($scriptlist); running them in parallel ..."
 
+[ ! -f ~/machinefile ] && echo "I need ~/machinefile with list of hosts to run jobs"
+
 nodelist=""
 for host in $(cat ~/machinefile)
 do 
-    nodelist="8/$host,$nodelist"
+    nodelist="$cores_per_host/$host,$nodelist"
 done
 pllnodes=$(echo $nodelist | sed -e 's/,$//')
 
