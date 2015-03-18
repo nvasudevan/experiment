@@ -24,7 +24,7 @@ run_randomcfg() {
             gcfg="$tmp/${randomsize}_${g}.cfg"    
             glog="$rsltdir/${randomsize}_${g}.log"
             acc_to_cfg $gacc $gcfg
-            $aclacmd -a $gcfg > $glog 2>&1
+            $aclacmd $gcfg > $glog 2>&1
             ((cnt+=1))
             out="${randomsize}/$g,"
             amb=$(grep -o 'ambiguous string' $glog)
@@ -58,7 +58,7 @@ run_lang() {
             gcfg="$tmp/$g.$i.cfg"
             glog="$rsltdir/${g}_${i}.log"
             acc_to_cfg $gacc $gcfg
-            $aclacmd -a $gcfg > $glog 2>&1
+            $aclacmd $gcfg > $glog 2>&1
             ((cnt+=1))
             out="$g.$i,"
             amb=$(grep -o 'ambiguous string' $glog)
@@ -96,7 +96,7 @@ run_mutlang() {
                 gcfg="$tmp/$g.0_$n.cfg"
                 glog="$rsltdir/${g}.0_${n}.log"
                 acc_to_cfg $gacc $gcfg
-                $aclacmd -a $gcfg > $glog 2>&1
+                $aclacmd $gcfg > $glog 2>&1
                 ((cnt+=1))
                 out="$g.0_$n,"
                 amb=$(grep -o 'ambiguous string' $glog)
@@ -132,7 +132,7 @@ run_boltzcfg() {
             gcfg="$tmp/${boltzsize}_${g}.cfg"    
             glog="$rsltdir/${boltzsize}_${g}.log"
             acc_to_cfg $gacc $gcfg
-            $aclacmd -a $gcfg > $glog 2>&1
+            $aclacmd $gcfg > $glog 2>&1
             ((cnt+=1))
             out="${boltzsize}/$g,"
             amb=$(grep -o 'ambiguous string' $glog)
@@ -164,7 +164,7 @@ run_test() {
         gcfg="$tmp/$g.cfg"
         glog="$rsltdir/${g}.log"
         acc_to_cfg $gacc $gcfg
-        $aclacmd -a $gcfg > $glog 2>&1
+        $aclacmd $gcfg > $glog 2>&1
         ((cnt+=1))
         out="$g,"
         amb=$(grep -o 'ambiguous string' $glog)
@@ -194,7 +194,7 @@ do
     shift
 done
 
-aclacmd="timeout ${timelimit}s java -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar"
+aclacmd="timeout ${timelimit}s java -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar -k -a"
 export aclacmd 
 echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit"
 run_$gset
