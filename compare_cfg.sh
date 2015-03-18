@@ -23,9 +23,9 @@ usage(){
 [ -z "$gset" ] && usage
 
 boltzcfg() {
-  for i in $(seq 39 39); do 
-    for j in $(find $i -name "*.acc" | cut -d/ -f 2 | sort -h); do 
-      for k in $(find $i -name "*.acc" | cut -d/ -f 2 | sort -h); do 
+  for i in $boltzcfgsizes; do
+    for j in $(find $i -name "*.acc" | cut -d/ -f 2 | sort -h); do
+      for k in $(find $i -name "*.acc" | cut -d/ -f 2 | sort -h); do
         if [ $j != $k ]; then
           lex="$i/lex"
           srcg="$i/$j"
@@ -40,10 +40,10 @@ boltzcfg() {
 
 mutlang() {
   cd acc
-  for t in empty add mutate delete switchadj switchany; do  
-    for l in Pascal SQL Java C CSS; do 
-      for bg in $(find ${t}/${l} -name "*.acc" | cut -d_ -f 2 | sort -h); do 
-        for tg in $(find ${t}/${l} -name "*.acc" | cut -d_ -f 2 | sort -h); do 
+  for t in $mutypes; do
+    for l in $mugrammars; do
+      for bg in $(find ${t}/${l} -name "*.acc" | cut -d_ -f 2 | sort -h); do
+        for tg in $(find ${t}/${l} -name "*.acc" | cut -d_ -f 2 | sort -h); do
           if [ $bg != $tg ]; then
             lex="../../lex/${l}.lex"
             srcg="${t}/${l}/${l}.0_$bg"
@@ -60,6 +60,9 @@ mutlang() {
 # path to cfg program
 expdir="$HOME/codespace/experiment"
 cfgp="$expdir/misc/CompareCFG.py"
+boltzcfgsizes=$(seq 10 65)
+mugrammars="Pascal SQL Java C CSS"
+mutypes="empty add mutate delete switchadj switchany"
 
 cd $expdir/grammars/$gset
 [ "$gset" == "boltzcfg" ] && boltzcfg
