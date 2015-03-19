@@ -16,7 +16,7 @@ do
 done
 
 usage(){
-    echo "$0 -g <boltz|mutlang>"
+    echo "$0 -g <boltzcfg|mutlang>"
     exit 1
 }
 
@@ -60,7 +60,7 @@ mutlang() {
 # path to cfg program
 expdir="$HOME/codespace/experiment"
 cfgp="$expdir/misc/CompareCFG.py"
-boltzcfgsizes=$(seq 10 65)
+boltzcfgsizes=$(seq 10 70)
 mugrammars="Pascal SQL Java C CSS"
 mutypes="empty add mutate delete switchadj switchany"
 
