@@ -1,17 +1,37 @@
 #!/bin/sh
 
-# A simple script that uses bison to determine if a grammar contains 
-# useless non-terminals and/or conflicts
-# grammar is unambiguous if there are no conflicts without containing
-# useless non-terminals
+# Use bison to test unreachable rules and unambiguity
+
+runtest=""
+gdir=""
+
+set -- $(getopt t:d: "$@")
+
+while [ $# -gt 0 ]
+do
+    case "$1" in 
+     -t) runtest=$2 ; shift;;
+     -d) gdir=$2 ; shift;;
+    (--) shift; break;;
+    (-*) echo "$0: error - unrecognized option $1" 1>&2; exit 1;;
+     (*) break;;  
+    esac
+    shift
+done
+
+usage(){
+    echo "$0 -d <useless|lr> -g <grammar directory>"
+    exit 1
+}
+
+[ -z "$runtest" ] && usage
+[ -z "$gdir" ] && usage
 
 convert_to_yacc(){
     gacc="$1"
     gy="$2"
     cat $gacc | grep  "%token" | sed -e 's/,//g' -e 's/;$//' > $gy
     echo "" >> $gy
-    # don't think start root need to be specified for boltz grammars
-    #cat $gacc | grep -v '%token' | sed -e 's/%nodefault/%start root\n\n%%/' >> $gy
     cat $gacc | grep -v '%token' | sed -e 's/%nodefault/\n%%/' >> $gy
 }
 
@@ -21,11 +41,10 @@ useless_nonterminals() {
      convert_to_yacc "$gacc" "$tf"
      bison -o ${tf}.output $tf > $tmpout 2>&1
      uselessnt=$(cat $tmpout | grep -o "warning: [0-9]* nonterminals* useless in grammar" | sed -e 's/warning: //')
-     #echo "useless non-terminals: $uselessnt"
      rm $tf ${tf}.output
      if [ ! -z "$uselessnt" ] 
      then
-        echo "unreachable: yes"
+        echo "unreachable ($uselessnt)"
      else
         echo ""
      fi
@@ -38,29 +57,29 @@ unambiguous() {
      bison -o ${tf}.output $tf > $tmpout 2>&1
      conflicts=$(cat $tmpout | grep -o "conflicts.*/reduce")
      uselessnt=$(cat $tmpout | grep -o "warning: [0-9]* nonterminals* useless in grammar" | sed -e 's/warning: //')
-     #echo "conflicts: $conflicts, useless non-terminals: $uselessnt"
      rm $tf ${tf}.output
      if [ -z "$uselessnt" ] && [ -z "$conflicts" ] 
      then
-        echo "unambiguous: yes"
+        echo "unambiguous"
      else
         echo ""
      fi
 }
 
-gdir="$1"
-if [ -z "$gdir" ]
-then
-    echo "usage: $0 <grammar directory containg grammars in ACCENT format>"
-    exit 1
-fi
-
 tmpout=$(mktemp)
 
-for g in $(find $gdir -name "*.acc" -print)
-do
-    out=$(unambiguous $g)
-    echo "$g,$out"
-done
+if [ "$runtest" == "useless" ]; then
+    for g in $(find $gdir -name "*.acc" -print)
+    do
+        out=$(useless_nonterminals $g)
+        echo "$g,$out"
+    done
+elif [ "$runtest" == "lr" ]; then
+    for g in $(find $gdir -name "*.acc" -print)
+    do
+        out=$(unambiguous $g)
+        echo "$g,$out"
+    done
+fi
 
 rm $tmpout
