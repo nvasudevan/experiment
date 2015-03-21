@@ -60,7 +60,7 @@ mutlang() {
 # path to cfg program
 expdir="$HOME/codespace/experiment"
 cfgp="$expdir/misc/CompareCFG.py"
-boltzcfgsizes=$(seq 10 70)
+boltzcfgsizes=$(seq 71 71)
 mugrammars="Pascal SQL Java C CSS"
 mutypes="empty add mutate delete switchadj switchany"
 
