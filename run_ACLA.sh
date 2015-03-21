@@ -89,7 +89,8 @@ run_mutlang() {
             cp /dev/null $gsetlog
             cnt=0
             ambcnt=0         
-            for n in $(seq 1 $nmutations)
+            glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
+            for n in $glist
             do
                 tmp=$(mktemp -d)
                 gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"

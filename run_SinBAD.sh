@@ -61,7 +61,8 @@ run_mutlang(){
          gsetlog="$rsltdir/log"
          cp /dev/null $gsetlog
          _lex="$lexdir/$g.lex"
-         for n in $(seq 1 $nmutations)
+         glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
+         for n in $glist
          do
             _acc="$gmutlang/acc/$type/$g/${g}.0_${n}.acc"
             glog="$rsltdir/${g}.0_${n}.log"

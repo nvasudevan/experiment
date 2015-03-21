@@ -103,7 +103,8 @@ run_mutlang() {
          cnt=0
          gsetlog="$rsltdir/log"
          cp /dev/null $gsetlog
-         for n in $(seq 1 $nmutations)
+         glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
+         for n in $glist
          do
              tmp=$(mktemp -d)
              glog="$rsltdir/${g}.0_${n}.log"
