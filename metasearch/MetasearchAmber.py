@@ -49,6 +49,7 @@ class Hillclimb:
 
     def neighbour(self, neigh, sdev3neigh, sdev10neigh):
         if len(self.k_values) < 3:
+            sys.stderr.write("recent: %s" % self.k_values)
             return  neigh
 
         recent3 = self.k_values[-3:]
@@ -65,10 +66,11 @@ class Hillclimb:
         
         sys.stderr.write("recent10vals: %s, sdev3: %s, sdev10: %s \n" % (recent10vals,sdev3,sdev10))
         if sdev3 < 3:
-            if sdev10 < 3:
-                return sdev10neigh
-            else:
-                return sdev3neigh
+            return sdev3neigh
+            #if sdev10 < 3:
+            #    return sdev10neigh
+            #else:
+            #    return sdev3neigh
         else:
             return neigh
 
@@ -81,6 +83,35 @@ class Hillclimb:
         return self.neighbour(int(math.ceil(n * EXAMPLES_INCREMENT)), 
                   int(math.ceil(n * EXAMPLES_INCREMENT_LVAL)), 
                   int(math.ceil(n * EXAMPLES_INCREMENT_HVAL))) 
+
+
+    def keep_running(self):
+        """ if we see a downward trend for the last 3 values, stop """
+        if len(self.k_values) > 3:
+            _, fit = self.k_values[-1]
+            _, _fit = self.k_values[-2]
+            _, __fit = self.k_values[-3]
+            _, ___fit = self.k_values[-4]
+            if (fit <= _fit) and (_fit <= __fit) and (__fit <= ___fit):
+                return False
+
+        return True
+
+
+    def finish(self):
+        fitvals = [f for k,f in self.k_values]
+        fitkeys = []
+        for k,f in self.k_values:
+            if f == max(fitvals):
+                fitkeys.append(k)
+
+        print "\n** Reached (local) maxima! **\n"
+        for k,f in self.k_values:
+            print "(%s,%s)" % (k,f)
+
+        msg = "Options %s found %s ambiguities **\n" % (fitkeys,max(fitvals))
+        sys.stderr.write(msg)
+        sys.exit(0) 
 
 
     def run_examples(self):
@@ -101,12 +132,11 @@ class Hillclimb:
             
             sys.stderr.write("new fitness: %s " % str(newfit))
 
-            if newfit >= currfit:
+            if self.keep_running():
                 currex = neighex
                 currfit = newfit
             else:
-                sys.stderr.write("\n** Reached maxima! examples: %s ambiguities found: %s *\n*" % (str(currex), str(currfit)))
-                sys.exit(0) 
+                self.finish()
 
 
     def run_length(self):
@@ -126,14 +156,11 @@ class Hillclimb:
 
             sys.stderr.write("new fitness: %s " % str(newfit))
 
-            if newfit >= currfit:
+            if self.keep_running():
                 currlen = neighlen
                 currfit = newfit
             else:
-                sys.stderr.write("\n** Reached maxima! length: %s ambiguities found: %s **\n" % (str(currlen), str(currfit)))
-                for k,v in self.k_values:
-                    print "%s,%s" % (k,v)
-                sys.exit(0) 
+                self.finish()
 
 
 def usage(msg=None):
@@ -141,14 +168,13 @@ def usage(msg=None):
         sys.stderr.write(msg)
         
     sys.stderr.write("Metasearch.py -x <experiment directory> " \
-    "-g <grammar set> -n <number of examples> -l <initial length -e>")
+    "-g <grammar set> -n <number of examples> -l <initial length -e>\n")
     sys.exit(1)
     
 
 
 if __name__ == "__main__": 
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:n:l:e")   
-    print opts, args
     length = None
     examples = None
     ellipsis = False
@@ -169,5 +195,6 @@ if __name__ == "__main__":
     if (examples is None) and (length is None):
         usage()
 
+    print opts, args
     Hillclimb(expdir, gset, examples, length, ellipsis, TIMELIMIT)
     
