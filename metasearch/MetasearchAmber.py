@@ -175,6 +175,8 @@ def usage(msg=None):
 
 if __name__ == "__main__": 
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:n:l:e")   
+    expdir = None
+    gset = None
     length = None
     examples = None
     ellipsis = False
@@ -191,6 +193,9 @@ if __name__ == "__main__":
             ellipsis = True
         else: 
             usage("Unknown argument '%s'" % opt[0])   
+
+    if (expdir is None) or (gset is None):
+        usage()
 
     if (examples is None) and (length is None):
         usage()
