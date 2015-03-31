@@ -65,6 +65,35 @@ class Hillclimb:
             return l + 1
 
 
+    def keep_running(self):
+        """ if we see a downward trend for the last 3 values, stop """
+        if len(self.k_values) > 3:
+            _, fit = self.k_values[-1]
+            _, _fit = self.k_values[-2]
+            _, __fit = self.k_values[-3]
+            _, ___fit = self.k_values[-4]
+            if (fit <= _fit) and (_fit <= __fit) and (__fit <= ___fit):
+                return False
+
+        return True
+
+
+    def finish(self):
+        fitvals = [f for k,f in self.k_values]
+        fitkeys = []
+        for k,f in self.k_values:
+            if f == max(fitvals):
+                fitkeys.append(k)
+
+        print "\n** Reached (local) maxima! **\n"
+        for k,f in self.k_values:
+            print "(%s,%s)" % (k,f)
+
+        msg = "Options %s found %s ambiguities **\n" % (fitkeys,max(fitvals))
+        sys.stderr.write(msg)
+        sys.exit(0) 
+
+
 
     def run(self):
         currlen = self.length
@@ -83,14 +112,11 @@ class Hillclimb:
             
             sys.stderr.write("new fitness: %s " % str(newfit))
 
-            if newfit >= currfit:
+            if self.keep_running():
                 currlen = neighlen
                 currfit = newfit
             else:
-                sys.stderr.write("\n** Reached maxima! length: %s ambiguities found: %s **\n" % (str(currlen), str(currfit)))
-                for k,v in self.k_values:
-                    print "%s,%s" % (k,v)
-                sys.exit(0) 
+                self.finish()
 
 
 def usage(msg=None):
@@ -98,14 +124,15 @@ def usage(msg=None):
         sys.stderr.write(msg)
         
     sys.stderr.write("MetasearchAmbiDexter.py -x <experiment directory> " \
-    "-g <grammar set> -k <initial length>")
+    "-g <grammar set> -k <initial length>\n")
     sys.exit(1)
     
 
 
 if __name__ == "__main__": 
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:k:f:")
-    print opts, args
+    expdir = None
+    gset = None
     length = None
     filter = None
     for opt in opts:
@@ -120,5 +147,9 @@ if __name__ == "__main__":
         else: 
             usage("Unknown argument '%s'" % opt[0])   
 
+    if (expdir is None) or (gset is None) or (length is None):
+        usage()
+
+    print opts, args
     Hillclimb(expdir, gset, length, filter, TIMELIMIT)
     
