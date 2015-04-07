@@ -20,7 +20,7 @@ do
 done
 
 usage(){
-    echo "$0 -d <useless|lr> -g <grammar directory>"
+    echo "$0 -t <useless|lr> -d <grammar directory>"
     exit 1
 }
 
@@ -55,7 +55,8 @@ unambiguous() {
      gacc="$1"
      convert_to_yacc "$gacc" "$tf"
      bison -o ${tf}.output $tf > $tmpout 2>&1
-     conflicts=$(cat $tmpout | grep -o "conflicts.*/reduce")
+     # different versions of bison output slightly differently
+     conflicts=$(cat $tmpout | egrep -o "conflicts.*/reduce|.*/reduce.*conflicts")
      uselessnt=$(cat $tmpout | grep -o "warning: [0-9]* nonterminals* useless in grammar" | sed -e 's/warning: //')
      rm $tf ${tf}.output
      if [ -z "$uselessnt" ] && [ -z "$conflicts" ] 
