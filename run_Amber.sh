@@ -219,6 +219,10 @@ do
 done
 
 options=""
+if [ "$ellipsis" = "yes" ]; then
+    options="${options} ellipsis"
+fi
+
 if [ "$examples" != "" ]; then
     options="${options} examples $examples"
 fi
@@ -227,17 +231,13 @@ if [ "$length" != "" ]; then
     options="${options} length $length"
 fi
 
-if [ "$ellipsis" = "yes" ]; then
-    options="${options} ellipsis"
-fi
-
 if [ -z "$options" ]; then
     echo "No options provided for Amber. Exiting."
     exit 1
 fi
 
 ambercmd="timeout ${timelimit}s ./amber $options"
-echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit,options=$options"
+echo "==> $(hostname -s)::($basename $0) [$gset] t=[$timelimit], options=[$options]"
 cwd=$(pwd)
 run_$gset
 
