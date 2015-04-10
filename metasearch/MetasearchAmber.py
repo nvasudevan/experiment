@@ -16,36 +16,30 @@ LEN_STEP3 = 5
 class Hillclimb:
 
     def __init__(self, expdir, gset, examples, length, ellipsis, timelimit):
-        self.expdir = expdir
-        self.gset = gset
-        self.examples = examples
-        self.length = length
-        self.ellipsis = ellipsis
-        self.timelimit = timelimit
         self.k_values = []
-        self.logd = "%s/results/amber/%s/%ss" % (expdir, gset, self.timelimit)
+        self.logd = "%s/results/amber/%s/%ss" % (expdir, gset, timelimit)
 
-        amberx =  "%s/run_Amber.sh" % (self.expdir)
-        self.cmd = [amberx, "-g", self.gset, "-t", str(self.timelimit)]
+        amberx =  "%s/run_Amber.sh" % (expdir)
+        self.cmd = [amberx, "-g", gset, "-t", str(timelimit)]
 
-        if self.ellipsis:
+        if ellipsis:
             self.cmd.append("-e")
             self.logd += "_ellipsis"
 
-        if self.examples is not None:
+        if examples is not None:
             self.switch = "-n"
-            self.initval = self.examples
+            self.initval = examples
             self.logd += "_examples"
         else:
             self.switch = "-l"
-            self.initval = self.length
+            self.initval = length
             self.logd += "_length"
 
         self.run()
 
 
     def neighbour(self, v):
-        if self.examples is not None:
+        if self.switch == "-n":
             return MetaUtils.neighbour(self.k_values,
                                        int(math.ceil(v * EX_STEP1)),
                                        int(math.ceil(v * EX_STEP2)),
