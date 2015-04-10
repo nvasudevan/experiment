@@ -29,7 +29,7 @@ export gmutlang mugrammars mutypes nmutations
 
 gboltz="$grammardir/boltzcfg"
 boltzcfgsizes=$(seq 10 70)
-nboltz="10"
+nboltz="100"
 
 export gboltz boltzcfgsizes nboltz 
 
