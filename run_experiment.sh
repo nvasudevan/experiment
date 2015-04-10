@@ -30,7 +30,7 @@ echo -e "===> Running $exp experiment from $wrkdir"
 mkdir -p $wrkdir
 export cwd wrkdir
 
-ln -s $cwd/${exp}_toolparams.sh $cwd/toolparams.sh
+ln -sf $cwd/${exp}_toolparams.sh $cwd/toolparams.sh
 cp /dev/null $cwd/env.sh
 echo "export cwd=$cwd" >> $cwd/env.sh
 echo "export wrkdir=$wrkdir" >> $cwd/env.sh
