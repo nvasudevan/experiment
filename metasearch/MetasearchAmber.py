@@ -72,7 +72,7 @@ class Hillclimb:
             MetaUtils.runtool(self.cmd + amberoptcmd)
             newfit = MetaUtils.fitness("%s_%s/log" % (self.logd, neighval))
             sys.stderr.write("new fitness: %s " % str(newfit))
-            self.k_values.append((neighval, newfit)
+            self.k_values.append((neighval, newfit))
 
             if MetaUtils.keep_running(self.k_values):
                 currval = neighval
