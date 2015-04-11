@@ -3,10 +3,6 @@
 import os, subprocess, sys
 import math
 
-def write(msg):
-    sys.stdout.write(msg)
-    sys.stdout.flush()
-
 
 def ambtotal(log):
     f = open(log)
