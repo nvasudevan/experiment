@@ -12,6 +12,8 @@ EX_STEP3 = 1.2
 LEN_STEP1 = 1
 LEN_STEP2 = 3
 LEN_STEP3 = 5
+STDDEV_CNT = 3
+STDDEV = 3
 
 class Hillclimb:
 
@@ -39,16 +41,18 @@ class Hillclimb:
 
 
     def neighbour(self, v):
+        fits = [f for _,f in self.k_values]
         if self.switch == "-n":
-            return MetaUtils.neighbour(self.k_values,
-                                       int(math.ceil(v * EX_STEP1)),
-                                       int(math.ceil(v * EX_STEP2)),
-                                       int(math.ceil(v * EX_STEP3)))
-        else:
-            return MetaUtils.neighbour(self.k_values,
-                                       v+LEN_STEP1,
-                                       v+LEN_STEP2,
-                                       v+LEN_STEP3)
+            if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+                return int(math.ceil(v * EX_STEP1))
+
+            return int(math.ceil(v * EX_STEP2))
+
+        if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+            return int(math.ceil(v * EX_STEP1))
+
+        return int(math.ceil(v * EX_STEP2))
+
 
     def run(self):
         currval = self.initval
@@ -64,13 +68,17 @@ class Hillclimb:
             sys.stderr.write("neighval: %s" % (str(neighval)))
             amberoptcmd = [self.switch, str(neighval)]
             MetaUtils.runtool(self.cmd + amberoptcmd)
-            newfit = MetaUtils.fitness("%s_%s/log" % (self.logd, neighval))
-            sys.stderr.write("new fitness: %s " % str(newfit))
-            self.k_values.append((neighval, newfit))
+            neighfit = MetaUtils.fitness("%s_%s/log" % (self.logd, neighval))
+            sys.stderr.write("new fitness: %s " % str(neighfit))
+            self.k_values.append((neighval,neighfit))
 
-            if MetaUtils.keep_running(self.k_values):
-                currval = neighval
-                currfit = newfit
+            fitvals = [f for _,f in self.k_values]
+            if MetaUtils.localmax(fitvals):
+                MetaUtils.report(self.k_values)
+                sys.exit(0)
+
+            currval = neighval
+            currfit = neighfit
 
 
 

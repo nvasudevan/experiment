@@ -9,6 +9,8 @@ TIMELIMIT = 10
 LEN_STEP1 = 1
 LEN_STEP2 = 3
 LEN_STEP3 = 5
+STDDEV_CNT = 3
+STDDEV = 3
 
 class Hillclimb:
 
@@ -28,11 +30,12 @@ class Hillclimb:
         self.run()
 
 
-    def neighbour(self, v):
-        return MetaUtils.neighbour(self.k_values,
-                                   v+LEN_STEP1,
-                                   v+LEN_STEP2,
-                                   v+LEN_STEP3)
+    def neighbour(self, l):
+        fits = [f for _,f in self.k_values]
+        if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+            return l + LEN_STEP1
+
+        return l + LEN_STEP2
 
 
     def run(self):
@@ -48,13 +51,17 @@ class Hillclimb:
             neighlen = self.neighbour(currlen)
             ambidextoptcmd = ["-k",str(neighlen)]
             MetaUtils.runtool(self.cmd + ambidextoptcmd)
-            newfit = MetaUtils.fitness("%s_%s/log" % (self.logd, neighlen))
-            sys.stderr.write("new fitness: %s " % str(newfit))
-            self.k_values.append((neighlen,newfit))
+            neighfit = MetaUtils.fitness("%s_%s/log" % (self.logd, neighlen))
+            sys.stderr.write("new fitness: %s " % str(neighfit))
+            self.k_values.append((neighlen,neighfit))
 
-            if MetaUtils.keep_running(self.k_values):
-                currlen = neighlen
-                currfit = newfit
+            fitvals = [f for _,f in self.k_values]
+            if MetaUtils.localmax(fitvals):
+                MetaUtils.report(self.k_values)
+                sys.exit(0)
+
+            currlen = neighlen
+            currfit = neighfit
 
 
 def usage(msg=None):

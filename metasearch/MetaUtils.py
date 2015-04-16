@@ -51,54 +51,48 @@ def stddev(l):
     return None
 
 
-def neighbour(vals, neigh1, neigh2, neigh3):
-    if len(vals) > 3:
-        recent3 = vals[-3:]
-        recent10 = vals[-10:]
-        recent3vals,recent10vals = [],[]
-        for k,v in recent3:
-            recent3vals.append(v)
+def move_by_step1(fitvals, n, s):
+    if len(fitvals) < n:
+        return True
 
-        for k,v in recent10:
-            recent10vals.append(v)
+    recent = fitvals[-n:]
+    sdev = stddev(recent)
+    sys.stderr.write("recent: %s, sdev: %s\n" % (recent, sdev))
+    if sdev > s:
+        return True
 
-        sdev3 = stddev(recent3vals)
-        sdev10 = stddev(recent10vals)
-
-        sys.stderr.write("recent10vals: %s, sdev3: %s, sdev10: %s \n" \
-                         % (recent10vals, sdev3, sdev10))
-        if sdev3 < 3:
-            #if sdev10 < 3:
-            #    return neigh3
-            return neigh2
-
-    return neigh1
+    return False
 
 
-def keep_running(vals):
+def localmax(fitvals):
     """ if the last 3 values are less then max, then stop """
-    if len(vals) > 3:
-        _, _f1 = vals[-1]
-        _, _f2 = vals[-2]
-        _, _f3 = vals[-3]
+    if len(fitvals) > 3:
+        f1 = fitvals[-1]
+        f2 = fitvals[-2]
+        f3 = fitvals[-3]
 
-        fitvals = [f for k,f in vals]
-        maxfit = max(fitvals)
+        maxfit = max(fitvals[:-3])
 
-        if (_f1 < maxfit) and (_f2 < maxfit) and (_f3 < maxfit):
+        if (f1 <= maxfit) and (f2 <= maxfit) and (f3 <= maxfit):
             print "\n** Reached (local) maxima! **\n"
-            fitkeys = []
-            for k,f in vals:
-                if f == maxfit:
-                    fitkeys.append(k)
+            return True
 
-            for k,f in vals:
-                print "(%s,%s)" % (k,f)
+    return False
 
-            msg = "Options %s found %s ambiguities **\n" % (fitkeys,maxfit)
-            sys.stderr.write(msg)
-            sys.exit(0)
 
-    return True
+def report(vals):
+    for k,f in vals:
+        print "(%s,%s)" % (k,f)
+
+    fitvals = [f for k,f in vals]
+    maxfit = max(fitvals)
+
+    fitkeys = []
+    for k,f in vals:
+        if f == maxfit:
+            fitkeys.append(k)
+
+    msg = "Options %s found %s ambiguities **\n" % (fitkeys,maxfit)
+    sys.stderr.write(msg)
 
 
