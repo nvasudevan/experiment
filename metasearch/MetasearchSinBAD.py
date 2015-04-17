@@ -82,7 +82,7 @@ class Hillclimb:
         d_cmd = ["-d", str(d)]
         if self.wgt is None:
             MetaUtils.runtool(self.cmd + d_cmd)
-            f = MetaUtils.fitness("%s_%s/log" % (self.logd, d))
+            f = MetaUtils.fitness("%s_-d_%s/log" % (self.logd, d))
             return None, f
 
         w = self.wgt
