@@ -93,15 +93,12 @@ case "$tool" in
    ambidexter mutlang
    ;;
  sinbad)
-   sinbad boltzcfg dynamic1
-   sinbad boltzcfg dynamic2
-   sinbad boltzcfg dynamic4
-   sinbad lang dynamic1
-   sinbad lang dynamic2
-   sinbad lang dynamic4
-   sinbad mutlang dynamic1
-   sinbad mutlang dynamic2
-   sinbad mutlang dynamic4
+   backends="dynamic1 dynamic2 dynamic3 dynamic4"
+   for b in $backends; do 
+     sinbad boltzcfg $b
+     sinbad lang $b
+     sinbad mutlang $b
+   done
    ;;
  *) 
    usage "Error - unrecognized option for tool: $tool" 
