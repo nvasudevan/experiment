@@ -90,6 +90,31 @@ sinbad() {
   fi
 }
 
+sinbad_recursion() {
+  g=$1
+  echo -e "\n=> g: $g"
+  if [ -d $logdir/$tool/$g ]; then
+    cd $logdir/$tool/$g
+    for b in $backends $wgtbackends; do 
+      echo "processing $b ..."
+      > ${out}.${g}.${b}.rec
+      dirs=$(find . -name "10s_-b_${b}_*" -type d -print | cut -d/ -f2 | sort -t_ -k5,5 -k7,7 -h)
+      for dir in $dirs; do 
+        cnt=$(zegrep -o -w 'r:1' $dir/*.log.gz | wc -l)
+        d=$(echo $dir | sed -e "s/10s_-b_${b}_-d_//" -e 's/_-w_/,/')
+        echo "$d,$cnt" >> ${out}.${g}.${b}.rec
+      done
+    done
+    dsort=$(cat ${out}.${g}.dynamic*.rec | cut -d, -f1 | sort -h | uniq)
+    for i in $dsort; do 
+      dyn1=$(grep -w ^$i ${out}.${g}.dynamic1.rec | cut -d, -f2)
+      dyn2=$(grep -w ^$i ${out}.${g}.dynamic2.rec | cut -d, -f2)
+      dyn3=$(grep -w ^$i ${out}.${g}.dynamic3.rec | cut -d, -f2)
+      echo "$i,$dyn1,$dyn2,$dyn3"
+    done
+  fi
+}
+
 case "$tool" in
  amber)
    amber boltzcfg length
@@ -108,6 +133,9 @@ case "$tool" in
    sinbad boltzcfg
    sinbad lang
    sinbad mutlang
+   sinbad_recursion boltzcfg
+   sinbad_recursion lang
+   sinbad_recursion mutlang
    ;;
  *) 
    usage "Error - unrecognized option for tool: $tool" 
