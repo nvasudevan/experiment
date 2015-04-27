@@ -16,7 +16,7 @@ out="/tmp/$tool"
 
 filters="lr0 slr1 lalr1 lr1"
 backends="dynamic1 dynamic2 dynamic3"
-wgtbackends="dynamic4"
+wgtbackends="dynamic4 dynamic7"
 
 amber() {
   g=$1
@@ -70,50 +70,54 @@ ambidexter() {
   fi
 }
 
+sinbad_gen_summary() {
+  g=$1
+  b=$2
+  grep -c yes 10s_-b_${b}_*/log 2>/dev/null \
+        | sort -t_ -k5,5 -k7,7 -h \
+        | sed -e "s/10s_-b_${b}_-d_//" -e 's/_-w_/,/' -e 's/\/log:/,/' > ${out}.${g}.${b}
+
+  > ${out}.${g}.${b}.rec
+  dirs=$(find . -name "10s_-b_${b}_*" -type d -print | cut -d/ -f2 | sort -t_ -k5,5 -k7,7 -h)
+  for dir in $dirs; do 
+    cnt=$(zegrep -o -w 'r:1' $dir/*.log.gz | wc -l)
+    d_w=$(echo $dir | sed -e "s/10s_-b_${b}_-d_//" -e 's/_-w_/,/')
+    echo "$d_w,$cnt" >> ${out}.${g}.${b}.rec
+  done
+
+}
+
 sinbad() {
   g=$1
   echo -e "\n=> g: $g"
   if [ -d $logdir/$tool/$g ]; then
     cd $logdir/$tool/$g
-    for b in $backends $wgtbackends; do 
-      grep -c yes 10s_-b_${b}_*/log 2>/dev/null \
-            | sort -t_ -k5,5 -k7,7 -h \
-            | sed -e "s/10s_-b_${b}_-d_//" -e 's/_-w_/,/' -e 's/\/log:/,/' > ${out}.${g}.${b}
+    for bend in $backends $wgtbackends; do 
+      echo "processing $bend ..."
+      sinbad_gen_summary $gset $bend
     done
-    dsort=$(cat ${out}.${g}.dynamic* | cut -d, -f1 | sort -h | uniq)
-    for i in $dsort; do 
-      dyn1=$(grep -w ^$i ${out}.${g}.dynamic1 | cut -d, -f2)
-      dyn2=$(grep -w ^$i ${out}.${g}.dynamic2 | cut -d, -f2)
-      dyn3=$(grep -w ^$i ${out}.${g}.dynamic3 | cut -d, -f2)
-      echo "$i,$dyn1,$dyn2,$dyn3"
+    dyns=$(echo $backends $wgtbackends | sed -e 's/dynamic//g' | tr -d ' ')
+    dsort=$(cat ${out}.${g}.dynamic[${dyns}] | cut -d, -f1 | sort -h | uniq)
+    echo ",${backends// /,,},,${wgtbackends// /,,}"
+    echo "depth,ambiguities,recursion,ambiguities,recursion,ambiguities,recursion,ambiguities,recursion"
+    for d in $dsort; do 
+      pout="$d"
+      for bend in $backends; do 
+        dynout=$(grep -w ^$d ${out}.${g}.$bend | cut -d, -f2)
+        recout=$(grep -w ^$d ${out}.${g}.${bend}.rec | cut -d, -f2)
+        pout="$pout,$dynout,$recout"
+      done
+      for bend in $wgtbackends; do 
+        dynw=$(grep -w ^$d ${out}.${g}.$bend | sort -t, -k3,3 -h | tail -1 | cut -d, -f2)
+        dynout=$(grep -w "^${d},${dynw}" ${out}.${g}.$bend | cut -d, -f3)
+        recout=$(grep -w "^${d},${dynw}" ${out}.${g}.${bend}.rec | cut -d, -f3)
+        pout="$pout,$dynout,$recout"
+      done
+      echo "$pout"
     done
   fi
 }
 
-sinbad_recursion() {
-  g=$1
-  echo -e "\n=> g: $g"
-  if [ -d $logdir/$tool/$g ]; then
-    cd $logdir/$tool/$g
-    for b in $backends $wgtbackends; do 
-      echo "processing $b ..."
-      > ${out}.${g}.${b}.rec
-      dirs=$(find . -name "10s_-b_${b}_*" -type d -print | cut -d/ -f2 | sort -t_ -k5,5 -k7,7 -h)
-      for dir in $dirs; do 
-        cnt=$(zegrep -o -w 'r:1' $dir/*.log.gz | wc -l)
-        d=$(echo $dir | sed -e "s/10s_-b_${b}_-d_//" -e 's/_-w_/,/')
-        echo "$d,$cnt" >> ${out}.${g}.${b}.rec
-      done
-    done
-    dsort=$(cat ${out}.${g}.dynamic*.rec | cut -d, -f1 | sort -h | uniq)
-    for i in $dsort; do 
-      dyn1=$(grep -w ^$i ${out}.${g}.dynamic1.rec | cut -d, -f2)
-      dyn2=$(grep -w ^$i ${out}.${g}.dynamic2.rec | cut -d, -f2)
-      dyn3=$(grep -w ^$i ${out}.${g}.dynamic3.rec | cut -d, -f2)
-      echo "$i,$dyn1,$dyn2,$dyn3"
-    done
-  fi
-}
 
 case "$tool" in
  amber)
@@ -133,9 +137,6 @@ case "$tool" in
    sinbad boltzcfg
    sinbad lang
    sinbad mutlang
-   sinbad_recursion boltzcfg
-   sinbad_recursion lang
-   sinbad_recursion mutlang
    ;;
  *) 
    usage "Error - unrecognized option for tool: $tool" 
