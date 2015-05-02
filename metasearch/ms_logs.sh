@@ -25,14 +25,12 @@ amber() {
   if [ -d $logdir/$tool/$g ]; then
     cd $logdir/$tool/$g
     grep -c yes 10s_${opt}_*/log \
-            | grep -v ellipsis \
             | sort -t_ -k3,3 -h \
             | sed -e "s/10s_${opt}_//" -e 's/\/log//' \
             > ${out}.${g}
-    grep -c yes 10s_${opt}_*/log \
-            | grep ellipsis \
+    grep -c yes 10s_ellipsis_${opt}_*/log \
             | sort -t_ -k3,3 -h \
-            | sed -e "s/10s_${opt}_//" -e 's/_ellipsis//' -e 's/\/log//' \
+            | sed -e "s/10s_ellipsis_${opt}_//" -e 's/\/log//' \
             > ${out}.${g}.e
 
     lsort=$(cat ${out}.${g} ${out}.${g}.e | cut -d: -f1 | sort -h | uniq)
