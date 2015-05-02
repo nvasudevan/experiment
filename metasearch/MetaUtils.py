@@ -64,18 +64,18 @@ def move_by_step1(fitvals, n, s):
     return False
 
 
-def localmax(fitvals):
-    """ if the last 3 values are less then max, then stop """
-    if len(fitvals) > 3:
-        f1 = fitvals[-1]
-        f2 = fitvals[-2]
-        f3 = fitvals[-3]
+def localmax(fitvals, n=3):
+    """ if the last n values are less then max, then stop """
+    if len(fitvals) > n:
+        lastn = fitvals[-n:]
+        maxfit = max(fitvals)
 
-        maxfit = max(fitvals[:-3])
+        for v in lastn:
+            if v > maxfit:
+                return False
 
-        if (f1 <= maxfit) and (f2 <= maxfit) and (f3 <= maxfit):
-            print "\n** Reached (local) maxima! **\n"
-            return True
+        print "\n** Reached (local) maxima! **\n"
+        return True
 
     return False
 
