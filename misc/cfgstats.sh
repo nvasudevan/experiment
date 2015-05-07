@@ -26,25 +26,25 @@ usage(){
 
 boltzcfg() {
   cd $expdir/grammars/$gset
-  echo "g, rules, alts, empty, alts (> $tlen), longest, nonterms, terms, cycles"
+  echo "cfg, rules, alts, empty, empty(pct), long alts, long alts(%), longest, nonterms, terms, cycles"
   for i in $boltzcfgsizes; do
     for j in $(seq 1 $nboltz); do
-      out=$(python $prog $i/${j}.acc $i/lex $tlen | cut -d: -f2)
-      echo "$i/$j,$out"
+      out=$(python $prog $i/${j}.acc $i/lex $tlen | cut -d: -f2 | tail -1)
+      echo "$i/$j, $out"
     done
   done
 }
 
 mutlang() {
   cd $expdir/grammars/$gset/acc
-  echo "g, rules, alts, empty, alts (> $tlen), longest, nonterms, terms, cycles"
+  echo "cfg, rules, alts, empty, empty(pct), long alts, long alts(%), longest, nonterms, terms, cycles"
   for t in $mutypes; do
     for l in $mugrammars; do
       for j in $(find ${t}/${l} -name "*.acc" | cut -d_ -f 2 | sort -h | cut -d. -f1 | head -${nmutations}); do
         lex="../../lex/${l}.lex"
         g="${t}/${l}/${l}.0_${j}.acc"
-        out=$(python $prog $g $lex $tlen | cut -d: -f2)
-        echo "${t}/${l}/${l}.0_${j},$out"
+        out=$(python $prog $g $lex $tlen | cut -d: -f2 | tail -1)
+        echo "${t}/${l}/${l}.0_${j}, $out"
       done
     done
   done
