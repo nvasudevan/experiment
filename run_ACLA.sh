@@ -110,7 +110,7 @@ run_mutlang() {
                 gzip -f $glog
                 rm -Rf $tmp 
             done
-	    cat $gsetlog >> $clog
+            cat $gsetlog | sed -e "s/^/${type}\/" >> $clog
             print_summary $ambcnt $cnt > $rsltdir/summary
         done
     done    
