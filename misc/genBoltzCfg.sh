@@ -107,19 +107,19 @@ launch(){
     xtraoptions=""
     if [ "$boltz" = "D" ]
     then
-	_gdir="${boltzlexdir}"
+      _gdir="${boltzlexdir}"
     else
-	_gdir="${boltzlexdir}"
-	xtraoptions="-n $n_nt -t $n_t"
+      _gdir="${boltzlexdir}"
+      xtraoptions="-n $n_nt -t $n_t"
     fi
-	
+
     for i in $(seq 1 $times)
     do
-	subdir="${_gdir}/$i"
-	mkdir -p $subdir
-	cp $BOLTZ_DIR/test/prog $subdir
-        (export BOLTZ_PROG="$subdir/prog";$boltzprog -d $_gdir -N $samples -p $sprec -v $vprec $xtraoptions -i $i -L) &
-        sleep 2
+      subdir="${_gdir}/$i"
+      mkdir -p $subdir
+      cp $BOLTZ_DIR/test/prog $subdir
+      (export BOLTZ_PROG="$subdir/prog";$boltzprog -d $_gdir -N $samples -p $sprec -v $vprec $xtraoptions -i $i -L) &
+      sleep 2
     done    
 }
 

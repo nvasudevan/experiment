@@ -27,63 +27,58 @@ import os, sys, tempfile, subprocess
 import CFG, Lexer
 import Utils, ValidGrammar
 
+# for validation
+EMPTY_ALTS_RATIO = 0.25
+MAXALTS = 10
+
+
 class MutateGrammar:
 
     def __init__(self, gp, lp, mutype, cnt, gdir):
         self.lex = Lexer.parse(open(lp, "r").read())
         self.cfg = CFG.parse(self.lex, open(gp, "r").read())
         self.mutype = mutype
-        self.symbolic_tokens = []
-        self.tokens = [rule.name for rule in self.cfg.rules if rule.name != 'root']
-        self.tokens += self.lex.keys()
+        self.gdir = gdir
+        self.tokens = self.lex.keys()
+        for rule in self.cfg.rules:
+            if rule.name != 'root']:
+                self.tokens.append(rule.name)
+
         random.shuffle(self.tokens)
 
-        cfgf = open(gp, "r")
-        lines = cfgf.readlines()
-        cfgf.close()
-        header = "%nodefault\n\n"
-        for l in lines:
-            if l.startswith("%token"):
-                self.symbolic_tokens = l[6:l.index(";")].replace(" ","").split(",")
-                header = "{0}\n%nodefault\n\n".format(l)
-                break
-        
+        self.header = Utils.cfg_header(gp)
+        self.symbolic_tokens = Utils.sym_tokens(gp)
 
-        gf = os.path.basename(gp)
-        mu_dir = gdir + "/" + self.mutype
+        mu_dir = self.gdir + "/" + self.mutype
         if not os.path.exists(mu_dir):
             os.makedirs(mu_dir)
         
-        base_md5 = hashlib.md5(open(gp,'r').read()).hexdigest()
+        self.run(cnt)
+
+
+    def check_duplicate_cfg(self):
+        """ Avoid duplicate cfg's """
+        for dir, subdirs, files in os.walk("%s/%s" % (self.gdir, self.mutype)):
+            for f in files:
+                tgp = os.path.join(dir, f)
+                if CompareCFG.compare(gp, tgp):
+                    print "%s == %s" % (gp, tgp)
+                    return True
+
+        return False
+
+
+    def run(self, cnt):
         i = 1
         while i <= cnt:
-            cfg = self.modify_grammar()
+            cfg = self.mutate_grammar()
             tp = tempfile.mktemp()
             tf = open(tp,"w")
-            tf.write(header)
+            tf.write(self.header)
             tf.write("%s\n" % str(cfg))
             tf.close()
             
-            if ValidGrammar.valid(tp, lp, 10, 0.25):
-                _md5 = hashlib.md5(open(tp,'r').read()).hexdigest()
-                _match = False
-                # now run a md5sum on all the files for this mutation
-                for p,q,r in os.walk(gdir):
-                    for f in r:
-                        __gp = os.path.join(p,f)
-                        __gp_md5 = hashlib.md5(open(__gp,'r').read()).hexdigest()
-                        # if md5 matches with the base grammar
-			# or with one of the mutated grammars, then throw away this file
-			if (_md5 == base_md5) or (_md5 == __gp_md5):
-                             print "md5:%s:curr,base,other=%s,%s,%s" % \
-			     (str(_md5),tp,gp,__gp)
-			     _match = True
-			     break
-
-                    if _match:
-                        break
-
-
+            if ValidGrammar.valid(tp, lp, MAXALTS, EMPTY_ALTS_RATIO):
                 if not _match:
                     _gp = '%s/%s_%s.acc' % (mu_dir, os.path.splitext(gf)[0], i)
                     r = subprocess.call(["cp", tp, _gp])
@@ -92,9 +87,9 @@ class MutateGrammar:
 
                     i += 1
 
-		if os.path.exists(tp):
+                if os.path.exists(tp):
                     os.remove(tp)
-            
+
 
     def randomTok(self):
         tok = random.choice(self.tokens)
@@ -128,16 +123,7 @@ class MutateGrammar:
                 seq[j] = self.randomTok()
             elif self.mutype == 'delete':
                 del seq[j]
-        elif self.mutype == 'switchadj':
-            seqs = [x for x in rule.seqs if len(x) >= 2]
-            seq = random.choice(seqs)
-            i = random.randint(0, len(seq)-2)
-            j = i+1
-            # switch the tokens seq[i] <-> seq[j]
-            t = seq[i]
-            seq[i] = seq[j]
-            seq[j] = t
-        elif self.mutype == 'switchany':
+        elif self.mutype == 'switch':
             seqs = [x for x in rule.seqs if len(x) >= 2]
             seq = random.choice(seqs)
             i,j = random.sample(xrange(len(seq)),2)
@@ -149,7 +135,7 @@ class MutateGrammar:
         print "++ " , rule
             
     
-    def modify_grammar(self):
+    def mutate_grammar(self):
         """ Grammar is modified in one of the ways:
             1) empty - identify rule with no empty alts, and pick a rule randonly
                and add an empty alt
@@ -186,18 +172,14 @@ class MutateGrammar:
             key = random.choice(keys)
             rule = _cfg.get_rule(key)
             self.modify_seq(rule)
-        elif self.mutype in ['switchadj','switchany']:
+        elif self.mutype in ['switch']:
             keys = []
             for r in _cfg.rules:
-                _switch = False
                 for seq in r.seqs:
                     if len(seq) >= 2:
-                        _switch = True
+                        keys.append(r.name)
                         break
-                        
-                if _switch:
-                    keys.append(r.name)
-                        
+
             key = random.choice(keys)
             rule = _cfg.get_rule(key)
             self.modify_seq(rule)    
@@ -222,12 +204,11 @@ def usage(msg=None):
     "-t <type of mutation> " \
     "-n <number of variations to generate> <grammar> <lexer> " \
     "\n\n - type of mutation can be one of the following: " \
-    "\n   - empty - add empty alternative" \
+    "\n   - empty  - add empty alternative" \
     "\n   - mutate - mutate symbol" \
-    "\n   - add - add a symbol" \
+    "\n   - add    - add a symbol" \
     "\n   - delete - remove a symbol" \
-    "\n   - switchadj - switch adjacent symbols" \
-    "\n   - switchany - switch any two symbols in an alternative\n\n")
+    "\n   - switch - switch any two symbols\n\n")
     sys.exit(1)
     
     
@@ -247,12 +228,11 @@ if __name__ == "__main__":
         
     if mutype == None:
         usage("\nProvide -t <type of mutation> \n\n")
-    elif mutype not in ['empty','mutate','add','delete','switchadj','switchany']:
+    elif mutype not in ['empty', 'mutate', 'add', 'delete', 'switch']:
         usage("\nIncorrect mutation type. See usage.\n\n")
     elif cnt == None:
         usage("\nProvide -n <no of variants to generate> \n\n")
     elif gdir == None:
         usage("\nProvide a directory for creating grammars \n\n")
-        
-        
+
     generate(args[0], args[1], mutype, cnt, gdir)

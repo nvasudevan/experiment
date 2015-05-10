@@ -25,6 +25,31 @@ from sets import Set
 import Lexer, CFG
 
 
+def sym_tokens(gp):
+    gf = open(gp, "r")
+    lines = cfgf.readlines()
+    gf.close()
+
+    for l in cfg_lines:
+        if l.startswith("%token"):
+            return l[6:l.index(";")].replace(" ","").split(",")
+
+    return []
+
+
+def cfg_header(gp):
+    gf = open(gp, "r")
+    lines = cfgf.readlines()
+    gf.close()
+
+    header = "%nodefault\n\n"
+    for l in cfg_lines:
+        if l.startswith("%token"):
+            header = "{0}\n%nodefault\n\n".format(l)
+            return header
+
+    return header
+
 
 def genSymbols(cfggen, minsize, maxsize):
     # we need one less nonterminal as we have start symbol - root

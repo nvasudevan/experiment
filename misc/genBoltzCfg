@@ -149,6 +149,7 @@ class BoltzGrammarGenerator:
 
         print "\n=> no of samples tried: %s" % str(_cnt) 
       
+
     def usage(self, msg=None):
         sys.stderr.write("genBoltz -d <grammar directory> -N <no of samples> " \
           "-p <precision in float> -n <no of nonterminals> -t <no of terminals> " \

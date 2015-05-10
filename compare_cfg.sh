@@ -48,7 +48,7 @@ mutlang() {
             lex="../../lex/${l}.lex"
             srcg="${t}/${l}/${l}.0_$bg"
             tgtg="${t}/${l}/${l}.0_$tg"
-	        out=$(python $cfgp $lex $srcg $tgtg | tail -1)
+            out=$(python $cfgp $lex $srcg $tgtg | tail -1)
             echo "$srcg - $tgtg,$out"
           fi
         done
@@ -60,7 +60,7 @@ mutlang() {
 # path to cfg program
 expdir="$HOME/codespace/experiment"
 cfgp="$expdir/misc/CompareCFG.py"
-boltzcfgsizes=$(seq 71 71)
+boltzcfgsizes=$(seq 79 79)
 mugrammars="Pascal SQL Java C CSS"
 mutypes="empty add mutate delete switchadj switchany"
 

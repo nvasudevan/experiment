@@ -25,10 +25,10 @@ def compare(lp, gf1, gf2):
     _cfg2 = _cfg(cfg2)
     
     if _cfg1 == _cfg2:
-        print "True"
-    else:
-        print "False"
+        return True
 
+    return False
 
 if __name__ == "__main__":
-    compare(sys.argv[1],sys.argv[2],sys.argv[3])
+    x = compare(sys.argv[1],sys.argv[2],sys.argv[3])
+    print x
