@@ -25,12 +25,22 @@ from sets import Set
 import Lexer, CFG
 
 
+def max_no_alts(cfg):
+    n = 0
+    for rule in cfg.rules:
+        l = len(rule.seqs)
+        if l > n:
+            n = l
+
+    return n
+
+
 def sym_tokens(gp):
     gf = open(gp, "r")
-    lines = cfgf.readlines()
+    lines = gf.readlines()
     gf.close()
 
-    for l in cfg_lines:
+    for l in lines:
         if l.startswith("%token"):
             return l[6:l.index(";")].replace(" ","").split(",")
 
@@ -39,11 +49,11 @@ def sym_tokens(gp):
 
 def cfg_header(gp):
     gf = open(gp, "r")
-    lines = cfgf.readlines()
+    lines = gf.readlines()
     gf.close()
 
     header = "%nodefault\n\n"
-    for l in cfg_lines:
+    for l in lines:
         if l.startswith("%token"):
             header = "{0}\n%nodefault\n\n".format(l)
             return header
@@ -56,7 +66,7 @@ def genSymbols(cfggen, minsize, maxsize):
     n_syms = (cfggen.no_nonterms-1) + cfggen.no_terms
     symbols =  Set()
     while (len(symbols) < (n_syms)):
-	size = random.randint(minsize,maxsize)
+        size = random.randint(minsize,maxsize)
         sym = ''.join(random.choice(string.uppercase) for x in range(size))
         symbols.add(sym)
             
