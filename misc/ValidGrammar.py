@@ -217,6 +217,7 @@ def unreachable(cfg):
 def has_too_many_alts(cfg, maxalts):
     for rule in cfg.rules:
         if len(rule.seqs) > maxalts:
+            print "r: " , rule
             return True            
 
     return False
@@ -252,28 +253,28 @@ def has_too_many_empty_alts(cfg, ratio):
 def valid(gf, lf, max_alts_allowed=None, empty_alts_ratio=None):
     """ Generated grammar is valid if it:
         a) has no empty rule
-	b) number of alternatives/rule < max_alts_allowed
+        b) number of alternatives/rule < max_alts_allowed
         c) %age of empty alternatives < empty_alts_ratio 
         d) has no unreachable rules 
         e) doesn't contain a subset which taken no input 
-	f) is not trivially ambiguous """
+        f) is not trivially ambiguous """
        
     lex = Lexer.parse(open(lf, "r").read())
     cfg = CFG.parse(lex, open(gf, "r").read())
 
     # check for empty rules
     if empty_rule(cfg):
-	return False
+        return False
 
     # check if any of the rule has > N alts
     if max_alts_allowed is not None:
-	if has_too_many_alts(cfg, max_alts_allowed):
-	    return False
+        if has_too_many_alts(cfg, max_alts_allowed):
+            return False
 
     # check if we have too many empty alts
     if empty_alts_ratio is not None:
-	if has_too_many_empty_alts(cfg, empty_alts_ratio):
-	    return False
+        if has_too_many_empty_alts(cfg, empty_alts_ratio):
+            return False
 
     # Check if all the rules are reachable from the start rule.
     if (len(unreachable(cfg)) > 0):
