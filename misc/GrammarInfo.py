@@ -20,6 +20,7 @@
 # IN THE SOFTWARE.
 
 
+import argparse
 import os, sys
 import sets
 import CFG, Lexer
@@ -57,16 +58,20 @@ def alts_info(cfg, tlen):
 
 if __name__ == "__main__":
 
-    gp = sys.argv[1]
-    lp = sys.argv[2]
-    lalt = int(sys.argv[3])
+    parser = argparse.ArgumentParser()
+    parser.add_argument('gp', help='relative path to grammar file')
+    parser.add_argument('lp', help='relative path to lex file')
+    parser.add_argument('altlen', help='threshold alternative length')
+    args = parser.parse_args()
+    gp = args.gp
+    lp = args.lp
+    altlen = int(args.altlen)
     lex = Lexer.parse(open(lp, "r").read())
     cfg = CFG.parse(lex, open(gp, "r").read())
-    total, empty, long_alts, longest, nonterms, terms = alts_info(cfg, lalt)
+    total, empty, long_alts, longest, nonterms, terms = alts_info(cfg, altlen)
     cycles = ValidGrammar.cyclicInfo(cfg, lex)
     
-    headers =  "rules, alts, empty, empty(%), long alts, long alts(%),\
-                longest, nonterms, terms, cycles"
+    headers =  "rules, alts, empty, empty(%), long alts, long alts(%), longest, nonterms, terms, cycles"
     print headers
     print "%s, %s, %s, %s, %s, %s, %s, %s, %s, %s" % \
           (len(cfg.rules), total, empty, ((empty * 1.0)/total),
