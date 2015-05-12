@@ -17,10 +17,10 @@ def _cfg(cfg):
     return _cfg
 
 
-def compare(lp, gf1, gf2):
+def compare(gp1, gp2, lp):
     lex = Lexer.parse(open(lp,"r").read())
-    cfg1 = CFG.parse(lex, open(gf1, "r").read())
-    cfg2 = CFG.parse(lex, open(gf2, "r").read())
+    cfg1 = CFG.parse(lex, open(gp1, "r").read())
+    cfg2 = CFG.parse(lex, open(gp2, "r").read())
     _cfg1 = _cfg(cfg1)
     _cfg2 = _cfg(cfg2)
     
@@ -30,5 +30,7 @@ def compare(lp, gf1, gf2):
     return False
 
 if __name__ == "__main__":
-    x = compare(sys.argv[1],sys.argv[2],sys.argv[3])
-    print x
+    lp = sys.argv[1]
+    g1 = sys.argv[2]
+    g2 = sys.argv[3]
+    print compare(g1, g2, lp)
