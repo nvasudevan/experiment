@@ -45,7 +45,7 @@ mutlang() {
       for bg in $(find ${t}/${l} -name "*.acc" | cut -d_ -f 2 | sort -h); do
         for tg in $(find ${t}/${l} -name "*.acc" | cut -d_ -f 2 | sort -h); do
           if [ $bg != $tg ]; then
-            lex="../../lex/${l}.lex"
+            lex="$expdir/grammars/lex/${l}.lex"
             srcg="${t}/${l}/${l}.0_$bg"
             tgtg="${t}/${l}/${l}.0_$tg"
             out=$(python $cfgp $lex $srcg $tgtg | tail -1)
@@ -62,7 +62,7 @@ expdir="$HOME/codespace/experiment"
 cfgp="$expdir/misc/CompareCFG.py"
 boltzcfgsizes=$(seq 79 79)
 mugrammars="Pascal SQL Java C CSS"
-mutypes="empty add mutate delete switchadj switchany"
+mutypes="empty add mutate delete switch"
 
 cd $expdir/grammars/$gset
 [ "$gset" == "boltzcfg" ] && boltzcfg
