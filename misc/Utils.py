@@ -35,6 +35,24 @@ def max_no_alts(cfg):
     return n
 
 
+def randomTok(cfg, lex, sym_toks):
+    tokens = lex.keys()
+    for rule in cfg.rules:
+        if rule.name != 'root':
+            tokens.append(rule.name)
+
+    random.shuffle(tokens)
+    tok = random.choice(tokens)
+
+    if tok in lex.keys():
+        if tok in sym_toks:
+            return CFG.Sym_Term(tok)
+
+        return CFG.Term(tok)
+    else:
+        return CFG.Non_Term_Ref(tok)        
+
+
 def sym_tokens(gp):
     gf = open(gp, "r")
     lines = gf.readlines()
