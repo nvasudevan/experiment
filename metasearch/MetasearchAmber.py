@@ -73,7 +73,7 @@ class Hillclimb:
             self.k_values.append((neighval,neighfit))
 
             fitvals = [f for _,f in self.k_values]
-            if MetaUtils.localmax(fitvals):
+            if MetaUtils.localmax(fitvals, 10):
                 MetaUtils.report(self.k_values)
                 sys.exit(0)
 
