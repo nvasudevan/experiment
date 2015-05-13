@@ -68,7 +68,7 @@ def localmax(fitvals, n=3):
     """ if the last n values are less then max, then stop """
     if len(fitvals) > n:
         lastn = fitvals[-n:]
-        maxfit = max(fitvals)
+        maxfit = max(fitvals[:-n])
 
         for v in lastn:
             if v > maxfit:
