@@ -23,12 +23,12 @@ export glang lgrammars nlang
 
 gmutlang="$grammardir/mutlang"
 mugrammars="Pascal SQL Java C CSS"
-mutypes="empty add mutate delete switchadj switchany"
-nmutations="10"
+mutypes="empty add mutate delete switch"
+nmutations="20"
 export gmutlang mugrammars mutypes nmutations 
 
 gboltz="$grammardir/boltzcfg"
-boltzcfgsizes=$(seq 10 65)
+boltzcfgsizes=$(seq 10 75)
 nboltz="10"
 
 export gboltz boltzcfgsizes nboltz 
