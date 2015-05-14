@@ -126,7 +126,7 @@ run_mutlang() {
              cd $cwd
              rm -Rf $tmp
          done
-         cat $gsetlog | sed -e "s/^/${type}\/" >> $clog
+         cat $gsetlog | sed -e "s/^/${type}\//" >> $clog
          print_summary $ambcnt $cnt > $rsltdir/summary        
        done
     done
