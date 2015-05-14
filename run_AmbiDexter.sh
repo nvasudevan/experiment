@@ -161,53 +161,53 @@ run_mutlang() {
     do
        for g in $mugrammars
        do
-            rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
-            mkdir -p $rsltdir
-            echo "result ==> $rsltdir"
-            gsetlog="$rsltdir/log"
-            cp /dev/null $gsetlog
-            cnt=0
-            ambcnt=0        
-            glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
-            for n in $glist
-            do
-                tmp=$(mktemp -d)
-                glog="$rsltdir/${g}.0_${n}.log"
-                gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
-                gy="$tmp/$g.0_$n.y"
-                ((cnt+=1))
-                acc_to_yacc $gacc $gy
-                $ambdxtcmd -s $gy > $glog 2>&1
-                msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
-                if [ "$msg" != "" ]
-                then
-                    echo "$g.0_$n,yes" | tee -a $gsetlog
-                    ((ambcnt+=1))
-                    rm -Rf $tmp
-                    continue
-                fi
-                msg=$(cat $glog | egrep -i 'Unproductive start symbol' | cut -d: -f2,3)
-                if [ "$msg" != "" ]
-                then 
-                    echo "$g.0_$n," | tee -a $gsetlog
-                    rm -Rf $tmp
-                    continue
-                fi            
-                out="$g.0_$n,"
-                timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
-                amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
-                if [ "$amb" != "" ]
-                then
-                    ((ambcnt+=1))
-                    out="$g.0_$n,yes"
-                fi
-                echo $out | tee -a $gsetlog
-                [ -f $glog ] && gzip -f $glog
-                rm -Rf $tmp            
-          done
-          cat $gsetlog | sed -e "s/^/${type}\/" >> $clog
-          print_summary $ambcnt $cnt > $rsltdir/summary
-          print_filter_summary $rsltdir >> $rsltdir/summary
+           rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
+           mkdir -p $rsltdir
+           echo "result ==> $rsltdir"
+           gsetlog="$rsltdir/log"
+           cp /dev/null $gsetlog
+           cnt=0
+           ambcnt=0
+           glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
+           for n in $glist
+           do
+               tmp=$(mktemp -d)
+               glog="$rsltdir/${g}.0_${n}.log"
+               gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
+               gy="$tmp/$g.0_$n.y"
+               ((cnt+=1))
+               acc_to_yacc $gacc $gy
+               $ambdxtcmd -s $gy > $glog 2>&1
+               msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
+               if [ "$msg" != "" ]
+               then
+                   echo "$g.0_$n,yes" | tee -a $gsetlog
+                   ((ambcnt+=1))
+                   rm -Rf $tmp
+                   continue
+               fi
+               msg=$(cat $glog | egrep -i 'Unproductive start symbol' | cut -d: -f2,3)
+               if [ "$msg" != "" ]
+               then
+                   echo "$g.0_$n," | tee -a $gsetlog
+                   rm -Rf $tmp
+                   continue
+               fi
+               out="$g.0_$n,"
+               timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
+               amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
+               if [ "$amb" != "" ]
+               then
+                   ((ambcnt+=1))
+                   out="$g.0_$n,yes"
+               fi
+               echo $out | tee -a $gsetlog
+               [ -f $glog ] && gzip -f $glog
+               rm -Rf $tmp
+           done
+           cat $gsetlog | sed -e "s/^/${type}\//" >> $clog
+           print_summary $ambcnt $cnt > $rsltdir/summary
+           print_filter_summary $rsltdir >> $rsltdir/summary
        done
     done
 }
