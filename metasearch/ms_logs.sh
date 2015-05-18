@@ -3,18 +3,29 @@
 usage() {
   msg="$1"
   [ ! -z "$msg" ] && echo $msg
-  echo "Usage: $0 <amber|ambidexter|sinbad> <boltzcfg|lang|mutlang>"
+  echo "Usage: $0 -d <log results directory> -t <amber|ambidexter|sinbad> -g <boltzcfg|lang|mutlang>"
   exit 1
 }
 
-tool="$1"
-gset="$2"
+logdir=""
+tool=""
+gset=""
 
-[ -z "$tool" ] && usage
-[ -z "$gset" ] && usage
+set -- $(getopt d:t:g: "$@")
 
-expdir="${HOME}/codespace/experiment"
-logdir="${expdir}/results"
+while [ $# -gt 0 ]
+do
+    case "$1" in 
+     -d) logdir=$2 ; shift;;
+     -t) tool=$2 ; shift;;
+     -g) gset=$2 ; shift;;
+    (--) shift; break;;
+    (-*) usage "$0: error - unrecognized option $1" 1>&2; ;;
+     (*) break;;  
+    esac
+    shift
+done
+
 out="/tmp/$tool"
 
 filters="lr0 slr1 lalr1 lr1"
@@ -129,9 +140,7 @@ case "$tool" in
    ambidexter $gset
    ;;
  sinbad)
-   sinbad boltzcfg
-   sinbad lang
-   sinbad mutlang
+   sinbad $gset
    ;;
  *) 
    usage "Error - unrecognized option for tool: $tool" 
