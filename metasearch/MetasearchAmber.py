@@ -49,9 +49,9 @@ class Hillclimb:
             return int(math.ceil(v * EX_STEP2))
 
         if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
-            return int(math.ceil(v * EX_STEP1))
+            return v + LEN_STEP1
 
-        return int(math.ceil(v * EX_STEP2))
+        return v + LEN_STEP2
 
 
     def run(self):
