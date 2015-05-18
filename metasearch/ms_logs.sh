@@ -1,15 +1,18 @@
 #!/bin/bash
 
-[ -z "$1" ] && usage
-
 usage() {
   msg="$1"
   [ ! -z "$msg" ] && echo $msg
-  echo "Usage: $0 <amber|ambidexter|sinbad>"
+  echo "Usage: $0 <amber|ambidexter|sinbad> <boltzcfg|lang|mutlang>"
   exit 1
 }
 
 tool="$1"
+gset="$2"
+
+[ -z "$tool" ] && usage
+[ -z "$gset" ] && usage
+
 expdir="${HOME}/codespace/experiment"
 logdir="${expdir}/results"
 out="/tmp/$tool"
@@ -119,17 +122,11 @@ sinbad() {
 
 case "$tool" in
  amber)
-   amber boltzcfg length
-   amber boltzcfg examples
-   amber lang length
-   amber lang examples
-   amber mutlang length
-   amber mutlang examples
+   amber $gset length
+   amber $gset examples
    ;;
  ambidexter)
-   ambidexter boltzcfg
-   ambidexter lang
-   ambidexter mutlang
+   ambidexter $gset
    ;;
  sinbad)
    sinbad boltzcfg
