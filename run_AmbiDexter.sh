@@ -296,6 +296,11 @@ run_test() {
     print_filter_summary $rsltdir >> $rsltdir/summary
 }
 
+usage() {
+  echo "$0 -t <time limit (secs)> [-f (lr0|slr1|lalr1|lr1)] <-i 0|-k N> -g <grammar>"
+  exit 1
+}
+
 set -- $(getopt g:t:f:k:i: "$@")
 
 inclength=""
@@ -319,6 +324,11 @@ options=""
 [ "$filter" != "" ] && options="$options -f $filter"
 [ "$length" != "" ] && options="$options -k $length"
 [ "$inclength" != "" ] && options="$options -i $inclength"
+
+if [ -z "$options" ] || [ -z "$timelimit" ]; then
+  echo "Some of the options are missing. See usage"
+  usage
+fi
 
 ambdxtcmd="java -Xss8m -Xmx$memlimit -jar $wrkdir/ambidexter/build/AmbiDexter.jar"
 export ambdxtcmd 

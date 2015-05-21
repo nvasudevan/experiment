@@ -35,12 +35,12 @@ run_randomcfg() {
             $lex $grandom/$randomsize/lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
             $ambercmd 2> /dev/null > $glog
-            ((cnt+=1))
+            cnt=$((cnt+1))
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$randomsize/$g," 
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -71,12 +71,12 @@ run_lang() {
             $lex $lexdir/$g.lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
             $ambercmd 2> /dev/null > $glog
-            ((cnt+=1))
+            cnt=$((cnt+1))
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$g.$i," 
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="$g.$i,yes"
             fi
             echo $out| tee -a $gsetlog
@@ -114,11 +114,11 @@ run_mutlang() {
              $cc -w -o amber -O3 yygrammar.c $ambersrc
              $ambercmd 2> /dev/null > $glog
              amb=$(grep -o 'Grammar ambiguity detected' $glog)
-             ((cnt+=1))
+             cnt=$((cnt+1))
              out="${g}.0_${n},"
              if [ "$amb" != "" ]
              then
-                 ((ambcnt+=1))
+                 ambcnt=$((ambcnt+1))
                  out="${g}.0_${n},yes"
              fi
              echo $out | tee -a $gsetlog
@@ -151,12 +151,12 @@ run_boltzcfg() {
             $lex $gboltz/$boltzsize/lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
             $ambercmd 2> /dev/null > $glog
-            ((cnt+=1))
+            cnt=$((cnt+1))
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$boltzsize/$g,"
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -185,12 +185,12 @@ run_test() {
         $lex $lexdir/general.lex || exit $?
         $cc -w -o amber -O3 yygrammar.c $ambersrc
         $ambercmd 2> /dev/null > $glog
-        ((cnt+=1))
+        cnt=$((cnt+1))
         amb=$(grep -o 'Grammar ambiguity detected' $glog)
         out="$g,"
         if [ "$amb" != "" ]
         then
-            ((ambcnt+=1))
+            ambcnt=$((ambcnt+1))
             out="$g,yes"
         fi
         echo "$out" | tee -a $gsetlog
@@ -199,6 +199,11 @@ run_test() {
         rm -Rf $tmp  
     done
     print_summary $ambcnt $cnt > $rsltdir/summary
+}
+
+usage() {
+  echo "$0 -t <time limit (secs)> -g <grammar set> <-n|-l> [-e]"
+  exit 1
 }
 
 set -- $(getopt g:t:n:l:e "$@")
@@ -231,9 +236,9 @@ if [ "$length" != "" ]; then
     options="${options} length $length"
 fi
 
-if [ -z "$options" ]; then
-    echo "No options provided for Amber. Exiting."
-    exit 1
+if [ -z "$options" ] || [ -z "$timelimit" ]; then
+    echo "Some of the options were not provided for running Amber. see usage"
+    usage
 fi
 
 ambercmd="timeout ${timelimit}s ./amber $options"

@@ -29,11 +29,11 @@ run_randomcfg() {
             glog="$rsltdir/${randomsize}_${g}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
-            ((cnt+=1))
+            cnt=$((cnt+1))
             out="$randomsize/$g,"
             if [ "$amb" != "" ]
             then 
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -68,11 +68,11 @@ run_mutlang(){
             glog="$rsltdir/${g}.0_${n}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
-            ((cnt+=1))
+            cnt=$((cnt+1))
             out="${g}.0_${n},"
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="${g}.0_${n},yes"
             fi
             echo $out | tee -a $gsetlog
@@ -103,11 +103,11 @@ run_boltzcfg(){
             glog="$rsltdir/${boltzsize}_${g}.log"
             $sinbadcmd ${_acc} ${_lex}  > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
-            ((cnt+=1))
+            cnt=$((cnt+1))
             out="$boltzsize/$g,"
             if [ "$amb" != "" ]
             then 
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -136,11 +136,11 @@ run_lang() {
             glog="$rsltdir/${g}_${i}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
-            ((cnt+=1))
+            cnt=$((cnt+1))
             out="$g.$i,"
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="$g.$i,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -167,11 +167,11 @@ run_test() {
         glog="$rsltdir/${g}_${g}.log"
         $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
         amb=$(grep -o 'Grammar ambiguity detected' $glog)
-        ((cnt+=1))
+        cnt=$((cnt+1))
         out="$g,"
         if [ "$amb" != "" ]
         then
-            ((ambcnt+=1))
+            ambcnt=$((ambcnt+1))
             out="$g,yes"
         fi
         echo $out | tee -a $gsetlog
@@ -179,6 +179,11 @@ run_test() {
     done
     rm -Rf $tmp
     print_summary $ambcnt $cnt   
+}
+
+usage() {
+  echo "$0 -t <time limit (secs)> -g <grammar> -b <backend> [-d <depth>] [-w <weight>]>>"
+  exit 1
 }
 
 set -- $(getopt g:b:t:d:w: "$@")
