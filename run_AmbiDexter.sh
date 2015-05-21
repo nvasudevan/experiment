@@ -35,7 +35,7 @@ print_filter_summary() {
                 [ $unamb == 1 ] && ((unambcnt+=1))
             fi
         fi
-        ((cnt+=1))
+        cnt=$((cnt+1))
     done
     avgratio="n/a"
     avgflttime="n/a"
@@ -66,14 +66,14 @@ run_randomcfg() {
             glog="$rsltdir/${randomsize}_${g}.log"
             gacc="$grandom/$randomsize/$g.acc"
             gy="$tmp/$g.y"
-            ((cnt+=1))
+            cnt=$((cnt+1))
             acc_to_yacc $gacc $gy
             $ambdxtcmd -s $gy > $glog 2>&1
             msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then
                 echo "$randomsize/$g,yes" | tee -a $gsetlog
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 rm -Rf $tmp
                 continue
             fi
@@ -89,7 +89,7 @@ run_randomcfg() {
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -117,14 +117,14 @@ run_lang() {
             glog="$rsltdir/${g}_${i}.log"
             gacc="$glang/acc/$g.$i.acc"
             gy="$tmp/$g.$i.y"
-            ((cnt+=1))
+            cnt=$((cnt+1))
             acc_to_yacc $gacc $gy
             $ambdxtcmd -s $gy > $glog 2>&1
             msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then
                 echo "$g.$i,yes" | tee -a $gsetlog
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 rm -Rf $tmp
                 continue
             fi
@@ -140,7 +140,8 @@ run_lang() {
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
+                echo "ambcnt: $ambcnt" 
+                ambcnt=$((ambcnt+1))
                 out="$g.$i,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -175,14 +176,14 @@ run_mutlang() {
                glog="$rsltdir/${g}.0_${n}.log"
                gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
                gy="$tmp/$g.0_$n.y"
-               ((cnt+=1))
+               cnt=$((cnt+1))
                acc_to_yacc $gacc $gy
                $ambdxtcmd -s $gy > $glog 2>&1
                msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
                if [ "$msg" != "" ]
                then
                    echo "$g.0_$n,yes" | tee -a $gsetlog
-                   ((ambcnt+=1))
+                   ambcnt=$((ambcnt+1))
                    rm -Rf $tmp
                    continue
                fi
@@ -198,7 +199,7 @@ run_mutlang() {
                amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
                if [ "$amb" != "" ]
                then
-                   ((ambcnt+=1))
+                   ambcnt=$((ambcnt+1))
                    out="$g.0_$n,yes"
                fi
                echo $out | tee -a $gsetlog
@@ -228,14 +229,14 @@ run_boltzcfg() {
             glog="$rsltdir/${boltzsize}_${g}.log"
             gacc="$gboltz/$boltzsize/$g.acc"
             gy="$tmp/$g.y"
-            ((cnt+=1))
+            cnt=$((cnt+1))
             acc_to_yacc $gacc $gy
             $ambdxtcmd -s $gy > $glog 2>&1
             msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then
                 echo "$boltzsize/$g,yes" | tee -a $gsetlog
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 rm -Rf $tmp
                 continue
             fi
@@ -251,7 +252,7 @@ run_boltzcfg() {
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
+                ambcnt=$((ambcnt+1))
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -281,11 +282,11 @@ run_test() {
         acc_to_yacc $gacc $gy
         timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
         amb=$(grep -o 'Ambiguous string found' $glog)
-        ((cnt+=1))
+        cnt=$((cnt+1))
         out="$g,"
         if [ "$amb" != "" ]
         then
-            ((ambcnt+=1))
+            ambcnt=$((ambcnt+1))
             out="$g,yes"
         fi
         echo $out | tee -a $gsetlog
