@@ -35,7 +35,8 @@ wgtbackends="dynamic4 dynamic7"
 amber() {
   g=$1
   opt=$2
-  echo -e "\n=> g: $g , opt: $opt"
+  echo -e "\n=> g: $g [$opt]"
+  echo "len/ex, $opt, ${opt}+ell"
   if [ -d $logdir/$tool/$g ]; then
     cd $logdir/$tool/$g
     grep -c yes 10s_${opt}_*/log \
@@ -58,9 +59,19 @@ amber() {
 
 ambidexter() {
   g=$1
-  echo -e "\n=> g: $g , opt: $opt"
+  echo -e "\n=> g: $g"
+  echo "length/inc, len, len+lr0, len+slr1, len+lalr1, len+lr1"
   if [ -d $logdir/$tool/$g ]; then
     cd $logdir/$tool/$g
+    # incremental length
+    inc=$(grep -c yes 10s_-i_0/log 2>/dev/null)
+    inc_lr0=$(grep -c yes 10s_-f_lr0_-i_0/log)
+    inc_slr1=$(grep -c yes 10s_-f_slr1_-i_0/log)
+    inc_lalr1=$(grep -c yes 10s_-f_lalr1_-i_0/log)
+    inc_lr1=$(grep -c yes 10s_-f_lr1_-i_0/log)
+    echo "0,$inc,$inc_lr0,$inc_slr1,$inc_lalr1,$inc_lr1"
+    echo ",,,,"
+    # fixed length
     grep -c yes 10s_-k_*/log 2>/dev/null \
             | sort -t_ -k3,3 -h \
             | sed -e "s/10s_-k_//" -e 's/\/log//' > ${out}.${g}
