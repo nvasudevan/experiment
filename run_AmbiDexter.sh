@@ -140,7 +140,6 @@ run_lang() {
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
-                echo "ambcnt: $ambcnt" 
                 ambcnt=$((ambcnt+1))
                 out="$g.$i,yes"
             fi
