@@ -78,7 +78,7 @@ run_mutlang(){
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
          done
-         cat $gsetlog | sed -e "s/^/${type}\/" >> $clog
+         cat $gsetlog | sed -e "s/^/${type}\//" >> $clog
          rm -Rf $tmp
          print_summary $ambcnt $cnt        
        done
