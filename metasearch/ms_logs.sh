@@ -3,22 +3,24 @@
 usage() {
   msg="$1"
   [ ! -z "$msg" ] && echo $msg
-  echo "Usage: $0 -d <log results directory> -t <amber|ambidexter|sinbad> -g <boltzcfg|lang|mutlang>"
+  echo "Usage: $0 -d <log results directory> -p <amber|ambidexter|sinbad> -g <boltzcfg|lang|mutlang> -t <timelimit>"
   exit 1
 }
 
 logdir=""
-tool=""
+prog=""
 gset=""
+timelimit=""
 
-set -- $(getopt d:t:g: "$@")
+set -- $(getopt d:t:g:p: "$@")
 
 while [ $# -gt 0 ]
 do
     case "$1" in 
      -d) logdir=$2 ; shift;;
-     -t) tool=$2 ; shift;;
+     -p) prog=$2 ; shift;;
      -g) gset=$2 ; shift;;
+     -t) timelimit=$2 ; shift;;
     (--) shift; break;;
     (-*) usage "$0: error - unrecognized option $1" 1>&2; ;;
      (*) break;;  
@@ -26,7 +28,7 @@ do
     shift
 done
 
-out="/tmp/$tool"
+out="/tmp/$prog"
 
 filters="lr0 slr1 lalr1 lr1"
 backends="dynamic1 dynamic2 dynamic3"
@@ -37,15 +39,15 @@ amber() {
   opt=$2
   echo -e "\n=> g: $g [$opt]"
   echo "len/ex, $opt, ${opt}+ell"
-  if [ -d $logdir/$tool/$g ]; then
-    cd $logdir/$tool/$g
-    grep -c yes 10s_${opt}_*/log \
+  if [ -d $logdir/$prog/$g ]; then
+    cd $logdir/$prog/$g
+    grep -c yes ${timelimit}s_${opt}_*/log \
             | sort -t_ -k3,3 -h \
-            | sed -e "s/10s_${opt}_//" -e 's/\/log//' \
+            | sed -e "s/${timelimit}s_${opt}_//" -e 's/\/log//' \
             > ${out}.${g}
-    grep -c yes 10s_ellipsis_${opt}_*/log \
+    grep -c yes ${timelimit}s_ellipsis_${opt}_*/log \
             | sort -t_ -k3,3 -h \
-            | sed -e "s/10s_ellipsis_${opt}_//" -e 's/\/log//' \
+            | sed -e "s/${timelimit}s_ellipsis_${opt}_//" -e 's/\/log//' \
             > ${out}.${g}.e
 
     lsort=$(cat ${out}.${g} ${out}.${g}.e | cut -d: -f1 | sort -h | uniq)
@@ -61,24 +63,24 @@ ambidexter() {
   g=$1
   echo -e "\n=> g: $g"
   echo "length/inc, len, len+lr0, len+slr1, len+lalr1, len+lr1"
-  if [ -d $logdir/$tool/$g ]; then
-    cd $logdir/$tool/$g
+  if [ -d $logdir/$prog/$g ]; then
+    cd $logdir/$prog/$g
     # incremental length
-    inc=$(grep -c yes 10s_-i_0/log 2>/dev/null)
-    inc_lr0=$(grep -c yes 10s_-f_lr0_-i_0/log)
-    inc_slr1=$(grep -c yes 10s_-f_slr1_-i_0/log)
-    inc_lalr1=$(grep -c yes 10s_-f_lalr1_-i_0/log)
-    inc_lr1=$(grep -c yes 10s_-f_lr1_-i_0/log)
+    inc=$(grep -c yes ${timelimit}s_-i_0/log 2>/dev/null)
+    inc_lr0=$(grep -c yes ${timelimit}s_-f_lr0_-i_0/log)
+    inc_slr1=$(grep -c yes ${timelimit}s_-f_slr1_-i_0/log)
+    inc_lalr1=$(grep -c yes ${timelimit}s_-f_lalr1_-i_0/log)
+    inc_lr1=$(grep -c yes ${timelimit}s_-f_lr1_-i_0/log)
     echo "0,$inc,$inc_lr0,$inc_slr1,$inc_lalr1,$inc_lr1"
     echo ",,,,"
     # fixed length
-    grep -c yes 10s_-k_*/log 2>/dev/null \
+    grep -c yes ${timelimit}s_-k_*/log 2>/dev/null \
             | sort -t_ -k3,3 -h \
-            | sed -e "s/10s_-k_//" -e 's/\/log//' > ${out}.${g}
+            | sed -e "s/${timelimit}s_-k_//" -e 's/\/log//' > ${out}.${g}
     for f in $filters; do
-      grep -c yes 10s_-f_${f}_-k_*/log 2>/dev/null \
+      grep -c yes ${timelimit}s_-f_${f}_-k_*/log 2>/dev/null \
             | sort -t_ -k5,5 -h \
-            | sed -e "s/10s_-f_${f}_-k_//" -e 's/\/log//' > ${out}.${g}.${f}
+            | sed -e "s/${timelimit}s_-f_${f}_-k_//" -e 's/\/log//' > ${out}.${g}.${f}
     done
 
     lsort=$(cat ${out}.${g} ${out}.${g}.*| cut -d: -f1 | sort -h | uniq)
@@ -96,15 +98,15 @@ ambidexter() {
 sinbad_gen_summary() {
   g=$1
   b=$2
-  grep -c yes 10s_-b_${b}_*/log 2>/dev/null \
+  grep -c yes ${timelimit}s_-b_${b}_*/log 2>/dev/null \
         | sort -t_ -k5,5 -k7,7 -h \
-        | sed -e "s/10s_-b_${b}_-d_//" -e 's/_-w_/,/' -e 's/\/log:/,/' > ${out}.${g}.${b}
+        | sed -e "s/${timelimit}s_-b_${b}_-d_//" -e 's/_-w_/,/' -e 's/\/log:/,/' > ${out}.${g}.${b}
 
   > ${out}.${g}.${b}.rec
-  dirs=$(find . -name "10s_-b_${b}_*" -type d -print | cut -d/ -f2 | sort -t_ -k5,5 -k7,7 -h)
+  dirs=$(find . -name "${timelimit}s_-b_${b}_*" -type d -print | cut -d/ -f2 | sort -t_ -k5,5 -k7,7 -h)
   for dir in $dirs; do 
     cnt=$(zegrep -o 'r:1' $dir/*.log.gz | wc -l)
-    d_w=$(echo $dir | sed -e "s/10s_-b_${b}_-d_//" -e 's/_-w_/,/')
+    d_w=$(echo $dir | sed -e "s/${timelimit}s_-b_${b}_-d_//" -e 's/_-w_/,/')
     echo "$d_w,$cnt" >> ${out}.${g}.${b}.rec
   done
 
@@ -113,8 +115,8 @@ sinbad_gen_summary() {
 sinbad() {
   g=$1
   echo -e "\n=> g: $g"
-  if [ -d $logdir/$tool/$g ]; then
-    cd $logdir/$tool/$g
+  if [ -d $logdir/$prog/$g ]; then
+    cd $logdir/$prog/$g
     for bend in $backends $wgtbackends; do 
       echo "processing $bend ..."
       sinbad_gen_summary $gset $bend
@@ -142,7 +144,7 @@ sinbad() {
 }
 
 
-case "$tool" in
+case "$prog" in
  amber)
    amber $gset length
    amber $gset examples
@@ -154,6 +156,6 @@ case "$tool" in
    sinbad $gset
    ;;
  *) 
-   usage "Error - unrecognized option for tool: $tool" 
+   usage "Error - unrecognized option for prog: $prog" 
    ;;
 esac
