@@ -143,13 +143,14 @@ def usage(msg=None):
         sys.stderr.write("** %s **\n" % msg)
 
     sys.stderr.write("Metasearch.py -x <experiment directory> " \
-    "-g <grammar set> -b <backend to run> -d <initial depth>\n")
+    "-g <grammar set> -b <backend to run> -d <initial depth> -t <time limit>\n")
     sys.exit(1)
 
 
 if __name__ == "__main__": 
-    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:w:")
+    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:b:d:w:t:")
     expdir, gset, backend, depth, wgt = None, None, None, None, None
+    timelimit = None
     for opt in opts:
         if opt[0] == "-x":
             expdir = opt[1]
@@ -159,6 +160,8 @@ if __name__ == "__main__":
             backend = opt[1]
         elif opt[0] == "-d":
             depth = int(opt[1])
+        elif opt[0] == "-t":
+            timelimit = int(opt[1])
         elif opt[0] == "-w":
             wgt = float(opt[1])
         else: 
@@ -167,5 +170,5 @@ if __name__ == "__main__":
     if (expdir == None) or (gset == None) or (backend == None) or (depth == None):
         usage("Missing arguments!")
 
-    Hillclimb(expdir, gset, backend, depth, wgt, TIMELIMIT)
+    Hillclimb(expdir, gset, backend, depth, wgt, timelimit)
     

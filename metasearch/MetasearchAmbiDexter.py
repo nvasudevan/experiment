@@ -69,17 +69,18 @@ def usage(msg=None):
         sys.stderr.write(msg)
         
     sys.stderr.write("MetasearchAmbiDexter.py -x <experiment directory> " \
-    "-g <grammar set> -k <initial length>\n")
+    "-g <grammar set> -k <initial length> -t <time limit>\n")
     sys.exit(1)
     
 
 
 if __name__ == "__main__": 
-    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:k:f:")
+    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:k:f:t:")
     expdir = None
     gset = None
     length = None
     filter = None
+    timelimit = None
     for opt in opts:
         if opt[0] == "-x":
             expdir = opt[1]
@@ -89,6 +90,8 @@ if __name__ == "__main__":
             filter = opt[1]
         elif opt[0] == "-k":
             length = int(opt[1])
+        elif opt[0] == "-t":
+            timelimit = int(opt[1])
         else: 
             usage("Unknown argument '%s'" % opt[0])   
 
@@ -96,5 +99,5 @@ if __name__ == "__main__":
         usage()
 
     print opts, args
-    Hillclimb(expdir, gset, length, filter, TIMELIMIT)
+    Hillclimb(expdir, gset, length, filter, timelimit)
     

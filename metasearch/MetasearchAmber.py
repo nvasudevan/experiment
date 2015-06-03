@@ -86,18 +86,20 @@ def usage(msg=None):
     if msg is not None:
         sys.stderr.write(msg)
 
-    sys.stderr.write("Metasearch.py -x <experiment directory> " \
-    "-g <grammar set> -n <number of examples> -l <initial length -e>\n")
+    sys.stderr.write("MetasearchAmber.py -x <experiment directory> " \
+    "-g <grammar set> -n <number of examples> -l <initial length> " \
+    "-t <time limit> -e\n")
     sys.exit(1)
 
 
 if __name__ == "__main__":
-    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:n:l:e")
+    opts, args = getopt.getopt(sys.argv[1 : ], "x:g:n:l:t:e")
     expdir = None
     gset = None
     length = None
     examples = None
     ellipsis = False
+    timelimit = None
     for opt in opts:
         if opt[0] == "-x":
             expdir = opt[1]
@@ -107,6 +109,8 @@ if __name__ == "__main__":
             examples = int(opt[1])
         elif opt[0] == "-l":
             length = int(opt[1])
+        elif opt[0] == "-t":
+            timelimit = int(opt[1])
         elif opt[0] == "-e":
             ellipsis = True
         else:
@@ -119,5 +123,5 @@ if __name__ == "__main__":
         usage()
 
     print opts, args
-    Hillclimb(expdir, gset, examples, length, ellipsis, TIMELIMIT)
+    Hillclimb(expdir, gset, examples, length, ellipsis, timelimit)
 
