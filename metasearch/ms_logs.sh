@@ -105,7 +105,7 @@ sinbad_gen_summary() {
   > ${out}.${g}.${b}.rec
   dirs=$(find . -name "${timelimit}s_-b_${b}_*" -type d -print | cut -d/ -f2 | sort -t_ -k5,5 -k7,7 -h)
   for dir in $dirs; do 
-    cnt=$(zegrep -o 'r:1' $dir/*.log.gz | wc -l)
+    cnt=$(find $dir -name '*.log.gz' | xargs zegrep -o 'r:1' | wc -l)
     d_w=$(echo $dir | sed -e "s/${timelimit}s_-b_${b}_-d_//" -e 's/_-w_/,/')
     echo "$d_w,$cnt" >> ${out}.${g}.${b}.rec
   done
