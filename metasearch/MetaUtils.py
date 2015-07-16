@@ -4,6 +4,15 @@ import os, subprocess, sys
 import math
 
 
+def err(msg):
+    _msg = 'Error Occurred. See below for details'
+    if msg is not None:
+        _msg += "\n%s\n" % msg
+
+    sys.stderr.write(_msg)
+    sys.exit(1)
+
+
 def ambtotal(log):
     f = open(log)
     results = f.read()
@@ -13,7 +22,7 @@ def ambtotal(log):
 
 def fitness(log, foundall=False):
     """ fitness -> number of ambiguities found
-        optionally, we can stop if all grammars are ambiguous (and detected)
+        optionally, stop if all grammars are detected as ambiguous
     """
     fit = ambtotal(log)
     if foundall:
@@ -95,4 +104,27 @@ def report(vals):
     msg = "Options %s found %s ambiguities **\n" % (fitkeys,maxfit)
     sys.stderr.write(msg)
 
+
+def best_w(vals):
+    fitvals = [f for k,f in vals]
+    maxfit = max(fitvals)
+
+    fitkeys = []
+    for k,f in vals:
+        if f == maxfit:
+            fitkeys.append(k)
+
+    return fitkeys, maxfit
+
+
+def best_dw(vals):
+    fitvals = [f for _,_,f in vals]
+    maxfit = max(fitvals)
+
+    fitkeys = []
+    for d,w,f in vals:
+        if f == maxfit:
+            fitkeys.append((d,w))
+
+    return fitkeys, maxfit
 
