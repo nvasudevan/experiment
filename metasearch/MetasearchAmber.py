@@ -5,6 +5,14 @@ import getopt
 import math
 import MetaUtils
 
+"""
+Run metasearch for AMBER tool for either of these options:
+ - length (+ optionally ellipsis)
+ - examples (+ optionally ellipsis)
+
+Additionally pass timelimit, grammar, and the experiment directory
+"""
+
 TIMELIMIT = 10
 EX_STEP1 = 1.05
 EX_STEP2 = 1.1

@@ -5,6 +5,16 @@ import getopt
 import MetaUtils
 import Depth1, Weight1, Weight2, Weight3
 
+"""
+Run metasearch for SinBAD tool for options depth and weight:
+ - backend 
+ - depth 
+ - weight (where applicable)
+ - Three different heuristics for exploring the `weight` option.
+   - Weight1 or Weight2 or Weight3
+Additionally pass timelimit, grammar, and the experiment directory
+"""
+
 class Hillclimb:
 
     def __init__(self, expdir, gset, backend, depth, wgt, timelimit, mtype):
@@ -16,14 +26,14 @@ class Hillclimb:
         if mtype == 'Depth1':
             m = Depth1.run(cmd, logd, depth)
         elif mtype == 'Weight1':
-            if wgt is None:
-                usage('Need a value for Weight')
-
-            m = Weight1.run(cmd, logd, depth, wgt)
+            m = Weight1.run(cmd, logd, depth)
         elif mtype == 'Weight2':
             m = Weight2.run(cmd, logd, depth)
         elif mtype == 'Weight3':
-            m = Weight3.run(cmd, logd, depth)
+            if wgt is None:
+                usage('Need a value for Weight')
+
+            m = Weight3.run(cmd, logd, depth, wgt)
 
 
 def usage(msg=None):

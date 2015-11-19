@@ -5,6 +5,13 @@ import getopt
 import math
 import MetaUtils
 
+"""
+Run metasearch for AmbiDexter tool for the length option:
+ - length (+ optionally filter)
+
+Additionally pass timelimit, grammar, and the experiment directory
+"""
+
 TIMELIMIT = 10
 LEN_STEP1 = 1
 LEN_STEP2 = 3
