@@ -149,5 +149,5 @@ class Weight1:
 
 
 def run(cmd, logd, depth):
-    Weight3(cmd, logd, depth)
+    Weight1(cmd, logd, depth)
 
