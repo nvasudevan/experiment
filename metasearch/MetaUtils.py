@@ -104,27 +104,3 @@ def report(vals):
     msg = "Options %s found %s ambiguities **\n" % (fitkeys,maxfit)
     sys.stderr.write(msg)
 
-
-def best_w(vals):
-    fitvals = [f for k,f in vals]
-    maxfit = max(fitvals)
-
-    fitkeys = []
-    for k,f in vals:
-        if f == maxfit:
-            fitkeys.append(k)
-
-    return fitkeys, maxfit
-
-
-def best_dw(vals):
-    fitvals = [f for _,_,f in vals]
-    maxfit = max(fitvals)
-
-    fitkeys = []
-    for d,w,f in vals:
-        if f == maxfit:
-            fitkeys.append((d,w))
-
-    return fitkeys, maxfit
-
