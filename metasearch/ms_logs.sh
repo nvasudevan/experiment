@@ -31,8 +31,8 @@ done
 out="/tmp/$prog"
 
 filters="lr0 slr1 lalr1 lr1"
-backends="dynamic1 dynamic2 dynamic3"
-wgtbackends="dynamic4 dynamic7"
+backends="dynamic1 dynamic3"
+wgtbackends="dynamic4 dynamic11 dynamic12"
 
 amber() {
   g=$1
@@ -104,7 +104,7 @@ sinbad_gen_summary() {
 
   > ${out}.${g}.${b}.rec
   dirs=$(find . -name "${timelimit}s_-b_${b}_*" -type d -print | cut -d/ -f2 | sort -t_ -k5,5 -k7,7 -h)
-  for dir in $dirs; do 
+  for dir in $dirs; do
     cnt=$(find $dir -name '*.log.gz' | xargs zegrep -o 'r:1' | wc -l)
     d_w=$(echo $dir | sed -e "s/${timelimit}s_-b_${b}_-d_//" -e 's/_-w_/,/')
     echo "$d_w,$cnt" >> ${out}.${g}.${b}.rec
@@ -117,22 +117,29 @@ sinbad() {
   echo -e "\n=> g: $g"
   if [ -d $logdir/$prog/$g ]; then
     cd $logdir/$prog/$g
-    for bend in $backends $wgtbackends; do 
+    for bend in $backends $wgtbackends; do
       echo "processing $bend ..."
       sinbad_gen_summary $gset $bend
     done
-    dyns=$(echo $backends $wgtbackends | sed -e 's/dynamic//g' | tr -d ' ')
-    dsort=$(cat ${out}.${g}.dynamic[${dyns}] | cut -d, -f1 | sort -h | uniq)
+    depthf=$(mktemp)
+    for b in $backends $wgtbackends; do
+      cat ${out}.${g}.$b | cut -d, -f1 | sort -h | uniq >> $depthf
+    done
+    uniqd=$(cat $depthf | sort -h | uniq)
     echo ",${backends// /,,},,${wgtbackends// /,,}"
-    echo "depth,ambiguities,recursion,ambiguities,recursion,ambiguities,recursion,ambiguities,recursion"
-    for d in $dsort; do 
+    nb=$(echo $backends | wc -w)
+    nwgtb=$(echo $wgtbackends | wc -w)
+    nbs=$(($nb+$nwgtb))
+    hdr=$(yes 'ambiguities,recursion' | head -n $nbs | tr '\n' ',')
+    echo "depth,$hdr"
+    for d in $uniqd; do
       pout="$d"
-      for bend in $backends; do 
+      for bend in $backends; do
         dynout=$(grep -w ^$d ${out}.${g}.$bend | cut -d, -f2)
         recout=$(grep -w ^$d ${out}.${g}.${bend}.rec | cut -d, -f2)
         pout="$pout,$dynout,$recout"
       done
-      for bend in $wgtbackends; do 
+      for bend in $wgtbackends; do
         dynw=$(grep -w ^$d ${out}.${g}.$bend | sort -t, -k3,3 -h | tail -1 | cut -d, -f2)
         dynout=$(grep -w "^${d},${dynw}" ${out}.${g}.$bend | cut -d, -f3)
         recout=$(grep -w "^${d},${dynw}" ${out}.${g}.${bend}.rec | cut -d, -f3)
