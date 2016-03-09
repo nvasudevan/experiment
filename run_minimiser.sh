@@ -121,7 +121,9 @@ boltz() {
       lex="$bolzdir/$g/lex"
       log="/tmp/${g}_${i}.${minimiser}"
       stats=$($cmd -l $log $gacc $lex)
-      echo "$g/$i,$(cat $log)"
+      size0=$(head -1 $log)
+      sizen=$(tail -1 $log)
+      echo "$g/$i,${size0},,${sizen}"
       rm $log
     done
   done
@@ -134,7 +136,9 @@ lang() {
       lex="$lexdir/${l}.lex"
       log="/tmp/${l}_${i}.${minimiser}"
       stats=$($cmd -l $log $gacc $lex)
-      echo "${l}.$i,$(cat $log)"
+      size0=$(head -1 $log)
+      sizen=$(tail -1 $log)
+      echo "${l}.${i},${size0},,${sizen}"
       rm $log
     done
    done
@@ -149,7 +153,9 @@ mutlang() {
         lex="$lexdir/${l}.lex"
         log="/tmp/${t}_${l}_${i}.${minimiser}"
         stats=$($cmd -l $log $gacc $lex)
-        echo "$t/${l}.$i,$(cat $log)"
+        size0=$(head -1 $log)
+        sizen=$(tail -1 $log)
+        echo "$t/${l}.${i},${size0},,${sizen}"
         rm $log
       done
      done
