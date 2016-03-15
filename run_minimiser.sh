@@ -13,13 +13,14 @@ minimiser=""
 gset=""
 nmin=""
 tmin=""
+ambijarp=""
 fltr=""
 outf=""
 tout="60"
 
 export ACCENT_DIR=$HOME/codespace/accent
 
-set -- $(getopt b:m:g:n:t:d:w:f:o: "$@")
+set -- $(getopt b:m:g:n:t:d:w:f:o:j: "$@")
 
 usage(){
     echo "$0 
@@ -28,10 +29,11 @@ usage(){
             -w <weight> 
             -m <minimiser> 
             -g <grammar set> 
-            -n <no of minimisations (for min1)> 
-            -t <time to search for ambiguity (for min2)>
-            -f <filter to apply (for min4)>
-            -o <output format for minimised grammar (for min4)>"
+            -n <no of minimisations>
+            -t <time to search for ambiguity>
+            -j <path to AmbiDexter jar>
+            -f <filter to apply>
+            -o <output format for minimised grammar>"
     exit 1
 }
 
@@ -46,6 +48,7 @@ do
      -g) gset=$2 ; shift;;
      -n) nmin=$2 ; shift;;
      -t) tmin=$2 ; shift;;
+     -j) ambijarp=$2 ; shift;;
      -f) fltr=$2 ; shift;;
      -o) outf=$2 ; shift;;
     (--) shift; break;;
@@ -60,7 +63,7 @@ done
 [ -z "$minimiser" ] && usage
 [ -z "$gset" ] && usage
 
-cmd="timeout ${tout}s python $ambiminp -b $backend -w $weight -d $depth -m $minimiser"
+cmd="timeout ${tout}s python $ambiminp -b $backend -w $weight -d $depth -m $minimiser -s"
 logd="$(pwd)/log/$minimiser/$gset"
 [ ! -d $logd ] && mkdir -p $logd
 
@@ -70,7 +73,7 @@ case "$minimiser" in
         echo "min1 requires -n <no of minimisations>"
         usage
       fi
-      cmd="$cmd -n $nmin -s"
+      cmd="$cmd -n $nmin"
     ;;
     min1a) 
       # TO DO
@@ -80,20 +83,20 @@ case "$minimiser" in
         echo "min{2|ad} requires -t <time to search for ambiguity>"
         usage
       fi
-      cmd="$cmd -t $tmin -s"
+      cmd="$cmd -t $tmin"
     ;;
     min3) 
-      if [ -z "$nmin" ]; then
-        echo "min3 requires -n <no of minimisations>"
-        usage
-      fi
       if [ -z "$tmin" ]; then
         echo "min3 requires -t <time to search for ambiguity>"
         usage
       fi
-      cmd="$cmd -n $nmin -t $tmin -s"
+      cmd="$cmd -t $tmin"
     ;;
     min4) 
+      if [ -z "$ambijarp" ]; then
+        echo "min4 requires -j <path to ambidexter jar>"
+        usage
+      fi
       if [ -z "$nmin" ]; then
         echo "min4 requires -n <no of minimisations>"
         usage
@@ -102,15 +105,30 @@ case "$minimiser" in
         echo "min4 requires -t <time to search for ambiguity>"
         usage
       fi
+      cmd="$cmd -j $ambijarp -n $nmin -t $tmin"
+    ;;
+    min5|min6)
+      if [ -z "$nmin" ]; then
+        echo "min[56] requires -n <no of minimisations>"
+        usage
+      fi
+      if [ -z "$tmin" ]; then
+        echo "min[56] requires -t <time to search for ambiguity>"
+        usage
+      fi
+      if [ -z "$ambijarp" ]; then
+        echo "min[56] requires -j <path to ambidexter jar>"
+        usage
+      fi
       if [ -z "$fltr" ]; then
-        echo "min4 requires -f <filter to apply for ambidexter>"
+        echo "min[56] requires -f <filter to apply for ambidexter>"
         usage
       fi
       if [ -z "$outf" ]; then
-        echo "min4 requires -t <output format for ambidexter>"
+        echo "min[56] requires -t <output format for ambidexter>"
         usage
       fi
-      cmd="$cmd -n $nmin -t $tmin -f $fltr -o $outf -s"
+      cmd="$cmd -n $nmin -t $tmin -j $ambijarp -f $fltr -o $outf"
     ;;
 esac
 
@@ -122,7 +140,8 @@ boltz() {
       log="/tmp/${g}_${i}.${minimiser}"
       stats=$($cmd -l $log $gacc $lex)
       size0=$(head -1 $log)
-      sizen=$(tail -1 $log)
+      sizen=",,,"
+      [ $(wc -l $log | awk '{print $1}') -gt 1 ] && sizen=$(tail -1 $log)
       echo "$g/$i,${size0},,${sizen}"
       rm $log
     done
@@ -137,7 +156,8 @@ lang() {
       log="/tmp/${l}_${i}.${minimiser}"
       stats=$($cmd -l $log $gacc $lex)
       size0=$(head -1 $log)
-      sizen=$(tail -1 $log)
+      sizen=",,,"
+      [ $(wc -l $log | awk '{print $1}') -gt 1 ] && sizen=$(tail -1 $log)
       echo "${l}.${i},${size0},,${sizen}"
       rm $log
     done
@@ -148,13 +168,14 @@ mutlang() {
   for t in empty add mutate delete switch; do 
     mkdir -p $logd/$t
     for l in Pascal SQL Java C CSS; do 
-      for i in $(seq 10); do
+      for i in $(seq 1); do
         gacc="$mutdir/$t/${l}/${l}.0_${i}.acc"
         lex="$lexdir/${l}.lex"
         log="/tmp/${t}_${l}_${i}.${minimiser}"
         stats=$($cmd -l $log $gacc $lex)
         size0=$(head -1 $log)
-        sizen=$(tail -1 $log)
+        sizen=",,,"
+        [ $(wc -l $log | awk '{print $1}') -gt 1 ] && sizen=$(tail -1 $log)
         echo "$t/${l}.${i},${size0},,${sizen}"
         rm $log
       done
