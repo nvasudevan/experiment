@@ -14,13 +14,14 @@ gset=""
 nmin=""
 tmin=""
 ambijarp=""
+heap=""
 fltr=""
 outf=""
 tout="60"
 
 export ACCENT_DIR=$HOME/codespace/accent
 
-set -- $(getopt b:m:g:n:t:d:w:f:o:j: "$@")
+set -- $(getopt b:m:g:n:t:d:w:f:o:j:x: "$@")
 
 usage(){
     echo "$0 
@@ -31,7 +32,8 @@ usage(){
             -g <grammar set> 
             -n <no of minimisations>
             -t <time to search for ambiguity>
-            -j <path to AmbiDexter jar>
+            -j <path to ambidexter jar>
+            -x <heap size for ambidexter>
             -f <filter to apply>
             -o <output format for minimised grammar>"
     exit 1
@@ -49,6 +51,7 @@ do
      -n) nmin=$2 ; shift;;
      -t) tmin=$2 ; shift;;
      -j) ambijarp=$2 ; shift;;
+     -x) heap=$2 ; shift;;
      -f) fltr=$2 ; shift;;
      -o) outf=$2 ; shift;;
     (--) shift; break;;
@@ -105,7 +108,11 @@ case "$minimiser" in
         echo "min4 requires -t <time to search for ambiguity>"
         usage
       fi
-      cmd="$cmd -j $ambijarp -n $nmin -t $tmin"
+      if [ -z "$heap" ]; then
+        echo "min4 requires -x <heap size for ambidexter>"
+        usage
+      fi
+      cmd="$cmd -j $ambijarp -n $nmin -t $tmin -x $heap"
     ;;
     min5|min6)
       if [ -z "$nmin" ]; then
@@ -128,7 +135,11 @@ case "$minimiser" in
         echo "min[56] requires -t <output format for ambidexter>"
         usage
       fi
-      cmd="$cmd -n $nmin -t $tmin -j $ambijarp -f $fltr -o $outf"
+      if [ -z "$heap" ]; then
+        echo "min4 requires -x <heap size for ambidexter>"
+        usage
+      fi
+      cmd="$cmd -n $nmin -t $tmin -j $ambijarp -x $heap -f $fltr -o $outf"
     ;;
 esac
 
