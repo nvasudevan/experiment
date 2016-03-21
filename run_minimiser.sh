@@ -143,6 +143,31 @@ case "$minimiser" in
     ;;
 esac
 
+print_stats() {
+  _g=$1
+  log=$2
+  size0=$(head -1 $log)
+  nlines=$(wc -l $log | awk '{print $1}')
+  sizen=",,,,,,"
+  if [ "${minimiser}" == 'min4' ]; then
+    # get the final accent grammar, followed by the grammar
+    # from ambidexter
+    if [ $nlines -gt 1 ]; then
+      ambil=$(grep ^* $log)
+      if [ -z "${ambil}" ]; then
+        # ambidexter didn't find anyting
+        sizen="$(tail -1 $log)"
+      else
+        # ambidexter did find something
+        sizen="$(tail -2 $log | head -1),,$ambil"
+      fi
+    fi
+  else
+    [ $nlines -gt 1 ] && sizen=$(tail -1 $log)
+  fi
+  echo "${_g},${size0},,${sizen}"
+}
+
 boltz() {
   for g in $(seq 10 75); do
     for i in $(seq 10); do 
@@ -150,10 +175,7 @@ boltz() {
       lex="$bolzdir/$g/lex"
       log="/tmp/${g}_${i}.${minimiser}"
       stats=$($cmd -l $log $gacc $lex)
-      size0=$(head -1 $log)
-      sizen=",,,"
-      [ $(wc -l $log | awk '{print $1}') -gt 1 ] && sizen=$(tail -1 $log)
-      echo "$g/$i,${size0},,${sizen}"
+      print_stats "$g/${i}" "$log"
       rm $log
     done
   done
@@ -166,13 +188,10 @@ lang() {
       lex="$lexdir/${l}.lex"
       log="/tmp/${l}_${i}.${minimiser}"
       stats=$($cmd -l $log $gacc $lex)
-      size0=$(head -1 $log)
-      sizen=",,,"
-      [ $(wc -l $log | awk '{print $1}') -gt 1 ] && sizen=$(tail -1 $log)
-      echo "${l}.${i},${size0},,${sizen}"
+      print_stats "${l}.${i}" "$log"
       rm $log
     done
-   done
+  done
 }
 
 mutlang() {
@@ -184,10 +203,7 @@ mutlang() {
         lex="$lexdir/${l}.lex"
         log="/tmp/${t}_${l}_${i}.${minimiser}"
         stats=$($cmd -l $log $gacc $lex)
-        size0=$(head -1 $log)
-        sizen=",,,"
-        [ $(wc -l $log | awk '{print $1}') -gt 1 ] && sizen=$(tail -1 $log)
-        echo "$t/${l}.${i},${size0},,${sizen}"
+        print_stats "$t/${l}.${i}" "$log"
         rm $log
       done
      done
