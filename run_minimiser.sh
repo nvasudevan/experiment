@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # modify the below settings before launch
 ambiminp="${HOME}/codespace/sinbad/src/AmbiMin.py"
@@ -21,7 +21,7 @@ tout="60"
 
 export ACCENT_DIR=$HOME/codespace/accent
 
-set -- $(getopt b:m:g:n:t:d:w:f:o:j:x: "$@")
+set -- $(getopt b:m:g:n:t:d:w:f:o:j:x:T: "$@")
 
 usage(){
     echo "$0 
@@ -31,7 +31,8 @@ usage(){
             -m <minimiser> 
             -g <grammar set> 
             -n <no of minimisations>
-            -t <time to search for ambiguity>
+            -t <time to search for ambiguity (accent)>
+            -T <time to search for ambiguity (ambidexter)>
             -j <path to ambidexter jar>
             -x <heap size for ambidexter>
             -f <filter to apply>
@@ -50,6 +51,7 @@ do
      -g) gset=$2 ; shift;;
      -n) nmin=$2 ; shift;;
      -t) tmin=$2 ; shift;;
+     -T) ambiT=$2 ; shift;;
      -j) ambijarp=$2 ; shift;;
      -x) heap=$2 ; shift;;
      -f) fltr=$2 ; shift;;
@@ -87,6 +89,25 @@ case "$minimiser" in
         usage
       fi
       cmd="$cmd -t $tmin"
+    ;;
+    min2a|min3a)
+      if [ -z "$tmin" ]; then
+        echo "min[23]a requires -t <time to search for ambiguity (accent)>"
+        usage
+      fi
+      if [ -z "$ambiT" ]; then
+        echo "min[23]a requires -T <time to search for ambiguity (ambidexter)>"
+        usage
+      fi
+      if [ -z "$ambijarp" ]; then
+        echo "min[23]a requires -j <path to ambidexter jar>"
+        usage
+      fi
+      if [ -z "$heap" ]; then
+        echo "min[23]a requires -x <heap size for ambidexter>"
+        usage
+      fi
+      cmd="$cmd -j $ambijarp -x $heap -t $tmin -T $ambiT"
     ;;
     min3) 
       if [ -z "$tmin" ]; then
@@ -149,22 +170,25 @@ print_stats() {
   size0=$(head -1 $log)
   nlines=$(wc -l $log | awk '{print $1}')
   sizen=",,,,,,"
-  if [ "${minimiser}" == 'min4' ]; then
-    # get the final accent grammar, followed by the grammar
-    # from ambidexter
-    if [ $nlines -gt 1 ]; then
-      ambil=$(grep ^* $log)
-      if [ -z "${ambil}" ]; then
-        # ambidexter didn't find anyting
-        sizen="$(tail -1 $log)"
-      else
-        # ambidexter did find something
-        sizen="$(tail -2 $log | head -1),,$ambil"
+  case "${minimiser}" in
+    min2a|min3a|min4)
+      # get the final accent grammar, followed by the grammar
+      # from ambidexter
+      if [ $nlines -gt 1 ]; then
+        ambil=$(grep ^* $log)
+        if [ -z "${ambil}" ]; then
+          # ambidexter didn't find anyting
+          sizen="$(tail -1 $log)"
+        else
+          # ambidexter did find something
+          sizen="$(tail -2 $log | head -1),,$ambil"
+        fi
       fi
-    fi
-  else
-    [ $nlines -gt 1 ] && sizen=$(tail -1 $log)
-  fi
+    ;;
+    min1|min2|min3)
+      [ $nlines -gt 1 ] && sizen=$(tail -1 $log)
+    ;;
+  esac
   echo "${_g},${size0},,${sizen}"
 }
 
