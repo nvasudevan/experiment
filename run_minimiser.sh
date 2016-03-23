@@ -17,11 +17,12 @@ ambijarp=""
 heap=""
 fltr=""
 outf=""
-tout="60"
-
-export ACCENT_DIR=$HOME/codespace/accent
+tout="180"
 
 set -- $(getopt b:m:g:n:t:d:w:f:o:j:x:T: "$@")
+
+# Check for ACCENT_DIR
+[ -z $ACCENT_DIR ] && (echo "ACCENT_DIR is not set. exiting..."; exit 1)
 
 usage(){
     echo "$0 
@@ -39,7 +40,6 @@ usage(){
             -o <output format for minimised grammar>"
     exit 1
 }
-
 
 while [ $# -gt 0 ]
 do
