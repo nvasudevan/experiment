@@ -174,7 +174,7 @@ def cyclicInfo(cfg, lex):
 
 
 def unproductive(cfg, lex):
-    """ Checks if the grammar contains rules that don't consume any input'.
+    """ Checks if the grammar contains rules that don't consume any input.
         Rules of this type don't consume any input:
         A: B; B: C; C: A """
     unproductive_rules = cyclicInfo(cfg,lex)

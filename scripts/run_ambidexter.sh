@@ -1,10 +1,7 @@
 #!/bin/bash
 
-bdir=$(dirname $0)
-echo $bdir
-. $bdir/toolparams.sh
-
-echo "$(hostname)::($basename $0) $cwd $wrkdir"
+echo $cwd
+. $cwd/toolparams.sh
 
 gset=""
 timelimit=""
@@ -85,7 +82,7 @@ run_randomcfg() {
                 continue
             fi
             out="$randomsize/$g,"
-            timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
+            timeout ${timelimit}s $scriptsdir/ambidexter.sh -g $gy -l $glog $options
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
@@ -136,7 +133,7 @@ run_lang() {
                 continue
             fi
             out="$g.$i,"
-            timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
+            timeout ${timelimit}s $scriptsdir/ambidexter.sh -g $gy -l $glog $options
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
@@ -194,7 +191,7 @@ run_mutlang() {
                    continue
                fi
                out="$g.0_$n,"
-               timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
+               timeout ${timelimit}s $scriptsdir/ambidexter.sh -g $gy -l $glog $options
                amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
                if [ "$amb" != "" ]
                then
@@ -247,7 +244,7 @@ run_boltzcfg() {
                 continue
             fi
             out="$boltzsize/$g,"
-            timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
+            timeout ${timelimit}s $scriptsdir/ambidexter.sh -g $gy -l $glog $options
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
@@ -279,7 +276,7 @@ run_test() {
         gy="$tmp/$g.y"
         glog="$rsltdir/${g}_${g}.log"
         acc_to_yacc $gacc $gy
-        timeout ${timelimit}s $bdir/AmbiDexter.sh -g $gy -l $glog $options
+        timeout ${timelimit}s $scriptsdir/ambidexter.sh -g $gy -l $glog $options
         amb=$(grep -o 'Ambiguous string found' $glog)
         cnt=$((cnt+1))
         out="$g,"

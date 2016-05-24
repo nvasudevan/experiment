@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/bin/bash -x
 
-bdir=$(dirname $0)
-echo $bdir
-. $bdir/toolparams.sh
+echo $cwd
+. $cwd/toolparams.sh
 
 gset=""
 timelimit=""
@@ -70,7 +69,8 @@ run_lang() {
             $accent $glang/acc/$g.$i.acc || exit $?
             $lex $lexdir/$g.lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
-            $ambercmd 2> /dev/null > $glog
+            #$ambercmd 2> /dev/null > $glog
+            $ambercmd > $glog 2>&1
             cnt=$((cnt+1))
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$g.$i," 
