@@ -33,45 +33,16 @@ if [ $missing -eq 1 ]; then
     exit 1
 fi
 
-
-which pypy > /dev/null 2> /dev/null
-if [ $? -eq 0 ]; then
-    PYTHON=`which pypy`
-else
-    check_for python
-    PYTHON=`which python`
+python -V 2>&1 | egrep -o '2.7.[0-9]*'
+if [ $? -ne 0 ]; then
+    echo "Incorrect version of Python detected. Please use Python 2.7"
+    exit 1
 fi
 
-export PYTHON 
-
-java -version 2>&1 | tail -n 1 | grep "OpenJDK .*Server VM (build [a-zA-Z0-9.\-]*, mixed mode)" > /dev/null 2> /dev/null
+java -fullversion 2>&1  | egrep -o '1.[78].[0-9a-z_-]*'
 if [ $? -ne 0 ]; then
-    cat << EOF
-Warning: incorrect version of Java detected. Expected:
-  OpenJDK Server VM (build ..., mixed mode)
-You should download the correct version and put it in your PATH.
-EOF
-    echo -n "Continue building anyway? [Ny] "
-    read answer
-    case "$answer" in
-        y | Y) ;;
-        *) exit 1;;
-    esac
-fi
-
-$PYTHON -V 2>&1 | egrep -o '[0-9].[0-9]' > /dev/null 2> /dev/null
-if [ $? -ne 0 ]; then
-    cat << EOF
-Warning: incorrect version of Python detected. Expected:
-  Python 2.7 or above
-You should download the correct version and put it in your PATH.
-EOF
-    echo -n "Continue building anyway? [Ny] "
-    read answer
-    case "$answer" in
-        y | Y) ;;
-        *) exit 1;;
-    esac
+    echo "Incorrect version of Java detected. Please use Java 1.7 or 1.8"
+    exit 1
 fi
 
 if [ $# -eq 0 ]; then
