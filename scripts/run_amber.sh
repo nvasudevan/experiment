@@ -244,5 +244,12 @@ fi
 ambercmd="timeout ${timelimit}s ./amber $options"
 echo "==> $(hostname -s)::($basename $0) [$gset] t=[$timelimit], options=[$options]"
 cwd=$(pwd)
-run_$gset
 
+case "$gset" in
+      test) run_test;;
+ randomcfg) run_randomcfg;;
+  boltzcfg) run_boltzcfg;;
+      lang) run_lang;;
+   mutlang) run_mutlang;;
+         *) echo "Unrecognised option ($gset). exiting ..."; exit 1;;
+esac

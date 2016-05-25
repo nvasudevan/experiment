@@ -329,5 +329,13 @@ fi
 
 ambdxtcmd="java -Xss8m -Xmx$memlimit -jar $wrkdir/ambidexter/build/AmbiDexter.jar"
 export ambdxtcmd 
-echo "==> [$gset] t=$timelimit,options=$options"
-run_$gset
+echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit,options=$options"
+
+case "$gset" in
+      test) run_test;;
+ randomcfg) run_randomcfg;;
+  boltzcfg) run_boltzcfg;;
+      lang) run_lang;;
+   mutlang) run_mutlang;;
+         *) echo "Unrecognised option ($gset). exiting ..."; exit 1;;
+esac

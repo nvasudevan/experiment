@@ -189,7 +189,7 @@ do
      -t) timelimit="$2" ; shift;;
     (--) shift; break;;
     (-*) echo "$0: error - unrecognized option $1" 1>&2; exit 1;;
-     (*)  break;;  
+     (*) break;;  
     esac
     shift
 done
@@ -197,5 +197,12 @@ done
 aclacmd="timeout ${timelimit}s java -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar -k -a"
 export aclacmd 
 echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit"
-run_$gset
 
+case "$gset" in
+      test) run_test;;
+ randomcfg) run_randomcfg;;
+  boltzcfg) run_boltzcfg;;
+      lang) run_lang;;
+   mutlang) run_mutlang;;
+         *) echo "Unrecognised option ($gset). exiting ..."; exit 1;;
+esac
