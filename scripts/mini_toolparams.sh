@@ -3,6 +3,8 @@
 bdir=$(dirname $0)
 . $bdir/env.sh
 
+export scriptsdir=$cwd/scripts
+
 gset="lang mutlang boltzcfg"
 grammardir="$cwd/grammars"
 lexdir="$grammardir/lex"

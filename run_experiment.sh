@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 wrkdir=""
 exp=""
@@ -30,13 +30,18 @@ echo -e "===> Tools are setup in $wrkdir"
 mkdir -p $wrkdir
 export cwd wrkdir
 
-ln -sf $cwd/scripts/${exp}_toolparams.sh $cwd/toolparams.sh
 > $cwd/env.sh
 echo "export cwd=$cwd" >> $cwd/env.sh
 echo "export wrkdir=$wrkdir" >> $cwd/env.sh
 
+# link toolparams to the exp being run
+ln -sf $cwd/scripts/${exp}_toolparams.sh $cwd/toolparams.sh
+
 # sets up values for our experiment
 . ./toolparams.sh
+
+[ -z "$scriptsdir" ] && echo "*scriptsdir* is not set! exiting..." && exit 1
+[ ! -d "$scriptsdir" ] && echo "*scriptsdir* does not exist! exiting..." && exit 1
 
 # download grammars that come with ambidexter
 $scriptsdir/download_grammars.sh

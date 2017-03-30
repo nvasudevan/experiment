@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 echo $cwd
 . $cwd/toolparams.sh
