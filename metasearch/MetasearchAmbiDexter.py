@@ -18,7 +18,7 @@ LEN_STEP2 = 3
 LEN_STEP3 = 5
 STDDEV_CNT = 3
 STDDEV = 3
-RUN_AMBDEXTER = "scripts/run_ambdexter.sh"
+RUN_AMBIDEXTER = "scripts/run_ambdexter.sh"
 
 class Hillclimb:
 
