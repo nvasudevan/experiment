@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 import sys, tempfile
 import getopt
@@ -22,6 +22,7 @@ LEN_STEP2 = 3
 LEN_STEP3 = 5
 STDDEV_CNT = 3
 STDDEV = 3
+RUN_AMBER = "scripts/run_amber.sh"
 
 class Hillclimb:
 
@@ -29,7 +30,7 @@ class Hillclimb:
         self.k_values = []
         self.logd = "%s/results/amber/%s/%ss" % (expdir, gset, timelimit)
 
-        amberx =  "%s/run_Amber.sh" % (expdir)
+        amberx =  "%s/%s" % (expdir, RUN_AMBER)
         self.cmd = [amberx, "-g", gset, "-t", str(timelimit)]
 
         if ellipsis:

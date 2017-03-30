@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 
 import sys, tempfile
 import getopt
@@ -18,6 +18,7 @@ LEN_STEP2 = 3
 LEN_STEP3 = 5
 STDDEV_CNT = 3
 STDDEV = 3
+RUN_AMBDEXTER = "scripts/run_ambdexter.sh"
 
 class Hillclimb:
 
@@ -25,7 +26,7 @@ class Hillclimb:
         self.length = length
         self.logd = "%s/results/ambidexter/%s/%ss" % (expdir, gset, timelimit)
 
-        ambidextx =  "%s/run_AmbiDexter.sh" % (expdir)
+        ambidextx =  "%s/%s" % (expdir, RUN_AMBIDEXTER)
         self.cmd = [ambidextx, "-g", gset, "-t", str(timelimit)]
 
         if filter is not None:
@@ -74,14 +75,14 @@ class Hillclimb:
 def usage(msg=None):
     if msg is not None:
         sys.stderr.write(msg)
-        
+
     sys.stderr.write("MetasearchAmbiDexter.py -x <experiment directory> " \
     "-g <grammar set> -k <initial length> -t <time limit>\n")
     sys.exit(1)
-    
 
 
-if __name__ == "__main__": 
+
+if __name__ == "__main__":
     opts, args = getopt.getopt(sys.argv[1 : ], "x:g:k:f:t:")
     expdir = None
     gset = None
@@ -99,12 +100,12 @@ if __name__ == "__main__":
             length = int(opt[1])
         elif opt[0] == "-t":
             timelimit = int(opt[1])
-        else: 
-            usage("Unknown argument '%s'" % opt[0])   
+        else:
+            usage("Unknown argument '%s'" % opt[0])
 
     if (expdir is None) or (gset is None) or (length is None):
         usage()
 
     print opts, args
     Hillclimb(expdir, gset, length, filter, timelimit)
-    
+
