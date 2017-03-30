@@ -7,11 +7,12 @@ D_STEP2 = 3
 WGT_STEP1 = 1.05
 WGT_STEP2 = 1.1
 
-STDDEV_CNT = 3
+NNEIGH = 3
 STDDEV = 3
+NBEST = 3
 
 """
-For each depth, search for weight is invoked from a given 
+For each depth, search for weight is invoked from a given
 initial value.
 """
 
@@ -34,7 +35,7 @@ class Weight3:
             self.k_values.append((neighd, fitw, neighf))
 
             print "------"
-            if MetaUtils.localmax([f for _,_,f in self.k_values]):
+            if MetaUtils.localmax([f for _,_,f in self.k_values], NBEST):
                 fitdw, maxf = self.best(self.k_values)
                 print "Max ambiguities found: %s" % maxf
                 print "Best depth, weights: "
@@ -72,7 +73,7 @@ class Weight3:
 
     def neighbourd(self, key_fits, d):
         fits = [f for _,_,f in key_fits]
-        if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+        if MetaUtils.move_by_step1(fits, NNEIGH, STDDEV):
             return d + D_STEP1
 
         return d + D_STEP2
@@ -80,7 +81,7 @@ class Weight3:
 
     def neighbourw(self, key_fits, w):
         fits = [f for _,f in key_fits]
-        if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+        if MetaUtils.move_by_step1(fits, NNEIGH, STDDEV):
             return (w * WGT_STEP1)
 
         return (w * WGT_STEP2)

@@ -20,8 +20,10 @@ EX_STEP3 = 1.2
 LEN_STEP1 = 1
 LEN_STEP2 = 3
 LEN_STEP3 = 5
-STDDEV_CNT = 3
+NNEIGH = 3
 STDDEV = 3
+NBEST = 3
+
 RUN_AMBER = "scripts/run_amber.sh"
 
 class Hillclimb:
@@ -52,12 +54,12 @@ class Hillclimb:
     def neighbour(self, v):
         fits = [f for _,f in self.k_values]
         if self.switch == "-n":
-            if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+            if MetaUtils.move_by_step1(fits, NNEIGH, STDDEV):
                 return int(math.ceil(v * EX_STEP1))
 
             return int(math.ceil(v * EX_STEP2))
 
-        if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+        if MetaUtils.move_by_step1(fits, NNEIGH, STDDEV):
             return v + LEN_STEP1
 
         return v + LEN_STEP2
@@ -82,7 +84,7 @@ class Hillclimb:
             self.k_values.append((neighval,neighfit))
 
             fitvals = [f for _,f in self.k_values]
-            if MetaUtils.localmax(fitvals, 3):
+            if MetaUtils.localmax(fitvals, NBEST):
                 MetaUtils.report(self.k_values)
                 sys.exit(0)
 

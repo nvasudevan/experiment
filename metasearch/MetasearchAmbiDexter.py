@@ -16,8 +16,10 @@ TIMELIMIT = 10
 LEN_STEP1 = 1
 LEN_STEP2 = 3
 LEN_STEP3 = 5
-STDDEV_CNT = 3
+NNEIGH = 3
 STDDEV = 3
+NBEST = 3
+
 RUN_AMBIDEXTER = "scripts/run_ambidexter.sh"
 
 class Hillclimb:
@@ -40,7 +42,7 @@ class Hillclimb:
 
     def neighbour(self, l):
         fits = [f for _,f in self.k_values]
-        if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+        if MetaUtils.move_by_step1(fits, NNEIGH, STDDEV):
             return l + LEN_STEP1
 
         return l + LEN_STEP2
@@ -64,7 +66,7 @@ class Hillclimb:
             self.k_values.append((neighlen,neighfit))
 
             fitvals = [f for _,f in self.k_values]
-            if MetaUtils.localmax(fitvals):
+            if MetaUtils.localmax(fitvals, NBEST):
                 MetaUtils.report(self.k_values)
                 sys.exit(0)
 

@@ -5,8 +5,9 @@ import sys
 D_STEP1 = 1
 D_STEP2 = 3
 
-STDDEV_CNT = 3
+NNEIGH = 3
 STDDEV = 3
+NBEST = 3
 
 """ Run metasearch from a given initial depth """
 
@@ -29,7 +30,7 @@ class Depth1:
             self.k_values.append((neighd, neighf))
 
             print "------"
-            if MetaUtils.localmax([f for _,f in self.k_values]):
+            if MetaUtils.localmax([f for _,f in self.k_values], NBEST):
                 fitd, maxf = self.best(self.k_values)
                 print "Max ambiguities found: %s" % maxf
                 print "Best depths: " , fitd
@@ -54,7 +55,7 @@ class Depth1:
 
     def neighbour(self, key_fits, d):
         fits = [f for _,f in key_fits]
-        if MetaUtils.move_by_step1(fits, STDDEV_CNT, STDDEV):
+        if MetaUtils.move_by_step1(fits, NNEIGH, STDDEV):
             return d + D_STEP1
 
         return d + D_STEP2
