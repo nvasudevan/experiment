@@ -18,30 +18,33 @@ do
 done
 
 usage(){
-    echo "$0 -d <work dir> -x <travis|mini|main|validation>"
+    echo "$0 -d <work dir> -x <travis|crude|dim|mini|main|validation>"
     exit 1
 }
 
 [ -z "$wrkdir" ] && usage
 [ -z "$exp" ] && usage
 
-cwd=$(pwd)
+expdir=$(dirname $0)
+echo -e "===> Experiment dir is $expdir"
 echo -e "===> Tools are setup in $wrkdir"
 mkdir -p $wrkdir
-export cwd wrkdir
+export expdir wrkdir
 
-> $cwd/env.sh
-echo "export cwd=$cwd" >> $cwd/env.sh
-echo "export wrkdir=$wrkdir" >> $cwd/env.sh
+> $expdir/env.sh
+echo "export expdir=$expdir" >> $expdir/env.sh
+echo "export wrkdir=$wrkdir" >> $expdir/env.sh
 
-# link toolparams to the exp being run
-ln -sf $cwd/scripts/${exp}_toolparams.sh $cwd/toolparams.sh
-
-# sets up values for our experiment
-. ./toolparams.sh
-
+export scriptsdir=$expdir/scripts
 [ -z "$scriptsdir" ] && echo "*scriptsdir* is not set! exiting..." && exit 1
 [ ! -d "$scriptsdir" ] && echo "*scriptsdir* does not exist! exiting..." && exit 1
+
+# setup common stuff
+. $scriptsdir/base_params.sh
+
+# setup experiment related stuff
+ln -sf $scriptsdir/${exp}_toolparams.sh $expdir/toolparams.sh
+. ./toolparams.sh
 
 # download grammars that come with ambidexter
 $scriptsdir/download_grammars.sh
@@ -49,6 +52,7 @@ $scriptsdir/download_grammars.sh
 # now run build.sh to build your tools
 ./build.sh $wrkdir || exit $?
 
+# for travis: run the tools on test grammars
 if [ "$exp" == "travis" ]; then
   for g in test lang; do
     $scriptsdir/run_acla.sh -g $g -t 10
@@ -74,7 +78,7 @@ fi
 
 [ ! -d $resultsdir ] && mkdir $resultsdir
 
-scriptlist="$cwd/scriptlist"
+scriptlist="$expdir/scriptlist"
 > $scriptlist
 
 for g in $gset; do
@@ -148,14 +152,10 @@ pllnodes=$(echo $nodelist | sed -e 's/,$//')
 
 echo $pllnodes
 
-expstart=$(date +%s)
 cat $scriptlist | parallel -u -S $pllnodes
-expend=$(date +%s)
-expelapsed=$(($expend - $expstart))
 
-echo -e "\\n===> experiment complete in $expelapsed seconds \n"
-cd $cwd
-tar czf results.tar.gz results
-echo -e "\\n===> results - results.tar.gz \\n"
-echo -e "\\n pretty printing results to $ppresults \\n"
-$scriptsdir/ppresults.sh > $ppresults 2>&1
+echo -e "\\n===> Experiment finished"
+#tar czf results.tar.gz results
+#echo -e "\\n===> results - results.tar.gz \\n"
+#echo -e "\\n pretty printing results to $ppresults \\n"
+#$scriptsdir/ppresults.sh > $ppresults 2>&1

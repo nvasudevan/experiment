@@ -1,7 +1,6 @@
 #!/bin/bash
 
-echo $cwd
-. $cwd/toolparams.sh
+. $expdir/toolparams.sh
 
 gset=""
 timelimit=""
@@ -15,14 +14,6 @@ lex=$(which flex)
 cc=$(which cc)
 
 run_randomcfg() {
-    rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
-    cwd=$(pwd)
     for randomsize in $randomcfgsizes
     do
         for g in $(seq 1 $nrandom)
@@ -34,12 +25,10 @@ run_randomcfg() {
             $lex $grandom/$randomsize/lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
             $ambercmd 2> /dev/null > $glog
-            cnt=$((cnt+1))
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$randomsize/$g," 
             if [ "$amb" != "" ]
             then
-                ambcnt=$((ambcnt+1))
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
@@ -48,17 +37,9 @@ run_randomcfg() {
             rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 run_lang() {
-    rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
     for g in $lgrammars
     do
         for i in $(seq 1 $nlang)
@@ -89,20 +70,15 @@ run_lang() {
 }
 
 run_mutlang() {
-    clog="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/log"
-    mkdir -p $resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
-    > $clog
     for type in $mutypes
     do
        for g in $mugrammars
        do
-         rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
-         mkdir -p $rsltdir
-         echo "result ==> $rsltdir"
-         ambcnt=0
-         cnt=0
-         gsetlog="$rsltdir/log"
-         cp /dev/null $gsetlog
+         t_rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
+         mkdir -p $t_rsltdir
+         t_gsetlog="$t_rsltdir/log"
+         echo "$type result log ==> $t_gsetlog"
+         cp /dev/null $t_gsetlog
          glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
          for n in $glist
          do
@@ -114,11 +90,9 @@ run_mutlang() {
              $cc -w -o amber -O3 yygrammar.c $ambersrc
              $ambercmd 2> /dev/null > $glog
              amb=$(grep -o 'Grammar ambiguity detected' $glog)
-             cnt=$((cnt+1))
              out="${g}.0_${n},"
              if [ "$amb" != "" ]
              then
-                 ambcnt=$((ambcnt+1))
                  out="${g}.0_${n},yes"
              fi
              echo $out | tee -a $gsetlog
@@ -126,20 +100,12 @@ run_mutlang() {
              cd $cwd
              rm -Rf $tmp
          done
-         cat $gsetlog | sed -e "s/^/${type}\//" >> $clog
-         print_summary $ambcnt $cnt > $rsltdir/summary        
+         cat $t_gsetlog | sed -e "s/^/${type}\//" >> $gsetlog
        done
     done
 }
 
 run_boltzcfg() {
-    rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
     for boltzsize in $boltzcfgsizes
     do
         for g in $(seq 1 $nboltz)
@@ -151,31 +117,21 @@ run_boltzcfg() {
             $lex $gboltz/$boltzsize/lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
             $ambercmd 2> /dev/null > $glog
-            cnt=$((cnt+1))
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$boltzsize/$g,"
             if [ "$amb" != "" ]
             then
-                ambcnt=$((ambcnt+1))
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
-            cd $cwd
+            cd $expdir
             rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 run_test() {
-    rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
     for g in $testgrammars
     do
         tmp=$(mktemp -d)
@@ -185,20 +141,17 @@ run_test() {
         $lex $lexdir/general.lex || exit $?
         $cc -w -o amber -O3 yygrammar.c $ambersrc
         $ambercmd 2> /dev/null > $glog
-        cnt=$((cnt+1))
         amb=$(grep -o 'Grammar ambiguity detected' $glog)
         out="$g,"
         if [ "$amb" != "" ]
         then
-            ambcnt=$((ambcnt+1))
             out="$g,yes"
         fi
         echo "$out" | tee -a $gsetlog
         [ -f $glog ] && gzip -f $glog
-        cd $cwd
+        cd $expdir
         rm -Rf $tmp  
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
 }
 
 usage() {
@@ -224,17 +177,9 @@ do
 done
 
 options=""
-if [ "$ellipsis" = "yes" ]; then
-    options="${options} ellipsis"
-fi
-
-if [ "$examples" != "" ]; then
-    options="${options} examples $examples"
-fi
-
-if [ "$length" != "" ]; then
-    options="${options} length $length"
-fi
+[ "$ellipsis" = "yes" ] && options="${options} ellipsis"
+[ "$examples" != "" ] && options="${options} examples $examples"
+[ "$length" != "" ] && options="${options} length $length"
 
 if [ -z "$options" ] || [ -z "$timelimit" ]; then
     echo "Some of the options were not provided for running Amber. see usage"
@@ -242,8 +187,16 @@ if [ -z "$options" ] || [ -z "$timelimit" ]; then
 fi
 
 ambercmd="timeout ${timelimit}s ./amber $options"
-echo "==> $(hostname -s)::($basename $0) [$gset] t=[$timelimit], options=[$options]"
-cwd=$(pwd)
+
+echo "==> ($basename $0) [$gset] t=$timelimit,options=$options"
+
+rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
+mkdir -p $rsltdir
+gsetlog="$rsltdir/log"
+echo "result log ==> $gsetlog"
+cp /dev/null $gsetlog
+
+runstart=$(date +%s)
 
 case "$gset" in
       test) run_test;;
@@ -253,3 +206,11 @@ case "$gset" in
    mutlang) run_mutlang;;
          *) echo "Unrecognised option ($gset). exiting ..."; exit 1;;
 esac
+
+runend=$(date +%s)
+runelapsed=$(($expend - $expstart))
+cnt=$(wc -l $gsetlog)
+ambcnt=$(grep -c yes $gsetlog)
+
+echo "amb count: ${ambcnt}/${cnt}, running time: ${runelapsed} secs" > ${rsltdir}/summary.txt
+cat ${rsltdir}/summary.txt

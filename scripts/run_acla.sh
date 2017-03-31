@@ -1,183 +1,136 @@
 #!/bin/bash
 
-echo $cwd
-. $cwd/toolparams.sh
+echo $expdir
+. $expdir/toolparams.sh
 
 gset=""
 timelimit=""
 
 run_randomcfg() {
-    rsltdir="$resultsdir/acla/$gset/${timelimit}s"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0    
+    tmp=$(mktemp -d)
     for randomsize in $randomcfgsizes
     do
         for g in  $(seq 1 $nrandom)
         do
-            tmp=$(mktemp -d)
             gacc="$grandom/$randomsize/$g.acc"
             gcfg="$tmp/${randomsize}_${g}.cfg"    
             glog="$rsltdir/${randomsize}_${g}.log"
             acc_to_cfg $gacc $gcfg
             $aclacmd $gcfg > $glog 2>&1
-            ((cnt+=1))
             out="${randomsize}/$g,"
             amb=$(grep -o 'ambiguous string' $glog)
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
                 out="${randomsize}/$g,yes"
             fi
             echo $out | tee -a $gsetlog        
             gzip -f $glog
-            rm -Rf $tmp            
         done
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
+    rm -Rf $tmp 
 }
 
 run_lang() {
-    rsltdir="$resultsdir/acla/$gset/${timelimit}s"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0 
+    tmp=$(mktemp -d)
     for g in $lgrammars
     do
         for i in $(seq 1 $nlang)
         do
-            tmp=$(mktemp -d)
             gacc="$glang/acc/$g.$i.acc"
             gcfg="$tmp/$g.$i.cfg"
             glog="$rsltdir/${g}_${i}.log"
             acc_to_cfg $gacc $gcfg
             $aclacmd $gcfg > $glog 2>&1
-            ((cnt+=1))
             out="$g.$i,"
             amb=$(grep -o 'ambiguous string' $glog)
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
                 out="$g.$i,yes"
             fi
             echo $out | tee -a $gsetlog        
             gzip -f $glog
-            rm -Rf $tmp 
         done
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
+    rm -Rf $tmp 
 }
 
 run_mutlang() {
-    clog="$resultsdir/acla/$gset/${timelimit}s/log"
-    mkdir -p $resultsdir/acla/$gset/${timelimit}s
     for type in $mutypes
     do
+        tmp=$(mktemp -d)
         for g in $mugrammars
         do
-            rsltdir="$resultsdir/acla/$gset/${timelimit}s/$type/$g"
-            mkdir -p $rsltdir
-            echo "result ==> $rsltdir"
-            gsetlog="$rsltdir/log"
-            cp /dev/null $gsetlog
-            cnt=0
-            ambcnt=0         
+            t_rsltdir="$rsltdir/$type/$g"
+            mkdir -p $t_rsltdir
+            t_gsetlog="${t_rsltdir}/log"
+            echo "$type result log ==> $t_gsetlog"
+            cp /dev/null $t_gsetlog
             glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
             for n in $glist
             do
-                tmp=$(mktemp -d)
                 gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
                 gcfg="$tmp/$g.0_$n.cfg"
                 glog="$rsltdir/${g}.0_${n}.log"
                 acc_to_cfg $gacc $gcfg
                 $aclacmd $gcfg > $glog 2>&1
-                ((cnt+=1))
                 out="$g.0_$n,"
                 amb=$(grep -o 'ambiguous string' $glog)
                 if [ "$amb" != "" ]
                 then
-                    ((ambcnt+=1))
                     out="$g.0_$n,yes"
                 fi
-                echo $out | tee -a $gsetlog        
+                echo $out | tee -a $t_gsetlog        
                 gzip -f $glog
-                rm -Rf $tmp 
             done
-            cat $gsetlog | sed -e "s/^/${type}\//" >> $clog
-            print_summary $ambcnt $cnt > $rsltdir/summary
+            cat $t_gsetlog | sed -e "s/^/${type}\//" >> $gsetlog
         done
+        rm -Rf $tmp 
     done    
 }
 
 run_boltzcfg() {
-    rsltdir="$resultsdir/acla/$gset/${timelimit}s"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
+    tmp=$(mktemp -d)
     for boltzsize in $boltzcfgsizes
     do    
         for g in  $(seq 1 $nboltz)
         do
-            tmp=$(mktemp -d)
             gacc="$gboltz/$boltzsize/$g.acc"
             gcfg="$tmp/${boltzsize}_${g}.cfg"    
             glog="$rsltdir/${boltzsize}_${g}.log"
             acc_to_cfg $gacc $gcfg
             $aclacmd $gcfg > $glog 2>&1
-            ((cnt+=1))
             out="${boltzsize}/$g,"
             amb=$(grep -o 'ambiguous string' $glog)
             if [ "$amb" != "" ]
             then
-                ((ambcnt+=1))
                 out="${boltzsize}/$g,yes"
             fi
             echo $out | tee -a $gsetlog        
             gzip -f $glog
-            rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
+    rm -Rf $tmp
 }
 
 run_test() {
-    rsltdir="$resultsdir/acla/$gset/${timelimit}s"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    cnt=0
-    ambcnt=0
+    tmp=$(mktemp -d)
     for g in $testgrammars
     do
-        tmp=$(mktemp -d)
         gacc="$grammardir/test/$g/$g.acc"
         gcfg="$tmp/$g.cfg"
         glog="$rsltdir/${g}.log"
         acc_to_cfg $gacc $gcfg
         $aclacmd $gcfg > $glog 2>&1
-        ((cnt+=1))
         out="$g,"
         amb=$(grep -o 'ambiguous string' $glog)
         if [ "$amb" != "" ]
         then
-            ((ambcnt+=1))
             out="$g,yes"
         fi
         echo $out | tee -a $gsetlog        
         gzip -f $glog
-        rm -Rf $tmp
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
+    rm -Rf $tmp
 }
 
 set -- $(getopt g:t: "$@")
@@ -196,7 +149,15 @@ done
 
 aclacmd="timeout ${timelimit}s java -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar -k -a"
 export aclacmd 
-echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit"
+echo "==> ($basename $0) [$gset] t=$timelimit"
+
+rsltdir="$resultsdir/acla/$gset/${timelimit}s"
+mkdir -p $rsltdir
+gsetlog="$rsltdir/log"
+echo "result log ==> $gsetlog"
+cp /dev/null $gsetlog
+
+runstart=$(date +%s)
 
 case "$gset" in
       test) run_test;;
@@ -206,3 +167,11 @@ case "$gset" in
    mutlang) run_mutlang;;
          *) echo "Unrecognised option ($gset). exiting ..."; exit 1;;
 esac
+
+runend=$(date +%s)
+runelapsed=$(($expend - $expstart))
+cnt=$(wc -l $gsetlog)
+ambcnt=$(grep -c yes $gsetlog)
+
+echo "amb count: ${ambcnt}/${cnt}, running time: ${runelapsed} secs" > ${rsltdir}/summary.txt
+cat ${rsltdir}/summary.txt

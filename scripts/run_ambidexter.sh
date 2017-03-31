@@ -1,7 +1,6 @@
 #!/bin/bash
 
-echo $cwd
-. $cwd/toolparams.sh
+. $expdir/toolparams.sh
 
 gset=""
 timelimit=""
@@ -48,37 +47,26 @@ print_filter_summary() {
 }
 
 run_randomcfg() {
-    rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    cnt=0
-    ambcnt=0    
+    tmp=$(mktemp -d)
     for randomsize in $randomcfgsizes
     do
         for g in $(seq 1 $nrandom)
         do
-            tmp=$(mktemp -d)
             glog="$rsltdir/${randomsize}_${g}.log"
             gacc="$grandom/$randomsize/$g.acc"
-            gy="$tmp/$g.y"
-            cnt=$((cnt+1))
+            gy="$tmp/${randomsize}_${g}.y"
             acc_to_yacc $gacc $gy
             $ambdxtcmd -s $gy > $glog 2>&1
             msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then
                 echo "$randomsize/$g,yes" | tee -a $gsetlog
-                ambcnt=$((ambcnt+1))
-                rm -Rf $tmp
                 continue
             fi
             msg=$(cat $glog | egrep -i 'Unproductive start symbol' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then 
                 echo "$randomsize/$g," | tee -a $gsetlog
-                rm -Rf $tmp
                 continue
             fi
             out="$randomsize/$g,"
@@ -86,161 +74,120 @@ run_randomcfg() {
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
-                ambcnt=$((ambcnt+1))
                 out="$randomsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
-            rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
-    print_filter_summary $rsltdir >> $rsltdir/summary
+    rm -Rf $tmp
 }
 
 run_lang() {
-    rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    cnt=0
-    ambcnt=0
+    tmp=$(mktemp -d)
     for g in $lgrammars
     do
         for i in $(seq 1 $nlang)
         do
-            tmp=$(mktemp -d)
             glog="$rsltdir/${g}_${i}.log"
             gacc="$glang/acc/$g.$i.acc"
-            gy="$tmp/$g.$i.y"
-            cnt=$((cnt+1))
+            gy="$tmp/${g}.${i}.y"
             acc_to_yacc $gacc $gy
             $ambdxtcmd -s $gy > $glog 2>&1
             msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then
-                echo "$g.$i,yes" | tee -a $gsetlog
-                ambcnt=$((ambcnt+1))
-                rm -Rf $tmp
+                echo "${g}.${i},yes" | tee -a $gsetlog
                 continue
             fi
             msg=$(cat $glog | egrep -i 'Unproductive start symbol' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then 
-                echo "$g.$i," | tee -a $gsetlog
-                rm -Rf $tmp
+                echo "${g}.${i}," | tee -a $gsetlog
                 continue
             fi
-            out="$g.$i,"
+            out="${g}.${i},"
             timeout ${timelimit}s $scriptsdir/ambidexter.sh -g $gy -l $glog $options
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
-                ambcnt=$((ambcnt+1))
-                out="$g.$i,yes"
+                out="${g}.${i},yes"
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
-            rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
-    print_filter_summary $rsltdir >> $rsltdir/summary
+    rm -Rf $tmp
 }
 
-
 run_mutlang() {
-    clog="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/log"
-    mkdir -p $resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
-    > $clog
     for type in $mutypes
     do
+       tmp=$(mktemp -d)
        for g in $mugrammars
        do
-           rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
-           mkdir -p $rsltdir
-           echo "result ==> $rsltdir"
-           gsetlog="$rsltdir/log"
-           cp /dev/null $gsetlog
-           cnt=0
-           ambcnt=0
+           t_rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
+           mkdir -p $t_rsltdir
+           t_gsetlog="$t_rsltdir/log"
+           echo "$type result log ==> $t_gsetlog"
+           cp /dev/null $t_gsetlog
            glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
            for n in $glist
            do
-               tmp=$(mktemp -d)
                glog="$rsltdir/${g}.0_${n}.log"
                gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
-               gy="$tmp/$g.0_$n.y"
-               cnt=$((cnt+1))
+               gy="$tmp/${g}.0_${n}.y"
                acc_to_yacc $gacc $gy
                $ambdxtcmd -s $gy > $glog 2>&1
                msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
                if [ "$msg" != "" ]
                then
-                   echo "$g.0_$n,yes" | tee -a $gsetlog
-                   ambcnt=$((ambcnt+1))
-                   rm -Rf $tmp
+                   echo "${g}.0_$n,yes" | tee -a $t_gsetlog
                    continue
                fi
                msg=$(cat $glog | egrep -i 'Unproductive start symbol' | cut -d: -f2,3)
                if [ "$msg" != "" ]
                then
-                   echo "$g.0_$n," | tee -a $gsetlog
-                   rm -Rf $tmp
+                   echo "${g}.0_$n," | tee -a $t_gsetlog
                    continue
                fi
-               out="$g.0_$n,"
+               out="${g}.0_$n,"
                timeout ${timelimit}s $scriptsdir/ambidexter.sh -g $gy -l $glog $options
                amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
                if [ "$amb" != "" ]
                then
-                   ambcnt=$((ambcnt+1))
-                   out="$g.0_$n,yes"
+                   out="${g}.0_$n,yes"
                fi
                echo $out | tee -a $gsetlog
                [ -f $glog ] && gzip -f $glog
-               rm -Rf $tmp
            done
-           cat $gsetlog | sed -e "s/^/${type}\//" >> $clog
-           print_summary $ambcnt $cnt > $rsltdir/summary
-           print_filter_summary $rsltdir >> $rsltdir/summary
+           cat $t_gsetlog | sed -e "s/^/${type}\//" >> $gsetlog
        done
+       rm -Rf $tmp
     done
 }
 
 run_boltzcfg() {
-    rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    cnt=0
-    ambcnt=0
+    tmp=$(mktemp -d)
     for boltzsize in $boltzcfgsizes
     do
         for g in $(seq 1 $nboltz)
         do
-            tmp=$(mktemp -d)
             glog="$rsltdir/${boltzsize}_${g}.log"
             gacc="$gboltz/$boltzsize/$g.acc"
-            gy="$tmp/$g.y"
-            cnt=$((cnt+1))
+            gy="$tmp/${boltzsize}_$g.y"
             acc_to_yacc $gacc $gy
             $ambdxtcmd -s $gy > $glog 2>&1
             msg=$(cat $glog | egrep -i 'Grammar contains injection cycle' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then
                 echo "$boltzsize/$g,yes" | tee -a $gsetlog
-                ambcnt=$((ambcnt+1))
-                rm -Rf $tmp
                 continue
             fi
             msg=$(cat $glog | egrep -i 'Unproductive start symbol' | cut -d: -f2,3)
             if [ "$msg" != "" ]
             then 
                 echo "$boltzsize/$g," | tee -a $gsetlog
-                rm -Rf $tmp
                 continue
             fi
             out="$boltzsize/$g,"
@@ -248,27 +195,17 @@ run_boltzcfg() {
             amb=$(egrep -o 'Grammar contains injection cycle|Ambiguous string found' $glog)
             if [ "$amb" != "" ]
             then
-                ambcnt=$((ambcnt+1))
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
-            rm -Rf $tmp
         done
     done
-    print_summary $ambcnt $cnt > $rsltdir/summary
-    print_filter_summary $rsltdir >> $rsltdir/summary
+    rm -Rf $tmp
 }
 
 
 run_test() {
-    rsltdir="$resultsdir/ambidexter/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    cnt=0
-    ambcnt=0
     tmp=$(mktemp -d)
     for g in $testgrammars
     do
@@ -278,19 +215,15 @@ run_test() {
         acc_to_yacc $gacc $gy
         timeout ${timelimit}s $scriptsdir/ambidexter.sh -g $gy -l $glog $options
         amb=$(grep -o 'Ambiguous string found' $glog)
-        cnt=$((cnt+1))
         out="$g,"
         if [ "$amb" != "" ]
         then
-            ambcnt=$((ambcnt+1))
             out="$g,yes"
         fi
         echo $out | tee -a $gsetlog
     done
     [ -f $glog ] && gzip -f $glog
     rm -Rf $tmp
-    print_summary $ambcnt $cnt > $rsltdir/summary
-    print_filter_summary $rsltdir >> $rsltdir/summary
 }
 
 usage() {
@@ -329,7 +262,16 @@ fi
 
 ambdxtcmd="java -Xss8m -Xmx$memlimit -jar $wrkdir/ambidexter/build/AmbiDexter.jar"
 export ambdxtcmd 
-echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit,options=$options"
+
+echo "==> ($basename $0) [$gset] t=$timelimit,options=$options"
+
+rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
+mkdir -p $rsltdir
+gsetlog="$rsltdir/log"
+echo "result log ==> $gsetlog"
+cp /dev/null $gsetlog
+
+runstart=$(date +%s)
 
 case "$gset" in
       test) run_test;;
@@ -339,3 +281,12 @@ case "$gset" in
    mutlang) run_mutlang;;
          *) echo "Unrecognised option ($gset). exiting ..."; exit 1;;
 esac
+
+runend=$(date +%s)
+runelapsed=$(($expend - $expstart))
+cnt=$(wc -l $gsetlog)
+ambcnt=$(grep -c yes $gsetlog)
+
+echo "amb count: ${ambcnt}/${cnt}, running time: ${runelapsed} secs" > ${rsltdir}/summary.txt
+cat ${rsltdir}/summary.txt
+print_filter_summary $rsltdir >> ${rsltdir}/summary.txt

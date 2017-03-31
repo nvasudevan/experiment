@@ -23,12 +23,12 @@ export glang lgrammars nlang
 gmutlang="$grammardir/mutlang"
 mugrammars="Pascal SQL Java C CSS"
 mutypes="empty add mutate delete switch"
-nmutations="100"
+nmutations="5"
 export gmutlang mugrammars mutypes nmutations 
 
 gboltz="$grammardir/boltzcfg"
 boltzcfgsizes=$(seq 10 75)
-nboltz="100"
+nboltz="5"
 
 export gboltz boltzcfgsizes nboltz 
 
@@ -57,3 +57,7 @@ wgtbackends="dynamic4 dynamic5 dynamic10"
 weights="0.0125 0.025 0.05 0.1 0.15 0.2"
 Tdepths="5 10 15 20 25"
 export backends wgtbackends weights Tdepths 
+
+resultsdir="$expdir/results"
+ppresults="$expdir/ppresults.txt"
+export resultsdir ppresults

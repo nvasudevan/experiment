@@ -1,6 +1,6 @@
 #!/bin/bash
 
-. $cwd/toolparams.sh
+. $expdir/toolparams.sh
 
 pp_acla() {
     g="$1"

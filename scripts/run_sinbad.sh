@@ -1,7 +1,6 @@
 #!/bin/bash
 
-echo $cwd
-. $cwd/toolparams.sh
+. $expdir/toolparams.sh
 
 gset=""
 backend=""
@@ -11,16 +10,8 @@ wgt=""
 sinbaddir="$wrkdir/sinbad/src"
 
 run_randomcfg() {
-    rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
     for randomsize in $randomcfgsizes
     do
-        tmp=$(mktemp -d)
         _lex="$grandom/$randomsize/lex"
         for g in $(seq 1 $nrandom)
         do
@@ -38,27 +29,19 @@ run_randomcfg() {
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip $glog
         done
-        rm -Rf $tmp
     done
-    print_summary $ambcnt $cnt
 }
 
 run_mutlang(){
-    clog="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/log"
-    mkdir -p $resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')
-    > $clog
     for type in $mutypes
     do
        for g in $mugrammars
        do
-         rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
-         mkdir -p $rsltdir
-         echo "result ==> $rsltdir"
-         tmp=$(mktemp -d)
-         ambcnt=0
-         cnt=0
-         gsetlog="$rsltdir/log"
-         cp /dev/null $gsetlog
+         t_rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')/$type/$g"
+         mkdir -p $t_rsltdir
+         t_gsetlog="${t_rsltdir}/log"
+         echo "$type result log ==> $t_gsetlog"
+         cp /dev/null $t_gsetlog
          _lex="$lexdir/$g.lex"
          glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
          for n in $glist
@@ -67,34 +50,22 @@ run_mutlang(){
             glog="$rsltdir/${g}.0_${n}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
-            cnt=$((cnt+1))
             out="${g}.0_${n},"
             if [ "$amb" != "" ]
             then
-                ambcnt=$((ambcnt+1))
                 out="${g}.0_${n},yes"
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
          done
-         cat $gsetlog | sed -e "s/^/${type}\//" >> $clog
-         rm -Rf $tmp
-         print_summary $ambcnt $cnt        
+         cat $t_gsetlog | sed -e "s/^/${type}\//" >> $gsetlog
        done
     done
 }
 
 run_boltzcfg(){
-    rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
     for boltzsize in $boltzcfgsizes
     do
-        tmp=$(mktemp -d)
         _lex="$gboltz/$boltzsize/lex"
         for g in $(seq 1 $nboltz)
         do
@@ -102,30 +73,18 @@ run_boltzcfg(){
             glog="$rsltdir/${boltzsize}_${g}.log"
             $sinbadcmd ${_acc} ${_lex}  > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
-            cnt=$((cnt+1))
             out="$boltzsize/$g,"
             if [ "$amb" != "" ]
             then 
-                ambcnt=$((ambcnt+1))
                 out="$boltzsize/$g,yes"
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
         done
-        rm -Rf $tmp        
     done
-    print_summary $ambcnt $cnt   
 }
 
 run_lang() {
-    rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
-    tmp=$(mktemp -d)
     for g in $lgrammars
     do
         _lex="$lexdir/$g.lex"
@@ -135,30 +94,18 @@ run_lang() {
             glog="$rsltdir/${g}_${i}.log"
             $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
-            cnt=$((cnt+1))
             out="$g.$i,"
             if [ "$amb" != "" ]
             then
-                ambcnt=$((ambcnt+1))
                 out="$g.$i,yes"
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
         done
     done
-    rm -Rf $tmp
-    print_summary $ambcnt $cnt    
 }
 
 run_test() {
-    rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
-    mkdir -p $rsltdir
-    echo "result ==> $rsltdir"
-    gsetlog="$rsltdir/log"
-    cp /dev/null $gsetlog
-    ambcnt=0
-    cnt=0
-    tmp=$(mktemp -d)
     _lex="$lexdir/general.lex"
     for g in $testgrammars
     do
@@ -166,18 +113,14 @@ run_test() {
         glog="$rsltdir/${g}_${g}.log"
         $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
         amb=$(grep -o 'Grammar ambiguity detected' $glog)
-        cnt=$((cnt+1))
         out="$g,"
         if [ "$amb" != "" ]
         then
-            ambcnt=$((ambcnt+1))
             out="$g,yes"
         fi
         echo $out | tee -a $gsetlog
         [ -f $glog ] && gzip -f $glog
     done
-    rm -Rf $tmp
-    print_summary $ambcnt $cnt   
 }
 
 usage() {
@@ -207,10 +150,17 @@ options="-b $backend"
 [ "$wgt" != "" ] && options="${options} -w $wgt"
 
 echo $options
-
 sinbadcmd="timeout ${timelimit}s $PYTHON $sinbaddir/sinbad $options"
 
-echo "==> $(hostname -s)::($basename $0) [$gset] t=$timelimit,options=$options"
+echo "==> ($basename $0) [$gset] t=$timelimit,options=$options"
+
+rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
+mkdir -p $rsltdir
+gsetlog="$rsltdir/log"
+echo "result log ==> $gsetlog"
+cp /dev/null $gsetlog
+
+runstart=$(date +%s)
 
 case "$gset" in
       test) run_test;;
@@ -220,3 +170,11 @@ case "$gset" in
    mutlang) run_mutlang;;
          *) echo "Unrecognised option ($gset). exiting ..."; exit 1;;
 esac
+
+runend=$(date +%s)
+runelapsed=$(($expend - $expstart))
+cnt=$(wc -l $gsetlog)
+ambcnt=$(grep -c yes $gsetlog)
+
+echo "amb count: ${ambcnt}/${cnt}, running time: ${runelapsed} secs" > ${rsltdir}/summary.txt
+cat ${rsltdir}/summary.txt
