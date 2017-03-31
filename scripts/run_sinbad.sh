@@ -172,7 +172,7 @@ case "$gset" in
 esac
 
 runend=$(date +%s)
-runelapsed=$(($expend - $expstart))
+runelapsed=$(($runend - $runstart))
 cnt=$(wc -l $gsetlog)
 ambcnt=$(grep -c yes $gsetlog)
 

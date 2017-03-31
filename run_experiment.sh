@@ -25,7 +25,7 @@ usage(){
 [ -z "$wrkdir" ] && usage
 [ -z "$exp" ] && usage
 
-expdir=$(dirname $0)
+expdir=$(cd $(dirname $0); pwd)
 echo -e "===> Experiment dir is $expdir"
 echo -e "===> Tools are setup in $wrkdir"
 mkdir -p $wrkdir

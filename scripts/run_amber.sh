@@ -187,7 +187,7 @@ ambercmd="timeout ${timelimit}s ./amber $options"
 
 echo "==> ($basename $0) [$gset] t=$timelimit,options=$options"
 
-rsltdir="$resultsdir/sinbad/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
+rsltdir="$resultsdir/amber/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
 mkdir -p $rsltdir
 gsetlog="$rsltdir/log"
 echo "result log ==> $gsetlog"
@@ -205,7 +205,7 @@ case "$gset" in
 esac
 
 runend=$(date +%s)
-runelapsed=$(($expend - $expstart))
+runelapsed=$(($runend - $runstart))
 cnt=$(wc -l $gsetlog)
 ambcnt=$(grep -c yes $gsetlog)
 
