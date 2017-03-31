@@ -1,6 +1,5 @@
 #!/bin/bash
 
-echo $expdir
 . $expdir/toolparams.sh
 
 gset=""

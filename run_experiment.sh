@@ -50,7 +50,7 @@ ln -sf $scriptsdir/${exp}_toolparams.sh $expdir/toolparams.sh
 $scriptsdir/download_grammars.sh
 
 # now run build.sh to build your tools
-./build.sh $wrkdir || exit $?
+./build.sh || exit $?
 
 # for travis: run the tools on test grammars
 if [ "$exp" == "travis" ]; then

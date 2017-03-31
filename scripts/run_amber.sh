@@ -33,7 +33,6 @@ run_randomcfg() {
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
-            cd $cwd
             rm -Rf $tmp
         done
     done
@@ -62,7 +61,6 @@ run_lang() {
             fi
             echo $out| tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
-            cd $cwd
             rm -Rf $tmp
         done
     done 
@@ -97,7 +95,6 @@ run_mutlang() {
              fi
              echo $out | tee -a $gsetlog
              [ -f $glog ] && gzip -f $glog
-             cd $cwd
              rm -Rf $tmp
          done
          cat $t_gsetlog | sed -e "s/^/${type}\//" >> $gsetlog
