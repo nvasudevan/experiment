@@ -285,7 +285,7 @@ esac
 
 runend=$(date +%s)
 runelapsed=$(($runend - $runstart))
-cnt=$(wc -l $gsetlog)
+cnt=$(wc -l $gsetlog | awk '{print $1}')
 ambcnt=$(grep -c yes $gsetlog)
 
 echo "amb count: ${ambcnt}/${cnt}, running time: ${runelapsed} secs" > ${rsltdir}/summary.txt
