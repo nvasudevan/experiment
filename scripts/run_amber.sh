@@ -1,5 +1,6 @@
 #!/bin/bash
 
+. $expdir/scripts/base_params.sh
 . $expdir/toolparams.sh
 
 gset=""
