@@ -10,6 +10,10 @@ depth=""
 wgt=""
 sinbaddir="$wrkdir/sinbad/src"
 
+accent="$wrkdir/accent/accent/accent"
+lex=$(which flex)
+cc=$(which cc)
+
 run_randomcfg() {
     for randomsize in $randomcfgsizes
     do
@@ -18,7 +22,14 @@ run_randomcfg() {
         do
             _acc="$grandom/$randomsize/$g.acc"
             glog="$rsltdir/${randomsize}_${g}.log"
-            $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
+            tmpd=$(mktemp -d)
+            cd $tmpd
+            $accent $_acc || exit $?
+            $lex $_lex || exit $?
+            parserp="$tmpd/parser"
+            $cc -w -o $parserp yygrammar.c lex.yy.c $ACCENT_DIR/exmplaccent/auxil.c $ACCENT_DIR/entire/entire.c
+            [ -x $parserp ] || exit $?
+            $sinbadcmd -p $parserp ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             cnt=$((cnt+1))
             out="$randomsize/$g,"
@@ -29,6 +40,7 @@ run_randomcfg() {
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip $glog
+            rm -rf $tmpd
         done
     done
 }
@@ -49,7 +61,14 @@ run_mutlang(){
          do
             _acc="$gmutlang/acc/$type/$g/${g}.0_${n}.acc"
             glog="$rsltdir/${g}.0_${n}.log"
-            $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
+            tmpd=$(mktemp -d)
+            cd $tmpd
+            $accent $_acc || exit $?
+            $lex $_lex || exit $?
+            parserp="$tmpd/parser"
+            $cc -w -o $parserp yygrammar.c lex.yy.c $ACCENT_DIR/exmplaccent/auxil.c $ACCENT_DIR/entire/entire.c
+            [ -x $parserp ] || exit $?
+            $sinbadcmd -p $parserp ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="${g}.0_${n},"
             if [ "$amb" != "" ]
@@ -58,6 +77,7 @@ run_mutlang(){
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
+            rm -rf $tmpd
          done
          cat $t_gsetlog | sed -e "s/^/${type}\//" >> $gsetlog
        done
@@ -72,7 +92,15 @@ run_boltzcfg(){
         do
             _acc="$gboltz/$boltzsize/$g.acc"
             glog="$rsltdir/${boltzsize}_${g}.log"
-            $sinbadcmd ${_acc} ${_lex}  > $glog 2>&1
+            tmpd=$(mktemp -d)
+            cd $tmpd
+            $accent $_acc || exit $?
+            $lex $_lex || exit $?
+            parserp="$tmpd/parser"
+            $cc -w -o $parserp yygrammar.c lex.yy.c $ACCENT_DIR/exmplaccent/auxil.c $ACCENT_DIR/entire/entire.c
+            [ -x $parserp ] || exit $?
+            echo "parser: $parserp"
+            $sinbadcmd -p $parserp ${_acc} ${_lex}  > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$boltzsize/$g,"
             if [ "$amb" != "" ]
@@ -81,6 +109,7 @@ run_boltzcfg(){
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
+            rm -rf $tmpd
         done
     done
 }
@@ -93,7 +122,14 @@ run_lang() {
         do
             _acc="$glang/acc/$g.$i.acc"
             glog="$rsltdir/${g}_${i}.log"
-            $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
+            tmpd=$(mktemp -d)
+            cd $tmpd
+            $accent $_acc || exit $?
+            $lex $_lex || exit $?
+            parserp="$tmpd/parser"
+            $cc -w -o $parserp yygrammar.c lex.yy.c $ACCENT_DIR/exmplaccent/auxil.c $ACCENT_DIR/entire/entire.c
+            [ -x $parserp ] || exit $?
+            $sinbadcmd -p $parserp ${_acc} ${_lex} > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$g.$i,"
             if [ "$amb" != "" ]
@@ -102,6 +138,7 @@ run_lang() {
             fi
             echo $out | tee -a $gsetlog
             [ -f $glog ] && gzip -f $glog
+            rm -rf $tmpd
         done
     done
 }
@@ -112,7 +149,14 @@ run_test() {
     do
         _acc="$grammardir/test/$g/$g.acc"
         glog="$rsltdir/${g}_${g}.log"
-        $sinbadcmd ${_acc} ${_lex} > $glog 2>&1
+        tmpd=$(mktemp -d)
+        cd $tmpd
+        $accent $_acc || exit $?
+        $lex $_lex || exit $?
+        parserp="$tmpd/parser"
+        $cc -w -o $parserp yygrammar.c lex.yy.c $ACCENT_DIR/exmplaccent/auxil.c $ACCENT_DIR/entire/entire.c
+        [ -x $parserp ] || exit $?
+        $sinbadcmd -p $parserp ${_acc} ${_lex} > $glog 2>&1
         amb=$(grep -o 'Grammar ambiguity detected' $glog)
         out="$g,"
         if [ "$amb" != "" ]
@@ -121,6 +165,7 @@ run_test() {
         fi
         echo $out | tee -a $gsetlog
         [ -f $glog ] && gzip -f $glog
+        rm -rf $tmpd
     done
 }
 
