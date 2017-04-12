@@ -60,7 +60,7 @@ run_mutlang(){
          for n in $glist
          do
             _acc="$gmutlang/acc/$type/$g/${g}.0_${n}.acc"
-            glog="$rsltdir/${g}.0_${n}.log"
+            glog="$t_rsltdir/${g}.0_${n}.log"
             tmpd=$(mktemp -d)
             cd $tmpd
             $accent $_acc || exit $?
@@ -75,7 +75,7 @@ run_mutlang(){
             then
                 out="${g}.0_${n},yes"
             fi
-            echo $out | tee -a $gsetlog
+            echo $out | tee -a $t_gsetlog
             [ -f $glog ] && gzip -f $glog
             rm -rf $tmpd
          done
