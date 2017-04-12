@@ -99,7 +99,6 @@ run_boltzcfg(){
             parserp="$tmpd/parser"
             $cc -w -o $parserp yygrammar.c lex.yy.c $ACCENT_DIR/exmplaccent/auxil.c $ACCENT_DIR/entire/entire.c
             [ -x $parserp ] || exit $?
-            echo "parser: $parserp"
             $sinbadcmd -p $parserp ${_acc} ${_lex}  > $glog 2>&1
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$boltzsize/$g,"
