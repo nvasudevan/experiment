@@ -32,7 +32,7 @@ nboltz="100"
 
 export gboltz boltzcfgsizes nboltz 
 
-memlimit="2048m"
+memlimit="4096m"
 timelimits="10 30 60 120"
 cores_per_host="3"
 export memlimit timelimits cores_per_host
