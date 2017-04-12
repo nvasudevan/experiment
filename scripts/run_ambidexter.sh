@@ -16,7 +16,7 @@ print_filter_summary() {
     fltcnt=0
     unambcnt=0
     totflttime=0
-    for log in $(ls $logdir/*.log.gz)
+    for log in $(find $logdir -name '*.log.gz')
     do
         flttime=$(zgrep "^filter time" $log | cut -d: -f2)
         if [ ! -z "$flttime" ]
