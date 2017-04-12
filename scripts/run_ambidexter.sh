@@ -135,7 +135,7 @@ run_mutlang() {
            glist=$(find $gmutlang/acc/$type/$g -name "*.acc" | cut -d_ -f2 | sort -h | cut -d. -f1 | head -${nmutations})
            for n in $glist
            do
-               glog="$rsltdir/${g}.0_${n}.log"
+               glog="$t_rsltdir/${g}.0_${n}.log"
                gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
                gy="$tmp/${g}.0_${n}.y"
                acc_to_yacc $gacc $gy
@@ -159,7 +159,7 @@ run_mutlang() {
                then
                    out="${g}.0_$n,yes"
                fi
-               echo $out | tee -a $gsetlog
+               echo $out | tee -a $t_gsetlog
                [ -f $glog ] && gzip -f $glog
            done
            cat $t_gsetlog | sed -e "s/^/${type}\//" >> $gsetlog
