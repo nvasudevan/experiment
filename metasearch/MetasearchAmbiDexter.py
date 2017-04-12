@@ -79,9 +79,8 @@ def usage(msg=None):
         sys.stderr.write(msg)
 
     sys.stderr.write("MetasearchAmbiDexter.py -x <experiment directory> " \
-    "-g <grammar set> -k <initial length> -t <time limit>\n")
+    "-g <grammar set> -k <initial length> -f <filter> -t <time limit>\n")
     sys.exit(1)
-
 
 
 if __name__ == "__main__":
