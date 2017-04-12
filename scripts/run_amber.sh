@@ -50,8 +50,7 @@ run_lang() {
             $accent $glang/acc/$g.$i.acc || exit $?
             $lex $lexdir/$g.lex || exit $?
             $cc -w -o amber -O3 yygrammar.c $ambersrc
-            #$ambercmd 2> /dev/null > $glog
-            $ambercmd > $glog 2>&1
+            $ambercmd 2> /dev/null > $glog
             cnt=$((cnt+1))
             amb=$(grep -o 'Grammar ambiguity detected' $glog)
             out="$g.$i," 
@@ -82,7 +81,7 @@ run_mutlang() {
          for n in $glist
          do
              tmp=$(mktemp -d)
-             glog="$rsltdir/${g}.0_${n}.log"
+             glog="$t_rsltdir/${g}.0_${n}.log"
              cd $tmp
              $accent $gmutlang/acc/${type}/$g/$g.0_${n}.acc || exit $?
              $lex $lexdir/$g.lex || exit $?
@@ -94,7 +93,7 @@ run_mutlang() {
              then
                  out="${g}.0_${n},yes"
              fi
-             echo $out | tee -a $gsetlog
+             echo $out | tee -a $t_gsetlog
              [ -f $glog ] && gzip -f $glog
              rm -Rf $tmp
          done
