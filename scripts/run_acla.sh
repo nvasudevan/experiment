@@ -70,7 +70,7 @@ run_mutlang() {
             do
                 gacc="$gmutlang/acc/$type/$g/$g.0_$n.acc"
                 gcfg="$tmp/$g.0_$n.cfg"
-                glog="$rsltdir/${g}.0_${n}.log"
+                glog="$t_rsltdir/${g}.0_${n}.log"
                 acc_to_cfg $gacc $gcfg
                 $aclacmd $gcfg > $glog 2>&1
                 out="$g.0_$n,"
