@@ -52,6 +52,8 @@ $scriptsdir/download_grammars.sh
 # now run build.sh to build your tools
 ./build.sh || exit $?
 
+[ ! -d $resultsdir ] && mkdir $resultsdir
+
 # for travis: run the tools on test grammars
 if [ "$exp" == "travis" ]; then
   for g in test lang; do
@@ -75,8 +77,6 @@ if [ "$exp" == "travis" ]; then
   done
   exit 0
 fi
-
-[ ! -d $resultsdir ] && mkdir $resultsdir
 
 scriptlist="$expdir/scriptlist"
 > $scriptlist
