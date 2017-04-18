@@ -3,7 +3,7 @@
 import sys
 import getopt
 import MetaUtils
-import Depth1, Weight1, Weight2, Weight3
+import Depth1, Weight1, Weight2, Weight3, Weight4
 
 """
 Run metasearch for SinBAD tool for options depth and weight:
@@ -36,15 +36,24 @@ class Hillclimb:
                 usage('Need a value for Weight')
 
             m = Weight3.run(cmd, logd, depth, wgt)
+        elif mtype == 'Weight4':
+            if wgt is None:
+                usage('Need a value for Weight')
+
+            m = Weight4.run(cmd, logd, depth, wgt)
+        else:
+            usage("Unknown search type: %s" % mtype)
+
 
 
 def usage(msg=None):
     if msg is not None:
         sys.stderr.write("** %s **\n" % msg)
 
+    sys.stderr.write("Usage:\n\n")
     sys.stderr.write("Metasearch.py -x <experiment directory> -g <grammar set> " \
                      "-b <backend to run> -d <initial depth> -t <time limit> " \
-                     "-T <search type for weight> -w <wgt>\n")
+                     "-T <Depth1|Weight1|Weight2|Weight3|Weight4> -w <wgt>\n")
     sys.exit(1)
 
 
