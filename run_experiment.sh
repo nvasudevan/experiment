@@ -18,7 +18,7 @@ do
 done
 
 usage(){
-    echo "$0 -d <work dir> -x <travis|crude|dim|mini|main|validation>"
+    echo "$0 -d <work dir> -x <travis|crude_dim|main_dim|mini|main|validation>"
     exit 1
 }
 
