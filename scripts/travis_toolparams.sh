@@ -11,5 +11,5 @@ export memlimit="512m"
 export resultsdir="$expdir/results"
 
 export glang="$grammardir/lang"
-export lgrammars="Pascal"
+export lgrammars="SQL"
 export nlang="1"
