@@ -58,7 +58,7 @@ $scriptsdir/download_grammars.sh
 if [ "$exp" == "travis" ]; then
   for g in test lang; do
     $scriptsdir/run_acla.sh -g $g -t 10 -k
-    [ $(grep -c yes $resultsdir/acla/$g/10s/log) == 1 ] || exit 1
+    [ $(grep -c yes $resultsdir/acla/$g/10s_-k/log) == 1 ] || exit 1
 
     $scriptsdir/run_amber.sh -g $g -t 10 -l 10
     [ $(grep -c yes $resultsdir/amber/$g/10s_length_10/log) == 1 ] || exit 1
