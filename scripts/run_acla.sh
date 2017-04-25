@@ -5,6 +5,7 @@
 
 gset=""
 timelimit=""
+parse_every_string=""
 
 run_randomcfg() {
     tmp=$(mktemp -d)
@@ -133,13 +134,19 @@ run_test() {
     rm -Rf $tmp
 }
 
-set -- $(getopt g:t: "$@")
+usage() {
+  echo "$0 -t <time limit (secs)> -g <grammar set> [-k]"
+  exit 1
+}
+
+set -- $(getopt g:t:k "$@")
 
 while [ $# -gt 0 ]
 do
     case "$1" in 
      -g) gset=$2 ; shift;;
      -t) timelimit="$2" ; shift;;
+     -k) parse_every_string="yes" ; shift;;
     (--) shift; break;;
     (-*) echo "$0: error - unrecognized option $1" 1>&2; exit 1;;
      (*) break;;  
@@ -147,11 +154,24 @@ do
     shift
 done
 
-aclacmd="timeout ${timelimit}s java -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar -k -a"
-export aclacmd 
-echo "==> ($basename $0) [$gset] t=$timelimit"
+options=""
+[ "$parse_every_string" = "yes" ] && options="${options} -k"
 
-rsltdir="$resultsdir/acla/$gset/${timelimit}s"
+if [ -z "$gset" ] || [ -z "$timelimit" ]; then
+    echo "Some of the options were not provided for running ACLA. see usage"
+    usage
+fi
+
+aclacmd="timeout ${timelimit}s java -Xmx$memlimit -jar $wrkdir/ACLA/grammar.modified.jar -a ${options}"
+export aclacmd 
+echo "==> ($basename $0) [$gset] t=$timelimit,options=$options"
+
+if [ -z "${options}" ]; then
+  rsltdir="$resultsdir/acla/$gset/${timelimit}s"
+else
+  rsltdir="$resultsdir/acla/$gset/${timelimit}s_$(echo $options | sed -e 's/ /_/g')"
+fi 
+
 mkdir -p $rsltdir
 gsetlog="$rsltdir/log"
 echo "result log ==> $gsetlog"
