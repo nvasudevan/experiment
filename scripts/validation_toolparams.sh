@@ -23,7 +23,7 @@ export glang lgrammars nlang
 gmutlang="$grammardir/mutlang"
 mugrammars="Pascal SQL Java C CSS"
 mutypes="empty add mutate delete switch"
-nmutations="200"
+nmutations="300"
 export gmutlang mugrammars mutypes nmutations 
 
 gboltz="$grammardir/boltzcfg"
