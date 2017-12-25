@@ -15,8 +15,8 @@ sinbad="/home/krish/codespace/sinbad/src/sinbad"
 ambidexter_jar="${wrkdir}/ambidexter/build/AmbiDexter.jar"
 
 lang() {
-  for l in Pascal SQL Java C; do
-    for i in $(seq 5); do 
+  for l in $lgrammars; do
+    for i in $(seq $nlang); do
       min1td="/var/tmp/min1_${l}_${i}"
       min4td="/var/tmp/min4_${l}_${i}"
       rm -rf $min1td $min4td 
